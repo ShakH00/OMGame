@@ -6,3 +6,5 @@
 | Zhuo Xi Hong   | 30213715 |
 | Logan Olszak   | 30221927 |
 | Nova Driscoll  | 30211940 |
+| Hatem Chehade  | 30223615 |
+
