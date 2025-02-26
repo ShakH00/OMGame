@@ -7,4 +7,5 @@
 | Logan Olszak   | 30221927 |
 | Nova Driscoll  | 30211940 |
 | Hatem Chehade  | 30223615 |
+| Amr Ibrahim    | 30219524 |
 
