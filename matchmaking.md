@@ -36,4 +36,16 @@
 
 
 4. Matchmaking Logic for Each Game
-- RESEARCH ON WHETHER ELO WOULD WORK FOR ALL FOR GAMES
+- Chess (Highly strategic, skill-based)
+  - Tighter Elo matching (±50-100) ensures fair competition.
+  - High K-factor (32) to reflect skill progression.
+- Checkers (Moderate complexity)
+  - Moderate matchmaking (±100 Elo) keeps it fair but flexible.
+  - K-factor = 20 to prevent large Elo swings.
+- Connect L (Pattern recognition-based)
+  - Broader matchmaking (±100-150 Elo) since strategies can be learned quickly.
+  - Lower K-factor (15) to prevent rapid ranking inflation.
+- Tic-Tac-Toe (Too simple, often leads to draws)
+  - Wide matchmaking range (±150-200 Elo) since small Elo gaps don’t matter.
+  - Very low K-factor (5-10) to prevent rating inflation due to forced draws.
+  - Alternative: Use a win-streak-based system instead of Elo.
