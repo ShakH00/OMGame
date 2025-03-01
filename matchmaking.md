@@ -9,4 +9,22 @@
   - After 2 minutes: Match with the closest available player.
 
 3. How Should a Match Affect a Player’s Elo?
-- My initial thoughts: f a lower-rated player wins, they gain more Elo than if a higher-rated player wins. Conversely, a higher-rated player loses more Elo if they lose to a weaker opponent.
+- My initial thoughts: if a lower-rated player wins, they gain more Elo than if a higher-rated player wins. Conversely, a higher-rated player loses more Elo if they lose to a weaker opponent.
+  https://stanislav-stankovic.medium.com/elo-rating-system-6196cc59941e#:~:text=After%20each%20match%2C%20the%20Elo,the%20match%20and%20SA%20is
+- The Elo system calculates rating changes using the expected vs. actual outcome:
+- R'=R+K(S−E)
+  - Where:
+  - R' = New rating. 
+  - R = Current rating. 
+  - K = Scaling factor (how much the rating changes). 
+  - S = Match result (1 = win, 0.5 = draw, 0 = loss). 
+  - E = Expected result (based on opponent’s Elo).
+
+- If you beat a stronger player, you gain more Elo. 
+- If you lose to a weaker player, you lose more Elo. 
+- If you win against a weaker player, you gain less Elo. 
+- If you lose to a stronger player, you lose less Elo.
+
+
+4. Matchmaking Logic for Each Game
+- RESEARCH ON WHETHER ELO WOULD WORK FOR ALL FOR GAMES
