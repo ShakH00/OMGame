@@ -49,3 +49,12 @@
   - Wide matchmaking range (±150-200 Elo) since small Elo gaps don’t matter.
   - Very low K-factor (5-10) to prevent rating inflation due to forced draws.
   - Alternative: Use a win-streak-based system instead of Elo.
+
+5. Summary for Players
+- You are matched with players within ±100 Elo of your rating.
+- If no match is found, the range expands every 30 seconds.
+- After 2 minutes, you are paired with the closest available player.
+- Win against a higher-rated player → Gain more points. 
+- Win against a lower-rated player → Gain fewer points. 
+- Lose against a weaker player → Lose more points. 
+- Lose against a stronger player → Lose fewer points.
