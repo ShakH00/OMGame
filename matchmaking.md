@@ -25,6 +25,15 @@
 - If you win against a weaker player, you gain less Elo. 
 - If you lose to a stronger player, you lose less Elo.
 
+- When we jump into game specific elo adjustments
+
+| GAME      | K-Factor |
+|-----------|----------|
+| Chess     | 32       |
+| Checkers  | 20       |
+| Connect L | 15       |
+| Tic Tac   | 10       |
+
 
 4. Matchmaking Logic for Each Game
 - RESEARCH ON WHETHER ELO WOULD WORK FOR ALL FOR GAMES
