@@ -55,3 +55,22 @@ Provide stub functions to simulate how your system will connect to external serv
 Select and join games from the available library.
 - View and challenge other players by searching their profile.
 - Communicate during gameplay using a basic in-game chat.
+
+### Iteration Deliverable Requirements
+#### 1
+**Focus on designing and planning rather than code.**
+
+"You will need to construct a project task timeline, use case descriptions/diagrams, structure diagrams (Class Diagrams), and any other diagrams/documents you feel will best help you plan your work."
+
+- Planning documents:
+
+  Prepare any planning documents that you might need which lists all of the milestones, task completion dates, etc., for the programming part of your project. You should use these documents throughout your project to keep on track. Do not include personal/group info, and submit these to the public Dropbox. You should plan to begin working on the code for your project as soon as possible (especially before the P2 deadline).
+- Structure Diagram:
+
+  Include a `class_diagram.png` or `class_diagram.svg` that documents your program's most important, vital or complex parts. Include all the parts you consider vital, but feel free to abstract what isn’t essential. Do not include personal/group info; submit this to the public Dropbox.
+- Use Case Descriptions/Diagram:
+
+  Create a `use_case_descriptions.pdf` that includes a diagram and the use cases that cover your most important interactions. Do not include personal/group info; submit this to the public Dropbox.
+- Other diagrams/documentation:
+
+  Include any other diagrams or documentation that would help a third party understand your development strategy and be able to critique it. Do not include personal/group info; submit these to the public Dropbox.
