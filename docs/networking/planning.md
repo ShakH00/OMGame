@@ -16,14 +16,16 @@
   Writing Placeholder methods and listing function names and parameters.
 
 ## Goals
-- a
+- **TO DO**
 ### Stretch Goals
 - Actual network implementation
 
   See this videos (listed in Docs section) for details. Can use Nova's server/VPS, and domain.
 - Real Database?
 
-  MongoDB is cool and would be easy. Nova has a `PostgreSQL` server running.
+  MongoDB is cool and would be easier to implement. Nova has a `PostgreSQL` server running.
+
+- **MORE?**
 
 
 ## Assignment Requirements
