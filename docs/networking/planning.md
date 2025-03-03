@@ -1,4 +1,4 @@
-# Network Planning Document
+# **Network Planning Document**
 
 ## Docs
 - [FigJam Diagram](https://www.figma.com/board/dpFR9WEMYuxA74ZvipXcZc/process-loop?node-id=1-25&t=nhEXUiFAzE8vcAcv-1)
