@@ -31,7 +31,7 @@
 |-----------|----------|
 | Chess     | 32       |
 | Checkers  | 20       |
-| Connect L | 15       |
+| Connect 4 | 15       |
 | Tic Tac   | 10       |
 
 
