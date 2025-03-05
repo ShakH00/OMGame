@@ -76,4 +76,11 @@ This process is handled by **two key components**: the **Game Server** and the *
 
 ## **6. Note For Other Teams**
 - Refer to the API documentation for more technical details.
--
+- The API documentation provides a technical breakdown of function signatures, parameters, and expected behaviors, serving as a developer reference for implementing or modifying networking functions. In contrast, the Networking Function Explanations document is a simplified guide meant for external teams, explaining how the system works at a high level without requiring a deep dive into the code. While the API documentation is used to understand function implementation details, this document helps non-networking teams grasp the overall system flow and interactions to integrate with it effectively.
+
+
+
+
+
+
+
