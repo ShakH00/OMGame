@@ -20,9 +20,37 @@ Post-conditions:
     2. If the board is full without a winner, then a draw is declared.
 Exceptions: The opponent can block the win before the player can play their turn.
 Priority: High, the goal of the game is this.
-When available: Once the there is a 3 in a row set up, and it is that players turn.
+When available: Once there is a 3 in a row set up, and it is that players turn.
 Frequency of use: Once a game, at most.
 Channel to actor: Once it is the player's turn, and they notice a 3 in a row.
+Secondary actors: Opponent
+Chanel to secondary actors: Once it is their turn they have the option to block.
+Open issues: None
+
+Use Case: 3InARow
+Iteration: 1
+Actor: Player (1 or 2)
+Goal in context: For one of the players to reach 3 of their symbols in a row on the board, which results in their declared win.
+Pre-Conditions:
+    1. A TicTacToe game has been initiated.
+    2. There are 2 of a symbol in a row requiring one more move.
+    3. It must be the players turn.
+Trigger: It is the players turn, and they choose the winning move.
+Scenario:
+    1. A TicTacToe game is in progress.
+    2. There is currently 2 in a row.
+    3. It is that players turn that has 2 in a row.
+    4. They choose the missing slot making it 3 in a row.
+    5. They win the game.
+    6. The game closes.
+Post-Conditions:
+    1. Once a 3 in a row is achieved the game ends.
+    2. If the board is full without a winner, then a draw happens.
+Exceptions: The opponent can block the winning move if it is their turn.
+Priority: High
+When available: Once there's 2 in a row, and it is that players turn.
+Frequency of use: Once a game
+Channel to actor: Once it is the player's turn, and they have 2 in a row.
 Secondary actors: Opponent
 Chanel to secondary actors: Once it is their turn they have the option to block.
 Open issues: None
