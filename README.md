@@ -22,3 +22,8 @@ These diagrams are named using the following convention:
 
 
 ### Class Structure Diagrams
+
+- class_structure_diagram_01: Contains diagram for administrator.
+- class_structure_diagram_02: Contains diagram for statistics tracking and leaderboard.
+- class_structure_diagram_03: Contains diagram for editing account.
+- class_structure_diagram_04: Contains diagram for guest/players.
