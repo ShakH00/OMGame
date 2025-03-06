@@ -26,4 +26,26 @@ These diagrams are named using the following convention:
 - class_structure_diagram_01: Contains diagram for administrator.
 - class_structure_diagram_02: Contains diagram for statistics tracking and leaderboard.
 - class_structure_diagram_03: Contains diagram for editing account.
-- class_structure_diagram_04: Contains diagram for guest/players.
+- clas s_structure_diagram_04: Contains diagram for guest/players.
+
+### Sequence Diagrams
+- sequence_diagram_01: Contains diagram for creating accounts.
+- sequence_diagram_02: Contains diagram for editing accounts.
+- sequence_diagram_03: Contains diagram for matchmaking process.
+- sequence_diagram_04: Contains diagram for match outcomes.
+
+### Use Case Diagrams
+- use_case_diagram_01: Contains diagram for account creation.
+- use_case_diagram_02: Contains diagram for administrator.
+- use_case_diagram_03: Contains diagram for user.
+- use_case_diagram_04: Contains diagram for matchmaking.
+- use_case_diagram_05: Contains diagram for authentication system.
+
+
+### Documentations
+- matchmaking.md: Contains explanation on how matchmaking proccess will work.
+- use_case_descriptions: Contains use cases for matchmaking.
+
+### Tasks
+- leaderboard_authentication_tasks: Contains students specific tasks and milestones.
+- Project_v1.0.1: Contains assignment description.
