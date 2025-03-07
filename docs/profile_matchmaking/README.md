@@ -1,13 +1,13 @@
-# SENG 300 - Project - Leaderboard & Matchmaking Team
+# SENG 300 - Project - Profile & Matchmaking Team
 
 ## Team Members
 The names and UCIDs of all team members are listed in team.md.
 
 ## File Descriptions
-- `./docs/leaderboard_matchmaking/`: Contains documentation regarding how the matchmaking process will work and use case descriptions.
-- `./diagrams/leaderboard_matchmaking/class_structure_diagrams/`: Contains the class structure diagrams. See below for information on naming conventions.
-- `./diagrams/leaderboard_matchmaking/sequence_diagrams/`: Contains the sequence diagrams. See below for information on naming conventions.
-- `./diagrams/leaderboard_matchmaking/use_case_diagrams/`: Contains use case diagrams. See below for information on naming conventions.
+- `./docs/profile_matchmaking/`: Contains documentation regarding how the matchmaking process will work and use case descriptions.
+- `./diagrams/profile_matchmaking/class_structure_diagrams/`: Contains the class structure diagrams. See below for information on naming conventions.
+- `./diagrams/profile_matchmaking/sequence_diagrams/`: Contains the sequence diagrams. See below for information on naming conventions.
+- `./diagrams/profile_matchmaking/use_case_diagrams/`: Contains use case diagrams. See below for information on naming conventions.
 
 ## Diagrams
 We have created class structure, sequence diagrams and use case diagrams representing the critical parts of the leaderboard and matchmaking system.
@@ -40,4 +40,5 @@ These diagrams are named using the following convention:
 
 ### Documentation
 - matchmaking.md: Contains explanation on how matchmaking process will work.
-- use_case_descriptions: Contains use cases for matchmaking.
+- use_case_descriptions_01: Contains use cases for matchmaking.
+- use_case_descriptions_02: Contains use cases for account operations.
