@@ -1,28 +1,20 @@
-# SENG 300 - Project 
+# SENG 300 - Project - Leaderboard & Matchmaking Team
 
 ## Team Members
 The names and UCIDs of all team members are listed in team.md.
 
 ## File Descriptions
-- `./class_structure_diagram/`: Contains the class structure diagrams. See below for information on naming conventions.
-- `./documentation/`: Contains documentation regarding how the matchmaking proccess will work and use case descriptions.
-- `./sequence_diagrams/`: Contains the sequence diagrams. See below for information on naming conventions.
-- `./tasks/`: Containts the list of tasks, milestones that were assigned and planning document.
-- `./use_case diagrams/`: Contains use case diagrams. See below for information on naming conventions.
-- `team.md`: in the main directory, contains team members' names and UCIDs.
-- `README.md`: in the main directory, this describes the location and purpose of files in the repository.
-- `gitlab_link.txt`: in the main directory, contains the link to the current repository.
-
+- `./docs/leaderboard_matchmaking/`: Contains documentation regarding how the matchmaking process will work and use case descriptions.
+- `./diagrams/leaderboard_matchmaking/class_structure_diagrams/`: Contains the class structure diagrams. See below for information on naming conventions.
+- `./diagrams/leaderboard_matchmaking/sequence_diagrams/`: Contains the sequence diagrams. See below for information on naming conventions.
+- `./diagrams/leaderboard_matchmaking/use_case_diagrams/`: Contains use case diagrams. See below for information on naming conventions.
 
 ## Diagrams
 We have created class structure, sequence diagrams and use case diagrams representing the critical parts of the leaderboard and matchmaking system.
 These diagrams are named using the following convention:
-
 `<diagram type>_<index>`
 
-
 ### Class Structure Diagrams
-
 - class_structure_diagram_01: Contains diagram for administrator.
 - class_structure_diagram_02: Contains diagram for statistics tracking and leaderboard.
 - class_structure_diagram_03: Contains diagram for editing account.
@@ -43,13 +35,8 @@ These diagrams are named using the following convention:
 - use_case_diagram_03: Contains diagram for user.
 - use_case_diagram_04: Contains diagram for matchmaking.
 - use_case_diagram_05: Contains diagram for authentication system.
-- use_case_diagram_06: Contains diagram for multifactor authentication.
+- use_case_diagram_06: Contains diagram for multi-factor authentication.
 
-
-### Documentations
-- matchmaking.md: Contains explanation on how matchmaking proccess will work.
+### Documentation
+- matchmaking.md: Contains explanation on how matchmaking process will work.
 - use_case_descriptions: Contains use cases for matchmaking.
-
-### Tasks
-- leaderboard_authentication_tasks: Contains students specific tasks and milestones.
-- Project_v1.0.1: Contains assignment description.
