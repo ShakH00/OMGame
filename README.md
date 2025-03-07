@@ -26,7 +26,9 @@ These diagrams are named using the following convention:
 - class_structure_diagram_01: Contains diagram for administrator.
 - class_structure_diagram_02: Contains diagram for statistics tracking and leaderboard.
 - class_structure_diagram_03: Contains diagram for editing account.
-- clas s_structure_diagram_04: Contains diagram for guest/players.
+- class_structure_diagram_04: Contains diagram for guest/players.
+- class_structure_diagram_05: Contains diagram for password encryption.
+- class_structure_diagram_06: Contains diagram for multi factor authentication
 
 ### Sequence Diagrams
 - sequence_diagram_01: Contains diagram for creating accounts.
