@@ -33,7 +33,7 @@ These diagrams are named using the following convention:
 ### Use Case Diagrams
 - use_case_diagram_01: Contains diagram for account creation.
 - use_case_diagram_02: Contains diagram for administrator.
-- use_case_diagram_03: Contains diagram for user.
+- use_case_diagram_03: Contains diagram for guest user.
 - use_case_diagram_04: Contains diagram for matchmaking.
 - use_case_diagram_05: Contains diagram for authentication system.
 - use_case_diagram_06: Contains diagram for multi-factor authentication.
