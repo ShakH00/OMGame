@@ -28,6 +28,7 @@ These diagrams are named using the following convention:
 - sequence_diagram_03: Contains diagram for matchmaking process.
 - sequence_diagram_04: Contains diagram for match outcomes.
 - sequence_diagram_05: Contains diagram for leaderboard generation.
+- sequence_diagram_06: Contains diagram for login process.
 
 ### Use Case Diagrams
 - use_case_diagram_01: Contains diagram for account creation.
