@@ -42,6 +42,7 @@ These diagrams are named using the following convention:
 - use_case_diagram_03: Contains diagram for user.
 - use_case_diagram_04: Contains diagram for matchmaking.
 - use_case_diagram_05: Contains diagram for authentication system.
+- use_case_diagram_06: Contains diagram for multifactor authentication.
 
 
 ### Documentations
