@@ -69,3 +69,74 @@
 3. Server notifies both players
 4. Server closes connections
 5. Clients display game result
+
+## 4. Connection Management Use Cases
+
+### UC7: Handle Player Disconnection
+**Primary Actor:** Game Server
+**Preconditions:** At least one player is connected
+**Main Success Scenario:**
+1. Server detects player disconnection
+2. Server notifies remaining player
+3. Server updates game state
+4. Server terminates game session
+5. Remaining client displays disconnect message
+
+### UC8: Process Game Logic
+**Primary Actor:** Game Server
+**Preconditions:** Valid move received
+**Main Success Scenario:**
+1. Server receives player move
+2. Server validates move against game rules
+3. Server updates game board state
+4. Server checks for win condition
+5. Server broadcasts updated state
+**Alternative Flow:**
+- If invalid move:
+  1. Server rejects move
+  2. Server sends error to player
+  3. Turn remains with current player
+
+### UC9: Receive Opponent Move
+**Primary Actor:** Inactive Player
+**Preconditions:** Opponent has made move
+**Main Success Scenario:**
+1. Client receives move from server
+2. Client validates move locally
+3. Client updates game board
+4. Client enables player controls
+**Alternative Flow:**
+- If connection lost:
+  1. Client detects timeout
+  2. Client attempts reconnection
+  3. Client displays error if failed
+
+## Use Case Diagram
+```mermaid
+    Player1[Player 1]
+    Player2[Player 2]
+    Server[Game Server]
+
+    %% Connection Use Cases
+    UC1[Connect to Server]
+    UC2[Make Move]
+    UC3[Receive Move]
+    UC4[Handle Disconnect]
+    UC5[Process Logic]
+    UC6[End Game]
+
+    %% Player Relationships
+    Player1 --> UC1
+    Player1 --> UC2
+    Player1 --> UC3
+    Player2 --> UC1
+    Player2 --> UC2
+    Player2 --> UC3
+
+    %% Server Relationships
+    Server --> UC4
+    Server --> UC5
+    Server --> UC6
+    UC1 --> Server
+    UC2 --> Server
+```
