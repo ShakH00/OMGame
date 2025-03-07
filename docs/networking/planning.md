@@ -16,7 +16,25 @@
   Writing Placeholder methods and listing function names and parameters.
 
 ## Goals
-- **TO DO**
+- Plan networking architecture (hosting, database, etc.) and interfaces
+
+- Create stubs for networking
+  - Databases
+    - User Auth.
+    - Game data (match history, leaderboard)
+    - Profiles
+  - Cloud hosting/server infra
+  - Profile management
+    - Stats visibility settings
+  - View own and others' profile stats
+    - Leaderboard
+  - **Skill-based** matchmaking
+  - Search for current games and queue
+
+- Design/demonstrate how online interface will be integrated
+  - Collaborate with GUI as how to expose this to end user
+
+- Have extensive and clear documentation for other teams to reference
 ### Stretch Goals
 - Actual network implementation
 
