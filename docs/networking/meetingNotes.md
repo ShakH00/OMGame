@@ -19,6 +19,7 @@
 - **Discuss Git etiquette** (How branches should be handled, merge conflicts, etc.)
 - **Group timeline document**
 - **Making use cases???**
+Above concerns addressed in 2025-03-05 Team Lead Meeting
 ### Plans for the week
 - **Nova:** Writing docs./planning structure (eventually can make class diagram). Help **Hatem** with diagrams.
 - **Hatem:** Making diagrams (structure, and overall network flow/structure). Help **Nova** with docs.

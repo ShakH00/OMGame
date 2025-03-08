@@ -1,5 +1,5 @@
 # Networking System - Function Explanations (Simplified for other Teams) #
-
+**See suggestions in `apiDocumentation.md` and discuss with other teams for suggestions**
 
 
 ## **1. Overview**
@@ -8,10 +8,10 @@ This document is intended to help external teams **understand the networking sys
 ---
 
 ## **2. How the System Works (Simplified Breakdown)**
-1️⃣ **Players connect to the server** → The server assigns them Player 1 or Player 2.  
-2️⃣ **Players take turns making moves** → Each move is sent to the server.  
-3️⃣ **Server updates the game board** → The updated board is sent to both players.  
-4️⃣ **Opponent sees the move and takes their turn** → This cycle continues until the game ends.  
+1️⃣ **Players connect to the server** → The server assigns them Player 1 or Player 2.
+2️⃣ **Players take turns making moves** → Each move is sent to the server.
+3️⃣ **Server updates the game board** → The updated board is sent to both players.
+4️⃣ **Opponent sees the move and takes their turn** → This cycle continues until the game ends.
 5️⃣ **Game checks for a winner or tie** → If conditions are met, the game ends.
 
 This process is handled by **two key components**: the **Game Server** and the **Player Client**. Below is a breakdown of their most important functions.
@@ -67,9 +67,9 @@ This process is handled by **two key components**: the **Game Server** and the *
 ---
 
 ## **5. Key Takeaways for Other Teams**
-🔹 This system **relies on a client-server model**, where the server **handles game logic and turn management**, while the clients **send moves and update their displays**.  
-🔹 **Turn-based interactions** are enforced, meaning only one player can move at a time.  
-🔹 **Game state synchronization** ensures both players see the same board at all times.  
+🔹 This system **relies on a client-server model**, where the server **handles game logic and turn management**, while the clients **send moves and update their displays**.
+🔹 **Turn-based interactions** are enforced, meaning only one player can move at a time.
+🔹 **Game state synchronization** ensures both players see the same board at all times.
 🔹 If you are working on other components, (GUI and Game logic teams), this document provides a **high-level understanding** of how to integrate with the existing system.
 
 ---
@@ -77,10 +77,3 @@ This process is handled by **two key components**: the **Game Server** and the *
 ## **6. Note For Other Teams**
 - Refer to the API documentation for more technical details.
 - The API documentation provides a technical breakdown of function signatures, parameters, and expected behaviors, serving as a developer reference for implementing or modifying networking functions. In contrast, the Networking Function Explanations document is a simplified guide meant for external teams, explaining how the system works at a high level without requiring a deep dive into the code. While the API documentation is used to understand function implementation details, this document helps non-networking teams grasp the overall system flow and interactions to integrate with it effectively.
-
-
-
-
-
-
-

@@ -7,14 +7,6 @@
 - https://www.youtube.com/watch?v=HQoWN28H80w
 - https://www.youtube.com/watch?v=gLfuZrrfKes
 
-## Team Roles
-- **Diagrams and Documentation:** Hatem and Uzair
-
-  Creating Network flow diagrams and writing descriptions of how networking will work.
-- **Stubs and API Design:** Nova and Sultan
-
-  Writing Placeholder methods and listing function names and parameters.
-
 ## Goals
 - Plan networking architecture (hosting, database, etc.) and interfaces
 
