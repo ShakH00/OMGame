@@ -37,8 +37,10 @@ These diagrams are named using the following convention:
 - use_case_diagram_04: Contains diagram for matchmaking.
 - use_case_diagram_05: Contains diagram for authentication system.
 - use_case_diagram_06: Contains diagram for multi-factor authentication.
+- use_case_diagram_07: Contains diagram for managing friends.
 
 ### Documentation
 - matchmaking.md: Contains explanation on how matchmaking process will work.
 - use_case_descriptions_01: Contains use cases for matchmaking.
 - use_case_descriptions_02: Contains use cases for account operations.
+- use_case_descriptions_01: Contains use cases for managing friends.
