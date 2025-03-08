@@ -81,3 +81,38 @@
 ### Explore the possibility of a peer-to-peer fallback mechanism to maintain game continuity in the event of server issues.
 
 ## These enhancements are suggestions for future discussion to further improve the system's resilience and player experience.
+
+# Error Handling (Potential) Diagrams
+
+```mermaid
+flowchart TD
+    A[Client Sends Move] -->|Network Error| B{Retry Logic}
+    B -->|Retry 1| C[Attempt 1]
+    B -->|Retry 2| D[Attempt 2]
+    B -->|Retry 3| E[Attempt 3]
+    
+    C -->|Success| F[Server Receives]
+    C -->|Fail| B
+    D -->|Success| F
+    D -->|Fail| B
+    E -->|Success| F
+    E -->|Fail| G[Error Handler]
+    
+    G -->|Notify Player| H[Display Error]
+    G -->|Update State| I[Game State Manager]
+    G -->|Log Error| J[Error Logger]
+```
+
+```mermaid
+flowchart TD
+    A[Player Disconnects] -->|Detect| B{Connection Monitor}
+    B -->|Temporary| C[Pause Game]
+    B -->|Permanent| D[End Game]
+    
+    C -->|30s Timer| E{Reconnection Check}
+    E -->|Success| F[Resume Game]
+    E -->|Timeout| D
+    
+    D -->|Notify Players| G[Update UI]
+    D -->|Clean Up| H[Close Session]
+```
