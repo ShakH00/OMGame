@@ -15,6 +15,7 @@ public class PlayerT extends JFrame {
     private Container contentPane;
     private JTextArea message;
     private JTextArea textGridMessage;
+    private JTextArea testText;
     private JButton b1,b2,b3,b4;
 
     private JButton b01,b02,b03,b04,b05,b06,b07,b08,b09;
@@ -32,6 +33,8 @@ public class PlayerT extends JFrame {
     private int enemyPoints;
     private boolean buttonsEnabled;
     private String playerInputSender;
+    private JButton startb00;
+    private boolean gameIsActive;
 
     // this will impliment the turn based aspect forcing the player
     // to wait the other players turn
@@ -44,6 +47,11 @@ public class PlayerT extends JFrame {
         contentPane = this.getContentPane();
         message = new JTextArea();
         textGridMessage = new JTextArea();
+        gameIsActive = false;
+        testText = new JTextArea();
+
+        // Buttons
+        startb00 = new JButton("Start Matchmaking");
 
         b01 = new JButton("1");
         b02 = new JButton("2");
@@ -63,9 +71,35 @@ public class PlayerT extends JFrame {
         enemyPoints = 0;
 
 
+
+    }
+    public void playerMenu() {
+
+        this.setSize(width, height);
+        this.setTitle("The GameMenu");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        contentPane = this.getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        testText = new JTextArea("lol");
+
+        JPanel panel = new JPanel();
+
+        startb00 = new JButton("Start Game");
+        panel.add(startb00);
+        panel.add(testText);
+        contentPane.add(panel, BorderLayout.CENTER);
+
+        setUpMenuButtons();
+        this.setVisible(true);
+
     }
 
     public void setUpGUII(){
+        contentPane.removeAll();
+        contentPane.revalidate();
+        contentPane.repaint();
+
+        gameIsActive = true;
         this.setSize(width, height);
         this.setTitle("The Game for Player #" + playerID);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,7 +200,24 @@ public class PlayerT extends JFrame {
         csc = new ClientSideConnection();
     }
 
-    public void setUpButtons(){
+
+    public void setUpMenuButtons(){
+        ActionListener alStart = new ActionListener() {
+            public void actionPerformed(ActionEvent StartAe) {
+                System.out.println(" YOU PRESSED THE BUTTON");
+                gameIsActive = true;
+                connectToServer();
+                setUpGame1Buttons();
+                setUpGUII();
+
+            }
+        };
+        startb00.addActionListener(alStart);
+    }
+    public void setUpGame1Buttons(){
+
+
+
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 JButton b = (JButton) ae.getSource();
@@ -205,12 +256,8 @@ public class PlayerT extends JFrame {
                 }
             }
         };
-    /*    b1.addActionListener(al); // ADDING ALL THE BUTTONS
-        b2.addActionListener(al);
-        b3.addActionListener(al);
-        b4.addActionListener(al);
 
-*/      b01.addActionListener(al);
+        b01.addActionListener(al);
         b02.addActionListener(al);
         b03.addActionListener(al);
         b04.addActionListener(al);
@@ -219,6 +266,8 @@ public class PlayerT extends JFrame {
         b07.addActionListener(al);
         b08.addActionListener(al);
         b09.addActionListener(al);
+
+
 
     }
     // ASKING CHATGTP FOR THIS TEDIOUS STRING FORMAT
@@ -361,8 +410,10 @@ public class PlayerT extends JFrame {
 
     public static void main(String[] args) {
         PlayerT p = new PlayerT(800, 400);
-        p.connectToServer();
+        p.playerMenu();
+        //p.Menu { includes [p.connectToServer();, GHAME SPCFIC :p.setUpGUII()  p.setUpButtons();]
+        /*p.connectToServer();
         p.setUpGUII(); //has startReceivingButtonNums in it
-        p.setUpButtons();
+        p.setUpButtons();*/
     }
 }
