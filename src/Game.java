@@ -3,9 +3,9 @@ interface Game {
     Player player2 = new Player();
     int score1 = 0, score2 = 0;
     String gameType = null;
+    GameState gameState = null;
     Board board = new Board(gameType);
     Piece selectedPiece = new Piece();
-    GameState gameState = new GameState();
     GameRules gameRules = new GameRules();
 
     public void move(Piece piece);
