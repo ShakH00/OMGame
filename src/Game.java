@@ -2,7 +2,7 @@ interface Game {
     Player player1 = new Player();
     Player player2 = new Player();
     int score1 = 0, score2 = 0;
-    String gameType = null;
+    GameType gameType = null;
     GameState gameState = null;
     Board board = new Board(gameType);
     Piece selectedPiece = new Piece();
