@@ -1,13 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>OMG</title>
+        <link rel="stylesheet" href="stylesheet.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
 
     <body>
         <h1>OMG</h1>
-        <img src="/assets/help_popup.gif" alt="Tetris Cat Help" />
+        <div class="overlay" id="overlay"></div>
+        <div class="container" id="popupBox">
+            <div class="contact-box">
+                <div class="sos-box">SOS!!</div>
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <p><strong>Need help?</strong></p><br>
+                <p>Reach out to us at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a><br> to speak to our support team. <span class="heart">💜</span></p>
+            </div>
+        </div>
+
+        <script>
+            window.onload = function() {
+                document.getElementById('popupBox').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            };
+
+            function closePopup() {
+                document.getElementById('popupBox').classList.remove('show');
+                document.getElementById('overlay').classList.remove('show');
+            }
+        </script>
     </body>
 </html>

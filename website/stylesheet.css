@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700);
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #9ed2e4;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 4rem;
+    color: #ff5eac;
+    margin-top: 30px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    z-index: 9;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(50px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.contact-box {
+    background-color: #fff;
+    padding: 40px 30px 30px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    position: relative;
+}
+
+.contact-box p {
+    font-size: 1.3rem;
+    color: #333;
+    margin: 10px 0;
+}
+
+.email-link {
+    color: #ff5eac;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+}
+
+.heart {
+    color: #ff5eac;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: #ff5eac;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+.container.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+}
+
+@keyframes wiggleBounce {
+    0%, 100% {
+        transform: rotate(-18deg) scaleX(1) translateY(0px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    20% {
+        transform: rotate(-12deg) scaleX(0.95) translateY(-4px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+    }
+    40% {
+        transform: rotate(-20deg) scaleX(1.05) translateY(3px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    60% {
+        transform: rotate(-15deg) scaleX(0.97) translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    80% {
+        transform: rotate(-19deg) scaleX(1.03) translateY(2px);
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.18);
+    }
+}
+
+.sos-box {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    animation: wiggleBounce 1.2s infinite ease-in-out;
+    transform-origin: center;
+}
