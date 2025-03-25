@@ -6,7 +6,8 @@ html {
 
 body {
 	background-color: #9ed2e4;
-	font-family: 'Comic Sans MS', cursive, sans-serif;
+	/*font-family: 'Comic Sans MS', cursive, sans-serif;*/
+	font-family: "Roboto";
 	text-align: center;
 	margin: 0;
 	padding: 0;
@@ -187,6 +188,18 @@ h1 {
 	margin: 10px 0;
 }
 
+.popup-tetriscat {
+	height: auto;
+	width: 200px;
+	rotate: 25deg;
+	z-index: -1;
+	top: -160px;
+	left: 360px;
+	position: fixed;
+	display: flex;
+}
+
+
 .email-link {
 	color: #ff5eac;
 	font-weight: bold;
@@ -276,35 +289,55 @@ h1 {
 }
 
 .header-center {
-	display: flex;
-	gap: 30px;
-	font-size: 1.2rem;
-	margin-left: auto;
-	margin-right: auto;
+    display: flex;
+    gap: 10px;
+    font-size: 1.2rem;
+    margin-left: auto;
+    margin-right: 60px;
 }
 
 .header-center a {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
+    position: relative;
 	transition: color 0.2s;
+	padding: 10px 30px 10px 30px;
+    border-radius: 50px;
 }
 
 .header-center a:hover {
-	color: #ffd6ec;
+    background-color: #ff71b6;
 }
 
 .header-right {
-	display: flex;
-	gap: 20px;
+    display: flex;
+    font-size: 1.2rem;
 }
 
-.header-right a {
-	color: white;
-	text-decoration: none;
-	font-weight: bold;
-	transition: color 0.2s;
+.signup-btn {
+    background-color: #555;
+    color: white;
+    border-radius: 50px 0 0 50px;
+	padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
-.header-right a:hover {
-	color: #ffd6ec;
+.signup-btn:hover {
+    background-color: #777;
+}
+
+.login-btn {
+    background-color: #b30000;
+    color: white;
+	padding: 10px 20px 10px 20px;
+    border-radius: 0 50px 50px 0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #ff0000;
 }
