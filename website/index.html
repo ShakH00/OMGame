@@ -8,7 +8,38 @@
     </head>
 
     <body>
+        <div class="header">
+            <div class="header-left">OMG.</div>
+            <div class="header-center">
+                <a href="#">Home</a>
+                <a href="#">Help</a>
+                <a href="#">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="#">Login</a>
+                <a href="#">Signup</a>
+            </div>
+        </div>
+
         <h1>OMG</h1>
+
+        <button class="chat-button" id="chatToggle">💬</button>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                Chat Support
+                <button class="chat-close-btn" onclick="closeChat()">×</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot">Hi i'm TetrisCat!</div>
+                <div class="chat-message bot">We are currently developing our chat feature.</div>
+                <div class="chat-message bot">Please contact support by email at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> 😊</div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask me a question..." />
+                <button onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+
         <div class="overlay" id="overlay"></div>
         <div class="container" id="popupBox">
             <div class="contact-box">
@@ -29,6 +60,45 @@
                 document.getElementById('popupBox').classList.remove('show');
                 document.getElementById('overlay').classList.remove('show');
             }
+
+const chatToggle = document.getElementById('chatToggle');
+        const chatPopup = document.getElementById('chatPopup');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+
+        chatToggle.addEventListener('click', () => {
+            chatPopup.classList.toggle('show');
+        });
+
+        function closeChat() {
+            chatPopup.classList.remove('show');
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message !== '') {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chat-message', 'user');
+                messageDiv.textContent = message;
+                chatBody.appendChild(messageDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                chatInput.value = '';
+
+                setTimeout(() => {
+                    const botReply = document.createElement('div');
+                    botReply.classList.add('chat-message', 'bot');
+                    botReply.textContent = "Thanks for asking! We'll get back to you soon. 😊";
+                    chatBody.appendChild(botReply);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        chatInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
         </script>
     </body>
 </html>
