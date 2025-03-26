@@ -1,147 +1,176 @@
-# Networking API Specification \- Multiplayer Game System #
+# API DOCUMENTATION
+## File Name: apiDocumentation.md
+## Iteration: P3
+## Status: Being Finalized for current codebase, stubs, and backend design
 
-## **1\. Overview**
+### Networking API Specification – Multiplayer Game System (P3)
+### Overview
+   The Networking System handles real-time, turn-based multiplayer gameplay, including player input transmission, game state updates, and server-client synchronization.
 
-**The Networking System is responsible for handling real-time, turn-based communication between two players in a multiplayer game. This document outlines the core networking functions used for managing player connections, transmitting moves, and synchronizing game state between clients.**
+This document outlines:
 
-## **2\. Core Components**
+Core methods on both the client and server
 
-### **Server (`GameServerT.java`)**
+Communication behavior
 
-* **Manages player connections and enforces turn-based gameplay.**
-* **Maintains the game state and updates both players.**
-* **Handles network communication through TCP sockets.**
+Stub status (implemented or placeholder)
 
-### **Client (`PlayerT.java`)**
+Internal backend access points (e.g. PlayerDatabase.java) used to track player data, ELO, and rankings
 
-* **Provides a graphical interface for players.**
-* **Connects to the server and sends player moves.**
-* **Receives game updates and processes opponent moves.**
+This version reflects the Iteration 3 (P3) status of the codebase, including stubbed logic, profile data integration, and planned extensions. All function behaviors and interactions are up-to-date and designed for cross-team clarity.
 
-## **3\. API Functions**
+#### Core Components
 
-### **🔹 Server Methods (GameServerT.java)**
+#### Server – GameServerT.java
+   Accepts player connections
 
-#### **Accept Player Connections**
+Validates moves and enforces turn order
 
-**public void acceptConnections();**
+Maintains game state (server2dChar[][])
 
-* **Purpose: Waits for two players to connect.**
-* **Behavior:**
-  * **Accepts two client sockets.**
-  * **Starts a new thread for each player.**
-* **Called by: Server during initialization.**
+Sends updates and move data to clients
 
-#### **Send Player Move to Opponent**
+(Eventually) communicates with player profiles / stats
 
-**public void sendButtonNum(String buttonNum);**
-*Likely too be modified after collaborating with Game Logic*
-* **Purpose: Sends the clicked button (move) to the opponent.**
-* **Parameters:**
-  * **`buttonNum` (String) – The button number clicked by the player.**
-* **Used by: Server to relay moves between players.**
+#### Client – PlayerT.java
+Connects to server
 
-#### **Send Updated Game Board**
+Sends player moves
 
-**public void send2dCharArray();**
-*Speak with Game Logic as to their board format*
-* **Purpose: Sends the current game board to the opponent.**
-* **Behavior:**
-  * **Iterates through `server2dChar[][]` and transmits board data.**
-* **Used by: Server after a player makes a move.**
+Receives opponent moves and board updates
 
-#### **Process Game Logic for Player 1**
+Handles client-side game state and UI hooks
 
-**public void processGameLogicP1(String input);**
-*Should consolidate into one method or move to client side in the case of no server*
-* **Purpose: Updates the game board for Player 1\.**
-* **Parameters:**
-  * **`input` (String) – Move made by Player 1\.**
-* **Behavior:**
-  * **Converts input into row/column coordinates.**
-  * **Places an 'X' on the board if the move is valid.**
+#### Internal Utility – PlayerDatabase.java
+Stores PlayerData (ELO, username)
 
-#### **Process Game Logic for Player 2**
+Provides ranked lists, lookups, and mutation methods
 
-**public void processGameLogicP2(String input);**
+Not directly exposed to clients – only server-side usage
 
-* **Purpose: Updates the game board for Player 2\.**
-* **Parameters:**
-  * **`input2` (String) – Move made by Player 2\.**
-* **Behavior:**
-  * **Converts input into row/column coordinates.**
-  * **Places an 'O' on the board if the move is valid.**
+#### API Functions
+   🔹 Server Methods (GameServerT.java)
+   
+#### public void acceptConnections();
 
-### **🔹 Client Methods (PlayerT.java)**
+Purpose: Accepts two clients and starts sessions.
 
-#### **Connect to Server**
+Behavior: Creates ServerSocket, accepts two clients, initializes threads.
 
-**public void connectToServer();**
+Called by: Server main method
 
-* **Purpose: Establishes a connection to the game server.**
-* **Behavior:**
-  * **Opens a TCP socket to `localhost:30000`.**
-  * **Receives player ID (`1` or `2`) from the server.**
-* **Called by: Player during initialization.**
+Status: ✅ Implemented
 
-#### **Send Move to Server**
+#### public void sendButtonNum(String buttonNum, int receiverID);
+Purpose: Sends move from one player to the opponent.
 
-**public void sendButtonNum(String strBNum);**
-*See above, contact Game Logic*
-* **Purpose: Sends the selected move to the server.**
-* **Parameters:**
-  * **`strBNum` (String) – The button number clicked by the player.**
-* **Behavior:**
-  * **Transmits move using `DataOutputStream`.**
-* **Used by: Player when clicking a button.**
+##### Parameters:
 
-#### **Receive Move from Opponent**
+buttonNum – the button number selected
 
-**public String receiveButtonNum();**
-*See above, contact Game Logic*
-* **Purpose: Receives and processes the opponent's move.**
-* **Returns:**
-  * **`String` – The button number clicked by the opponent.**
-* **Behavior:**
-  * **Reads opponent's move from `DataInputStream`.**
-  * **Updates local game board (`server2dChar[][]`).**
+receiverID – target client
 
-#### **Update Turn After Opponent Moves**
+Behavior: Sends move to client via DataOutputStream
 
-**public void updateTurn();**
+Status: 🟡 Stubbed – logic pending final structure from Game Logic
 
-* **Purpose: Handles turn-based mechanics.**
-* **Behavior:**
-  * **Waits for the opponent to make a move.**
-  * **Updates the game board.**
-  * **Enables the player's buttons after receiving the opponent's move.**
-* **Called by: Background thread after a move is made.**
+#### public void send2dCharArray(int receiverID);
+Purpose: Sends full game board to a player
 
-#### **Check for Game Over**
+Parameters: receiverID – client to update
 
-**private void checkWinner();**
+Behavior: Sends serialized char[][] of board state
 
-* **Purpose: Determines if the game has ended.**
-* **Behavior:**
-  * **Compares player scores.**
-  * **Displays a message indicating win, lose, or tie.**
-* **Called by: `updateTurn()` when the max number of turns is reached.**
+Status: 🟡 Stubbed – pending board format finalization
 
-#### **Close Connection**
+#### public void processGameLogicP1(String input);
+#### public void processGameLogicP2(String input);
+Purpose: Validate and apply move to board for P1/P2
 
-**public void closeConnection();**
+Parameters: input – move (String)
 
-* **Purpose: Gracefully closes the socket connection.**
-* **Called by: The client when the game ends.**
+Behavior: Parses position, updates board, switches turns
 
-### Profile Functions
+Note: May later be merged into a shared method
 
-**TO ADD**
+Status: ✅ Implemented
 
-## **4\. Data Flow Example**
+### 🔹 Client Methods (PlayerT.java)
+#### Public void connectToServer();
+Purpose: Establish socket connection to server
 
-**1️⃣ Player 1 clicks a button → Calls `sendButtonNum()` to send move to server.**
- **2️⃣ Server processes move → Updates board and sends the move to Player 2\.**
- **3️⃣ Player 2 receives the move → Calls `receiveButtonNum()` and updates UI.**
- **4️⃣ Player 2 takes a turn → Sends move back to the server.**
- **5️⃣ Process repeats until max turns are reached.**
+Behavior: Opens socket at port 30000, receives player ID
+
+Called by: Client UI on startup
+
+Status: ✅ Implemented
+
+#### public void sendButtonNum(String strBNum);
+Purpose: Sends player move to server
+
+Parameters: strBNum – move as string
+
+Behavior: Writes to DataOutputStream
+
+Status: 🟡 Stubbed – behavior depends on finalized GUI/button interface
+
+#### public String receiveButtonNum();
+Purpose: Receives opponent move from server
+
+Returns: Opponent's move string
+
+Behavior: Reads from DataInputStream
+
+Status: 🟡 Stubbed – structure may change once board sync is finalized
+
+#### public void closeConnection();
+Purpose: Ends connection cleanly
+
+Behavior: Closes socket
+
+Status: ✅ Implemented
+
+### Player Profile / Backend Access (PlayerDatabase.java)
+   These functions are not part of the direct client-server protocol, but are used by the server to manage persistent player data.
+
+They may be exposed to other components (like GUI or matchmaking) through future APIs.
+
+#### public boolean addPlayer(PlayerData pd);
+Adds new player to database
+
+Returns true on success
+
+#### public boolean removePlayer(String username);
+Removes player by username
+
+Returns true if found and removed
+
+#### public boolean playerExists(String username);
+Returns true if player is in DB
+
+#### public PlayerData getPlayer(String username);
+Returns PlayerData object for given user
+
+#### public List<PlayerData> getTopTenPlayers();
+Returns top 10 players by ELO rating
+
+#### public int size();
+Returns number of players in the DB
+
+## Data Flow Example
+
+   1️⃣ Player 1 clicks button → `sendButtonNum()`  
+   2️⃣ Server receives move → `processGameLogicP1()`  
+   3️⃣ Server updates game state → `send2dCharArray()` → Player 2  
+   4️⃣ Player 2 receives update → `receiveButtonNum()`  
+   5️⃣ Repeat until `checkWinner()` returns true
+
+## Notes & Integration Planning
+   Stubbed methods will be gradually updated based on GUI/game logic input.
+
+PlayerDatabase is expected to be integrated in P4 or used for leaderboard/matchmaking hooks.
+
+Diagrams in the flowchart doc supplement this API for external teams.
+
+Some client-server behavior may move to a SessionManager class later – TBD.
+
