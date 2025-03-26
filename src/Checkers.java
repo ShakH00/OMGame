@@ -10,11 +10,13 @@ public class Checkers{
     private GameRules gameRules;
     
     public void move(Piece piece, Array[][] board){
-
+        
+    
     }
 
     public bool isValidMove(Piece piece){
 
+        return false;
     }
 
     public void jumpMove(Piece piece, Array[][] board){
