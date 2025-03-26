@@ -297,12 +297,18 @@ h1 {
 }
 
 .header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 15px 40px;
-	background-color: #ff5eac;
-	color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background-color: #ff5eac;
+    color: white;
+    box-sizing: border-box;
+    z-index: 1000;
 }
 
 .header-left {
@@ -368,7 +374,7 @@ h1 {
 
 .hero {
 	text-align: center;
-	padding: 120px 30px;
+	padding: 180px 30px 120px;
 	background: linear-gradient(180deg, #1E4165, #0A1C2F);
 }
 
