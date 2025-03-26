@@ -429,7 +429,17 @@ h1 {
 }
 
 .vision-div {
-	background-color: #4CAF50;
+	background-image: url("assets/defaultstars_bg.png");
+	padding: 100px;
+}
+
+.vision-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
 .vision {
