@@ -15,4 +15,14 @@ public class databaseService {
         return null;
     }
 
+    /**
+     * @author Logan Olszak
+     * @return             Returns all players that are currently queueing for a match
+     *
+     * queryPlayerPool returns a list of all players that are currently queued for a match
+     */
+    public static List<Player> queryPlayerPool() {
+        return null;
+    }
+
 }
