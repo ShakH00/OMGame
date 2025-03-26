@@ -2,19 +2,22 @@ import java.util.Scanner;
 
 public class TicTacToe {
     private char[][] board;
+    //private final Board board;
     private char currentPlayer;
 
     public TicTacToe() {
+        //Board board = new char(Board(GameType.TICTACTOE));
         board = new char[3][3];
         currentPlayer = 'X';
         initializeBoard();
     }
 
     private void initializeBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
+        for (int rows = 0; rows < 3; rows++) {
+            for (int columns = 0; columns < 3; columns++) {
+                board[rows][columns] = '-';
             }
+            Board board1 = new Board(GameType.TICTACTOE);
         }
     }
 
