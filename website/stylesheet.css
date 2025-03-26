@@ -145,6 +145,29 @@ h1 {
 	}
 }
 
+@keyframes bounceShadow {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+.chat-button.bouncing {
+  animation: bounceShadow 0.8s infinite;
+}
+
+#popupBox.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#overlay.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
 .overlay {
 	position: fixed;
 	top: 0;
@@ -300,9 +323,9 @@ h1 {
     color: white;
     text-decoration: none;
     position: relative;
-	transition: color 0.2s;
 	padding: 10px 30px 10px 30px;
     border-radius: 50px;
+    transition: background-color 0.3s;
 }
 
 .header-center a:hover {
@@ -340,4 +363,106 @@ h1 {
 
 .login-btn:hover {
     background-color: #ff0000;
+}
+
+
+.hero {
+	text-align: center;
+	padding: 120px 30px;
+	background: linear-gradient(180deg, #1E4165, #0A1C2F);
+}
+
+.hero h1 {
+	font-size: 4rem;
+	margin-bottom: 20px;
+	color: white;
+}
+
+.hero p {
+	font-size: 1.3rem;
+	max-width: 600px;
+	margin: auto;
+	margin-bottom: 40px;
+	color: white;
+}
+
+.hero a {
+	background-color: #fff;
+	color: #111;
+	padding: 12px 30px;
+	border-radius: 50px;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	display: inline-block;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hero a:hover {
+	transform: scale(1.1);
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vision-div {
+	background-color: #4CAF50;
+}
+
+.vision {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section h2, .vision h2 {
+	font-size: 2.5rem;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.section p, .vision p {
+	font-size: 1.1rem;
+	line-height: 1.8;
+	text-align: center;
+}
+
+.features-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 30px;
+	margin-top: 60px;
+}
+
+.feature-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.feature-card:hover {
+	/*cursor: pointer;*/
+	transform: scale(1.03);
+}
+
+.feature-card h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}
+
+.footer {
+	background-color: #222;
+	padding: 30px;
+	text-align: center;
+	font-size: 0.9rem;
+	color: #aaa;
 }

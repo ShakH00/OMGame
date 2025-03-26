@@ -10,7 +10,7 @@
     <body>
         <div class="header">
 
-            <div class="header-left"><img src="/diagrams/gui/assets/sprites/tetrisCatIcon.png"/> OMG</div>
+            <div class="header-left"><img style="height: auto; width: 35px" src="/diagrams/gui/assets/sprites/tetrisCatIcon.png"/></div>
             <div class="header-center">
                 <a href="#">Home</a>
                 <a href="#">Help</a>
@@ -21,9 +21,6 @@
                 <a href="#" class="login-btn">Login</a>
             </div>
         </div>
-
-
-        <h1>OMG</h1>
 
         <button class="chat-button" id="chatToggle">💬</button>
         <div class="chat-popup" id="chatPopup">
@@ -53,55 +50,109 @@
             </div>
         </div>
 
+
+        <div class="hero">
+            <h1>Build. Play. Compete.</h1>
+            <p>Join OMG — the ultimate online multiplayer board game platform. Connect with friends, discover new games, and rise through the leaderboards.</p>
+            <a href="#">Get Started</a>
+        </div>
+
+        <div class="vision-div">
+            <div class="vision">
+                <h2>Our Vision</h2>
+                <p>We are thrilled to invite you to join the next big multiplayer game platform, Online Multiplayer board Game platform (OMG). This is our dream of creating something akin to Steam, but focused on multiplayer board games and community interaction. Our vision is grand: a platform where players can login, create profiles, join matches, track their game history, and rise through the leaderboard rankings. We believe this project will set the stage for a vibrant multiplayer community where users can discover new games, challenge friends, and engage in competitive play across all genres.</p>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Smart Matchmaking</h3>
+                    <p>Seamless matchmaking, even under heavy load. Find opponents in seconds and jump right into the action.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Player Profiles</h3>
+                    <p>Track your history, stats, and favorite games. Customize your profile and show off your achievements.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Dynamic Leaderboards</h3>
+                    <p>Compete against the best. Climb the ranks and see how you stack up across multiple games.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Community Hub</h3>
+                    <p>Challenge friends, join discussions, and stay connected with a thriving player community.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            &copy; 2025 OMG Platform | Created by dreamers, for players. | Contact us at contact@omgame.club
+        </div>
+
         <script>
             window.onload = function() {
                 document.getElementById('popupBox').classList.add('show');
                 document.getElementById('overlay').classList.add('show');
+
+                const chatButton = document.getElementById('chatToggle');
+                chatButton.classList.add('bouncing');
+                setTimeout(() => {
+                    chatButton.classList.remove('bouncing');
+                }, 5000);
             };
 
             function closePopup() {
-                document.getElementById('popupBox').classList.remove('show');
-                document.getElementById('overlay').classList.remove('show');
-            }
+                const popupBox = document.getElementById('popupBox');
+                const overlay = document.getElementById('overlay');
 
-const chatToggle = document.getElementById('chatToggle');
-        const chatPopup = document.getElementById('chatPopup');
-        const chatBody = document.getElementById('chatBody');
-        const chatInput = document.getElementById('chatInput');
-
-        chatToggle.addEventListener('click', () => {
-            chatPopup.classList.toggle('show');
-        });
-
-        function closeChat() {
-            chatPopup.classList.remove('show');
-        }
-
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message !== '') {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('chat-message', 'user');
-                messageDiv.textContent = message;
-                chatBody.appendChild(messageDiv);
-                chatBody.scrollTop = chatBody.scrollHeight;
-                chatInput.value = '';
+                popupBox.classList.add('fade-out');
+                overlay.classList.add('fade-out');
 
                 setTimeout(() => {
-                    const botReply = document.createElement('div');
-                    botReply.classList.add('chat-message', 'bot');
-                    botReply.textContent = "Thanks for asking! We'll get back to you soon. 😊";
-                    chatBody.appendChild(botReply);
-                    chatBody.scrollTop = chatBody.scrollHeight;
-                }, 1000);
+                    popupBox.remove();
+                    overlay.remove();
+                }, 500);
             }
-        }
 
-        chatInput.addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                sendMessage();
+            const chatToggle = document.getElementById('chatToggle');
+            const chatPopup = document.getElementById('chatPopup');
+            const chatBody = document.getElementById('chatBody');
+            const chatInput = document.getElementById('chatInput');
+
+            chatToggle.addEventListener('click', () => {
+                chatPopup.classList.toggle('show');
+            });
+
+            function closeChat() {
+                chatPopup.classList.remove('show');
             }
-        });
+
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message !== '') {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('chat-message', 'user');
+                    messageDiv.textContent = message;
+                    chatBody.appendChild(messageDiv);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    chatInput.value = '';
+
+                    setTimeout(() => {
+                        const botReply = document.createElement('div');
+                        botReply.classList.add('chat-message', 'bot');
+                        botReply.innerHTML = 'Thanks for reaching out! Our chat is currently in development.<br><br> Please email support at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> 😊';
+                        chatBody.appendChild(botReply);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+
+            chatInput.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                  sendMessage();
+                }
+            });
         </script>
     </body>
 </html>
