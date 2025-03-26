@@ -1,8 +1,15 @@
 public class Checkers{
+    private Player player1;
+    private Player player2;
+    private int score;
+    private Piece[] capturedP1;
+    private Piece[] captruedP2;
+    private Piece selectedPiece;
+    private Board board;
+    private GameState gameState;
+    private GameRules gameRules;
     
-    
-    
-    public void move(Piece piece){
+    public void move(Piece piece, Array[][] board){
 
     }
 
@@ -10,11 +17,11 @@ public class Checkers{
 
     }
 
-    public void jumpMove(){
+    public void jumpMove(Piece piece, Array[][] board){
 
     }
 
-    public void checkWinCondition(){
+    public void checkWinCondition(GameState gameState){
 
     }
 
