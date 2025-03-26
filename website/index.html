@@ -9,7 +9,6 @@
 
     <body>
         <div class="header">
-
             <div class="header-left"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></div>
             <div class="header-center">
                 <a href="#">Home</a>
@@ -20,6 +19,10 @@
                 <a href="#" class="signup-btn">Sign up</a>
                 <a href="#" class="login-btn">Login</a>
             </div>
+        </div>
+
+        <div class="scroll-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
         </div>
 
         <button class="chat-button" id="chatToggle">💬</button>
@@ -91,6 +94,17 @@
         </div>
 
         <script>
+            window.onscroll = function () {
+                scrollBar();
+            };
+
+            function scrollBar() {
+                var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById("scrollBar").style.width = scrolled + "%";
+            }
+
             window.onload = function() {
                 document.getElementById('popupBox').classList.add('show');
                 document.getElementById('overlay').classList.add('show');
