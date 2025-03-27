@@ -1,79 +1,187 @@
-# Networking System - Function Explanations (Simplified for other Teams) #
-**See suggestions in `apiDocumentation.md` and discuss with other teams for suggestions**
+## Networking System – Code Behavior & Structure (P3 Edition)
+## Iteration: P3
+## Audience: Internal developers, integration teams (GUI/Game Logic), testing/support
+## Purpose: Explain networking system logic and responsibilities without requiring deep code inspection
 
+## 1. System Overview
 
-## **1. Overview**
-This document is intended to help external teams **understand the networking system** without needing to dive deep into the code. It provides a **clear and simplified explanation** of how key functions work, how they interact, and their role in the multiplayer game system. If you need an in-depth look at the technical implementation, refer to the API documentation.
+### The networking system manages:
 
----
+- Real-time client-server communication
 
-## **2. How the System Works (Simplified Breakdown)**
-1️⃣ **Players connect to the server** → The server assigns them Player 1 or Player 2.
-2️⃣ **Players take turns making moves** → Each move is sent to the server.
-3️⃣ **Server updates the game board** → The updated board is sent to both players.
-4️⃣ **Opponent sees the move and takes their turn** → This cycle continues until the game ends.
-5️⃣ **Game checks for a winner or tie** → If conditions are met, the game ends.
+- Player session management
 
-This process is handled by **two key components**: the **Game Server** and the **Player Client**. Below is a breakdown of their most important functions.
+- Turn-based move validation
 
----
+- Synchronized game state transmission
 
-## **3. Server Functions (GameServerT.java)**
+#### It uses:
 
-### **🔹 acceptConnections()**
-- **What it does:** Waits for two players to connect.
-- **Why it matters:** The game won’t start until both players join.
+- TCP sockets for communication
 
-### **🔹 sendButtonNum(String buttonNum)**
-- **What it does:** Sends the player's move to the opponent.
-- **Why it matters:** Keeps both players updated in real time.
+- Custom logic per player (via ServerSideConnection)
 
-### **🔹 send2dCharArray()**
-- **What it does:** Sends the updated game board to both players.
-- **Why it matters:** Ensures both players see the same game state.
+- Internal 2D board state (char[][]) shared across clients
 
-### **🔹 processGameLogicP1(String input) & processGameLogicP2(String input)**
-- **What they do:** Update the game board based on Player 1 and Player 2’s moves.
-- **Why they matter:** Ensure valid moves are processed and stored correctly.
+- A planned expansion into player data management via PlayerData & PlayerDatabase
 
----
+#### The system consists of four core classes:
 
-## **4. Client Functions (PlayerT.java)**
+- GameServerT – Server logic
 
-### **🔹 connectToServer()**
-- **What it does:** Connects the player to the server.
-- **Why it matters:** A player can't play without a connection.
+- ServerSideConnection – Handles each player’s server-side socket
 
-### **🔹 sendButtonNum(String strBNum)**
-- **What it does:** Sends the clicked button (move) to the server.
-- **Why it matters:** Ensures the player’s move is registered in the game.
+- PlayerT – Client logic
 
-### **🔹 receiveButtonNum()**
-- **What it does:** Receives the opponent’s move from the server.
-- **Why it matters:** Allows the player to see what their opponent did.
+- ClientSideConnection – Client socket handler
 
-### **🔹 updateTurn()**
-- **What it does:** Manages the turn-based system.
-- **Why it matters:** Ensures players take turns correctly.
+## 2. Core Code Behavior
 
-### **🔹 checkWinner()**
-- **What it does:** Checks if the game has ended.
-- **Why it matters:** Determines when the game is over and declares a winner or tie.
+### 🔹 GameServerT.java
 
-### **🔹 closeConnection()**
-- **What it does:** Closes the player’s connection to the server.
-- **Why it matters:** Prevents lingering connections after the game ends.
+#### ✅ acceptConnections()
 
----
+- Listens on port 30000 for 2 players
 
-## **5. Key Takeaways for Other Teams**
-🔹 This system **relies on a client-server model**, where the server **handles game logic and turn management**, while the clients **send moves and update their displays**.
-🔹 **Turn-based interactions** are enforced, meaning only one player can move at a time.
-🔹 **Game state synchronization** ensures both players see the same board at all times.
-🔹 If you are working on other components, (GUI and Game logic teams), this document provides a **high-level understanding** of how to integrate with the existing system.
+- Assigns player1 and player2 as ServerSideConnection instances
 
----
+- Sends unique player IDs (1 or 2)
 
-## **6. Note For Other Teams**
-- Refer to the API documentation for more technical details.
-- The API documentation provides a technical breakdown of function signatures, parameters, and expected behaviors, serving as a developer reference for implementing or modifying networking functions. In contrast, the Networking Function Explanations document is a simplified guide meant for external teams, explaining how the system works at a high level without requiring a deep dive into the code. While the API documentation is used to understand function implementation details, this document helps non-networking teams grasp the overall system flow and interactions to integrate with it effectively.
+- Starts a thread per connection
+
+#### ✅ processGameLogicP1(String input) / processGameLogicP2(String input)
+
+- Parses input as position (e.g., "1,2")
+
+- Updates shared board (server2dChar[][]) with 'X' or 'O'
+
+- Does not currently validate turn order or reject duplicates (relies on game logic to reject)
+
+#### 🟡 sendButtonNum(String buttonNum, int receiverID)
+
+- Sends a move to the opposing player (by ID)
+
+- This is where move relaying occurs
+
+- Currently stubbed — logic to determine target player and send is incomplete
+
+#### 🟡 send2dCharArray(int receiverID)
+
+- Serializes char[][] board and sends it to a client
+
+- Used to sync board between players after a move
+
+- Also stubbed — missing formatting and serialization details
+
+### 🔹 ServerSideConnection.java
+
+#### ✅ run()
+
+- Constantly reads messages from its associated client
+
+- Relays them to GameServerT for logic processing
+
+#### 🟡 sendButtonNum() & send2dCharArray()
+
+- Methods used to send data back to the client (move or board)
+
+- Invoked by GameServerT depending on receiverID
+
+##### 📝 Note: These methods are essential for player-to-player communication. As of P3, they're structured but stubbed — data formatting, transmission, and recovery are pending.
+
+### 🔹 PlayerT.java
+
+#### ✅ connectToServer()
+
+- Connects to localhost:30000
+
+- Receives player ID from server
+
+- Instantiates ClientSideConnection and GUI
+
+#### 🟡 sendButtonNum(String strBNum)
+
+- Sends player move to server via socket
+
+- Assumes input is in valid format (string index or coordinate)
+
+- Needs stronger failure handling
+
+#### 🟡 receiveButtonNum()
+
+- Reads move from server
+
+- Updates local GUI accordingly (not yet tied into full UI system)
+
+#### ✅ closeConnection()
+
+- Closes socket cleanly
+
+### 🔹 ClientSideConnection.java
+
+#### ✅ run()
+
+- Waits for input from server (opponent move or game update)
+
+- Passes it to the GUI via PlayerT methods
+
+#### 🟡 sendButtonNum() / receiveButtonNum()
+
+- These mirror the server-side methods
+
+- Function as socket send/receive wrappers
+
+- Implementation is minimal but foundational
+
+### 🔹 PlayerData.java and PlayerDatabase.java (Internal Modules)
+
+- Used by server only (not part of client-server messages yet)
+
+- Stores player usernames, ELO, and other stats
+
+- May be used for matchmaking, leaderboards, or profiles in later phases
+
+## Interaction Flow Summary
+
+- PlayerT connects to server → receives ID
+- Player clicks button → PlayerT.sendButtonNum()
+- ClientSideConnection sends move to server
+- ServerSideConnection receives move
+- GameServerT processes move → updates board
+- GameServerT relays move to opponent
+- Opponent’s PlayerT receives move → updates UI
+- Repeat until game ends
+
+### 📝 Note: Disconnection, timeout, and invalid move handling are discussed in error_handling_ideas.md.
+
+## 4. Integration Considerations for Other Teams
+
+### GUI Team:
+
+- Ensure buttons trigger sendButtonNum() in PlayerT
+
+- Hook up board updates to output of receiveButtonNum()
+
+- Handle “waiting for opponent…” states
+
+### Game Logic Team:
+
+- Clarify where move validation should occur (currently inside GameServerT.processGameLogic)
+
+- Share format for move strings (e.g., "2,3")
+
+### Database/Profiles:
+
+- If player identity becomes persistent, tie PlayerData to login/connection
+
+- Decide whether PlayerDatabase is memory-only or file-backed
+
+## 5. Stub Status Overview
+| Function             | File                        | Status      |
+|----------------------|-----------------------------|-------------|
+| sendButtonNum(...)   | GameServerT.java            | 🟡 Stubbed  |
+| send2dCharArray(...) | GameServerT.java            | 🟡 Stubbed  |
+| receiveButtonNum()   | PlayerT.java                | 🟡 Stubbed  |
+| sendButtonNum()      | PlayerT.java                | 🟡 Stubbed  |
+| run()                | ClientSideConnection.java   | 🟡 Stubbed  |
+| run()                | ServerSideConnection.java	  | 🟡 Stubbed  |
