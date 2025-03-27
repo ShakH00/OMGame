@@ -1,0 +1,8 @@
+.hoverButton {
+    -fx-transition: all 0.3s ease;
+}
+
+.hoverButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
