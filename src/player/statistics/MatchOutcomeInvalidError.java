@@ -1,4 +1,4 @@
-package game;
+package player.statistics;
 
 public class MatchOutcomeInvalidError extends Exception {
     public MatchOutcomeInvalidError(){}

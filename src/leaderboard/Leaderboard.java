@@ -2,7 +2,7 @@ package leaderboard;
 
 import game.GamesEnum;
 import player.Account;
-import player.GameStatistics;
+import player.statistics.GameStatistics;
 import database.databaseService;
 
 import java.util.ArrayList;

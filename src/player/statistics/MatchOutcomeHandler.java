@@ -1,7 +1,7 @@
-package game;
+package player.statistics;
 
+import game.GamesEnum;
 import player.Player;
-import player.StatisticsEnum;
 
 import java.util.HashMap;
 
@@ -21,15 +21,15 @@ public class MatchOutcomeHandler {
      * @throws MatchOutcomeInvalidError Error thrown if the Match Outcome is malformed and cannot be processed
      */
     public static void RecordMatchOutcome(GamesEnum game, int matchID,
-                        Player player1, HashMap<StatisticsEnum, Integer> player1Results,
-                        Player player2, HashMap<StatisticsEnum, Integer> player2Results)
+                                          Player player1, HashMap<StatisticsEnum, Integer> player1Results,
+                                          Player player2, HashMap<StatisticsEnum, Integer> player2Results)
                         throws MatchOutcomeInvalidError
     {
         // if the Player Statistics fields are not malformed, update PlayerStatistics and log match in Player match histories
-        if (matchOutcomeIsValid(player1, player1Results, player2, player2Results)){
+        if (matchOutcomeIsValid(game, player1, player1Results, player2, player2Results)){
             // Update statistics for both Players
-            player1.updateStatistics(player1Results);
-            player2.updateStatistics(player2Results);
+            player1.updateStatistics(game, player1Results);
+            player2.updateStatistics(game, player2Results);
 
             // Add a String[] representation of the match outcome to both players' accounts
             player1.logMatch(composeMatchLog(game, player1Results, player2, matchID));
@@ -42,9 +42,12 @@ public class MatchOutcomeHandler {
      * @return                          true if the Players exist and the results are well-formed
      * @throws MatchOutcomeInvalidError if the match outcome is not created properly
      */
-    private static boolean matchOutcomeIsValid(Player player1, HashMap<StatisticsEnum, Integer> player1Results,
-                                        Player player2, HashMap<StatisticsEnum, Integer> player2Results)
-                                        throws MatchOutcomeInvalidError
+    private static boolean matchOutcomeIsValid( GamesEnum game,
+                                                Player player1,
+                                                HashMap<StatisticsEnum, Integer> player1Results,
+                                                Player player2,
+                                                HashMap<StatisticsEnum, Integer> player2Results)
+                                                throws MatchOutcomeInvalidError
     {
         if (player1 == null || player2 == null){
             throw new MatchOutcomeInvalidError("A match must have two players."); }

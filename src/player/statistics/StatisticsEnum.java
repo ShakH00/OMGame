@@ -1,4 +1,4 @@
-package player;
+package player.statistics;
 
 /**
  * Enum for statistics that must be tracked by each game.
@@ -26,6 +26,9 @@ public enum StatisticsEnum {
     CHECKS,
     CHECKMATES,
     PIECES_PROMOTED,
+
+    // Chess only
+    MULTI_CAPTURES, // when a player captures multiple pieces in one turn
 
     // Tic-Tac-Toe, Connect 4 only
     WINS_BLOCKED    // e.g. P1 has three red pieces in a line, and P2 places a yellow which blocks P1's potential win
