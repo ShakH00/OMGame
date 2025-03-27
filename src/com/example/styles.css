@@ -1,15 +1,13 @@
+
 /* Main style for the win screen */
 .root {
-    -fx-font-family: "Monospace";
+    -fx-font-family: "Press Start 2P";
 }
 
 /* Background style for the win screen */
 #winScreenRoot {
     -fx-background-color: #55AAFF;
-
-    /* Using the correct singular filename: cloud.png */
     -fx-background-image: url("images/cloud.png");
-
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
@@ -20,19 +18,19 @@
     -fx-fill: #FFD700;
     -fx-font-size: 48px;
     -fx-font-weight: bold;
-    -fx-font-family: "Monospace";
+    -fx-font-family: 'PressStart2P', monospace;
 }
 
 /* Style for buttons */
 .game-button {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: #A0B1C9;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-font-family: "Monospace";
+    -fx-font-family: 'PressStart2P', monospace;
     -fx-padding: 10px 20px;
 }
 
 .game-button:hover {
     -fx-text-fill: #FFD700;
-}
+}}
