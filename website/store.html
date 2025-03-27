@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Store | Online Multiplayer Games - OMG</title>
+        <link rel="stylesheet" href="store.css">
+        <link rel="stylesheet" href="all.css">
+        <link rel="shortcut icon" type="image/png" href="assets/tetrisCatIcon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="header-left"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></div>
+            <div class="header-center">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="#" class="signup-btn">Sign up</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </div>
+
+        <div class="scroll-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
+        </div>
+
+        <button class="chat-button" id="chatToggle">💬</button>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                Chat Support
+                <button class="chat-close-btn" onclick="closeChat()">×</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot">Hi i'm TetrisCat!</div>
+                <div class="chat-message bot">We are currently developing our chat feature.</div>
+                <div class="chat-message bot">Please contact support by email at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> 😊</div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask me a question..." />
+                <button onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
