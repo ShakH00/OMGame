@@ -9,8 +9,12 @@ public class Checkers{
     private GameState gameState;
     private GameRules gameRules;
     
-    public void move(Piece piece, Array[][] board){
-        
+    public void move(Piece piece, int newX, int newY){
+        int currentX = Piece.x;
+        int currentY = Piece.y;
+
+        Piece.x = newX;
+        Piece.y = newY;
     
     }
 
