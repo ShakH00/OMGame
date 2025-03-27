@@ -1,5 +1,6 @@
 package matchmaking;
 
+import game.GamesEnum;
 import player.*;
 
 import java.util.ArrayList;

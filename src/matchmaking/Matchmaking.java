@@ -1,4 +1,10 @@
 package matchmaking;
+
+import player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Matchmaking {
 
     /**
@@ -20,7 +26,7 @@ public class Matchmaking {
      */
 
     public double calculateExpectedScore(double ratingA, double ratingB) {
-
+        return 0;
     }
 
     /**
