@@ -5,9 +5,13 @@ import player.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 public class PrivateMatch {
     private int roomID;
     private List<Player> players = new ArrayList<>();
+
+    String possibleIDCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     //FUNCTIONS TO ADD:
     //Host select game
     //Host start match
@@ -18,7 +22,8 @@ public class PrivateMatch {
      */
     public PrivateMatch() {
         //establish a unique room ID
-        //ensure no duplicates by comparing ID to all other matches stored in database
+        String potentialID = generateRandomID();
+        //ensure no duplicates by comparing ID to all other private matches stored in database
     }
 
     /**
@@ -37,5 +42,19 @@ public class PrivateMatch {
     public void hostStartGame() {
         //checks that there are two players in the private match
         //start the match when this function is called
+    }
+
+    /**
+     * @author Logan Olszak
+     * generateRandomID is a function that generates a random 6 character room ID using characters A-Z and 0-9
+     */
+    public String generateRandomID() {
+        StringBuilder idString = new StringBuilder ();
+        Random rand =new Random();
+        for (int i = 0; i < 6; i++) {
+            int randIndex=rand.nextInt(possibleIDCharacters.length());
+            idString.append(possibleIDCharacters.charAt(randIndex));
+        }
+        return idString.toString();
     }
 }
