@@ -22,4 +22,12 @@ public class Player {
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
 
     }
+
+    /**
+     * Get the Account that is associated with this Player
+     * @return  Account that is associated with this Player
+     */
+    public Account getAccount(){
+        return account;
+    }
 }

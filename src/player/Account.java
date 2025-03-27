@@ -53,6 +53,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
+        statistics.put(GamesEnum.CHESS, new GameStatistics());
+        statistics.put(GamesEnum.CHECKERS, new GameStatistics());
+        statistics.put(GamesEnum.CONNECT4, new GameStatistics());
+        statistics.put(GamesEnum.TICTACTOE, new GameStatistics());
         this.matchHistory = new ArrayList<>();
     }
 
@@ -74,6 +78,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
+        statistics.put(GamesEnum.CHESS, new GameStatistics());
+        statistics.put(GamesEnum.CHECKERS, new GameStatistics());
+        statistics.put(GamesEnum.CONNECT4, new GameStatistics());
+        statistics.put(GamesEnum.TICTACTOE, new GameStatistics());
         this.matchHistory = new ArrayList<>();
     }
 
@@ -92,5 +100,41 @@ public class Account {
         this.email = email;
         this.password = password;
         this.friends = new ArrayList<>();
+    }
+
+    /**
+     * Get a reference to this Account's GameStatistics object for a specific game
+     * @param game  GamesEnum for which game to retrieve statistics for
+     * @return      GameStatistics object that contains the Account's statistics for a game
+     */
+    public GameStatistics getGameStatistics(GamesEnum game){
+        return statistics.get(game);
+    }
+
+    public GameStatistics getCombinedStatistics(){
+        GameStatistics combinedStatistics = new GameStatistics();
+        for (GameStatistics gameStatistics; statistics.values()){
+            combinedStatistics.
+        }
+    }
+
+    public boolean getIsGuest(){
+        return isGuest;
+    }
+
+    /**
+     * Return the username of the Account, or "Guest" if it is a guest account
+     * @return  String username of the Account
+     */
+    public String getUsername(){
+        return isGuest ? "Guest" : username;
+    }
+
+    /**
+     * Return the ID of the Account, or "-1" if it is a guest account
+     * @return  int ID of the Account
+     */
+    public int getID(){
+        return isGuest ? -1 : id;
     }
 }
