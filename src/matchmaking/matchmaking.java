@@ -1,3 +1,4 @@
+package matchmaking;
 public class matchmaking {
 
     /**
@@ -47,12 +48,11 @@ public class matchmaking {
     }
 
     /**
+     * @author Logan Olszak
      * @param player     Player object to add to the playerPool
      * @param playerPool List of player objects that are currently queued
      * @return Returns all accounts that are currently queueing for a match
-     * <p>
      * joinQueue adds a given player object into the list of player objects that are queued for a match
-     * @author Logan Olszak
      */
     public void joinQueue(Player player, ArrayList<Player> playerPool) {
     }
