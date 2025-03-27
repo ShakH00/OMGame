@@ -1,0 +1,238 @@
+#popupBox.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#overlay.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.5s ease;
+	z-index: 12;
+}
+
+.overlay.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+.container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) translateY(50px);
+	opacity: 0;
+	transition: all 0.5s ease;
+	z-index: 13;
+}
+
+.contact-box {
+	background-color: #fff;
+	padding: 40px 30px 30px;
+	border-radius: 25px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	max-width: 400px;
+	position: relative;
+}
+
+.contact-box p {
+	font-size: 1.3rem;
+	color: #333;
+	margin: 10px 0;
+}
+
+.popup-tetriscat {
+	height: auto;
+	width: 200px;
+	rotate: 25deg;
+	z-index: -1;
+	top: -160px;
+	left: 360px;
+	position: fixed;
+	display: flex;
+}
+
+.email-link {
+	color: #ff5eac;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.email-link:hover {
+	text-decoration: underline;
+}
+
+.heart {
+	color: #ff5eac;
+	font-size: 1.5rem;
+}
+
+.close-btn {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	background: transparent;
+	border: none;
+	font-size: 2.5rem;
+	cursor: pointer;
+	color: #ff5eac;
+	transition: transform 0.2s;
+}
+
+.close-btn:hover {
+	transform: scale(1.2);
+}
+
+.container.show {
+	opacity: 1;
+	transform: translate(-50%, -50%) translateY(0);
+}
+
+@keyframes wiggleBounce {
+	0%, 100% {
+		transform: rotate(-18deg) scaleX(1) translateY(0px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	}
+	20% {
+		transform: rotate(-12deg) scaleX(0.95) translateY(-4px);
+		box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+	}
+	40% {
+		transform: rotate(-20deg) scaleX(1.05) translateY(3px);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	}
+	60% {
+		transform: rotate(-15deg) scaleX(0.97) translateY(-2px);
+		box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+	}
+	80% {
+		transform: rotate(-19deg) scaleX(1.03) translateY(2px);
+		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.18);
+	}
+}
+
+.sos-box {
+	position: absolute;
+	top: -15px;
+	left: -15px;
+	background-color: #4CAF50;
+	color: white;
+	padding: 5px 12px;
+	border-radius: 8px;
+	font-weight: bold;
+	font-size: 1.2rem;
+	animation: wiggleBounce 1.2s infinite ease-in-out;
+	transform-origin: center;
+}
+
+.hero {
+	text-align: center;
+	padding: 180px 30px 120px;
+	background: linear-gradient(180deg, #1E4165, #0A1C2F);
+}
+
+.hero h1 {
+	font-size: 4rem;
+	margin-bottom: 20px;
+	color: white;
+}
+
+.hero p {
+	font-size: 1.3rem;
+	max-width: 600px;
+	margin: auto;
+	margin-bottom: 40px;
+	color: white;
+}
+
+.hero a {
+	background-color: #fff;
+	color: #111;
+	padding: 12px 30px;
+	border-radius: 50px;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	display: inline-block;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hero a:hover {
+	transform: scale(1.1);
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vision-div {
+	background-image: url("assets/defaultstars_bg.png");
+	padding: 100px;
+}
+
+.vision-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.vision {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section h2, .vision h2 {
+	font-size: 2.5rem;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.section p, .vision p {
+	font-size: 1.1rem;
+	line-height: 1.8;
+	text-align: center;
+}
+
+.features-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 30px;
+	margin-top: 60px;
+}
+
+.feature-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.feature-card:hover {
+	/*cursor: pointer;*/
+	transform: scale(1.03);
+}
+
+.feature-card h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}
