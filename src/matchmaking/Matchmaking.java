@@ -1,5 +1,5 @@
 package matchmaking;
-public class matchmaking {
+public class Matchmaking {
 
     /**
      * Updates players rating after match as we discussed in planning document

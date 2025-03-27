@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class leaderboard {
+public class Leaderboard {
 
     /**
      * @param games,                Game to sort by

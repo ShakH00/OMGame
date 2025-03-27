@@ -2,10 +2,9 @@ package matchmaking;
 
 import player.*;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-public class privateMatch {
+public class PrivateMatch {
     private int roomID;
     private List<Player> players = new ArrayList<>();
     //FUNCTIONS TO ADD:
@@ -16,7 +15,7 @@ public class privateMatch {
      * @author Logan Olszak
      * privateMatch is an initilizing function that assigns the new match with a unique room ID
      */
-    public privateMatch() {
+    public PrivateMatch() {
         //establish a unique room ID
         //ensure no duplicates by comparing ID to all other matches stored in database
     }

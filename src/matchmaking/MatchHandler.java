@@ -1,8 +1,6 @@
 package matchmaking;
 
-import matchmaking.privateMatch;
-
-public class matchHandler {
+public class MatchHandler {
 
 
     /**
@@ -11,7 +9,7 @@ public class matchHandler {
      * @return          returns the new privateMatch object
      * createPrivateMatch is a method that initializes a new privateMatch object
      */
-    public privateMatch createPrivateMatch(Player host) {
+    public PrivateMatch createPrivateMatch(Player host) {
         return null;
     }
 
