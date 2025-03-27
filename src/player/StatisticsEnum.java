@@ -1,8 +1,9 @@
 package player;
 
 /**
- * Enum for statistics that must be tracked by each game
- * It is expected that the results hashmaps used to initialize a MatchOutcome object contain all relevant statistics
+ * Enum for statistics that must be tracked by each game.
+ * When a match is complete, it should be logged using MatchOutcomeHandler with results HashMaps that contain all statistics
+ * that are related to the specific game, as described in the comments of this class.
  */
 public enum StatisticsEnum {
     // All games

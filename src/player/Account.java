@@ -3,7 +3,7 @@ package player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import game.GamesEnum;
-import game.MatchOutcome;
+import game.MatchOutcomeHandler;
 
 public class Account {
     /**
@@ -37,7 +37,7 @@ public class Account {
     private ArrayList<Account> friends;
 
     private final HashMap<GamesEnum, GameStatistics> statistics;
-    private final ArrayList<MatchOutcome> matchHistory;
+    private final ArrayList<MatchOutcomeHandler> matchHistory;
 
     /**
      * Initialize a guest Account

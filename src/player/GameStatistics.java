@@ -1,6 +1,6 @@
 package player;
 
-import game.MatchOutcome;
+import game.MatchOutcomeHandler;
 
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ public class GameStatistics {
         this.elo = 100;       // TODO: Set this to the correct default value
     }
 
-    public updateWithMatchOutcome(MatchOutcome matchOutcome){
+    public updateWithMatchOutcome(MatchOutcomeHandler matchOutcome){
 
     }
 
