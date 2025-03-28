@@ -29,6 +29,10 @@ public class Board{
         board = new Piece[rows][cols];
     }
 
+    public Piece[][] getBoardState(){
+        return board;
+    }
+
     /* IGNORE THIS, FOR TICTACTOE
 
     public Piece getCell(int rows, int cols) {

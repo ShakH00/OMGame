@@ -3,53 +3,75 @@ public class Checkers{
     private Player player2;
     private int score;
     private Piece[] capturedP1;
-    private Piece[] captruedP2;
+    private Piece[] capturedP2;
     private Piece selectedPiece;
     private Board board;
     private GameState gameState;
     private GameRules gameRules;
     
     public void move(CheckersPiece piece, int newX, int newY){
-        int currentX = piece.getX();
+    /*  int currentX = piece.getX();
         int currentY = piece.getY();
 
         piece.setX(newX);
         piece.setY(newY);
+    */
     }
 
     /**
      * [!] Should we consider a draw occurring when players repeat move? (TBD later)
+     * [!] NOT COMPLETE NEED TO CHECK CAPTURE VALUES
      * 
-     *
      */
-    public boolean isValidMove(int x, int y, int newX, int newY, Board board){
+    public boolean isValidMove(int x, int y, int newX, int newY, Board gameBoard){
+        Piece[][] board = gameBoard.getBoardState();
+        selectedPiece = board[x][y];
+        
         // Check if move is within bounds
         if(newX < 0 || newY > 7){
-        return false;
+        return false;       // Move out of bounds
         }
 
         // Check destination is empty
         if(board[newX][newY] != null) {
-            reurn false;
+            return false;   // There is a Piece in the new position
         }
 
-        // using col and row diff lets us do captures later. 
+        // using col and row diff to calculate directions. 
         int rowDiff = Math.abs(x-newX);
         int colDiff = Math.abs(y-newY);    
+
         /** 
         * Check row validity. 
         * To move diagonal you must move same # of rows & cols.
         * Can max move 2 spaces if you are capturing.
         */  
         if(rowDiff > 2 || rowDiff != colDiff) {
-            return false; 
+            return false;   /**
+                            * Piece is trying to jump more than 1 space
+                            * Piece is not moving diagonally
+                            */
         }
 
-        // Due to conditions above we know that colomn movement is good.
+        // Since check above is constraints we know that if rowDiff == 1 the piece is only moving 1 tile.
         if(rowDiff == 1){
-            return true;
+            return true;    // Piece is moving 1 space diagonally
         }
 
+        // index of piece inbetween starting position and end of jump
+        int intermediateRow = (x + newX)/2;
+        int intermediateCol = (y + newY)/2;
+        Piece intermediatePiece = board[intermediateRow][intermediateCol];
+
+        // Verify that the selected piece can capture.
+        if(rowDiff == 2) {
+            if((intermediatePiece == null) || 
+                intermediatePiece.getColour() == selectedPiece.getColour()){
+                return false;   // No Piece to capture
+            }
+            return true;        // Piece to Capture
+        }
+        return false;
     }
 
     public boolean isOccupied(int newX, int newY){
