@@ -23,9 +23,9 @@ public class Checkers{
      * [!] NOT COMPLETE NEED TO CHECK CAPTURE VALUES ~ Adam
      * 
      */
-    public boolean isValidMove(int x, int y, int newX, int newY, Board gameBoard){
+    public boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
         Piece[][] board = gameBoard.getBoardState();
-        selectedPiece = board[x][y];
+        selectedPiece = board[currentX][currentY];
         
         // Check if move is within bounds
         if(newX < 0 || newY > 7){
@@ -38,8 +38,8 @@ public class Checkers{
         }
 
         // using col and row diff to calculate directions. 
-        int rowDiff = Math.abs(x-newX);
-        int colDiff = Math.abs(y-newY);    
+        int rowDiff = Math.abs(currentX-newX);
+        int colDiff = Math.abs(currentY-newY);    
 
         /** 
         * Check row validity. 
@@ -59,8 +59,8 @@ public class Checkers{
         }
 
         // index of piece inbetween starting position and end of jump
-        int intermediateRow = (x + newX)/2;
-        int intermediateCol = (y + newY)/2;
+        int intermediateRow = (currentX + newX)/2;
+        int intermediateCol = (currentY + newY)/2;
         Piece intermediatePiece = board[intermediateRow][intermediateCol];
 
         /**
