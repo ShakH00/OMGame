@@ -1,6 +1,7 @@
 .idea/
 *.iml
 .DS_Store
+TLmeetingNotes.md
 
 # Java .gitignore
 ## from: https://github.com/github/gitignore/blob/main/Java.gitignore
