@@ -1,0 +1,17 @@
+public class ConnectFourMatchMaking extends MatchMaking {
+    private long startingTime;
+    private int findElo;
+    private int increment;
+
+    public void changeElo(int elo) {
+
+    }
+
+    public void increaseRange(int elo) {
+
+    }
+
+    public void findTwoPlayers() {
+
+    }
+}
