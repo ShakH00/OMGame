@@ -17,60 +17,89 @@ public class Checkers{
         piece.setY(newY);
     }
 
-    public boolean isValidMove(Piece piece, int newX, int newY) {
-        int currentX = piece.getX();
-        int currentY = piece.getY();
-    
-        // Check if the destination is within bounds
-        if (!board.isWithinBounds(newX, newY)) {
-            return false;
-        }
-    
-        // Check if the destination square is empty
-        if (board.getPieceAt(newX, newY) != null) {
-            return false;
-        }
-    
-        // Check if the move is diagonal
-        int deltaX = Math.abs(newX - currentX);
-        int deltaY = Math.abs(newY - currentY);
-        if (deltaX != deltaY || deltaX > 2) {
-            return false;
-        }
-    
-        // Check for a simple move (1 square diagonal)
-        if (deltaX == 1) {
-            return true;
-        }
-    
-        // Check for a jump move (2 squares diagonal)
-        if (deltaX == 2) {
-            int midX = (currentX + newX) / 2;
-            int midY = (currentY + newY) / 2;
-            Piece midPiece = board.getPieceAt(midX, midY);
-    
-            // Ensure there's an opponent's piece to jump over
-            if (midPiece != null && midPiece.getPlayer() != piece.getPlayer()) {
-                return true;
-            }
-        }
-    
+    /**
+     * [!] Should we consider a draw occurring when players repeat move? (TBD later)
+     *
+     */
+    public boolean isValidMove(){
         return false;
     }
 
+    public boolean isOccupied(int newX, int newY){
+        return false;
+    }
+
+    /**
+     * Check diagonal of the piece, check if enemy piece, check if the piece diagonal is empty,
+     *
+     */
     public void jumpMove(Piece piece, Board board){
 
     }
 
-    public void checkWinCondition(GameState gameState){
+    public void checkDiagonal(){
 
     }
 
+    /**
+     * Check pieces on the board.
+     * Piece 1 = Player 1, BLACK
+     * Piece 2 = Player 2, RED
+     * If !Piece1Exists then P2 Wins
+     * If !Piece2Exists then P1 Wins.
+     * [!!!] How do we decide colours? Let colour be red/black and GUI do the rest?
+     * board.getCell(x,y) was personal changes since Board.java didnt have a way to fetch any cells.
+     */
+    public void checkWinCondition(){
+        boolean Piece1Exists = false;
+        boolean Piece2Exists = false;
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                Piece piece = board.getCell(i, j);
+                if (piece != null){
+                    if (piece.getColour().equals("BLACK")){
+                        Piece1Exists = true;
+                    }
+                    if (piece.getColour().equals("RED")){
+                        Piece2Exists = true;
+                    }
+                }
+            }
+        }
+        if (!Piece1Exists){
+            gameState = GameState.P2_WIN;
+        }
+        else if (!Piece2Exists){
+            gameState = GameState.P1_WIN;
+        }
+    }
+
+
+    /**
+     *
+     *
+     */
     public void surrender(){
-
+        if (gameState == GameState.P1_TURN){
+            gameState = GameState.P2_WIN;
+        } else if (gameState == GameState.P2_TURN) {
+            gameState = GameState.P1_WIN;
+        }
     }
 
+    /**
+     *
+     *
+     */
     public void matchOutcome(){
-
+        if(gameState == GameState.P1_WIN){
+            System.out.println("Player 1 has won the game!");
+        }
+        else if(gameState == GameState.P2_WIN) {
+            System.out.println("Player 2 has won the game!");
+        }
+        else{
+            System.out.println("The game is ongoing");
+        }
     }
 }
