@@ -1,64 +1,59 @@
 package player.statistics;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
-/**
- * Object that tracks a set of statistics relating to a specific Game for an Account.
- */
-
-public class GameStatistics {
-    // Dynamically updated in response to changes to other stats
-    private int elo;
-
-    // Properties corresponding to statistics in StatisticsEnum for this game that should be updated after each match
-    private int wins;
-    private int losses;
-    private int draws;
+public abstract class GameStatistics {
+    /**
+     * Return an object that contains the combination of some set of other GameStatistics objects
+     * @param setOfGameStatistics   Which GameStatistics objects to include in the combination
+     * @return                      new immutable CombinedStatistics object that contains combined stats
+     */
+    public CombinedStatistics combineStatistics(HashSet<GameStatistics> setOfGameStatistics) {
+        CombinedStatistics combinedStatistics = new CombinedStatistics();
+        for (GameStatistics gameStatistics : setOfGameStatistics){
+            combinedStatistics.addStatistics(gameStatistics.getStatistics());
+        }
+        return combinedStatistics;
+    }
 
     /**
-     * Set of accepted statistics for this game
+     * Check if the statistics in the statistics HashMap can be added to the current statistics
+     * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
+     * @return          True if it is possible to add statistics to the statistics HashMap
      */
-    private final HashSet<StatisticsEnum> acceptedStatistics = new HashSet<>(List.of(StatisticsEnum.values()));
+    public boolean canAddStatistics(HashMap<StatisticsEnum, Integer> statistics) {
+        return this.acceptedStatistics.contains(statistics.keySet());
+    }
 
     /**
-     * Set of statistics that MUST be logged for each match of this game
+     * Add the statistics HashMap to existing statistics
+     * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
      */
-    private final HashSet<HashSet<StatisticsEnum>> requirements = new HashSet<>(List.of(
-            new HashSet<>(List.of(StatisticsEnum.WINS, StatisticsEnum.LOSSES, StatisticsEnum.DRAWS)),
-            new HashSet<>(List.of(StatisticsEnum.NUMBER_OF_TURNS))
-    ));
-
-    public GameStatistics(){
-        this.wins = 0;
-        this.losses = 0;
-        this.draws = 0;
-        this.elo = 100;       // TODO: Set this to the correct default value
+    public void addStatistics(HashMap<StatisticsEnum, Integer> statistics) {
+        if (canAddStatistics(statistics)){
+            for (StatisticsEnum key : statistics.keySet()){
+                Integer currentValue = this.statistics.get(key);
+                Integer addValue = statistics.get(key);
+                this.statistics.put(key, currentValue + addValue);
+            }
+        }
     }
 
-    public updateStatistics(HashMap<>){
+    /**
+     * Get all Statistics in this object
+     * @return          a new HashMap containing all statistics
+     */
+    public HashMap<StatisticsEnum, Integer> getStatistics() {
 
     }
 
-    public int getWins(){
-        return wins;
-    }
+    /**
+     * Get a HashMap containing all Statistics in this object that are included in the filter set
+     * @param filter    HashSet of StatisticsEnums to get
+     * @return          A new HashMap containing the requested statistics
+     */
+    public HashMap<StatisticsEnum, Integer> getStatistics(HashSet<StatisticsEnum> filter) {
 
-    public int getLosses(){
-        return losses;
-    }
-
-    public int getDraws(){
-        return draws;
-    }
-
-    public int getElo(){
-        return elo;
-    }
-
-    public void combine(Collection<GameStatistics> allStatistics){
-        return new GameStatistics()
     }
 }

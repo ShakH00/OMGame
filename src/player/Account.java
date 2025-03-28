@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import game.GamesEnum;
 import player.statistics.MatchOutcomeHandler;
-import player.statistics.GameStatistics;
+import player.statistics.IGameStatistics;
 import player.statistics.StatisticsEnum;
 
 public class Account {
@@ -40,7 +40,7 @@ public class Account {
      */
     private ArrayList<Account> friends;
 
-    private final HashMap<GamesEnum, GameStatistics> statistics;
+    private final HashMap<GamesEnum, IGameStatistics> statistics;
     private final ArrayList<MatchOutcomeHandler> matchHistory;
 
     /**
@@ -57,10 +57,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new GameStatistics());
-        statistics.put(GamesEnum.CHECKERS, new GameStatistics());
-        statistics.put(GamesEnum.CONNECT4, new GameStatistics());
-        statistics.put(GamesEnum.TICTACTOE, new GameStatistics());
+        statistics.put(GamesEnum.CHESS, new IGameStatistics());
+        statistics.put(GamesEnum.CHECKERS, new IGameStatistics());
+        statistics.put(GamesEnum.CONNECT4, new IGameStatistics());
+        statistics.put(GamesEnum.TICTACTOE, new IGameStatistics());
         this.matchHistory = new ArrayList<>();
     }
 
@@ -82,10 +82,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new GameStatistics());
-        statistics.put(GamesEnum.CHECKERS, new GameStatistics());
-        statistics.put(GamesEnum.CONNECT4, new GameStatistics());
-        statistics.put(GamesEnum.TICTACTOE, new GameStatistics());
+        statistics.put(GamesEnum.CHESS, new IGameStatistics());
+        statistics.put(GamesEnum.CHECKERS, new IGameStatistics());
+        statistics.put(GamesEnum.CONNECT4, new IGameStatistics());
+        statistics.put(GamesEnum.TICTACTOE, new IGameStatistics());
         this.matchHistory = new ArrayList<>();
     }
 
