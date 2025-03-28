@@ -1,7 +1,10 @@
 package database;
 
 import player.Account;
+import player.Player;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class databaseService {
 
@@ -21,7 +24,7 @@ public class databaseService {
      *
      * queryPlayerPool returns a list of all players that are currently queued for a match
      */
-    public static List<Player> queryPlayerPool() {
+    public static ArrayList<Player> queryPlayerPool() {
         return null;
     }
 
