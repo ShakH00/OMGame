@@ -1,3 +1,4 @@
+
 public class CheckersMatchMaking extends MatchMaking {
     private long startingTime;
     private int findElo;
