@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Chess</title>
+    <link rel=\"stylesheet\" href=\"https://chessboardjs.com/releases/v1.0.0/css/chessboard-1.0.0.min.css\">
+    <script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>
+    <script src=\"https://chessboardjs.com/releases/v1.0.0/js/chessboard-1.0.0.min.js\"></script>
+    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.0/chess.min.js\"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #222;
+        }
+        .section {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        ul {
+            margin-left: 20px;
+        }
+        #board {
+            width: 400px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Chess Mastery</h1>
+
+    <div class=\"section\">
+        <h2>What is Chess?</h2>
+        <p>Chess is a strategic two-player game played on a checkered board. The goal is to checkmate your opponent's king, meaning the king cannot escape capture.</p>
+    </div>
+
+    <div class=\"section\">
+        <h2>Chess Pieces and Movements</h2>
+        <ul>
+            <li><strong>King:</strong> Moves one square in any direction.</li>
+            <li><strong>Queen:</strong> Moves any number of squares in any direction.</li>
+            <li><strong>Rook:</strong> Moves any number of squares horizontally or vertically.</li>
+            <li><strong>Bishop:</strong> Moves any number of squares diagonally.</li>
+            <li><strong>Knight:</strong> Moves in an \"L\" shape: two squares vertically and one horizontally, or vice versa.</li>
+            <li><strong>Pawn:</strong> Moves forward one square (two on its first move), captures diagonally.</li>
+        </ul>
+    </div>
+
+    <div class=\"section\">
+        <h2>Teach by Playing (Play as White)</h2>
+        <div id=\"board\"></div>
+        <p id=\"status\"></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Chess Mastery. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        var board,
+            game = new Chess();
+
+        function onDragStart (source, piece, position, orientation) {
+            if (game.game_over()) return false;
+            if (piece.search(/^b/) !== -1) return false;
+        }
+
+        function onDrop (source, target) {
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q'
+            });
+
+            if (move === null) return 'snapback';
+
+            updateStatus();
+            window.setTimeout(makeRandomMove, 500);
+        }
+
+        function makeRandomMove () {
+            var possibleMoves = game.moves();
+
+            if (possibleMoves.length === 0) return;
+
+            var randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+            game.move(randomMove);
+            board.position(game.fen());
+            updateStatus();
+        }
+
+        function onSnapEnd () {
+            board.position(game.fen());
+        }
+
+        function updateStatus() {
+            var status = '';
+
+            if (game.in_checkmate()) status = 'Checkmate!';
+            else if (game.in_draw()) status = 'Draw!';
+            else status = 'Your move';
+
+            document.getElementById('status').innerHTML = status;
+        }
+
+        board = Chessboard('board', {
+            draggable: true,
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd,
+            orientation: 'white'
+        });
+
+        updateStatus();
+    </script>
+
+</body>
+</html>
