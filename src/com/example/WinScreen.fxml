@@ -35,12 +35,12 @@
                         <!-- Buttons positioned very close to YOU WIN and to each other -->
                         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="628.0" spacing="5.0" translateY="10.0">
                             <children>
-                                <Button fx:id="startOverBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleStartOver" prefHeight="47.0" prefWidth="198.0" styleClass="game-button" text="START  OVER">
+                                <Button fx:id="startOverBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleStartOver" prefHeight="47.0" prefWidth="248.0" styleClass="game-button" text="START  OVER">
                            <font>
                               <Font name="Press Start 2P Regular" size="15.0" />
                            </font></Button>
 
-                                <Button fx:id="mainMenuBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleMainMenu" prefHeight="40.0" prefWidth="200.0" styleClass="game-button" text="MAIN  MENU" />
+                                <Button fx:id="mainMenuBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleMainMenu" prefHeight="40.0" prefWidth="226.0" styleClass="game-button" text="MAIN  MENU" />
                             </children>
                         </VBox>
                     </children>

@@ -11,11 +11,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Font.getFamilies().forEach(System.out::println);
 
         // Load the win screen
-        Parent root = FXMLLoader.load(getClass().getResource("WinScreen.fxml"));
-        primaryStage.setTitle("You Win!");
+        //Parent root = FXMLLoader.load(getClass().getResource("WinScreen.fxml"));
+        //primaryStage.setTitle("You Win!");
+
+        Parent root = FXMLLoader.load(getClass().getResource("DrawScreen.fxml"));
+        primaryStage.setTitle("You Have Drawn");
+
+
         primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.show();
     }
