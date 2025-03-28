@@ -2,8 +2,7 @@ package leaderboard;
 
 import game.GamesEnum;
 import player.Account;
-import player.Player;
-import player.statistics.GameStatistics;
+import player.statistics.Statistics;
 import database.databaseService;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class Leaderboard {
      * isAscending is true, else it would be reversed...
      *
      */
-    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, GameStatistics gameStats, boolean isAscending) {
+    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, Statistics gameStats, boolean isAscending) {
         ArrayList<Account> accountsList = databaseService.queryAllAccounts();
 
         HashSet<Account> totalPlayersAccount = new HashSet<>();
@@ -69,7 +68,7 @@ public class Leaderboard {
      * Getting local leaderboard (max = friends added) from the player's friends list. Sorted by the chosen game
      * selected by player. Returning the sorted result into a String[][] to be displayed properly
      */
-    public String[][] getFriendsLeaderboard(Account playerAccount, GamesEnum games, GameStatistics gameStats, boolean isAscending) {
+    public String[][] getFriendsLeaderboard(Account playerAccount, GamesEnum games, Statistics gameStats, boolean isAscending) {
         return new String[0][0];
     }
 
