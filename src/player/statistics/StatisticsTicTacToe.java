@@ -13,6 +13,7 @@ public class StatisticsTicTacToe extends Statistics implements IStatistics {
             StatisticsEnum.WINS,
             StatisticsEnum.LOSSES,
             StatisticsEnum.DRAWS,
+            StatisticsEnum.MATCHES_PLAYED,
             StatisticsEnum.NUMBER_OF_TURNS,
             StatisticsEnum.WINS_BLOCKED
     ));}

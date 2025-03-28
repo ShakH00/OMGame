@@ -14,6 +14,7 @@ public enum StatisticsEnum {
     WINS,
     LOSSES,
     DRAWS,
+    MATCHES_PLAYED,
     NUMBER_OF_TURNS,
 
     // Chess, Checkers

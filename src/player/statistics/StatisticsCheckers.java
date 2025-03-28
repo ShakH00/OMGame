@@ -13,6 +13,7 @@ public class StatisticsCheckers extends Statistics implements IStatistics {
             StatisticsEnum.WINS,
             StatisticsEnum.LOSSES,
             StatisticsEnum.DRAWS,
+            StatisticsEnum.MATCHES_PLAYED,
             StatisticsEnum.NUMBER_OF_TURNS,
             StatisticsEnum.PIECES_CAPTURED,
             StatisticsEnum.MULTI_CAPTURES
