@@ -9,6 +9,7 @@ import java.util.List;
 public class Matchmaking {
 
     /**
+     * @author Nebila Wako
      * Updates players rating after match as we discussed in planning document
      *
      * @param player1
@@ -16,9 +17,17 @@ public class Matchmaking {
      * @param result
      */
     public void updateElo(Player player1, Player player2, int result) {
+        // Get current Elo ratings
+        int elo1 = player1.getElo();
+        int elo2 = player2.getElo();
+
+        // Calculate expected scores based on current Elo ratings
+        double expectedScore1 = calculateExpectedScore(elo1, elo2);
+        double expectedScore2 = calculateExpectedScore(elo2, elo1);
     }
 
     /**
+     * @author Nebila Wako
      * To calculate win probabiliy
      *
      * @param ratingA
@@ -27,10 +36,12 @@ public class Matchmaking {
      */
 
     public double calculateExpectedScore(double ratingA, double ratingB) {
-        return 0;
+        return 1 / (1 + Math.pow(10, (ratingB - ratingA) / 400.0));
+
     }
 
     /**
+     * @author Nebila Wako
      * To check if two players have acceptable skill proximity
      *
      * @param player1
