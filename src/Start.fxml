@@ -15,7 +15,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
       <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
          <image>
-            <Image url="@images/adjustedstars.png" />
+            <Image url="@images/twinklingstars.gif" />
          </image>
       </ImageView>
       <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
@@ -58,7 +58,7 @@
                   <Image url="@images/pink.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" stroke="#13202a" strokeType="OUTSIDE" strokeWidth="1.5" text="LOGIN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="LOGIN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
                   <Font name="Retro Gaming" size="16.0" />
                </font>
@@ -72,7 +72,7 @@
                   <Image url="@images/yellow.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" stroke="#13202a" strokeType="OUTSIDE" strokeWidth="1.5" text="SETTINGS" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SETTINGS" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
                   <Font name="Retro Gaming" size="16.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Image url="@images/green.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" stroke="#13202a" strokeType="OUTSIDE" strokeWidth="1.5" text="HELP" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="HELP" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
                   <Font name="Retro Gaming" size="16.0" />
                </font>
