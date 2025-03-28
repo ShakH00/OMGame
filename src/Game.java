@@ -5,7 +5,7 @@ interface Game {
     GameType gameType = null;
     GameState gameState = null;
     Board board = new Board(gameType);
-    Piece selectedPiece = new Piece();
+    //Piece selectedPiece = new Piece();
     GameRules gameRules = new GameRules();
 
     public void move(Piece piece);

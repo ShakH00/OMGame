@@ -9,21 +9,20 @@ public class Checkers{
     private GameState gameState;
     private GameRules gameRules;
     
-    public void move(Piece piece, int newX, int newY){
-        int currentX = Piece.x;
-        int currentY = Piece.y;
+    public void move(CheckersPiece piece, int newX, int newY){
+        int currentX = piece.getX();
+        int currentY = piece.getY();
 
-        Piece.x = newX;
-        Piece.y = newY;
-    
+        piece.setX(newX);
+        piece.setY(newY);
     }
 
-    public bool isValidMove(Piece piece){
+    public boolean isValidMove(Piece piece){
 
         return false;
     }
 
-    public void jumpMove(Piece piece, Array[][] board){
+    public void jumpMove(Piece piece, Board board){
 
     }
 
