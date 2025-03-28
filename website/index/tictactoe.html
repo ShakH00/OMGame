@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border: 2px solid #333;
+            font-size: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .cell.disabled {
+            cursor: default;
+            background-color: #ddd;
+        }
+        #instruction {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Tic Tac Toe Tutorial</h1>
+
+<div class="board" id="board">
+    <div class="cell" id="cell-0"></div>
+    <div class="cell" id="cell-1"></div>
+    <div class="cell" id="cell-2"></div>
+    <div class="cell" id="cell-3"></div>
+    <div class="cell" id="cell-4"></div>
+    <div class="cell" id="cell-5"></div>
+    <div class="cell" id="cell-6"></div>
+    <div class="cell" id="cell-7"></div>
+    <div class="cell" id="cell-8"></div>
+</div>
+
+<p id="instruction">Click on the top-left cell to start.</p>
+<button onclick="resetGame()">Reset Game</button>
+
+<script>
+    const tutorialMoves = [0, 4, 8];
+    const computerMoves = [1, 2];
+    let moveCount = 0;
+
+    resetGame();
+
+    function resetGame() {
+        moveCount = 0;
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.textContent = '';
+            cell.classList.add('disabled');
+            cell.onclick = null;
+        });
+        document.getElementById('instruction').textContent = 'Click on the top-left cell to start.';
+        enableCell(tutorialMoves[moveCount]);
+    }
+
+    function enableCell(index) {
+        const cell = document.getElementById(`cell-${index}`);
+        cell.classList.remove('disabled');
+        cell.onclick = () => {
+            cell.textContent = 'X';
+            cell.classList.add('disabled');
+            cell.onclick = null;
+
+            moveCount++;
+
+            if (moveCount <= computerMoves.length) {
+                setTimeout(() => {
+                    computerTurn(computerMoves[moveCount - 1]);
+                }, 500);
+            }
+
+            if (moveCount < tutorialMoves.length) {
+                document.getElementById('instruction').textContent = `Good job! Now click cell ${tutorialMoves[moveCount] + 1}.`;
+                enableCell(tutorialMoves[moveCount]);
+            } else {
+                document.getElementById('instruction').textContent = 'You won diagonally! You can also win vertically or horizontally. Click reset to play again.';
+                endGame();
+            }
+        };
+    }
+
+    function computerTurn(index) {
+        const cell = document.getElementById(`cell-${index}`);
+        cell.textContent = 'O';
+        cell.classList.add('disabled');
+    }
+
+    function endGame() {
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.classList.add('disabled');
+            cell.onclick = null;
+        });
+    }
+</script>
+
+
+</body>
+</html>
