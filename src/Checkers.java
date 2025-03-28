@@ -20,7 +20,7 @@ public class Checkers{
 
     /**
      * [!] Should we consider a draw occurring when players repeat move? (TBD later)
-     * [!] NOT COMPLETE NEED TO CHECK CAPTURE VALUES
+     * [!] NOT COMPLETE NEED TO CHECK CAPTURE VALUES ~ Adam
      * 
      */
     public boolean isValidMove(int x, int y, int newX, int newY, Board gameBoard){
@@ -29,12 +29,12 @@ public class Checkers{
         
         // Check if move is within bounds
         if(newX < 0 || newY > 7){
-        return false;       // Move out of bounds
+        return false;           // Move out of bounds
         }
 
         // Check destination is empty
         if(board[newX][newY] != null) {
-            return false;   // There is a Piece in the new position
+            return false;       // There is a Piece in the new position
         }
 
         // using col and row diff to calculate directions. 
@@ -47,15 +47,15 @@ public class Checkers{
         * Can max move 2 spaces if you are capturing.
         */  
         if(rowDiff > 2 || rowDiff != colDiff) {
-            return false;   /**
-                            * Piece is trying to jump more than 1 space
-                            * Piece is not moving diagonally
-                            */
+            return false;       /**
+                                * Piece is trying to jump more than 1 space
+                                * Piece is not moving diagonally
+                                */
         }
 
         // Since check above is constraints we know that if rowDiff == 1 the piece is only moving 1 tile.
         if(rowDiff == 1){
-            return true;    // Piece is moving 1 space diagonally
+            return true;        // Piece is moving 1 space diagonally
         }
 
         // index of piece inbetween starting position and end of jump
@@ -63,7 +63,11 @@ public class Checkers{
         int intermediateCol = (y + newY)/2;
         Piece intermediatePiece = board[intermediateRow][intermediateCol];
 
-        // Verify that the selected piece can capture.
+        /**
+         * Verify that the selected piece can capture.
+         * Check if a Piece exists in the intermediate square.
+         * If there is an intermediate Piece and if the colour matches the selected piece fail.
+         * */ 
         if(rowDiff == 2) {
             if((intermediatePiece == null) || 
                 intermediatePiece.getColour() == selectedPiece.getColour()){
@@ -74,6 +78,11 @@ public class Checkers{
         return false;
     }
 
+
+
+    /*
+     * Is this needed? It does not follow the class diagram ~ Adam
+     */
     public boolean isOccupied(int newX, int newY){
         return false;
     }
@@ -86,6 +95,9 @@ public class Checkers{
 
     }
 
+    /*
+     * Is this needed? It does not follow the class diagram ~ Adam
+     */
     public void checkDiagonal(){
 
     }

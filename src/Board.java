@@ -29,8 +29,20 @@ public class Board{
         board = new Piece[rows][cols];
     }
 
+    public void displayBoard(){
+
+    }
+
     public Piece[][] getBoardState(){
         return board;
+    }
+
+    /*
+     * Will this just do a full wipe and set all values to null?
+     * Or does this return the board to the original state of any game? ~ Adam
+     */
+    public void resetBoard(){
+        
     }
 
     /* IGNORE THIS, FOR TICTACTOE
