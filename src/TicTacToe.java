@@ -1,26 +1,39 @@
 import java.util.Scanner;
 
 public class TicTacToe {
+
+    // Create a 3x3 Tic-Tac-Toe Board for char
     private char[][] board;
-    //private final Board board;
     private char currentPlayer;
 
+    /*
+     * TicTacToe Constructor
+     * Initializes the board and sets the first player(current player) to 'X'
+     * Calls initializeBoard() to set cells
+     */
     public TicTacToe() {
-        //Board board = new char(Board(GameType.TICTACTOE));
         board = new char[3][3];
         currentPlayer = 'X';
         initializeBoard();
     }
 
+    /*
+     * Initializes the whole board with '-'
+     * To represent empty cells
+     */
     private void initializeBoard() {
         for (int rows = 0; rows < 3; rows++) {
             for (int columns = 0; columns < 3; columns++) {
                 board[rows][columns] = '-';
             }
-            Board board1 = new Board(GameType.TICTACTOE);
+            
         }
     }
 
+    /*
+     * Prints the current state of the board
+     * 3x3 grid
+     */
     private void printBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -30,6 +43,10 @@ public class TicTacToe {
         }
     }
 
+    /*
+     * Checks if the board is full
+     * If there are no '-', the board is full
+     */
     private boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -41,10 +58,18 @@ public class TicTacToe {
         return true;
     }
 
+    /*
+     * Checks if the game is over
+     * Calls checkRows(), checkColumns(), checkDiagonals()
+     */
     private boolean isGameOver() {
         return checkRows() || checkColumns() || checkDiagonals();
     }
 
+    /*
+     * Checks if any row has the same elements
+     * If all elements in a row are the same, return true
+     */
     private boolean checkRows() {
         for (int i = 0; i < 3; i++) {
             if (board[i][0] != '-' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
@@ -54,6 +79,10 @@ public class TicTacToe {
         return false;
     }
 
+    /*
+     * Checks if any column has the same elements
+     * If all elements in a column are the same, return true
+     */
     private boolean checkColumns() {
         for (int i = 0; i < 3; i++) {
             if (board[0][i] != '-' && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
@@ -63,29 +92,31 @@ public class TicTacToe {
         return false;
     }
 
+    /*
+     * Checks if any diagonal has the same elements
+     * If all elements in a diagonal are the same, return true
+     */
     private boolean checkDiagonals() {
+
+        // Top Left to Bottom Right
         if (board[0][0] != '-' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             return true;
         }
+
+        // Top Right to Bottom Left
         if (board[0][2] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             return true;
         }
+
+        // No Diagonal Win
         return false;
     }
 
-    // @Override
-    // private static String ToString(board.length) {
-    //     board = 1;
-    //     board = new Array[2][2];
-    //     board = new Array[1][2];
-    //     board[row][col] = '-';
-
-    //     if board != board.length && (board[row][col] == current.board[row][col]) {
-    //         return "TicTacToe, This is the Wrong Spot, Duplicate Spot, Try Again!";
-    //     }
-    //     return "TicTacToe, board=" + board + ", currentPlayer=" + currentPlayer;
-    // }
-
+    /*
+     * Makes a move on the board
+     * If the cell is empty, place the current player's symbol
+     * If the cell is not empty, print "Invalid Move. Please Try Again."
+     */
     private void makeMove(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayer;
@@ -95,6 +126,13 @@ public class TicTacToe {
         }
     }
 
+    /*
+     * Main Game Loop
+     * Asks the current player to make a move
+     * Calls makeMove() and printBoard()
+     * If the game is over, print the winner
+     * If the board is full, print "It's a Draw!"
+     */
     public void play() {
         Scanner scanner = new Scanner(System.in);
 
@@ -116,6 +154,10 @@ public class TicTacToe {
         scanner.close();
     }
 
+    /*
+     * Main Method
+     * Creates a new TicTacToe object and calls play()
+     */
     public static void main(String[] args) {
         TicTacToe game = new TicTacToe();
         game.play();

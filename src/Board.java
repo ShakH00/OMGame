@@ -1,8 +1,9 @@
-public class Board {
+public class Board{
     private Piece[][] board;
     private int rows;
     private int cols;
     private GameType gameType;
+
     public Board(GameType gameType)
     {
         this.gameType = gameType;
@@ -12,11 +13,13 @@ public class Board {
             rows = 8;
             cols = 8;
         }
+        
         else if(gameType == GameType.TICTACTOE)
         {
             rows = 3;
             cols = 3;
         }
+
         else if(gameType == GameType.CONNECT4)
         {
             rows = 6;
@@ -25,4 +28,16 @@ public class Board {
 
         board = new Piece[rows][cols];
     }
+
+    /* IGNORE THIS, FOR TICTACTOE
+
+    public Piece getCell(int rows, int cols) {
+        return board[rows][cols];
+    }
+
+    public void setCell(int rows, int cols, Piece value) {
+        board[rows][cols] = value;
+    }
+
+    */
 }
