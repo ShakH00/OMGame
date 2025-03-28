@@ -11,7 +11,7 @@
 
     <body>
         <div class="header">
-            <div class="header-left"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></div>
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
             <div class="header-center">
                 <a href="index.html">Home</a>
                 <a href="help.html">Help</a>
@@ -27,22 +27,170 @@
             <div class="scroll-progress-bar" id="scrollBar"></div>
         </div>
 
-        <button class="chat-button" id="chatToggle">💬</button>
-        <div class="chat-popup" id="chatPopup">
-            <div class="chat-header">
-                Chat Support
-                <button class="chat-close-btn" onclick="closeChat()">×</button>
+        <div class="store-container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('loot', event)">Loot Boxes</button>
+                <button class="tab-button" onclick="openTab('ranks', event)">Ranks</button>
+                <button class="tab-button " onclick="openTab('skins', event)">Skins</button>
             </div>
-            <div class="chat-body" id="chatBody">
-                <div class="chat-message bot">Hi i'm TetrisCat!</div>
-                <div class="chat-message bot">We are currently developing our chat feature.</div>
-                <div class="chat-message bot">Please contact support by email at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> 😊</div>
+
+            <!-- Loot Boxes Section -->
+            <div class="tab-content active" id="loot">
+                <div class="item-grid">
+                    <div class="card">
+                        <img src="assets/chessRookBlack.png" alt="Platinum Loot Box">
+                        <h3>Platinum Loot Box</h3>
+                        <p>Contains legendary items!</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/chessRookBlack.png', 'Platinum Loot Box', 'Contains legendary items!', true)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessBishopBlack.png" alt="Diamond Loot Box">
+                        <h3>Diamond Loot Box</h3>
+                        <p>Contains ultra-rare items!</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/diamondLootBox.png', 'Diamond Loot Box', 'Contains ultra-rare items!', true)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessKingBlack.png" alt="Golden Loot Box">
+                        <h3>Golden Loot Box</h3>
+                        <p>Contains rare and legendary items!</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/goldenLootBox.png', 'Golden Loot Box', 'Contains rare items!', true)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessKnightBlack.png" alt="Silver Loot Box">
+                        <h3>Silver Loot Box</h3>
+                        <p>A chance for exclusive cosmetics!</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/silverLootBox.png', 'Silver Loot Box', 'A chance for exclusive cosmetics!', true)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessPawnBlack.png" alt="Bronze Loot Box">
+                        <h3>Bronze Loot Box</h3>
+                        <p>Decent rewards for beginners.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/bronzeLootBox.png', 'Bronze Loot Box', 'Decent rewards for beginners.', true)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessQueenBlack.png" alt="Wood Loot Box">
+                        <h3>Wood Loot Box</h3>
+                        <p>Basic starter items.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/woodLootBox.png', 'Wood Loot Box', 'Basic starter items.', true)">View</button>
+                    </div>
+                </div>
             </div>
-            <div class="chat-input-container">
-                <input type="text" id="chatInput" placeholder="Ask me a question..." />
-                <button onclick="sendMessage()">➤</button>
+
+            <!-- Ranks Section -->
+            <div class="tab-content" id="ranks">
+                <div class="item-grid">
+                    <div class="card">
+                        <img src="assets/chessRookWhite.png" alt="Bronze Rank">
+                        <h3>Bronze Rank</h3>
+                        <p>Entry-level rank with small perks.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/bronzeRank.png', 'Bronze Rank', 'Entry-level rank with small perks.', false)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessBishopWhite.png" alt="Silver Rank">
+                        <h3>Silver Rank</h3>
+                        <p>Better rewards and privileges.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/silverRank.png', 'Silver Rank', 'Better rewards and privileges.', false)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessKingWhite.png" alt="Gold Rank">
+                        <h3>Gold Rank</h3>
+                        <p>Exclusive benefits and bonuses.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/goldRank.png', 'Gold Rank', 'Exclusive benefits and bonuses.', false)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessKnightWhite.png" alt="Diamond Rank">
+                        <h3>Diamond Rank</h3>
+                        <p>Elite perks and in-game advantages.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/diamondRank.png', 'Diamond Rank', 'Elite perks and in-game advantages.', false)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessPawnWhite.png" alt="Ascendant Rank">
+                        <h3>Ascendant Rank</h3>
+                        <p>Top-tier privileges and rewards.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/ascendantRank.png', 'Ascendant Rank', 'Top-tier privileges and rewards.', false)">View</button>
+                    </div>
+
+                    <div class="card">
+                        <img src="assets/chessQueenWhite.png" alt="Grandmaster Rank">
+                        <h3>Grandmaster Rank</h3>
+                        <p>Ultimate prestige with legendary benefits.</p>
+                        <button class="buy-btn">Buy Now</button>
+                        <button class="view-btn" onclick="openModal('assets/grandmasterRank.png', 'Grandmaster Rank', 'Ultimate prestige with legendary benefits.', false)">View</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <script src="script.js"></script>
+
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <img id="modal-image" class="modal-image" src="" alt="Product">
+                <div class="modal-text">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+                    <select id="purchase-select" class="purchase-select">
+                        <option value="1">1 item - $4.99</option>
+                        <option value="2">2 items - $9.49</option>
+                        <option value="3">3 items - $13.99</option>
+                    </select>
+                    <button class="buy-btn-modal">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openTab(tabName) {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove("active");
+                });
+
+                setTimeout(() => {
+                    document.getElementById(tabName).classList.add("active");
+                }, 50);
+
+                document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+            }
+
+            function openModal(imageSrc, title, description, isLootbox) {
+                document.getElementById("modal-image").src = imageSrc;
+                document.getElementById("modal-title").innerText = title;
+                document.getElementById("modal-description").innerText = description;
+
+                document.getElementById("purchase-select").style.display = isLootbox ? "block" : "none";
+
+                document.getElementById("modal").style.opacity = "1";
+                document.getElementById("modal").style.visibility = "visible";
+            }
+
+            function closeModal() {
+                document.getElementById("modal").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("modal").style.visibility = "hidden";
+                }, 300);
+            }
+        </script>
     </body>
 </html>
