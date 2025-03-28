@@ -19,10 +19,37 @@ public class Checkers{
 
     /**
      * [!] Should we consider a draw occurring when players repeat move? (TBD later)
+     * 
      *
      */
-    public boolean isValidMove(){
+    public boolean isValidMove(int x, int y, int newX, int newY, Board board){
+        // Check if move is within bounds
+        if(newX < 0 || newY > 7){
         return false;
+        }
+
+        // Check destination is empty
+        if(board[newX][newY] != null) {
+            reurn false;
+        }
+
+        // using col and row diff lets us do captures later. 
+        int rowDiff = Math.abs(x-newX);
+        int colDiff = Math.abs(y-newY);    
+        /** 
+        * Check row validity. 
+        * To move diagonal you must move same # of rows & cols.
+        * Can max move 2 spaces if you are capturing.
+        */  
+        if(rowDiff > 2 || rowDiff != colDiff) {
+            return false; 
+        }
+
+        // Due to conditions above we know that colomn movement is good.
+        if(rowDiff == 1){
+            return true;
+        }
+
     }
 
     public boolean isOccupied(int newX, int newY){
