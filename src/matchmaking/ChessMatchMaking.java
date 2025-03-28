@@ -3,6 +3,8 @@ public class ChessMatchMaking extends MatchMaking {
     private int findElo;
     private int increment;
 
+    this.kFactor = 32;
+
     @Override
     public void changeElo(int elo) {
 

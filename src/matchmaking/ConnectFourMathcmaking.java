@@ -3,6 +3,8 @@ public class ConnectFourMatchMaking extends MatchMaking {
     private int findElo;
     private int increment;
 
+    this.kFactor = 15;
+
     public void changeElo(int elo) {
 
     }

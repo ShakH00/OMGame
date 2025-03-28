@@ -3,6 +3,8 @@ public class TicTacToeMatchMaking extends MatchMaking {
     private int findElo;
     private int increment;
 
+    this.kFactor = 10;
+
     @Override
     public void changeElo(int elo) {
 

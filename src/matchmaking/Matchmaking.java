@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Matchmaking {
 
+    protected int kFactor;
+
     /**
      * @author Nebila Wako
      * Updates players rating after match as we discussed in planning document
