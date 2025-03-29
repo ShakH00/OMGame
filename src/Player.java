@@ -18,7 +18,7 @@ public class Player {
         return team;
     }
     
-    private bool isturn() {
+    private boolean isturn() {
 
         return false;
     }
