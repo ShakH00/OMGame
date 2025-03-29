@@ -127,10 +127,11 @@
     color: #111;
 	float: left;
 	margin-left: 15px;
+    font-size: 16px;
 }
 
 .buy-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.07);
     background: #edbe00;
 }
 
@@ -140,10 +141,11 @@
     color: white;
 	float: right;
 	margin-right: 15px;
+    font-size: 16px;
 }
 
 .view-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.07);
     background: #df5399;
 }
 
@@ -171,20 +173,6 @@
     padding: 20px;
     border-radius: 10px;
     position: relative;
-}
-
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-	font-size: 1.8rem;
-	cursor: pointer;
-	transition: transform 0.2s;
-}
-
-.close-btn:hover {
-	transform: scale(1.2);
 }
 
 /* Modal Image */
