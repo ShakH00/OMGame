@@ -105,12 +105,12 @@ public class Account {
     }
 
     /**
-     * Get a String[] containing the Account's generic statistics (wins, losses, draws) for the game
+     * Get a String[] containing the Account's statistics for the game in a predetermined order
      * @param game  GamesEnum for which game to get statistics for
-     * @return      String[] containing generic statistics
+     * @return      String[] containing statistic values as strings
      */
     public String[] getGameStatistics(GamesEnum game){
-        StatisticsEnum[] order = new StatisticsEnum[]{StatisticsEnum.WINS, StatisticsEnum.LOSSES, StatisticsEnum.DRAWS};
+        StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatistics(game, order);
     }
 
@@ -121,7 +121,19 @@ public class Account {
      * @return      String[] containing the specified statistics in the same order
      */
     public String[] getGameStatistics(GamesEnum game, StatisticsEnum[] order){
-        //
+        String[] output = new String[order.length];
+        for (int i = 0; i < order.length; i++){
+            StatisticsEnum statistic = order[i];
+            Number value = statistics.get(game).getStatistic(statistic);
+
+            if (value instanceof Integer){
+                output[i] = value.toString();
+            }
+            else if (value instanceof Double){
+                output[i] = String.format("%.2f", value);   // Two decimals for a double.
+            }
+        }
+        return output;
     }
 
     /**
@@ -129,19 +141,22 @@ public class Account {
      * @param game  GamesEnum for which game to get statistics for
      * @return      String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
-    public static String[] getGameStatisticsHeader(GamesEnum game){
-        StatisticsEnum[] order = new StatisticsEnum[]{StatisticsEnum.WINS, StatisticsEnum.LOSSES, StatisticsEnum.DRAWS};
-        return getGameStatisticsHeader(game, order);
+    public String[] getGameStatisticsHeader(GamesEnum game){
+        StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
+        return getGameStatisticsHeader(order);
     }
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game, order)
-     * @param game  GamesEnum for which game to get statistics for
      * @param order StatisticsEnum array that determines which statistics will be returned and in what order
      * @return      String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
-    public static String[] getGameStatisticsHeader(GamesEnum game, StatisticsEnum[] order){
-        //
+    public String[] getGameStatisticsHeader(StatisticsEnum[] order) {
+        String[] headers = new String[order.length];
+        for (int i = 0; i < order.length; i++){
+            headers[i] = order[i].toString();
+        }
+        return headers;
     }
 
     /**
@@ -150,7 +165,7 @@ public class Account {
      * @return      String[] containing the combined statistics
      */
     public String[] getCombinedStatistics(HashSet<GamesEnum> games){
-        StatisticsEnum[] order = new StatisticsEnum[]{StatisticsEnum.WINS, StatisticsEnum.LOSSES, StatisticsEnum.DRAWS};
+        StatisticsEnum[] order = StatisticsEnum.values();
         return getCombinedStatistics(games, order);
     }
 
@@ -161,27 +176,40 @@ public class Account {
      * @return      String[] containing the combined statistics
      */
     public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order){
+        // Create a new CombinedStatistics object
+        HashSet<Statistics> setOfStatistics = new HashSet<>();
+        for (GamesEnum game : games){
+            setOfStatistics.add(statistics.get(game));
+        }
+        StatisticsCombined statisticsCombined = new StatisticsCombined(setOfStatistics);
 
+        // Get the string for combined statistics from CombinedStatistics object
+        String[] output = new String[order.length];
+        for (int i = 0; i < order.length; i++){
+            StatisticsEnum statistic = order[i];
+            Number value = statisticsCombined.getStatistic(statistic);
+
+            if (value instanceof Integer){
+                output[i] = value.toString();
+            }
+            else if (value instanceof Double){
+                output[i] = String.format("%.2f", value);   // Two decimals for a double.
+            }
+        }
+        return output;
     }
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getCombinedStatistics(games)
-     * @param games HashSet of GamesEnums for which games to include in the combined stats
      * @return      String[] containing the names of each statistic given by getCombinedStatistics(...)
      */
-    public static String[] getCombinedStatisticsHeader(HashSet<GamesEnum> games){
-        StatisticsEnum[] order = new StatisticsEnum[]{StatisticsEnum.WINS, StatisticsEnum.LOSSES, StatisticsEnum.DRAWS};
-        return getCombinedStatisticsHeader(games, order);
-    }
-
-    /**
-     * Get a String[] with the names for the statistics corresponding to those given by getCombinedStatistics(games)
-     * @param games HashSet of GamesEnums for which games to include in the combined stats
-     * @param order StatisticsEnum array that determines which statistics will be returned and in what order
-     * @return      String[] containing the names of each statistic given by getCombinedStatistics(...)
-     */
-    public static String[] getCombinedStatisticsHeader(HashSet<GamesEnum> games, StatisticsEnum[] order){
-        //
+    public static String[] getCombinedStatisticsHeader(){
+        StatisticsEnum[] order = StatisticsEnum.values();
+        String[] headers = new String[order.length];
+        for (int i = 0; i < order.length; i++){
+            headers[i] = order[i].toString();
+        }
+        return headers;
     }
 
     public boolean getIsGuest(){

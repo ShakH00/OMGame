@@ -8,6 +8,5 @@ public enum GamesEnum {
     CHECKERS,
     CHESS,
     CONNECT4,
-    TICTACTOE,
-    COMBINED
+    TICTACTOE
 }

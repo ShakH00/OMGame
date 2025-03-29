@@ -1,13 +1,13 @@
 package player.statistics;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsCheckers extends Statistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    final HashSet<StatisticsEnum> acceptedStatistics = new HashSet<>(List.of(
+    final StatisticsEnum[] acceptedStatistics = new StatisticsEnum[]{
             StatisticsEnum.ELO,
             StatisticsEnum.WIN_RATE,
             StatisticsEnum.WINS,
@@ -17,5 +17,5 @@ public class StatisticsCheckers extends Statistics implements IStatistics {
             StatisticsEnum.NUMBER_OF_TURNS,
             StatisticsEnum.PIECES_CAPTURED,
             StatisticsEnum.MULTI_CAPTURES
-    ));
+    };
 }
