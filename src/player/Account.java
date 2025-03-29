@@ -34,6 +34,11 @@ public class Account {
     private String password;    // TODO: Handle encryption/decryption in Account class
 
     /**
+     * String for the phone number associated with this Account
+     */
+    private String phoneNumber;
+
+    /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
      */
     private ArrayList<Account> friends;
