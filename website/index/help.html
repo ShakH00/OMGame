@@ -77,8 +77,8 @@
         </div>
 
         <!-- Overlay -->
-        <div class="overlay" id="overlay" onclick="closePopup()"></div>
-        <div class="container" id="popupBox">
+        <div class="overlay" id="overlayComingSoon" onclick="closePopup()"></div>
+        <div class="container" id="comingSoonPopup">
             <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 300px; top: -150px;" src="../static/assets/tetrisCat6.gif" alt=""/>
             <div class="contact-box">
                 <div class="sos-box" style="background-color: red">SOS!!</div>
@@ -106,15 +106,16 @@
             </div>
         </div>
 
+        <script src="../static/script.js"></script>
         <script>
             function openPopup() {
-                document.getElementById("overlay").classList.add("show");
-                document.getElementById("popupBox").classList.add("show");
+                document.getElementById("overlayComingSoon").classList.add("show");
+                document.getElementById("comingSoonPopup").classList.add("show");
             }
 
             function closePopup() {
-                document.getElementById("overlay").classList.remove("show");
-                document.getElementById("popupBox").classList.remove("show");
+                document.getElementById("overlayComingSoon").classList.remove("show");
+                document.getElementById("comingSoonPopup").classList.remove("show");
             }
         </script>
     </body>
