@@ -169,14 +169,19 @@
 .modal-content {
     background: white;
     width: 500px;
+    height: 350px;
     padding: 20px;
     border-radius: 10px;
     position: relative;
     text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 .quantity-container {
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .purchase-select, .custom-quantity {
@@ -196,10 +201,19 @@
     visibility: visible;
 }
 
+.custom-quantity {
+    width: 45%;
+    padding: 5px;
+    display: none;
+}
+
 /* Modal Image */
 .modal-image {
     width: 40%;
-    border-radius: 8px;
+    max-width: 250px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 20px;
 }
 
 .modal-text {
@@ -218,7 +232,7 @@
 
 /* Purchase Dropdown */
 .purchase-select {
-    width: 100%;
+    width: 50%;
     padding: 8px;
     margin-top: 10px;
     margin-bottom: 10px;
