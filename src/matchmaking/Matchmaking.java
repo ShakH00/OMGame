@@ -26,6 +26,15 @@ public class Matchmaking {
         // Calculate expected scores based on current Elo ratings
         double expectedScore1 = calculateExpectedScore(elo1, elo2);
         double expectedScore2 = calculateExpectedScore(elo2, elo1);
+
+        double score1 = result;
+        double score2 = 1 - result;
+
+        int newElo1 = (int) Math.round(elo1 + kFactor * (score1 - expectedScore1));
+        int newElo2 = (int) Math.round(elo2 + kFactor * (score2 - expectedScore2));
+
+        player1.setElo(newElo1);
+        player2.setElo(newElo2);
     }
 
     /**
