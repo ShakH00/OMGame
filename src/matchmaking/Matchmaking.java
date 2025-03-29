@@ -61,7 +61,11 @@ public class Matchmaking {
      */
 
     public boolean isMatchSuitable(Player player1, Player player2) {
-        return false;
+        int rating1 = player1.getElo();
+        int rating2 = player2.getElo();
+
+        // Base threshold
+        int baseThreshold = (rating1 < 1000 || rating2 < 1000) ? 150 : 100;
     }
 
     /**
