@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <!-- Background -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+        <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
+            <image>
+                <Image url="@images/twinklingstars.gif" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+            <image>
+                <Image url="@images/chessboard.png" />
+            </image>
+        </ImageView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />
+<!--        <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="-514.0" layoutY="70.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />-->
+
+        <!-- Login Text -->
+        <Label layoutX="350.0" layoutY="120.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(to right, #ff6699, #ffcc00, #33cc33, #0099ff, #9933ff);" text="LOGIN" />
+
+        <!-- Username -->
+        <Label layoutX="300.0" layoutY="200.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <TextField layoutX="300.0" layoutY="225.0" prefWidth="200.0" />
+
+        <!-- Password -->
+        <Label layoutX="300.0" layoutY="270.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <PasswordField layoutX="300.0" layoutY="295.0" prefWidth="200.0" />
+
+        <!-- Buttons -->
+        <StackPane prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+            <children>
+                <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/pink.png" />
+                    </image>
+                </ImageView>
+                <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="RETURN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+                    <font>
+                        <Font name="Retro Gaming" size="16.0" />
+                    </font>
+                </Text>
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+            <children>
+                <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/pink.png" />
+                    </image>
+                </ImageView>
+                <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SUBMIT" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+                    <font>
+                        <Font name="Retro Gaming" size="16.0" />
+                    </font>
+                </Text>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>
