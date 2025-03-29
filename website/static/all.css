@@ -183,7 +183,7 @@ body {
 	z-index: 12;
 }
 
-.overlay.show {
+.overlay.show, .container.show {
 	opacity: 1;
 	visibility: visible;
 }
@@ -196,6 +196,7 @@ body {
 	opacity: 0;
 	transition: all 0.5s ease;
 	z-index: 13;
+	visibility: hidden;
 }
 
 .contact-box {

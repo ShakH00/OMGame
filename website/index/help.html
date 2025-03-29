@@ -64,25 +64,25 @@
                     <img src="../static/assets/tetrisCat6.gif" alt="Tetris">
                     <h3>Tetris</h3>
                     <p>Learn how to master the classic falling block game.</p>
-                    <a style="cursor: pointer" onclick="openPopup()">Coming Soon™</a>
+                    <a style="cursor: pointer" onclick="openHelpPopup()">Coming Soon™</a>
                 </div>
 
                 <div class="card">
                     <img src="../static/assets/tetrisCat6.gif" alt="Monopoly">
                     <h3>Monopoly</h3>
                     <p>Build your empire and bankrupt your friends.</p>
-                    <a style="cursor: pointer" onclick="openPopup()">Coming Soon™</a>
+                    <a style="cursor: pointer" onclick="openHelpPopup()">Coming Soon™</a>
                 </div>
             </div>
         </div>
 
         <!-- Overlay -->
-        <div class="overlay" id="overlayComingSoon" onclick="closePopup()"></div>
+        <div class="overlay" id="overlayComingSoon" onclick="closeHelpPopup()"></div>
         <div class="container" id="comingSoonPopup">
             <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 300px; top: -150px;" src="../static/assets/tetrisCat6.gif" alt=""/>
             <div class="contact-box">
                 <div class="sos-box" style="background-color: red">SOS!!</div>
-                <button class="close-btn" onclick="closePopup()">×</button>
+                <button class="close-btn" onclick="closeHelpPopup()">×</button>
                 <p><strong>This page is currently in development</strong></p><br>
                 <p>Please check back later</p>
                 <p>Reach out to us at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> for support. <span class="heart">💜</span></p>
@@ -108,14 +108,30 @@
 
         <script src="../static/script.js"></script>
         <script>
-            function openPopup() {
-                document.getElementById("overlayComingSoon").classList.add("show");
-                document.getElementById("comingSoonPopup").classList.add("show");
+            function openHelpPopup() {
+                let overlay = document.getElementById("overlayComingSoon");
+                let popup = document.getElementById("comingSoonPopup");
+
+                overlay.style.display = "block";
+                popup.style.display = "block";
+
+                setTimeout(() => {
+                    overlay.classList.add("show");
+                    popup.classList.add("show");
+                }, 10); // Small delay to ensure transition works
             }
 
-            function closePopup() {
-                document.getElementById("overlayComingSoon").classList.remove("show");
-                document.getElementById("comingSoonPopup").classList.remove("show");
+            function closeHelpPopup() {
+                let overlay = document.getElementById("overlayComingSoon");
+                let popup = document.getElementById("comingSoonPopup");
+
+                overlay.classList.remove("show");
+                popup.classList.remove("show");
+
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                    popup.style.display = "none";
+                }, 300); // Matches transition duration
             }
         </script>
     </body>
