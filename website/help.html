@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8"/>
         <title>Help | Online Multiplayer Games - OMG</title>
-        <link rel="stylesheet" href="../static/help.css">
-        <link rel="stylesheet" href="../static/all.css">
-        <link rel="shortcut icon" type="image/png" href="../static/assets/tetrisCatIcon.png">
+        <link rel="stylesheet" href="help.css">
+        <link rel="stylesheet" href="all.css">
+        <link rel="shortcut icon" type="image/png" href="assets/tetrisCatIcon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
     <body>
         <div class="header">
-            <div class="header-left"><a href="/"><img style="height: auto; width: 35px" src="../static/assets/tetrisCatIcon.png"/></a></div>
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
             <div class="header-center">
-                <a href="/">Home</a>
-                <a href="help">Help</a>
-                <a href="store">Store</a>
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
             </div>
             <div class="header-right">
                 <a href="#" class="signup-btn">Sign up</a>
@@ -33,42 +33,42 @@
 
             <div class="help-cards">
                 <div class="card">
-                    <img src="../static/assets/tetrisCat4.GIF" alt="Chess">
+                    <img src="assets/tetrisCat4.GIF" alt="Chess">
                     <h3>Chess</h3>
                     <p>Understand the rules and strategies of Chess.</p>
-                    <a href="/chess">Learn More</a>
+                    <a href="chess.html">Learn More</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat5.gif" alt="Checkers">
+                    <img src="assets/tetrisCat5.gif" alt="Checkers">
                     <h3>Checkers</h3>
                     <p>Simple yet strategic. Learn how to win in Checkers.</p>
-                    <a href="/checkers">Learn More</a>
+                    <a href="checkers.html">Learn More</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat3.GIF" alt="TicTacToe">
+                    <img src="assets/tetrisCat3.GIF" alt="TicTacToe">
                     <h3>TicTacToe</h3>
                     <p>Three in a row. Think fast. Block smart. Win big!</p>
-                    <a href="/tictactoe">Learn More</a>
+                    <a href="tictactoe.html">Learn More</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat2.GIF" alt="Connect4">
+                    <img src="assets/tetrisCat2.GIF" alt="Connect4">
                     <h3>Connect4</h3>
                     <p>Drop, Stack, Win! Can you outsmart your opponent?</p>
-                    <a href="/connect4">Learn More</a>
+                    <a href="connect4.html">Learn More</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat6.gif" alt="Tetris">
+                    <img src="assets/tetrisCat6.gif" alt="Tetris">
                     <h3>Tetris</h3>
                     <p>Learn how to master the classic falling block game.</p>
                     <a style="cursor: pointer" onclick="openHelpPopup()">Coming Soon™</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat6.gif" alt="Monopoly">
+                    <img src="assets/tetrisCat6.gif" alt="Monopoly">
                     <h3>Monopoly</h3>
                     <p>Build your empire and bankrupt your friends.</p>
                     <a style="cursor: pointer" onclick="openHelpPopup()">Coming Soon™</a>
@@ -79,7 +79,7 @@
         <!-- Overlay -->
         <div class="overlay" id="overlayComingSoon" onclick="closeHelpPopup()"></div>
         <div class="container" id="comingSoonPopup">
-            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 300px; top: -150px;" src="../static/assets/tetrisCat6.gif" alt=""/>
+            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 300px; top: -150px;" src="assets/tetrisCat6.gif" alt=""/>
             <div class="contact-box">
                 <div class="sos-box" style="background-color: red">SOS!!</div>
                 <button class="close-btn" onclick="closeHelpPopup()">×</button>
@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <script src="../static/script.js"></script>
+        <script src="script.js"></script>
         <script>
             function openHelpPopup() {
                 let overlay = document.getElementById("overlayComingSoon");
