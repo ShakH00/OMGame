@@ -43,29 +43,36 @@ public class CheckersPiece extends MovingPiece {
     /**
      * Move a piece on the board
      *
+     * @param currentX: current X location of piece
+     * @param currentY: current Y location of piece
      * @param newX: new x (row) location
      * @param newY: new y (column) location
-     * @param board: board being played on
+     * @param gameBoard: board being played on
      */
     @Override
-    public void move(int newX, int newY, Board board){
+    public void move(int currentX, int currentY, int newX, int newY, Board gameBoard){
         //if this move is valid, perform it
-        if(isValidMove(newX, newY, board)){
+        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+            Piece[][] board = gameBoard.getBoardState();
+            board[currentX][currentY] = null;
             setX(newX);
             setY(newY);
+            board[newX][newY] = this;
         }
     }
 
     /**
      * Check for a move's validity
      *
+     * @param currentX: current X location of piece
+     * @param currentY: current Y location of piece
      * @param newX: X location to check
      * @param newY: Y location to check
-     * @param board: board to check on
+     * @param gameBoard: board to check on
      * @return true if move is valid, false if invalid
      */
     @Override
-    public boolean isValidMove(int newX, int newY, Board board){
+    public boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
         return false; //temporary
     }
 }
