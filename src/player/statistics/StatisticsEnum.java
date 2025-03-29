@@ -6,17 +6,21 @@ package player.statistics;
  * that are related to the specific game, as described in the comments of this class.
  */
 public enum StatisticsEnum {
+    // Complex stats (cannot be updated by simple addition/subtraction)
+    ELO,
+    WIN_RATE,
+
     // All games
     WINS,
     LOSSES,
     DRAWS,
-    ELO,
+    MATCHES_PLAYED,
     NUMBER_OF_TURNS,
 
-    // Chess, Checkers only
+    // Chess, Checkers
     PIECES_CAPTURED,    // yes, this includes pawns
 
-    // Chess only
+    // Chess
     PAWNS_CAPTURED,
     KNIGHTS_CAPTURED,
     BISHOPS_CAPTURED,
@@ -27,10 +31,9 @@ public enum StatisticsEnum {
     CHECKMATES,
     PIECES_PROMOTED,
 
-    // Chess only
+    // Checkers
     MULTI_CAPTURES, // when a player captures multiple pieces in one turn
 
-    // Tic-Tac-Toe, Connect 4 only
+    // Tic-Tac-Toe, Connect 4
     WINS_BLOCKED    // e.g. P1 has three red pieces in a line, and P2 places a yellow which blocks P1's potential win
-
 }

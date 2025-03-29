@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import game.GamesEnum;
-import player.statistics.MatchOutcomeHandler;
-import player.statistics.IGameStatistics;
-import player.statistics.StatisticsEnum;
+import player.statistics.*;
 
 public class Account {
     /**
@@ -40,7 +38,7 @@ public class Account {
      */
     private ArrayList<Account> friends;
 
-    private final HashMap<GamesEnum, IGameStatistics> statistics;
+    private final HashMap<GamesEnum, Statistics> statistics;
     private final ArrayList<MatchOutcomeHandler> matchHistory;
 
     /**
@@ -57,10 +55,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new IGameStatistics());
-        statistics.put(GamesEnum.CHECKERS, new IGameStatistics());
-        statistics.put(GamesEnum.CONNECT4, new IGameStatistics());
-        statistics.put(GamesEnum.TICTACTOE, new IGameStatistics());
+        statistics.put(GamesEnum.CHESS, new StatisticsChess());
+        statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
+        statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
+        statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new ArrayList<>();
     }
 
@@ -82,10 +80,10 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new IGameStatistics());
-        statistics.put(GamesEnum.CHECKERS, new IGameStatistics());
-        statistics.put(GamesEnum.CONNECT4, new IGameStatistics());
-        statistics.put(GamesEnum.TICTACTOE, new IGameStatistics());
+        statistics.put(GamesEnum.CHESS, new StatisticsChess());
+        statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
+        statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
+        statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new ArrayList<>();
     }
 
