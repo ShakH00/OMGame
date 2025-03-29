@@ -9,10 +9,10 @@ function scrollBar() {
     document.getElementById("scrollBar").style.width = scrolled + "%";
 }
 
-window.onload = function() {
-    document.getElementById('popupBox').classList.add('show');
-    document.getElementById('overlay').classList.add('show');
-};
+// window.onload = function() {
+//     document.getElementById('popupBox').classList.add('show');
+//     document.getElementById('overlay').classList.add('show');
+// };
 
 window.onload = function () {
     const chatButton = document.getElementById('chatToggle');
