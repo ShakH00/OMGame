@@ -64,15 +64,28 @@
                     <img src="../static/assets/tetrisCat6.gif" alt="Tetris">
                     <h3>Tetris</h3>
                     <p>Learn how to master the classic falling block game.</p>
-                    <a href="#">Coming Soon&trade;</a>
+                    <a style="cursor: pointer" onclick="openPopup()">Coming Soon™</a>
                 </div>
 
                 <div class="card">
-                    <img src="../static/assets/tetrisCat6.gif" alt="Tetris">
+                    <img src="../static/assets/tetrisCat6.gif" alt="Monopoly">
                     <h3>Monopoly</h3>
                     <p>Build your empire and bankrupt your friends.</p>
-                    <a href="#">Coming Soon&trade;</a>
+                    <a style="cursor: pointer" onclick="openPopup()">Coming Soon™</a>
                 </div>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay" onclick="closePopup()"></div>
+        <div class="container" id="popupBox">
+            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 300px; top: -150px;" src="../static/assets/tetrisCat6.gif" alt=""/>
+            <div class="contact-box">
+                <div class="sos-box" style="background-color: red">SOS!!</div>
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <p><strong>This page is currently in development</strong></p><br>
+                <p>Please check back later</p>
+                <p>Reach out to us at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> for support. <span class="heart">💜</span></p>
             </div>
         </div>
 
@@ -92,6 +105,17 @@
                 <button onclick="sendMessage()">➤</button>
             </div>
         </div>
-        <script src="../static/script.js"></script>
+
+        <script>
+            function openPopup() {
+                document.getElementById("overlay").classList.add("show");
+                document.getElementById("popupBox").classList.add("show");
+            }
+
+            function closePopup() {
+                document.getElementById("overlay").classList.remove("show");
+                document.getElementById("popupBox").classList.remove("show");
+            }
+        </script>
     </body>
 </html>
