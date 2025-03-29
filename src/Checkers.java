@@ -10,12 +10,35 @@ public class Checkers{
     private GameRules gameRules;
     
     public void move(CheckersPiece piece, int newX, int newY){
-    /*  int currentX = piece.getX();
+        int currentX = piece.getX();
         int currentY = piece.getY();
 
-        piece.setX(newX);
-        piece.setY(newY);
-    */
+        // If valid moves, make the move.
+        if (isValidMove(currentX, currentY, newX, newY, board)){
+            Piece[][] boardState = board.getBoardState();
+            // Place piece in new location.
+            boardState[newX][newY] = piece;
+            // remove prev piece location
+            boardState[currentX][currentY] = null;
+            piece.setX(newX);
+            piece.setY(newY);
+
+            // Capture move.
+            // If the move made is 2 cells it is a capture move.
+            if (Math.abs(currentX-newX) == 2){
+                // Get the location of the captured piece.
+                int capturedX = currentX + newX / 2;
+                int capturedY = currentY + newY / 2;
+                // remove the captured piece.
+                boardState[capturedX][capturedY] = null;
+            }
+
+            // King promotion, assuming black is p1 and red is p2
+            if (piece.getColour().equals("BLACK") && newX == 7 || piece.getColour().equals("RED") && newX == 0){
+                // Promote IF the piece has reached the other end.
+                piece.promote();
+            }
+      }
     }
 
     /**
@@ -79,29 +102,6 @@ public class Checkers{
     }
 
 
-
-    /*
-     * Is this needed? It does not follow the class diagram ~ Adam
-     */
-    public boolean isOccupied(int newX, int newY){
-        return false;
-    }
-
-    /**
-     * Check diagonal of the piece, check if enemy piece, check if the piece diagonal is empty,
-     *
-     */
-    public void jumpMove(Piece piece, Board board){
-
-    }
-
-    /*
-     * Is this needed? It does not follow the class diagram ~ Adam
-     */
-    public void checkDiagonal(){
-
-    }
-
     /**
      * Check pieces on the board.
      * Piece 1 = Player 1, BLACK
@@ -109,7 +109,7 @@ public class Checkers{
      * If !Piece1Exists then P2 Wins
      * If !Piece2Exists then P1 Wins.
      * [!!!] How do we decide colours? Let colour be red/black and GUI do the rest?
-     * board.getCell(x,y) was personal changes since Board.java didnt have a way to fetch any cells.
+     *
      */
     public void checkWinCondition(){
         boolean Piece1Exists = false;
@@ -137,7 +137,7 @@ public class Checkers{
 
 
     /**
-     *
+     * surrender method that changes the gameState to the opposing player winning if a player calls it during their turn.
      *
      */
     public void surrender(){
@@ -149,7 +149,8 @@ public class Checkers{
     }
 
     /**
-     *
+     * Match Outcome, checks the state of the game and depending on it,
+     * will set out a line stating which player won or if the game is still ongoing otherwise.
      *
      */
     public void matchOutcome(){
