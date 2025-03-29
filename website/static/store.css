@@ -167,12 +167,33 @@
 }
 
 .modal-content {
-    background: #fff;
-    display: flex;
+    background: white;
     width: 500px;
     padding: 20px;
     border-radius: 10px;
     position: relative;
+    text-align: center;
+}
+
+.quantity-container {
+    margin-top: 10px;
+}
+
+.purchase-select, .custom-quantity {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.modal-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Modal Image */
