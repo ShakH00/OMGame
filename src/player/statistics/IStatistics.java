@@ -1,6 +1,5 @@
 package player.statistics;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -8,11 +7,11 @@ import java.util.HashSet;
  * Object that tracks a set of statistics relating to a specific Game for an Account.
  */
 
-public interface IStatistics {
+interface IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    HashSet<StatisticsEnum> includedStatistics = new HashSet<>();
+    HashSet<StatisticsEnum> acceptedStatistics = new HashSet<>();
 
     /**
      * Set of statistics that cannot be updated by simple addition/subtraction
@@ -20,9 +19,9 @@ public interface IStatistics {
     HashSet<StatisticsEnum> complexStatistics = new HashSet<>();
 
     /**
-     * Maps each StatisticsEnum in includedStatistics to some integer value
+     * Maps each StatisticsEnum in includedStatistics to some value
      */
-    HashMap<StatisticsEnum, Integer> statistics = new HashMap<>();
+    HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
 
     /**
      * Return an object that contains the combination of some set of other GameStatistics objects
@@ -33,34 +32,39 @@ public interface IStatistics {
 
     /**
      * Check if the statistics HashMap can be added to the current statistics
-     * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
-     * @return          True if it is possible to add results to the statistics HashMap
+     * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
+     * @return              True if it is possible to add results to the statistics HashMap
      */
-    boolean canAddStatistics(HashMap<StatisticsEnum, Integer> statistics);
+    boolean canAddStatistics(HashMap<StatisticsEnum, Number> statistics);
 
     /**
      * Add the statistics HashMap to existing statistics
-     * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
+     * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      */
-    void addStatistics(HashMap<StatisticsEnum, Integer> statistics);
+    void addStatistics(HashMap<StatisticsEnum, Number> statistics);
 
     /**
      * Get the values of all statistics tracked for this game
      * @return          ArrayList containing the values of all statistics tracked for this game
      */
-    ArrayList<Integer> getStatistics();
+    Number[] getStatistics();
 
     /**
      * Get the values of all stats requested in the order parameter, or null if that statistic is not tracked
      * @param order     ArrayList that is the ordered list of statistics to retrieve for this game
-     * @return          ArrayList containing the values of the requested statistics in the same order
+     * @return          array containing the values of the requested statistics in the same order
      */
-    ArrayList<Integer> getStatistics(ArrayList<StatisticsEnum> order);
+    Number[] getStatistics(StatisticsEnum[] order);
 
     /**
      * Get a specific Statistic from this object
      * @param statistic statistic to get
-     * @return          Integer value for the statistic
+     * @return          value for the statistic
      */
-    Integer getStatistic(StatisticsEnum statistic);
+    Number getStatistic(StatisticsEnum statistic);
+
+    /**
+     * Set ELO to a new value
+     */
+    void updateElo(int newElo);
 }

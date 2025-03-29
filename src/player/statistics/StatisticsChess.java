@@ -7,7 +7,7 @@ public class StatisticsChess extends Statistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    final HashSet<StatisticsEnum> includedStatistics = new HashSet<>(List.of(
+    final HashSet<StatisticsEnum> acceptedStatistics = new HashSet<>(List.of(
             StatisticsEnum.ELO,
             StatisticsEnum.WIN_RATE,
             StatisticsEnum.WINS,
