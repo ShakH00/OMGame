@@ -38,7 +38,7 @@ public class Account {
      */
     private ArrayList<Account> friends;
 
-    private final HashMap<GamesEnum, IStatistics> statistics;
+    private final HashMap<GamesEnum, Statistics> statistics;
     private final ArrayList<MatchOutcomeHandler> matchHistory;
 
     /**

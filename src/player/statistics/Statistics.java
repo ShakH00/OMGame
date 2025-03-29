@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Statistics implements IStatistics {
     /**
-     * Set of statistics that are updated through special methods
+     * Set of statistics that are updated through special methods, and cannot be added to like other statistics
      */
     final HashSet<StatisticsEnum> complexStatistics = new HashSet<>(List.of(
         StatisticsEnum.ELO,
@@ -15,9 +15,9 @@ public abstract class Statistics implements IStatistics {
     ));
 
     /**
-     * Maps each StatisticsEnum in includedStatistics to some integer value
+     * Maps each StatisticsEnum in includedStatistics to some value (Integer or Double)
      */
-    final HashMap<StatisticsEnum, Integer> statistics = new HashMap<>();
+    final HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
 
     /**
      * Return an object that contains the combination of some set of other GameStatistics objects
@@ -26,23 +26,71 @@ public abstract class Statistics implements IStatistics {
      */
     public StatisticsCombined combineStatistics(HashSet<Statistics> setOfGameStatistics) {
         StatisticsCombined combinedStatistics = new StatisticsCombined();
+
+        // Used to calculate ELO mean.
+        int eloCount = 0;
+        int eloSum = 0;
+
         for (Statistics gameStatistics : setOfGameStatistics){
+            for (StatisticsEnum statistic : gameStatistics.statistics.keySet()){
+                // If the statistic is not complex, add it.
+                if (!isComplex(statistic)){
+                    Integer value = (Integer) gameStatistics.statistics.get(statistic);
+                    combinedStatistics.addStatistic(statistic, value);
+                }
+
+                // If the statistic is ELO, add it to the sum so the mean can be taken later.
+                else if (statistic == StatisticsEnum.ELO){
+                    eloCount += 1;
+                    eloSum += (int) gameStatistics.getStatistic(StatisticsEnum.ELO);
+                }
+            }
             combinedStatistics.addStatistics(gameStatistics.statistics);
         }
+        // set combined statistics Elo to average Elo for all included games
+        combinedStatistics.updateElo(eloSum/eloCount);
+
         return combinedStatistics;
     }
 
     /**
-     * Check if the statistics in the statistics HashMap can be added to the current statistics
-     * @param statistics    HashMap that assigns an integer value to some set of StatisticsEnums
+     * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
+     * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      * @return              True if it is possible to add statistics to the statistics HashMap
      */
-    public boolean canAddStatistics(HashMap<StatisticsEnum, Integer> statistics) {
+    public boolean canAddStatistics(HashMap<StatisticsEnum, Number> statistics) {
+        // For each statistic...
         for (StatisticsEnum statistic : statistics.keySet()){
-            if (!this.complexStatistics.contains(statistic)){
+            // Statistic must be possible for this game
+            if (!isAccepted(statistic)){
+                return false;
+            }
+
+            // Statistic must not be a complex statistic (these are updated through other methods)
+            if (isComplex(statistic)){
+                return false;
+            }
+
+            // Statistic must not be negative
+            else if ((int) statistics.get(statistic) < 0){
                 return false;
             }
         }
+
+        // Exactly one of WIN, LOSS, or DRAW is true.
+        if ((Integer) statistics.get(StatisticsEnum.WINS)
+                + (Integer) statistics.get(StatisticsEnum.LOSSES)
+                + (Integer) statistics.get(StatisticsEnum.DRAWS)
+                != 1)
+        {
+            return false;
+        }
+
+        // MATCHES_PLAYED should be 1
+        if ((Integer) statistics.get(StatisticsEnum.MATCHES_PLAYED) != 1){
+            return false;
+        }
+
         return true;
     }
 
@@ -50,30 +98,36 @@ public abstract class Statistics implements IStatistics {
      * Add the statistics HashMap to existing statistics
      * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
      */
-    public void addStatistics(HashMap<StatisticsEnum, Integer> statistics) {
-        if (canAddStatistics(statistics)){
-            for (StatisticsEnum key : statistics.keySet()){
-                int value = statistics.get(key);
-                addStatistic(key, value);
-            }
+    public void addStatistics(HashMap<StatisticsEnum, Number> statistics) {
+        for (StatisticsEnum key : statistics.keySet()){
+            Integer value = (Integer) statistics.get(key);
+            addStatistic(key, value);
         }
     }
 
-    private void addStatistic(StatisticsEnum statistic, int add){
-        Integer currentValue = this.statistics.get(statistic);
-        this.statistics.put(statistic, currentValue + add);
+    /**
+     * Increase a statistic by some value
+     * @param statistic StatisticEnum statistic to increase
+     * @param value     Integer value to increase statistic by
+     */
+    public void addStatistic(StatisticsEnum statistic, Integer value){
+        Integer currentValue = (Integer) this.statistics.get(statistic);
+        this.statistics.put(statistic, currentValue + value);
+
+        // update win rate
+        updateWinRate();
     }
 
     /**
      * Get the values of all statistics tracked for this game
      * @return          ArrayList containing the values of all statistics tracked for this game
      */
-    public ArrayList<Integer> getStatistics() {
-        ArrayList<Integer> statistics = new ArrayList<>();
-        for (StatisticsEnum statistic : includedStatistics) {
+    public Number[] getStatistics() {
+        ArrayList<Number> statistics = new ArrayList<>();
+        for (StatisticsEnum statistic : acceptedStatistics) {
             statistics.add(getStatistic(statistic));
         }
-        return statistics;
+        return statistics.toArray(new Number[0]);  // Java should automatically resize the array.
     }
 
     /**
@@ -81,10 +135,11 @@ public abstract class Statistics implements IStatistics {
      * @param order     ArrayList that is the ordered list of statistics to retrieve for this game
      * @return          ArrayList containing the values of the requested statistics in the same order
      */
-    public ArrayList<Integer> getStatistics(ArrayList<StatisticsEnum> order) {
-        ArrayList<Integer> statistics = new ArrayList<>();
-        for (StatisticsEnum statistic : order) {
-            statistics.add(getStatistic(statistic));
+    public Number[] getStatistics(StatisticsEnum[] order) {
+        Number[] statistics = new Number[order.length];
+        for (int i = 0; i < order.length; i++){
+            StatisticsEnum statistic = order[i];
+            statistics[i] = getStatistic(statistic);
         }
         return statistics;
     }
@@ -95,12 +150,47 @@ public abstract class Statistics implements IStatistics {
      * @return          int value associated with the StatisticsEnum input, or null if that statistic doesn't exist for
      *                  this game.
      */
-    public Integer getStatistic(StatisticsEnum statistic) {
-        if (includedStatistics.contains(statistic)){
+    public Number getStatistic(StatisticsEnum statistic) {
+        if (acceptedStatistics.contains(statistic)){
             return statistics.getOrDefault(statistic, 0);
         }
         else {
             return null;
         }
+    }
+
+    /**
+     * Update the Elo of the account for this game
+     * @param newElo    int for new Elo to use. Overwrites previous Elo.
+     */
+    public void updateElo(int newElo){
+        statistics.put(StatisticsEnum.ELO, newElo);
+    }
+
+    /**
+     * Recalculate the win rate statistic
+     */
+    private void updateWinRate() {
+        Double wins = (Double) statistics.get(StatisticsEnum.WINS);
+        Double losses = (Double) statistics.get(StatisticsEnum.LOSSES);
+        statistics.put(StatisticsEnum.WIN_RATE, wins/(wins + losses));
+    }
+
+    /**
+     * Return true if the statistic is complex, i.e. cannot be updated by simple addition
+     * @param statistic Statistic to query
+     * @return          True if the statistic is complex; false otherwise
+     */
+    private boolean isComplex(StatisticsEnum statistic){
+        return complexStatistics.contains(statistic);
+    }
+
+    /**
+     * Return true if the statistic applies to the game related to this Statistics object
+     * @param statistic Statistic to query
+     * @return          True if the statistic applies to the related game
+     */
+    private boolean isAccepted(StatisticsEnum statistic){
+        return acceptedStatistics.contains(statistic);
     }
 }

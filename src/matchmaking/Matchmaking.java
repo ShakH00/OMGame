@@ -26,6 +26,15 @@ public class Matchmaking {
         // Calculate expected scores based on current Elo ratings
         double expectedScore1 = calculateExpectedScore(elo1, elo2);
         double expectedScore2 = calculateExpectedScore(elo2, elo1);
+
+        double score1 = result;
+        double score2 = 1 - result;
+
+        int newElo1 = (int) Math.round(elo1 + kFactor * (score1 - expectedScore1));
+        int newElo2 = (int) Math.round(elo2 + kFactor * (score2 - expectedScore2));
+
+        player1.setElo(newElo1);
+        player2.setElo(newElo2);
     }
 
     /**
@@ -52,7 +61,23 @@ public class Matchmaking {
      */
 
     public boolean isMatchSuitable(Player player1, Player player2) {
-        return false;
+        int rating1 = player1.getElo();
+        int rating2 = player2.getElo();
+
+        // Base threshold
+        int baseThreshold = (rating1 < 1000 || rating2 < 1000) ? 150 : 100;
+
+        long now = System.currentTimeMillis();
+        long oldestJoinTime = Math.min(player1.getJoinTimestamp(), player2.getJoinTimestamp());
+        long waitTimeMillis = now - oldestJoinTime;
+
+        if (waitTimeMillis > 2 * 60 * 1000) { // after 2 minutes
+            baseThreshold = Integer.MAX_VALUE; // match with anyone
+        } else if (waitTimeMillis > 1 * 60 * 1000) { // after 1 minute
+            baseThreshold += 100;
+        } else if (waitTimeMillis > 30 * 1000) { // after 30 seconds
+            baseThreshold += 50;
+        }
     }
 
     /**

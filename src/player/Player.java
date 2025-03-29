@@ -51,5 +51,15 @@ public class Player {
         return account;
     }
 
+    private long joinTimestamp;
+
+    public void setJoinTimestamp(long timestamp) {
+        this.joinTimestamp = timestamp;
+    }
+
+    public long getJoinTimestamp() {
+        return this.joinTimestamp;
+    }
+
 
 }
