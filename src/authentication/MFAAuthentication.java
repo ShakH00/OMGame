@@ -1,7 +1,10 @@
 package authentication;
 
-public static void MFAAuthentication(String email) throws EmailAuthenticationFailedException {
-    Scanner sc = new Scanner(System.in);
+public static void MFAAuthentication {
+
+    public static void emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+
+    Scanner s = new Scanner(System.in);
     String code;
     if (testMode == false) {
         code = generateRandomCode();
@@ -13,14 +16,14 @@ public static void MFAAuthentication(String email) throws EmailAuthenticationFai
     System.out.println("Please enter verification code: ");
     String userInput = s.nextLine();
 
-    if(userInput.equals(code)) {
+    if (userInput.equals(code)) {
         System.out.println("Code verified");
-    }
-    else {
+    } else {
         throw new EmailAuthenticationFailedException("Invalid code entered!");
+        }
     }
-    public static String generateRandomCode() {
-        // Generates a random 6-digit code between 100000 and 999999 (inclusive)
+
+    public static String generateRandomCode () {
         int randomCode = ThreadLocalRandom.current().nextInt(100000, 1000000);
         return String.valueOf(randomCode);  // Return as a string
     }
