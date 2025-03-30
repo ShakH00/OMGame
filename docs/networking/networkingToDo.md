@@ -61,7 +61,7 @@
 
 - If Networking is complete, move temporarily to GUI to help implement buttons, matchmaking menus, or display of network state.
 
-- Implement Database code or file-based persistence if no one else is handling it.
+- Implement Database code.
 
 #### Files we Own or Co-Own
 
