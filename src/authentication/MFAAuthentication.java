@@ -1,6 +1,6 @@
 package authentication;
 
-public static void MFA(String email) throws EmailAuthenticationFailedException {
+public static void MFAAuthentication(String email) throws EmailAuthenticationFailedException {
     Scanner sc = new Scanner(System.in);
     String code;
     if (testMode == false) {
@@ -18,7 +18,7 @@ public static void MFA(String email) throws EmailAuthenticationFailedException {
     }
     else {
         throw new EmailAuthenticationFailedException("Invalid code entered!");
-}
+    }
     public static String generateRandomCode() {
         // Generates a random 6-digit code between 100000 and 999999 (inclusive)
         int randomCode = ThreadLocalRandom.current().nextInt(100000, 1000000);
