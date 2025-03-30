@@ -255,20 +255,55 @@ public class Account {
     }
 
     /**
-     * Updates the account information with new values for username, email, password, and phone number.
-     * This method uses internal setter methods to update each field.
+     * Updates the account information after validating all provided fields.
+     * Returns false and prints an error message if any input is invalid.
      *
      * @param username     The new display name for the account
-     * @param email        The new email address associated with the account
-     * @param password     The new password for the account
-     * @param phoneNumber  The new phone number associated with the account
+     * @param //email        The new email address to associate with the account
+     * @param //password     The new password for the account (must be at least 6 characters)
+     * @param //phoneNumber  The new phone number (must be at least 10 digits)
+     * @return             True if all fields are valid and update was successful, false otherwise
      */
 
-    public void updateAccountInfo(String username, String email, String password, String phoneNumber) {
+    // Validation methods for account input
+    private boolean isValidUsername(String username) {
+        return username != null && !username.trim().isEmpty();
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.contains("@") && email.contains(".");
+    }
+
+    private boolean isValidPassword(String password) {
+        return password != null && password.length() >= 6;
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber != null && phoneNumber.matches("\\d{10,}");
+    }
+    public boolean updateAccountInfo(String username, String email, String password, String phoneNumber) {
+        if (!isValidUsername(username)) {
+            System.out.println("Invalid username.");
+            return false;
+        }
+        if (!isValidEmail(email)) {
+            System.out.println("Invalid email.");
+            return false;
+        }
+        if (!isValidPassword(password)) {
+            System.out.println("Password must be at least 6 characters.");
+            return false;
+        }
+        if (!isValidPhoneNumber(phoneNumber)) {
+            System.out.println("Phone number must be at least 10 digits.");
+            return false;
+        }
+
         setUsername(username);
         setEmail(email);
         setPassword(password);
         setPhoneNumber(phoneNumber);
+        return true;
     }
 
     public String getPhoneNumber() {
