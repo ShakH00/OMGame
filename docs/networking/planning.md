@@ -19,13 +19,14 @@
 ### Integration 
 
 - **Game Logic** Discuss with first, as how to best suit their needs and wrap around their code. We can offer some feedback as to what helps us most.
-- **Authentication** Work closely with in a more cohesive manner as to 
-- **Leaderboard/Matchmaking**
-- **Integration**
-- **Website** Nova 
+- **Authentication** Work closely with in a more cohesive manner as to explain technical limitations and come up with a solution. 
+- **Leaderboard/Matchmaking** Work closely in a cohesive manner as to how to store game history and communicate it. 
+- **GUI** Work with GUI last as to how to surface network specific actions (connect, disconnect, authentication, etc.)
+- **Integration** Will have our code merged between Game Logic and GUI phases: **GL -> Net/Auth/LB/MM -> GUI**
+- **Website** Nova owns domain, CF Dashboard (DNS and Site Hosting on CF Pages), and Email hosting; speak to her RE: website/email changes for access. **Work on only if extra time!**
 
 ### Primary Goals
-- **First develop stubs that work on the client side as a failsafe**, then we can move to a functional + server based system afterwards
+- **First develop stubs that work on the client side as a failsafe**, then we can move to a functional + server based system afterwards.
 
 - Finalize a fully functional prototype of the networking system.
 
