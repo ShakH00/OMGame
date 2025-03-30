@@ -254,6 +254,13 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
+    public void updateAccountInfo(String username, String email, String password, String phoneNumber) {
+        setUsername(username);
+        setEmail(email);
+        setPassword(password);
+        setPhoneNumber(phoneNumber);
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
