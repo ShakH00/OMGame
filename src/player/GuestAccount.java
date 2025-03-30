@@ -37,9 +37,14 @@ public class GuestAccount {
      * @param email     Email for the new account
      * @param password  Password for the new account
      */
-    public void signUp(int id, String username, String email, String password) {
+    public void signUp(int id, String username, String email, String password, HashSet<GamesEnum> games) {
         if (this.isGuest()) {
+            // Save progress before converting the account
+            saveProgress(games);
+
+            // Convert the guest account to a permanent account
             this.account.convertToNonGuestAccount(id, username, email, password);
+            System.out.println("Sign-up successful! Progress has been saved.");
         } else {
             System.out.println("Player is already signed up.");
         }
