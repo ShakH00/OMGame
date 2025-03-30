@@ -6,3 +6,12 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
+
+loginHoverButton {
+    -fx-transition: all 0.3s ease;
+}
+
+.loginHoverButton:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <!-- Background -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -33,36 +33,34 @@
         <Label layoutX="350.0" layoutY="120.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(to right, #ff6699, #ffcc00, #33cc33, #0099ff, #9933ff);" text="LOGIN" />
 
         <!-- Username -->
-        <Label layoutX="300.0" layoutY="200.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-        <TextField layoutX="300.0" layoutY="225.0" prefWidth="200.0" />
+        <Label layoutX="270.0" layoutY="188.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE" />
+        <TextField layoutX="270.0" layoutY="220.0" prefHeight="25.0" prefWidth="273.0" promptText="Enter username" />
 
         <!-- Password -->
-        <Label layoutX="300.0" layoutY="270.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-        <PasswordField layoutX="300.0" layoutY="295.0" prefWidth="200.0" />
+        <Label layoutX="270.0" layoutY="270.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <PasswordField layoutX="273.0" layoutY="302.0" prefHeight="25.0" prefWidth="273.0" promptText="Enter password" />
 
         <!-- Buttons -->
-        <StackPane prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+        <StackPane layoutY="3.0" prefHeight="51.0" prefWidth="119.0" styleClass="hoverButton">
             <children>
-                <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/pink.png" />
                     </image>
                 </ImageView>
                 <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="RETURN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
-                    <font>
-                        <Font name="Retro Gaming" size="16.0" />
-                    </font>
+                <font>
+                    <Font size="15.0" />
+                </font>
                 </Text>
             </children>
         </StackPane>
 
-        <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+        <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton">
             <children>
                 <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -70,9 +68,9 @@
                     </image>
                 </ImageView>
                 <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SUBMIT" textAlignment="CENTER" wrappingWidth="118.7403564453125">
-                    <font>
-                        <Font name="Retro Gaming" size="16.0" />
-                    </font>
+                <font>
+                    <Font name="Retro Gaming" size="16.0" />
+                </font>
                 </Text>
             </children>
         </StackPane>
