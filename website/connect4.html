@@ -1,142 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Connect Four Tutorial</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fafafa;
-            text-align: center;
-            padding-top: 30px;
-        }
-        h1 {
-            color: #333;
-        }
-        .board {
-            display: grid;
-            grid-template-columns: repeat(7, 60px);
-            grid-template-rows: repeat(6, 60px);
-            gap: 5px;
-            justify-content: center;
-            background-color: #3498db;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 20px auto;
-        }
-        .cell {
-            width: 60px;
-            height: 60px;
-            background-color: #ecf0f1;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .red {
-            background-color: #e74c3c;
-        }
-        .yellow {
-            background-color: #f1c40f;
-        }
-        .disabled {
-            pointer-events: none;
-        }
-        #instruction {
-            font-size: 18px;
-            margin-top: 15px;
-        }
-        button {
-            padding: 8px 16px;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-<body>
-<h1>Connect Four Tutorial</h1>
-<div id="instruction">Click column 1 to start!</div>
-<div class="board" id="board"></div>
-<button onclick="resetGame()">Reset Game</button>
-<script>
-const userMoves = [0, 0, 0, 0];
-const yellowMoves = [1, 1, 1];
-const board = document.getElementById('board');
-let moveIndex = 0;
-
-function createBoard() {
-    board.innerHTML = '';
-    for (let i = 0; i < 42; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        board.appendChild(cell);
-    }
-}
-
-function resetGame() {
-    moveIndex = 0;
-    createBoard();
-    document.getElementById('instruction').textContent = 'Click column 1 to start!';
-    enableColumn(userMoves[moveIndex]);
-}
-
-function enableColumn(col) {
-    for (let row = 5; row >= 0; row--) {
-        const cell = board.children[row * 7 + col];
-        if (!cell.classList.contains('red') && !cell.classList.contains('yellow')) {
-            cell.onclick = () => userMove(col);
-            return;
-        }
-    }
-}
-
-function userMove(col) {
-    dropPiece(col, 'red');
-    if (checkWin('red')) {
-        document.getElementById('instruction').textContent = 'You won vertically! You can also win diagonally or horizontally.';
-        disableBoard();
-        return;
-    }
-
-    setTimeout(() => {
-        if (moveIndex < yellowMoves.length) {
-            dropPiece(yellowMoves[moveIndex], 'yellow');
-        }
-        moveIndex++;
-
-        if (moveIndex < userMoves.length) {
-            document.getElementById('instruction').textContent = `Good! Now click column ${userMoves[moveIndex] + 1}.`;
-            enableColumn(userMoves[moveIndex]);
-        }
-    }, 500);
-}
-
-function dropPiece(col, color) {
-    for (let row = 5; row >= 0; row--) {
-        const cell = board.children[row * 7 + col];
-        if (!cell.classList.contains('red') && !cell.classList.contains('yellow')) {
-            cell.classList.add(color);
-            break;
-        }
-    }
-}
-
-function disableBoard() {
-    document.querySelectorAll('.cell').forEach(cell => cell.onclick = null);
-}
-
-function checkWin(color) {
-    // Vertical check
-    for (let c = 0; c < 7; c++) {
-        for (let r = 0; r < 3; r++) {
-            if ([0,1,2,3].every(i => board.children[(r+i)*7+c].classList.contains(color))) {
-                return true;
+    <head>
+        <meta charset="UTF-8">
+        <title>Connect Four Tutorial</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #fafafa;
+                text-align: center;
+                padding-top: 30px;
             }
-        }
-    }
-    return false;
-}
+            h1 {
+                color: #333;
+            }
+            .board {
+                display: grid;
+                grid-template-columns: repeat(7, 60px);
+                grid-template-rows: repeat(6, 60px);
+                gap: 5px;
+                justify-content: center;
+                background-color: #3498db;
+                padding: 10px;
+                border-radius: 8px;
+                margin: 20px auto;
+            }
+            .cell {
+                width: 60px;
+                height: 60px;
+                background-color: #ecf0f1;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+            .red {
+                background-color: #e74c3c;
+            }
+            .yellow {
+                background-color: #f1c40f;
+            }
+            .disabled {
+                pointer-events: none;
+            }
+            #instruction {
+                font-size: 18px;
+                margin-top: 15px;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                margin-top: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Connect Four Tutorial</h1>
+        <div id="instruction">Click column 1 to start!</div>
+        <div class="board" id="board"></div>
+        <button onclick="resetGame()">Reset Game</button>
 
-resetGame();
-</script>
+        <script>
+            const userMoves = [0, 0, 0, 0];
+            const yellowMoves = [1, 1, 1];
+            const board = document.getElementById('board');
+            let moveIndex = 0;
 
-</body>
+            function createBoard() {
+                board.innerHTML = '';
+                for (let i = 0; i < 42; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    board.appendChild(cell);
+                }
+            }
+
+            function resetGame() {
+                moveIndex = 0;
+                createBoard();
+                document.getElementById('instruction').textContent = 'Click column 1 to start!';
+                enableColumn(userMoves[moveIndex]);
+            }
+
+            function enableColumn(col) {
+                for (let row = 5; row >= 0; row--) {
+                    const cell = board.children[row * 7 + col];
+                    if (!cell.classList.contains('red') && !cell.classList.contains('yellow')) {
+                        cell.onclick = () => userMove(col);
+                        return;
+                    }
+                }
+            }
+
+            function userMove(col) {
+                dropPiece(col, 'red');
+                if (checkWin('red')) {
+                    document.getElementById('instruction').textContent = 'You won vertically! You can also win diagonally or horizontally.';
+                    disableBoard();
+                    return;
+                }
+
+                setTimeout(() => {
+                    if (moveIndex < yellowMoves.length) {
+                        dropPiece(yellowMoves[moveIndex], 'yellow');
+                    }
+                    moveIndex++;
+
+                    if (moveIndex < userMoves.length) {
+                        document.getElementById('instruction').textContent = `Good! Now click column ${userMoves[moveIndex] + 1}.`;
+                        enableColumn(userMoves[moveIndex]);
+                    }
+                }, 500);
+            }
+
+            function dropPiece(col, color) {
+                for (let row = 5; row >= 0; row--) {
+                    const cell = board.children[row * 7 + col];
+                    if (!cell.classList.contains('red') && !cell.classList.contains('yellow')) {
+                        cell.classList.add(color);
+                        break;
+                    }
+                }
+            }
+
+            function disableBoard() {
+                document.querySelectorAll('.cell').forEach(cell => cell.onclick = null);
+            }
+
+            function checkWin(color) {
+                // Vertical check
+                for (let c = 0; c < 7; c++) {
+                    for (let r = 0; r < 3; r++) {
+                        if ([0,1,2,3].every(i => board.children[(r+i)*7+c].classList.contains(color))) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            resetGame();
+        </script>
+    </body>
 </html>

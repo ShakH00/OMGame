@@ -1,168 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkers Promotion and Capture Tutorial</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            padding-top: 30px;
-        }
-        .board {
-            width: 320px;
-            height: 320px;
-            margin: 20px auto;
-            display: grid;
-            grid-template: repeat(8, 1fr) / repeat(8, 1fr);
-            border: 2px solid #333;
-        }
-        .square {
-            width: 40px;
-            height: 40px;
-        }
-        .light {
-            background-color: #f0d9b5;
-        }
-        .dark {
-            background-color: #b58863;
-        }
-        .piece {
-            width: 34px;
-            height: 34px;
-            background-color: red;
-            border-radius: 50%;
-            margin: 3px auto;
-            cursor: pointer;
-        }
-        .king {
-            border: 3px solid gold;
-        }
-        .enemy {
-            background-color: black;
-        }
-        .highlight {
-            background-color: #6eff75 !important;
-            cursor: pointer;
-        }
-        #instruction {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        button {
-            margin-top: 15px;
-            padding: 6px 12px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-<h2>Checkers Promotion and Capture Tutorial</h2>
-<div id="instruction">Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.</div>
-<div class="board" id="board"></div>
-<button onclick="resetBoard()">Reset</button>
-
-<script>
-    const board = document.getElementById('board');
-    let piecePosition = 49;
-    let enemyPosition = null;
-    let isKing = false;
-
-    function createBoard() {
-        board.innerHTML = '';
-        for (let i = 0; i < 64; i++) {
-            const square = document.createElement('div');
-            square.classList.add('square');
-            square.classList.add((Math.floor(i / 8) + i % 8) % 2 === 0 ? 'light' : 'dark');
-            board.appendChild(square);
-        }
-        placePiece();
-        if (enemyPosition !== null) placeEnemy();
-    }
-
-    function placePiece() {
-        const squares = document.querySelectorAll('.square');
-        const piece = document.createElement('div');
-        piece.classList.add('piece');
-        if (isKing) piece.classList.add('king');
-        squares[piecePosition].appendChild(piece);
-        piece.onclick = highlightMoves;
-    }
-
-    function placeEnemy() {
-        const squares = document.querySelectorAll('.square');
-        const enemy = document.createElement('div');
-        enemy.classList.add('piece', 'enemy');
-        squares[enemyPosition].appendChild(enemy);
-    }
-
-    function highlightMoves() {
-        clearHighlights();
-        const squares = document.querySelectorAll('.square');
-        let moves = [];
-        if (piecePosition >= 8) moves.push(piecePosition - 9, piecePosition - 7);
-        if (isKing && piecePosition <= 55) moves.push(piecePosition + 7, piecePosition + 9);
-
-        moves.forEach(pos => {
-            if (pos >= 0 && pos < 64 && squares[pos].classList.contains('dark') && squares[pos].innerHTML === '') {
-                squares[pos].classList.add('highlight');
-                squares[pos].onclick = () => movePiece(pos);
+    <head>
+        <meta charset="UTF-8">
+        <title>Checkers Promotion and Capture Tutorial</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                background-color: #f0f0f0;
+                padding-top: 30px;
             }
-        });
-
-        if (isKing && enemyPosition !== null && (Math.abs(piecePosition - enemyPosition) === 9 || Math.abs(piecePosition - enemyPosition) === 7)) {
-            const jumpPos = enemyPosition + (enemyPosition - piecePosition);
-            if (jumpPos >= 0 && jumpPos < 64 && squares[jumpPos].innerHTML === '' && squares[jumpPos].classList.contains('dark')) {
-                squares[jumpPos].classList.add('highlight');
-                squares[jumpPos].onclick = () => capturePiece(jumpPos);
-                document.getElementById('instruction').textContent = 'Jump over the enemy piece to capture it!';
+            .board {
+                width: 320px;
+                height: 320px;
+                margin: 20px auto;
+                display: grid;
+                grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+                border: 2px solid #333;
             }
-        }
-    }
+            .square {
+                width: 40px;
+                height: 40px;
+            }
+            .light {
+                background-color: #f0d9b5;
+            }
+            .dark {
+                background-color: #b58863;
+            }
+            .piece {
+                width: 34px;
+                height: 34px;
+                background-color: red;
+                border-radius: 50%;
+                margin: 3px auto;
+                cursor: pointer;
+            }
+            .king {
+                border: 3px solid gold;
+            }
+            .enemy {
+                background-color: black;
+            }
+            .highlight {
+                background-color: #6eff75 !important;
+                cursor: pointer;
+            }
+            #instruction {
+                margin-top: 20px;
+                font-size: 18px;
+            }
+            button {
+                margin-top: 15px;
+                padding: 6px 12px;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Checkers Promotion and Capture Tutorial</h2>
+        <div id="instruction">Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.</div>
+        <div class="board" id="board"></div>
+        <button onclick="resetBoard()">Reset</button>
 
-    function movePiece(newPos) {
-        piecePosition = newPos;
-        updatePiece();
-        clearHighlights();
-        if (piecePosition < 8 && !isKing) {
-            isKing = true;
-            enemyPosition = 42;
-            document.getElementById('instruction').textContent = 'Your piece is now a king! An enemy appeared—click your piece and capture it by jumping over it.';
+        <script>
+            const board = document.getElementById('board');
+            let piecePosition = 49;
+            let enemyPosition = null;
+            let isKing = false;
+
+            function createBoard() {
+                board.innerHTML = '';
+                for (let i = 0; i < 64; i++) {
+                    const square = document.createElement('div');
+                    square.classList.add('square');
+                    square.classList.add((Math.floor(i / 8) + i % 8) % 2 === 0 ? 'light' : 'dark');
+                    board.appendChild(square);
+                }
+                placePiece();
+                if (enemyPosition !== null) placeEnemy();
+            }
+
+            function placePiece() {
+                const squares = document.querySelectorAll('.square');
+                const piece = document.createElement('div');
+                piece.classList.add('piece');
+                if (isKing) piece.classList.add('king');
+                squares[piecePosition].appendChild(piece);
+                piece.onclick = highlightMoves;
+            }
+
+            function placeEnemy() {
+                const squares = document.querySelectorAll('.square');
+                const enemy = document.createElement('div');
+                enemy.classList.add('piece', 'enemy');
+                squares[enemyPosition].appendChild(enemy);
+            }
+
+            function highlightMoves() {
+                clearHighlights();
+                const squares = document.querySelectorAll('.square');
+                let moves = [];
+                if (piecePosition >= 8) moves.push(piecePosition - 9, piecePosition - 7);
+                if (isKing && piecePosition <= 55) moves.push(piecePosition + 7, piecePosition + 9);
+
+                moves.forEach(pos => {
+                    if (pos >= 0 && pos < 64 && squares[pos].classList.contains('dark') && squares[pos].innerHTML === '') {
+                        squares[pos].classList.add('highlight');
+                        squares[pos].onclick = () => movePiece(pos);
+                    }
+                });
+
+                if (isKing && enemyPosition !== null && (Math.abs(piecePosition - enemyPosition) === 9 || Math.abs(piecePosition - enemyPosition) === 7)) {
+                    const jumpPos = enemyPosition + (enemyPosition - piecePosition);
+                    if (jumpPos >= 0 && jumpPos < 64 && squares[jumpPos].innerHTML === '' && squares[jumpPos].classList.contains('dark')) {
+                        squares[jumpPos].classList.add('highlight');
+                        squares[jumpPos].onclick = () => capturePiece(jumpPos);
+                        document.getElementById('instruction').textContent = 'Jump over the enemy piece to capture it!';
+                    }
+                }
+            }
+
+            function movePiece(newPos) {
+                piecePosition = newPos;
+                updatePiece();
+                clearHighlights();
+                if (piecePosition < 8 && !isKing) {
+                    isKing = true;
+                    enemyPosition = 42;
+                    document.getElementById('instruction').textContent = 'Your piece is now a king! An enemy appeared—click your piece and capture it by jumping over it.';
+                    createBoard();
+                }
+            }
+
+            function capturePiece(newPos) {
+                piecePosition = newPos;
+                enemyPosition = null;
+                updatePiece();
+                clearHighlights();
+                document.getElementById('instruction').textContent = 'Excellent! You captured the enemy piece by jumping over it.';
+            }
+
+            function updatePiece() {
+                document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+                placePiece();
+                if (enemyPosition !== null) placeEnemy();
+            }
+
+            function clearHighlights() {
+                document.querySelectorAll('.highlight').forEach(sq => {
+                    sq.classList.remove('highlight');
+                    sq.onclick = null;
+                });
+            }
+
+            function resetBoard() {
+                piecePosition = 49;
+                enemyPosition = null;
+                isKing = false;
+                document.getElementById('instruction').textContent = 'Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.';
+                createBoard();
+            }
+
             createBoard();
-        }
-    }
-
-    function capturePiece(newPos) {
-        piecePosition = newPos;
-        enemyPosition = null;
-        updatePiece();
-        clearHighlights();
-        document.getElementById('instruction').textContent = 'Excellent! You captured the enemy piece by jumping over it.';
-    }
-
-    function updatePiece() {
-        document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
-        placePiece();
-        if (enemyPosition !== null) placeEnemy();
-    }
-
-    function clearHighlights() {
-        document.querySelectorAll('.highlight').forEach(sq => {
-            sq.classList.remove('highlight');
-            sq.onclick = null;
-        });
-    }
-
-    function resetBoard() {
-        piecePosition = 49;
-        enemyPosition = null;
-        isKing = false;
-        document.getElementById('instruction').textContent = 'Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.';
-        createBoard();
-    }
-
-    createBoard();
-</script>
-</body>
+        </script>
+    </body>
 </html>
