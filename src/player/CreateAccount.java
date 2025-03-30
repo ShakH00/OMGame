@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class CreateAccount {
+
     public static Account createAccount() {
         Scanner scanner = new Scanner(System.in);
 
@@ -23,7 +24,12 @@ public class CreateAccount {
         scanner.close();
         return newAccount;
     }
-    public void generateAccountId(){}
+
+    private static int generateAccountId() {
+        // In a real system, this would come from your database
+        return (int) (Math.random() * 900000) + 100000; // 6-digit random ID
+    }
+
     private static String getValidUsername(Scanner scanner) {
         while (true) {
             System.out.print("Enter username (4-20 alphanumeric characters): ");
@@ -36,8 +42,21 @@ public class CreateAccount {
             System.out.println("Invalid username. Must be 4-20 alphanumeric characters.");
         }
     }
-    public void getValidEmail(){}
-    public String getValidPassword(Scanner scanner) {
+
+    private static String getValidEmail(Scanner scanner) {
+        while (true) {
+            System.out.print("Enter email: ");
+            String email = scanner.nextLine().trim();
+
+            if (Pattern.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$", email)) {
+                // In real system, check if email is already registered
+                return email;
+            }
+            System.out.println("Invalid email format. Please try again.");
+        }
+    }
+
+    private static String getValidPassword(Scanner scanner) {
         while (true) {
             System.out.print("Enter password (min 8 chars with letter and number): ");
             String password = scanner.nextLine();
@@ -54,7 +73,6 @@ public class CreateAccount {
                 return password;
             }
             System.out.println("Password must be at least 8 characters with both letters and numbers.");
-
         }
     }
 }

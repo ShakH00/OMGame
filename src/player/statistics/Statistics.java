@@ -20,40 +20,6 @@ public abstract class Statistics implements IStatistics {
     final HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
 
     /**
-     * Return an object that contains the combination of some set of other GameStatistics objects
-     * @param setOfGameStatistics   Which GameStatistics objects to include in the combination
-     * @return                      new immutable CombinedStatistics object that contains combined stats
-     */
-    public StatisticsCombined combineStatistics(HashSet<Statistics> setOfGameStatistics) {
-        StatisticsCombined combinedStatistics = new StatisticsCombined();
-
-        // Used to calculate ELO mean.
-        int eloCount = 0;
-        int eloSum = 0;
-
-        for (Statistics gameStatistics : setOfGameStatistics){
-            for (StatisticsEnum statistic : gameStatistics.statistics.keySet()){
-                // If the statistic is not complex, add it.
-                if (!isComplex(statistic)){
-                    Integer value = (Integer) gameStatistics.statistics.get(statistic);
-                    combinedStatistics.addStatistic(statistic, value);
-                }
-
-                // If the statistic is ELO, add it to the sum so the mean can be taken later.
-                else if (statistic == StatisticsEnum.ELO){
-                    eloCount += 1;
-                    eloSum += (int) gameStatistics.getStatistic(StatisticsEnum.ELO);
-                }
-            }
-            combinedStatistics.addStatistics(gameStatistics.statistics);
-        }
-        // set combined statistics Elo to average Elo for all included games
-        combinedStatistics.updateElo(eloSum/eloCount);
-
-        return combinedStatistics;
-    }
-
-    /**
      * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      * @return              True if it is possible to add statistics to the statistics HashMap
@@ -119,6 +85,14 @@ public abstract class Statistics implements IStatistics {
     }
 
     /**
+     * Return a list of statistics in StatisticsEnum that this game can have
+     * @return  StatisticsEnum[] of possible statistics for this game
+     */
+    public StatisticsEnum[] getAcceptedStatistics(){
+        return acceptedStatistics;
+    }
+
+    /**
      * Get the values of all statistics tracked for this game
      * @return          ArrayList containing the values of all statistics tracked for this game
      */
@@ -151,11 +125,11 @@ public abstract class Statistics implements IStatistics {
      *                  this game.
      */
     public Number getStatistic(StatisticsEnum statistic) {
-        if (acceptedStatistics.contains(statistic)){
+        if (isAccepted(statistic)){
             return statistics.getOrDefault(statistic, 0);
         }
         else {
-            return null;
+            return 0;
         }
     }
 
@@ -170,7 +144,7 @@ public abstract class Statistics implements IStatistics {
     /**
      * Recalculate the win rate statistic
      */
-    private void updateWinRate() {
+    void updateWinRate() {
         Double wins = (Double) statistics.get(StatisticsEnum.WINS);
         Double losses = (Double) statistics.get(StatisticsEnum.LOSSES);
         statistics.put(StatisticsEnum.WIN_RATE, wins/(wins + losses));
@@ -181,7 +155,7 @@ public abstract class Statistics implements IStatistics {
      * @param statistic Statistic to query
      * @return          True if the statistic is complex; false otherwise
      */
-    private boolean isComplex(StatisticsEnum statistic){
+    boolean isComplex(StatisticsEnum statistic){
         return complexStatistics.contains(statistic);
     }
 
@@ -191,6 +165,11 @@ public abstract class Statistics implements IStatistics {
      * @return          True if the statistic applies to the related game
      */
     private boolean isAccepted(StatisticsEnum statistic){
-        return acceptedStatistics.contains(statistic);
+        for (StatisticsEnum acceptedStatistic : acceptedStatistics){
+            if (statistic == acceptedStatistic){
+                return true;
+            }
+        }
+        return false;
     }
 }

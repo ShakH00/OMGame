@@ -11,7 +11,7 @@ interface IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    HashSet<StatisticsEnum> acceptedStatistics = new HashSet<>();
+    StatisticsEnum[] acceptedStatistics = StatisticsEnum.values();
 
     /**
      * Set of statistics that cannot be updated by simple addition/subtraction
@@ -22,13 +22,6 @@ interface IStatistics {
      * Maps each StatisticsEnum in includedStatistics to some value
      */
     HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
-
-    /**
-     * Return an object that contains the combination of some set of other GameStatistics objects
-     * @param setOfGameStatistics   Which GameStatistics objects to include in the combination
-     * @return                      new immutable CombinedStatistics object that contains combined stats
-     */
-    StatisticsCombined combineStatistics(HashSet<Statistics> setOfGameStatistics);
 
     /**
      * Check if the statistics HashMap can be added to the current statistics
