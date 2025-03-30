@@ -1,6 +1,13 @@
 package authentication;
 
-public static void MFAAuthentication {
+import ExceptionsAuthentication.MFAAuthenticationFailedException;
+
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class MFAAuthentication {
+
+    protected static boolean testMode = false;
 
     public static void emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
 
@@ -19,7 +26,7 @@ public static void MFAAuthentication {
     if (userInput.equals(code)) {
         System.out.println("Code verified");
     } else {
-        throw new EmailAuthenticationFailedException("Invalid code entered!");
+        throw new MFAAuthenticationFailedException("Invalid code entered!");
         }
     }
 
