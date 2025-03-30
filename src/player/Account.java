@@ -254,4 +254,8 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
 }
