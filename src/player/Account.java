@@ -254,6 +254,16 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * Updates the account information with new values for username, email, password, and phone number.
+     * This method uses internal setter methods to update each field.
+     *
+     * @param username     The new display name for the account
+     * @param email        The new email address associated with the account
+     * @param password     The new password for the account
+     * @param phoneNumber  The new phone number associated with the account
+     */
+
     public void updateAccountInfo(String username, String email, String password, String phoneNumber) {
         setUsername(username);
         setEmail(email);
