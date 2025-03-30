@@ -3,7 +3,11 @@ body {
 	text-align: center;
 	background-color: #9ed2e4;
 	color: #fff;
-	padding: 20px;
+	padding-top: 90px;
+}
+
+h1 {
+	font-size: 45px;
 }
 
 .board {

@@ -8,6 +8,23 @@
     </head>
 
     <body>
+        <div class="header">
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
+            <div class="header-center">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="#" class="signup-btn">Sign up</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </div>
+
+        <div class="scroll-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
+        </div>
+
         <h1>Tic Tac Toe</h1>
         <div class="board" id="board"></div>
         <button class="button" onclick="resetGame()">Reset Game</button>
@@ -21,6 +38,10 @@
                 <p id="popup-text"><strong>Click to start!</strong></p>
             </div>
         </div>
+
+<!--        <div class="footer">-->
+<!--            &copy; 2025 OMG Platform | Created by dreamers, for players. | Contact us at contact@omgame.club-->
+<!--        </div>-->
 
         <script>
             const winPatterns = [
