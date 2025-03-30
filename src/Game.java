@@ -1,18 +1,18 @@
-interface Game {
-    Player player1 = new Player();
-    Player player2 = new Player();
-    int score1 = 0, score2 = 0;
-    GameType gameType = null;
-    GameState gameState = null;
-    Board board = new Board(gameType);
-    //Piece selectedPiece = new Piece();
-    GameRules gameRules = new GameRules();
+abstract class Game {
+    Player player1;
+    Player player2;
+    int score1, score2;
+    GameType gameType;
+    GameState gameState;
+    Board board;
+    //Piece selectedPiece;
+    GameRules gameRules;
 
-    public void move(Piece piece);
+    abstract void move(Piece piece);
 
-    public void checkWinCondition();
+    abstract void checkWinCondition();
 
-    public void surrender();
+    abstract void surrender();
 
-    public void matchOutcome();
+    abstract void matchOutcome();
 }
