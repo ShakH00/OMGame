@@ -50,11 +50,13 @@ h1 {
 	background-color: #ff79c6;
 	color: white;
 	cursor: pointer;
-	transition: background 0.2s;
+    transition: background 0.3s ease, transform 0.3s ease;
+
 }
 
 .button:hover {
-	background-color: #ff92da;
+    transform: scale(1.05);
+	background-color: #fb88ca;
 }
 
 .show {
