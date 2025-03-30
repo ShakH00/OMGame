@@ -1,5 +1,5 @@
 abstract class Game {
-    Player player1;
+    public Player player1;
     Player player2;
     int score1, score2;
     GameType gameType;

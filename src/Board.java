@@ -29,6 +29,19 @@ public class Board{
         board = new Piece[rows][cols];
     }
 
+    public void fillBoard(GameType gameType)
+    {
+        if(gameType == GameType.CHESS)
+        {
+            // Method to fill board with chess pieces
+        }
+
+        else if(gameType == GameType.CHECKERS)
+        {
+            // Method to fill board with checkers pieces
+        }
+    }
+
     public void displayBoard(){
 
     }

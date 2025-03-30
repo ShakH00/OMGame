@@ -1,4 +1,5 @@
 public class Chess extends Game{
+
     public void move(Piece piece) {
 
     }

@@ -1,7 +1,9 @@
 public class Player {
     private String team;
 
-
+    public Player() {
+        System.out.println("Player Constructor");
+    }
 
     private int getWinCount() {
 
