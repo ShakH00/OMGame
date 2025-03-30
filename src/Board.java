@@ -46,6 +46,32 @@ public class Board{
 
     }
 
+    public int getRows()
+    {
+        return rows;
+    }
+
+    public int getCols()
+    {
+        return cols;
+    }
+
+    public boolean isFull()
+    {
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                if(board[i][j] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public Piece[][] getBoardState(){
         return board;
     }
