@@ -111,5 +111,4 @@ public class Matchmaking {
     public void removeFromQueue(Player player, ArrayList<Player> playerPool) {
         playerPool.remove(player);
     }
-
 }
