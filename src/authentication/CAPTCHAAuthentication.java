@@ -1,5 +1,7 @@
 package authentication;
 
+import java.util.Random;
+
 public class CAPTCHAAuthentication {
 
     public static int generateMathProblem () {
