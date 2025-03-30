@@ -2,123 +2,103 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Tic Tac Toe Tutorial</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                background-color: #f0f8ff;
-                padding: 20px;
-            }
-            h1 {
-                color: #333;
-            }
-            .board {
-                display: grid;
-                grid-template-columns: 100px 100px 100px;
-                grid-gap: 5px;
-                justify-content: center;
-                margin: 20px auto;
-            }
-            .cell {
-                width: 100px;
-                height: 100px;
-                background-color: #fff;
-                border: 2px solid #333;
-                font-size: 48px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-            }
-            .cell.disabled {
-                cursor: default;
-                background-color: #ddd;
-            }
-            #instruction {
-                margin-top: 20px;
-                font-size: 18px;
-            }
-            button {
-                margin-top: 20px;
-                padding: 8px 16px;
-                font-size: 16px;
-            }
-        </style>
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="all.css">
+        <link rel="stylesheet" href="tictactoe.css">
     </head>
 
     <body>
-        <h1>Tic Tac Toe Tutorial</h1>
-        <div class="board" id="board">
-            <div class="cell" id="cell-0"></div>
-            <div class="cell" id="cell-1"></div>
-            <div class="cell" id="cell-2"></div>
-            <div class="cell" id="cell-3"></div>
-            <div class="cell" id="cell-4"></div>
-            <div class="cell" id="cell-5"></div>
-            <div class="cell" id="cell-6"></div>
-            <div class="cell" id="cell-7"></div>
-            <div class="cell" id="cell-8"></div>
+        <h1>Tic Tac Toe</h1>
+        <div class="board" id="board"></div>
+        <button class="button" onclick="resetGame()">Reset Game</button>
+
+        <div class="overlay" id="TTToverlay" onclick="closePopup()"></div>
+        <div class="container" id="TTTpopupBox">
+            <img class="popup-tetriscat" src="assets/tetrisCat1.GIF" alt=""/>
+            <div class="contact-box">
+                <div class="sos-box">SOS!!</div>
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <p id="popup-text"><strong>Click to start!</strong></p>
+            </div>
         </div>
-        <p id="instruction">Click on the top-left cell to start.</p>
-        <button onclick="resetGame()">Reset Game</button>
 
         <script>
-            const tutorialMoves = [0, 4, 8];
-            const computerMoves = [1, 2];
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            const cellPositions = [
+                "top-left", "top-middle", "top-right",
+                "middle-left", "middle", "middle-right",
+                "bottom-left", "bottom-middle", "bottom-right"
+            ];
+            let currentWinPattern = [];
             let moveCount = 0;
-
-            resetGame();
 
             function resetGame() {
                 moveCount = 0;
-                document.querySelectorAll('.cell').forEach(cell => {
-                    cell.textContent = '';
-                    cell.classList.add('disabled');
-                    cell.onclick = null;
-                });
-                document.getElementById('instruction').textContent = 'Click on the top-left cell to start.';
-                enableCell(tutorialMoves[moveCount]);
+                currentWinPattern = winPatterns[Math.floor(Math.random() * winPatterns.length)];
+                document.getElementById("board").innerHTML = "";
+                for (let i = 0; i < 9; i++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("cell", "disabled");
+                    cell.id = `cell-${i}`;
+                    cell.onclick = () => makeMove(i);
+                    document.getElementById("board").appendChild(cell);
+                }
+                showPopup(`<strong>Hi! Welcome to TicTacToe instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Click the ${cellPositions[currentWinPattern[0]]} square to begin!`);
+                enableCell(currentWinPattern[0]);
             }
 
             function enableCell(index) {
-                const cell = document.getElementById(`cell-${index}`);
-                cell.classList.remove('disabled');
-                cell.onclick = () => {
-                    cell.textContent = 'X';
-                    cell.classList.add('disabled');
-                    cell.onclick = null;
-
-                    moveCount++;
-
-                    if (moveCount <= computerMoves.length) {
-                        setTimeout(() => {
-                            computerTurn(computerMoves[moveCount - 1]);
-                        }, 500);
-                    }
-
-                    if (moveCount < tutorialMoves.length) {
-                        document.getElementById('instruction').textContent = `Good job! Now click cell ${tutorialMoves[moveCount] + 1}.`;
-                        enableCell(tutorialMoves[moveCount]);
-                    } else {
-                        document.getElementById('instruction').textContent = 'You won diagonally! You can also win vertically or horizontally. Click reset to play again.';
-                        endGame();
-                    }
-                };
+                document.getElementById(`cell-${index}`).classList.remove("disabled");
             }
 
-            function computerTurn(index) {
+            function makeMove(index) {
                 const cell = document.getElementById(`cell-${index}`);
-                cell.textContent = 'O';
-                cell.classList.add('disabled');
+                if (cell.classList.contains("disabled")) return;
+
+                cell.innerHTML = "<span>X</span>";
+                cell.classList.add("disabled");
+                moveCount++;
+
+                if (moveCount < currentWinPattern.length) {
+                    const nextMove = currentWinPattern[moveCount];
+                    showPopup(`Nice! Now click the ${cellPositions[nextMove]} square.`);
+                    enableCell(nextMove);
+                    setTimeout(() => computerMove(), 500);
+                } else {
+                    showPopup("You won! Click reset to play again.");
+                }
             }
 
-            function endGame() {
-                document.querySelectorAll('.cell').forEach(cell => {
-                    cell.classList.add('disabled');
-                    cell.onclick = null;
+            function computerMove() {
+                let availableCells = Array.from(document.querySelectorAll('.cell:not(.disabled)'));
+                let safeCells = availableCells.filter(cell => {
+                    let cellIndex = parseInt(cell.id.replace('cell-', ''));
+                    return !currentWinPattern.includes(cellIndex);
                 });
+
+                if (safeCells.length > 0) {
+                    let randomCell = safeCells[Math.floor(Math.random() * safeCells.length)];
+                    randomCell.innerHTML = "<span>O</span>";
+                    randomCell.classList.add("disabled");
+                }
             }
+
+            function showPopup(text) {
+                document.getElementById("popup-text").innerHTML = text;
+                document.getElementById("TTTpopupBox").classList.add("show");
+                document.getElementById("TTToverlay").classList.add("show");
+            }
+
+            function closePopup() {
+                document.getElementById("TTTpopupBox").classList.remove("show");
+                document.getElementById("TTToverlay").classList.remove("show");
+            }
+
+            resetGame();
         </script>
     </body>
 </html>

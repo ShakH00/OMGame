@@ -204,7 +204,7 @@ body {
 	padding: 40px 30px 30px;
 	border-radius: 25px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-	max-width: 400px;
+	width: 400px;
 	position: relative;
 }
 
