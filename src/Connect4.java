@@ -1,5 +1,4 @@
 public class Connect4 extends Game {
-
     public Connect4() {
         super.player1 = new Player();
         super.player2 = new Player();
@@ -10,6 +9,10 @@ public class Connect4 extends Game {
         super.gameState = GameState.SETUP;
         super.gameRules = new GameRules();
     }
+
+    Connect4Piece piece1 = new Connect4Piece("red", PieceType.LIGHT, super.player1);
+    Connect4Piece piece2 = new Connect4Piece("blue", PieceType.DARK, super.player2);
+
     void move(Piece piece) {
 
     }

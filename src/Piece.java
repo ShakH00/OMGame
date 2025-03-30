@@ -8,8 +8,6 @@
  * @author Abdulrahman
  */
 abstract class Piece {
-    private int x;
-    private int y;
     private String colour;
     private Player ownedBy;
     private int score;
@@ -17,51 +15,15 @@ abstract class Piece {
 
     /**
      * Constructor
-     * @param x: int, row
-     * @param y: int, column
      * @param colour: String, colour
      * @param ownedBy: Player, player who owns the piece
      * @param score: int
      */
-    public Piece(int x, int y, String colour, PieceType pieceType, Player ownedBy, int score){
-        this.x = x;
-        this.y = y;
+    public Piece(String colour, PieceType pieceType, Player ownedBy, int score){
         this.colour = colour;
         this.pieceType = pieceType;
         this.ownedBy = ownedBy;
         this.score = score;
-    }
-
-    /**
-     * Set new X value
-     * @param newX: int, new row value
-     */
-    public void setX(int newX){
-        this.x = newX;
-    }
-
-    /**
-     * Set new Y value
-     * @param newY: int, new column value
-     */
-    public void setY(int newY){
-        this.y = newY;
-    }
-
-    /**
-     * Get current x location
-     * @return x: int
-     */
-    public int getX(){
-        return this.x;
-    }
-
-    /**
-     * Get current y value
-     * @return y: int
-     */
-    public int getY(){
-        return this.y;
     }
 
     /**
