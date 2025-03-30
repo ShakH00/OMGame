@@ -1,10 +1,12 @@
 package authentication;
 
+import ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
+
 import java.util.Random;
 
 public class CAPTCHAAuthentication {
 
-    public static int generateMathProblem () {
+    public static int generateProblem () {
         Random rand = new Random();
         int a = rand.nextInt(10) + 1;
         int b = rand.nextInt(10) + 1;
@@ -42,11 +44,11 @@ public class CAPTCHAAuthentication {
             if (userAnswer == correctAnswer) {
                 System.out.println("CAPTCHA verified");
             } else {
-                throw new CAPTCHAException("Invalid answer entered!");
+                throw new CAPTCHAAuthenticationFailedException("Invalid answer entered!");
             }
 
         } catch (NumberFormatException e) {
-            throw new CAPTCHAException("Invalid input format! Please enter a number.");
+            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
         }
     }
 }
