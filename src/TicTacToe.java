@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    // Create a 3x3 Tic-Tac-Toe Board for char
+    // Create a 3x3 Tic-Tac-Toe Board with char
     private char[][] board;
     private char currentPlayer;
 
