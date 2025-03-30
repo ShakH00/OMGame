@@ -16,7 +16,16 @@
 
 ## P3
 
+### Integration 
+
+- **Game Logic** Discuss with first, as how to best suit their needs and wrap around their code. We can offer some feedback as to what helps us most.
+- **Authentication** Work closely with in a more cohesive manner as to 
+- **Leaderboard/Matchmaking**
+- **Integration**
+- **Website** Nova 
+
 ### Primary Goals
+- **First develop stubs that work on the client side as a failsafe**, then we can move to a functional + server based system afterwards
 
 - Finalize a fully functional prototype of the networking system.
 
