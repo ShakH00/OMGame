@@ -95,7 +95,7 @@ public class Connect4 extends Game {
                 {
                     counter++;
                 }
-                else if(counter != 4)
+                else if(counter < 4)
                 {
                     counter = 0;
                 }
@@ -114,7 +114,7 @@ public class Connect4 extends Game {
                 {
                     counter++;
                 }
-                else if(counter != 4)
+                else if(counter < 4)
                 {
                     counter = 0;
                 }
