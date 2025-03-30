@@ -86,6 +86,45 @@ public class Connect4 extends Game {
     // Check for win in given row
     boolean winInRow(int row)
     {
+        int counter = 0;
+        if(gameState == GameState.P1_TURN)
+        {
+            for(int col = 0; col < board.getCols(); col++)
+            {
+                if(board.board[row][col] == piece1)
+                {
+                    counter++;
+                }
+                else if(counter != 4)
+                {
+                    counter = 0;
+                }
+            }
+
+            if(counter >= 4)
+            {
+                return true;
+            }
+        }
+        else if(gameState == GameState.P2_TURN)
+        {
+            for(int col = 0; col < board.getCols(); col++)
+            {
+                if(board.board[row][col] == piece2)
+                {
+                    counter++;
+                }
+                else if(counter != 4)
+                {
+                    counter = 0;
+                }
+            }
+
+            if(counter >= 4)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
