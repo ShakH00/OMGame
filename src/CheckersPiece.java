@@ -19,8 +19,8 @@ public class CheckersPiece extends MovingPiece {
      * @param ownedBy: the player who owns the piece
      * @param score: score of the piece once captured
      */
-    public CheckersPiece(int x, int y, String colour, Player ownedBy, int score){
-        super(x, y, colour, ownedBy, score);
+    public CheckersPiece(int x, int y, String colour,  PieceType pieceType, Player ownedBy, int score){
+        super(x, y, colour, pieceType, ownedBy, score);
         this.isKing = false;
     }
 

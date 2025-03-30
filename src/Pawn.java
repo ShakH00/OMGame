@@ -15,8 +15,8 @@ public class Pawn extends MovingPiece{
      * @param colour: pawn colour
      * @param ownedBy: player who owns the pawn
      */
-    public Pawn(int x, int y, String colour, Player ownedBy){
-        super(x, y, colour, ownedBy, 1);
+    public Pawn(int x, int y, String colour, PieceType pieceType,  Player ownedBy){
+        super(x, y, colour, pieceType, ownedBy, 1);
         firstMove = false;
     }
 
@@ -70,6 +70,8 @@ public class Pawn extends MovingPiece{
      * @param gameBoard: board being played on
      * @return true if this is a valid move
      */
+
+    //WILL BE REWORKED A BIT NOW THAT WE HAVE PIECETYPE!!!!
     @Override
     boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         Piece[][] board = gameBoard.getBoardState();

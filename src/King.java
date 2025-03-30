@@ -10,8 +10,8 @@
 public class King extends MovingPiece{
     private boolean firstMove;
 
-    public King(int x, int y, String colour, Player ownedBy, int score){
-        super(x, y, colour, ownedBy, -1);
+    public King(int x, int y, String colour, PieceType pieceType,  Player ownedBy){
+        super(x, y, colour, pieceType, ownedBy, -1);
         this.firstMove = false;
     }
 
@@ -31,12 +31,38 @@ public class King extends MovingPiece{
             setX(newX);
             setY(newY);
             board[newX][newY] = this;
+            if(!firstMove){
+                firstMove = true;
+            }
         }
     }
 
+    /**
+     * A method to check if the tile the King is being moved to is a valid move
+     * Some notes on how the King can be moved in Chess:
+     * 1. A king can only move one tile, in any direction.
+     * 2. There is a special move however, castling, where, if the king hasn't moved once yet, and neither
+     *      was one of the rooks, with absolutely no piece in between them to stop it, then the rook and king
+     *      will effectively alternate positions ending up side by side, clearing the edge
+     * A king cannot move into a tile if it would cause him to end up in check, or checkmate
+     * @param currentX: current x coordinate of king's location
+     * @param currentY: current y coordinate of king's location
+     * @param newX: x coordinate of tile that the king might be moved to
+     * @param newY: y coordinate of tile that the king might be moved to
+     * @param gameBoard: board being played on
+     * @return true if this is a valid move to perform for the king
+     */
     @Override
     boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        return false;
+        boolean out = false;
+        Piece[][] board = gameBoard.getBoardState();
+        PieceType pieceType = this.getPieceType();
+        if(board[newX][newY] == null){
+            //need to check for if moving here might put king in check
+            //need to check if trying to castle
+            out = false;
+        }
+        return out;
     }
 
 

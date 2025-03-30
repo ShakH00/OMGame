@@ -4,6 +4,8 @@
  * Each piece also requires a colour which is a visual indicator of which player it belongs to
  * Each piece holds an ownedBy attribute which is the Player that it belongs to
  * Each piece has a score value when it comes to its worth
+ *
+ * @author Abdulrahman
  */
 abstract class Piece {
     private int x;
@@ -11,6 +13,7 @@ abstract class Piece {
     private String colour;
     private Player ownedBy;
     private int score;
+    private PieceType pieceType;
 
     /**
      * Constructor
@@ -20,10 +23,11 @@ abstract class Piece {
      * @param ownedBy: Player, player who owns the piece
      * @param score: int
      */
-    public Piece(int x, int y, String colour, Player ownedBy, int score){
+    public Piece(int x, int y, String colour, PieceType pieceType, Player ownedBy, int score){
         this.x = x;
         this.y = y;
         this.colour = colour;
+        this.pieceType = pieceType;
         this.ownedBy = ownedBy;
         this.score = score;
     }
@@ -82,6 +86,14 @@ abstract class Piece {
      */
     public Player getOwnedBy(){
         return this.ownedBy;
+    }
+
+    /**
+     * Get the piece type (LIGHT or DARK)
+     * @return pieceType: PieceType
+     */
+    public PieceType getPieceType(){
+        return this.pieceType;
     }
 
 }

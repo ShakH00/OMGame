@@ -11,8 +11,8 @@
  */
 abstract class MovingPiece extends Piece{
 
-    public MovingPiece(int x, int y, String colour, Player ownedBy, int score){
-        super(x, y, colour, ownedBy, score);
+    public MovingPiece(int x, int y, String colour, PieceType pieceType,  Player ownedBy, int score){
+        super(x, y, colour, pieceType, ownedBy, score);
     }
 
     abstract void move(int currentX, int currentY, int newX, int newY, Board gameBoard);
