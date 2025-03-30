@@ -1,6 +1,9 @@
 ## Networking System – Code Behavior & Structure (P3 Edition)
+
 ## Iteration: P3
+
 ## Audience: Internal developers, integration teams (GUI/Game Logic), testing/support
+
 ## Purpose: Explain networking system logic and responsibilities without requiring deep code inspection
 
 ## 1. System Overview
@@ -177,11 +180,12 @@
 - Decide whether PlayerDatabase is memory-only or file-backed
 
 ## 5. Stub Status Overview
-| Function             | File                        | Status      |
-|----------------------|-----------------------------|-------------|
-| sendButtonNum(...)   | GameServerT.java            | 🟡 Stubbed  |
-| send2dCharArray(...) | GameServerT.java            | 🟡 Stubbed  |
-| receiveButtonNum()   | PlayerT.java                | 🟡 Stubbed  |
-| sendButtonNum()      | PlayerT.java                | 🟡 Stubbed  |
-| run()                | ClientSideConnection.java   | 🟡 Stubbed  |
-| run()                | ServerSideConnection.java	  | 🟡 Stubbed  |
+
+| Function             | File                      | Status     |
+| -------------------- | ------------------------- | ---------- |
+| sendButtonNum(...)   | GameServerT.java          | 🟡 Stubbed |
+| send2dCharArray(...) | GameServerT.java          | 🟡 Stubbed |
+| receiveButtonNum()   | PlayerT.java              | 🟡 Stubbed |
+| sendButtonNum()      | PlayerT.java              | 🟡 Stubbed |
+| run()                | ClientSideConnection.java | 🟡 Stubbed |
+| run()                | ServerSideConnection.java | 🟡 Stubbed |

@@ -1,6 +1,7 @@
-#  To-Do
+# To-Do
 
 ## 1. Finalize & Refine Networking Documentation
+
 ### Objective: Ensure everything is clear, consistent, and non-contradictory before any coding.
 
 ##### Review and refine:
@@ -18,6 +19,7 @@
 ##### Update meetingNotes.md with clear summaries of what’s been decided or postponed.
 
 ## 2. Contribute to Project Planning & Timeline Definition
+
 ### Objective: Help your team stay ahead by clearly outlining when and how networking should evolve.
 
 #### Review and revise:
@@ -30,6 +32,7 @@
 - Inter-team dependencies (e.g., Profile Matchmaking feeds into PlayerData.java structure).
 
 ## 3. Support Stub Implementation with Context
+
 ### Objective: Guide and support without jumping into major code unless assigned.
 
 - Help annotate GameServerT.java and PlayerData.java with insights, assumptions, or next steps.
@@ -39,6 +42,7 @@
 - Contribute simple utility code or suggestions for player state syncing, reconnection handling, etc., only when needed.
 
 ## 4. Meet + Collaborate with Other Teams
+
 ### Objective: Keep other branches informed and in sync with networking decisions.
 
 - Help organize feedback loops across:
@@ -52,6 +56,7 @@
 - Work with team leads to ensure integration doesn't break inter-team logic.
 
 ## 5. Stretch Goals (Only if Needed)
+
 #### Objective: Fill in other areas if time allows.
 
 - If Networking is complete, move temporarily to GUI to help implement buttons, matchmaking menus, or display of network state.
@@ -60,11 +65,11 @@
 
 #### Files we Own or Co-Own
 
-- apiDocumentation.md 
+- apiDocumentation.md
 - networkingCodeExplanation.md
-- planning.md 
-- flowchartPlan.md 
-- error_handling_ideas.md 
+- planning.md
+- flowchartPlan.md
+- error_handling_ideas.md
 - tentative_matchmaking_sessions_ideas.md
 
 ##### Diagrams for:

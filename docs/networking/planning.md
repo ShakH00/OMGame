@@ -3,13 +3,17 @@
 ## P3 Edition
 
 ## Docs
+
 - [FigJam Diagram](https://www.figma.com/board/dpFR9WEMYuxA74ZvipXcZc/process-loop?node-id=1-25&t=nhEXUiFAzE8vcAcv-1)
 - [Google Doc Plan](https://docs.google.com/document/d/1O3nZ0WbedHbkeMzC8PnDiTGf0OVOONgV-Xe5WJszYR0/edit?usp=sharing)
+
 ### Networking Implementation
+
 - https://www.youtube.com/watch?v=HQoWN28H80w
 - https://www.youtube.com/watch?v=gLfuZrrfKes
 
 ### Iteration Deliverable Requirements
+
 ## P3
 
 ### Primary Goals
@@ -26,8 +30,8 @@
 
 - Prepare for video demos and individual deliverables.
 
-
 ## Subteam Tasks (Based on Current Division)
+
 ### 🔹 Hatem + Nova — Docs + Planning + Code
 
 #### ✅ Refine all documentation for P3:
@@ -46,7 +50,7 @@
 
 - Game flow / client-server interaction diagrams ✅
 
-- Game class diagram 
+- Game class diagram
 
 - Use case Diagram
 
@@ -55,6 +59,7 @@
 ##### 📌 Final check and review of all P3 documents
 
 ### 🔹 Sultan + Uzair — Code + Research
+
 ✅ Analyze GameServerT.java, PlayerT.java, PlayerData.java, PlayerDatabase.java
 
 ✅ Identify and implement networking stub functions
@@ -110,17 +115,17 @@ Incorporate chat feature if feasible (stretch goal)
 
 - Reflect on testing + future improvements
 
-##  Individual Deliverables (P3)
+## Individual Deliverables (P3)
 
 ### Each member must submit to D2L:
 
-- [UCID]_worklog_p3.xlsx
+- [UCID]\_worklog_p3.xlsx
 
-- [UCID]_peer_evaluations_p3.xlsx
+- [UCID]\_peer_evaluations_p3.xlsx
 
-- [UCID]_reflection_p3.pdf
+- [UCID]\_reflection_p3.pdf
 
-- [UCID]_tech_demo_pNN.mp4 + timestamp file
+- [UCID]\_tech_demo_pNN.mp4 + timestamp file
 
 - AI disclosure (if applicable)
 
