@@ -123,18 +123,72 @@ public class Connect4 extends Game {
     // Check for win in given column
     boolean winInCol(int col, Piece piece)
     {
+        int counter = 0;
+        for (int row = 0; row < board.getRows(); row++)
+        {
+            Piece current = board.getBoardState()[row][col];
+            if (current != null && current.getColour().equals(piece.getColour()))
+            {
+                counter++;
+                if (counter >= 4) return true;
+            } else
+            {
+                counter = 0;
+            }
+        }
         return false;
     }
 
     // Check for win in a backslash diagonal
     boolean winInDiagonalBackslash(Piece piece)
     {
+        Piece[][] state = board.getBoardState();
+        int rows = board.getRows();
+        int cols = board.getCols();
+        for (int row = 0; row <= rows - 4; row++)   // Loop through the rows except the last 4 since we're checking diagonal
+        {
+            for (int col = 0; col <= cols - 4; col++) // Loop through columns except the last 4
+            {
+                boolean match = true;
+                for (int i = 0; i < 4; i++)
+                {
+                    Piece current = state[row + i][col + i];
+                    if (current == null || !current.getColour().equals(piece.getColour()))
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
+            }
+        }
         return false;
     }
 
     // Check for win in a frontslash diagonal
     boolean winInDiagonalFrontslash(Piece piece)
     {
+        Piece[][] state = board.getBoardState();
+        int rows = board.getRows();
+        int cols = board.getCols();
+
+        for (int row = 3; row < rows; row++)
+        {
+            for (int col = 0; col <= cols - 4; col++)
+            {
+                boolean match = true;
+                for (int i = 0; i < 4; i++)
+                {
+                    Piece current = state[row - i][col + i];
+                    if (current == null || !current.getColour().equals(piece.getColour()))
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
+            }
+        }
         return false;
     }
 
