@@ -22,13 +22,16 @@ public class Connect4 extends Game {
         // Check for wins in rows
         for(int row = 0; row < board.getRows(); row++)
         {
-            if(winInRow(row))
+            if(gameState == GameState.P1_TURN)
             {
-                if(gameState == GameState.P1_TURN)
+                if(winInRow(row, piece1))
                 {
                     gameState = GameState.P1_WIN;
                 }
-                else if(gameState == GameState.P2_TURN)
+            }
+            else if(gameState == GameState.P2_TURN)
+            {
+                if(winInRow(row, piece2))
                 {
                     gameState = GameState.P2_WIN;
                 }
@@ -38,13 +41,16 @@ public class Connect4 extends Game {
         // Check for wins in columns
         for(int col = 0; col < board.getCols(); col++)
         {
-            if(winInCol(col))
+            if(gameState == GameState.P1_TURN)
             {
-                if(gameState == GameState.P1_TURN)
+                if(winInCol(col, piece1))
                 {
                     gameState = GameState.P1_WIN;
                 }
-                else if(gameState == GameState.P2_TURN)
+            }
+            else if(gameState == GameState.P2_TURN)
+            {
+                if(winInCol(col, piece2))
                 {
                     gameState = GameState.P2_WIN;
                 }
@@ -52,25 +58,31 @@ public class Connect4 extends Game {
         }
 
         // Check for wins in diagonals
-        if(winInDiagonalBackslash())
+        if(gameState == GameState.P1_TURN)
         {
-            if(gameState == GameState.P1_TURN)
+            if(winInDiagonalBackslash(piece1))
             {
                 gameState = GameState.P1_WIN;
             }
-            else if(gameState == GameState.P2_TURN)
+        }
+        else if(gameState == GameState.P2_TURN)
+        {
+            if(winInDiagonalBackslash(piece2))
             {
                 gameState = GameState.P2_WIN;
             }
         }
 
-        if(winInDiagonalFrontslash())
+        if(gameState == GameState.P1_TURN)
         {
-            if(gameState == GameState.P1_TURN)
+            if(winInDiagonalFrontslash(piece1))
             {
                 gameState = GameState.P1_WIN;
             }
-            else if(gameState == GameState.P2_TURN)
+        }
+        else if(gameState == GameState.P2_TURN)
+        {
+            if(winInDiagonalFrontslash(piece2))
             {
                 gameState = GameState.P2_WIN;
             }
@@ -84,25 +96,44 @@ public class Connect4 extends Game {
     }
 
     // Check for win in given row
-    boolean winInRow(int row)
+    boolean winInRow(int row, Piece piece)
     {
+        int counter = 0;
+
+        for(int col = 0; col < board.getCols(); col++)
+        {
+            if(board.board[row][col] == piece)
+            {
+                counter++;
+            }
+            else if(counter < 4)
+            {
+                counter = 0;
+            }
+        }
+
+        if(counter >= 4)
+        {
+            return true;
+        }
+
         return false;
     }
 
     // Check for win in given column
-    boolean winInCol(int col)
+    boolean winInCol(int col, Piece piece)
     {
         return false;
     }
 
     // Check for win in a backslash diagonal
-    boolean winInDiagonalBackslash()
+    boolean winInDiagonalBackslash(Piece piece)
     {
         return false;
     }
 
     // Check for win in a frontslash diagonal
-    boolean winInDiagonalFrontslash()
+    boolean winInDiagonalFrontslash(Piece piece)
     {
         return false;
     }
