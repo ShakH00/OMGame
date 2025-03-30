@@ -19,5 +19,9 @@ public static void MFA(String email) throws EmailAuthenticationFailedException {
     else {
         throw new EmailAuthenticationFailedException("Invalid code entered!");
 }
-
+    public static String generateRandomCode() {
+        // Generates a random 6-digit code between 100000 and 999999 (inclusive)
+        int randomCode = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        return String.valueOf(randomCode);  // Return as a string
+    }
 }
