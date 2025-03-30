@@ -1,7 +1,8 @@
 .hero {
 	text-align: center;
 	padding: 180px 30px 120px;
-	background: linear-gradient(135deg, #1E4165, #0A1C2F);
+	/*background-image: url("assets/mountainstars_bg.png");*/
+	background: linear-gradient(135deg, #22466a, #091c30);
 }
 
 .hero h1 {
@@ -38,6 +39,7 @@
 }
 
 .vision-div {
+	/*background: linear-gradient(135deg, #1E4165, #0A1C2F);*/
 	background-image: url("assets/defaultstars_bg.png");
 	padding: 100px;
 }
