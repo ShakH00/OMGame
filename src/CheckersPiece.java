@@ -4,7 +4,7 @@
  * The CheckersPiece ovverrides two key methods present within MovingPiece: move, isValidMove.
  * This is done due to how a checkers piece moves differently than say a chess piece
  *
- * @author Abdu, Adam
+ * @author Abdulrahman, Adam
  */
 public class CheckersPiece extends MovingPiece {
     private boolean isKing; //boolean to track if the piece is a king or not
