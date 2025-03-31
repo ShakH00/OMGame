@@ -82,9 +82,9 @@
             </DropShadow>
          </effect>
           </ImageView>
-          <Text fill="WHITE" layoutX="541.0" layoutY="480.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SUBMIT" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+          <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SUBMIT" textAlignment="CENTER" wrappingWidth="118.7403564453125">
               <font>
-                  <Font name="Retro Gaming" size="16.0" />
+                  <Font name="Press Start 2P Regular" size="14.0" />
               </font>
           </Text>
       <Text fill="#254663" layoutX="243.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="139.52422332763672">
