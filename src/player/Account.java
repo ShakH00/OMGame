@@ -68,6 +68,20 @@ public class Account {
     }
 
     /**
+     * Initialize an Account with full details including phone number.
+     *
+     * @param id           the account ID
+     * @param username     the account username
+     * @param email        the account email
+     * @param password     the account password
+     * @param phoneNumber  the account phone number
+     */
+    public Account(int id, String username, String email, String password, String phoneNumber) {
+        this(id, username, email, password); // Call the 4-param constructor
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
      * Initialize an Account with a given id, username, email, and password
      * @param id            int id for the account, unique in database
      * @param username      String username for the account
