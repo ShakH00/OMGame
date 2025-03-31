@@ -286,14 +286,34 @@ public class Account {
      * @return             true if all inputs are valid and update was successful; false otherwise
      */
 
+    /**
+     * Checks whether the given username is valid (not null or empty).
+     *
+     * @param username the username to validate
+     * @return true if the username is valid; false otherwise
+     */
+
     private boolean isValidUsername(String username) {
         return username != null && !username.trim().isEmpty();
     }
 
+    /**
+     * Checks whether the given email is valid (must contain "@" and ".").
+     *
+     * @param email the email to validate
+     * @return true if the email is valid; false otherwise
+     */
 
     private boolean isValidEmail(String email) {
         return email != null && email.contains("@") && email.contains(".");
     }
+
+    /**
+     * Checks whether the password is valid (at least 6 characters).
+     *
+     * @param password the password to validate
+     * @return true if the password is valid; false otherwise
+     */
 
     private boolean isValidPassword(String password) {
         return password != null && password.length() >= 6;
