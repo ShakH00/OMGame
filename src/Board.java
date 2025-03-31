@@ -1,5 +1,5 @@
 public class Board{
-    public Piece[][] board;
+    private Piece[][] board;
     private int rows;
     private int cols;
     private GameType gameType;
