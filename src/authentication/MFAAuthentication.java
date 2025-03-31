@@ -1,17 +1,27 @@
 package authentication;
 
 import ExceptionsAuthentication.MFAAuthenticationFailedException;
-
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+/** This class is for MFA Authentication for when a user log's into their account
+ *  Email is being used as a secondary verification method
+ */
 public class MFAAuthentication {
 
+    /**
+     * protected boolean checking if the system is running a test mode or not
+     */
     protected static boolean testMode = false;
 
+    /** Sends authentication code via email and then asks user to input the code sent
+     *  Checking if the code is correct or not is done through conditional statements
+     * @param email - The verification authentication code will be sent to the email
+     * @throws MFAAuthenticationFailedException - Exception created for when verification is not successful
+     */
     public static void emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
 
-    Scanner s = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
     String code;
     if (testMode == false) {
         code = generateRandomCode();
@@ -21,7 +31,7 @@ public class MFAAuthentication {
 
     System.out.printf("Verification code: %s", code, '\n');
     System.out.println("Please enter verification code: ");
-    String userInput = s.nextLine();
+    String userInput = sc.nextLine();
 
     if (userInput.equals(code)) {
         System.out.println("Code verified");
