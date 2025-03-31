@@ -255,6 +255,12 @@ public class Account {
         this.email = email;
     }
 
+    /**
+     * Sets the password for the account.
+     *
+     * @param password the new password to set
+     */
+
     public void setPassword(String password) {
         this.password = password;
     }
