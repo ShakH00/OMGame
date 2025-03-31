@@ -40,6 +40,22 @@ public class Board{
         {
             // Method to fill board with checkers pieces
         }
+
+        else if(gameType == gameType.TICTACTOE)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    board[i][j] = null; // Fill with empty cells
+                }
+            }
+        }
+
+        else if(gameType == GameType.CONNECT4)
+        {
+            // Method to fill empty board
+        }
     }
 
     public void displayBoard(){

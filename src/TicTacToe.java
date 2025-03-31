@@ -5,6 +5,8 @@ public class TicTacToe {
     // Create a 3x3 Tic-Tac-Toe Board with char
     private char[][] board;
     private char currentPlayer;
+    private GameState gameState;
+    private GameType gameType = GameType.TICTACTOE;
 
     /*
      * TicTacToe Constructor
@@ -115,14 +117,18 @@ public class TicTacToe {
     /*
      * Makes a move on the board
      * If the cell is empty, place the current player's symbol
-     * If the cell is not empty, print "Invalid Move. Please Try Again."
+     * Invalid Move:
+     *      If the cell is not empty, print "Invalid Move, Outside of Board. Please Try Again."
+     *      Or If the placed cell is outside of the board, print "Invalid Move, Cell is Occupied. Please Try Again."
      */
     private void makeMove(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayer;
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        } else if (row >= 3 || col >= 3 || row < 0 || col < 0) {
+            System.out.println("Invalid Move, Outside of Board. Please Try Again.");
         } else {
-            System.out.println("Invalid Move. Please Try Again.");
+            System.out.println("Invalid Move, Cell is Occupied. Please Try Again.");
         }
     }
 
@@ -135,19 +141,31 @@ public class TicTacToe {
      */
     public void play() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Tic Tac Toe!");
 
         while (!isGameOver() && !isBoardFull()) {
-            System.out.println("Player " + currentPlayer + ", Enter Your Move [Row and Column (_ _)]:");
+            gameState = (currentPlayer == 'X') ? GameState.P1_TURN : GameState.P2_TURN;
+            System.out.println("Player " + currentPlayer + ", Enter Your Move:");
+
+            System.out.print("Row [0, 1, 2]: ");
             int row = scanner.nextInt();
+            System.out.print("Column [0, 1, 2]: ");
             int col = scanner.nextInt();
             makeMove(row, col);
             printBoard();
         }
 
         if (isGameOver()) {
+            if(currentPlayer == 'X') {
+                gameState = GameState.P1_WIN;
+            } else {
+                gameState = GameState.P2_WIN;
+            }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            System.out.println("GameOver! Congratulations,");
             System.out.println("Player " + currentPlayer + " Wins!");
         } else {
+            System.out.println("GameOver!");
             System.out.println("It's a Draw!");
         }
 

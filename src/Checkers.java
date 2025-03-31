@@ -60,9 +60,9 @@ public class Checkers{
             return false;       // There is a Piece in the new position
         }
 
-        // using col and row diff to calculate directions. 
+        // using col and row diff to calculate directions.
         int rowDiff = Math.abs(currentX-newX);
-        int colDiff = Math.abs(currentY-newY);    
+        int colDiff = Math.abs(currentY-newY);
 
         /** 
         * Check row validity. 
