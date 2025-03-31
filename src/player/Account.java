@@ -326,6 +326,11 @@ public class Account {
         setPhoneNumber(phoneNumber);
         return true;
     }
+    /**
+     * Returns the phone number associated with this account.
+     *
+     * @return the phone number as a String
+     */
 
     public String getPhoneNumber() {
         return phoneNumber;
