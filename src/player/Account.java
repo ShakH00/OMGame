@@ -246,6 +246,11 @@ public class Account {
         this.username = username;
     }
 
+    /**
+     * Sets the email address associated with the account.
+     *
+     * @param email the new email address to set
+     */
     public void setEmail(String email) {
         this.email = email;
     }
