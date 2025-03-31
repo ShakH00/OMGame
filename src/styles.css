@@ -15,3 +15,11 @@ loginHoverButton {
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
+
+.hoverCartridge {
+    -fx-transition: all 0.5s ease;
+}
+
+.hoverCartridge:hover {
+    -fx-translate-y: -10;
+}
