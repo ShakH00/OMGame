@@ -68,6 +68,20 @@ public class Account {
     }
 
     /**
+     * Initialize an Account with full details including the phone number.
+     *
+     * @param id           the account ID
+     * @param username     the account username
+     * @param email        the account email
+     * @param password     the account password
+     * @param phoneNumber  the account phone number
+     */
+    public Account(int id, String username, String email, String password, String phoneNumber) {
+        this(id, username, email, password); // Call the 4-param constructor
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
      * Initialize an Account with a given id, username, email, and password
      * @param id            int id for the account, unique in database
      * @param username      String username for the account
@@ -323,38 +337,31 @@ public class Account {
 
     /**
      * Updates the account information after validating all provided fields.
-     * Returns false and prints an error message if any input is invalid.
+     * Throws IllegalArgumentException if any input is invalid.
      *
-     * @param username     The new display name for the account
-     * @param //email        The new email address to associate with the account
-     * @param //password     The new password for the account (must be at least 6 characters)
-     * @param //phoneNumber  The new phone number (must be at least 10 digits)
-     * @return             true if all inputs are valid and update was successful; false otherwise
+     * @param username     the new display name for the account
+     * @param email        the new email address for the account
+     * @param password     the new password (must be at least 6 characters)
+     * @param phoneNumber  the new phone number (must be at least 10 digits)
      */
-
-    public boolean updateAccountInfo(String username, String email, String password, String phoneNumber) {
+    public void updateAccountInfo(String username, String email, String password, String phoneNumber) {
         if (!isValidUsername(username)) {
-            System.out.println("Invalid username.");
-            return false;
+            throw new IllegalArgumentException("Invalid username.");
         }
         if (!isValidEmail(email)) {
-            System.out.println("Invalid email.");
-            return false;
+            throw new IllegalArgumentException("Invalid email.");
         }
         if (!isValidPassword(password)) {
-            System.out.println("Password must be at least 6 characters.");
-            return false;
+            throw new IllegalArgumentException("Password must be at least 6 characters.");
         }
         if (!isValidPhoneNumber(phoneNumber)) {
-            System.out.println("Phone number must be at least 10 digits.");
-            return false;
+            throw new IllegalArgumentException("Phone number must be at least 10 digits.");
         }
 
         setUsername(username);
         setEmail(email);
         setPassword(password);
         setPhoneNumber(phoneNumber);
-        return true;
     }
     /**
      * Returns the phone number associated with this account.
