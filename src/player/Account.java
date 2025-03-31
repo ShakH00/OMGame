@@ -265,6 +265,12 @@ public class Account {
         this.password = password;
     }
 
+    /**
+     * Sets the phone number associated with the account.
+     *
+     * @param phoneNumber the new phone number to set
+     */
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
