@@ -34,7 +34,7 @@
 
         <!-- Username -->
         <Label layoutX="270.0" layoutY="188.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE" />
-        <TextField layoutX="270.0" layoutY="220.0" prefHeight="25.0" prefWidth="273.0" promptText="Enter username" />
+        <TextField layoutX="270.0" layoutY="220.0" prefHeight="30.0" prefWidth="273.0" promptText="Enter username" style="-fx-background-color: #D9D9D9; -fx-background-radius: 50px; -fx-border-color: transparent;" />
 
         <!-- Password -->
         <Label layoutX="270.0" layoutY="270.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
@@ -42,7 +42,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <PasswordField layoutX="273.0" layoutY="302.0" prefHeight="25.0" prefWidth="273.0" promptText="Enter password" />
+        <PasswordField layoutX="273.0" layoutY="302.0" prefHeight="30.0" prefWidth="273.0" promptText="Enter password" style="-fx-background-color: #D9D9D9; -fx-background-radius: 50px; -fx-border-color: transparent;" />
 
         <!-- Buttons -->
         <StackPane layoutY="3.0" prefHeight="51.0" prefWidth="119.0" styleClass="hoverButton">
@@ -53,9 +53,9 @@
                     </image>
                 </ImageView>
                 <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="RETURN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
-                <font>
-                    <Font size="15.0" />
-                </font>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
                 </Text>
             </children>
         </StackPane>
@@ -68,9 +68,9 @@
                     </image>
                 </ImageView>
                 <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SUBMIT" textAlignment="CENTER" wrappingWidth="118.7403564453125">
-                <font>
-                    <Font name="Retro Gaming" size="16.0" />
-                </font>
+                    <font>
+                        <Font name="Retro Gaming" size="16.0" />
+                    </font>
                 </Text>
             </children>
         </StackPane>

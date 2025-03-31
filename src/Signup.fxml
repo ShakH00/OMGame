@@ -34,43 +34,43 @@
 
 
         <!-- Email -->
-        <Label layoutX="300.0" layoutY="193.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Email:" textFill="WHITE">
+        <Label layoutX="270.0" layoutY="193.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Email:" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font></Label>
-        <TextField layoutX="300.0" layoutY="225.0" prefWidth="200.0" />
+        <TextField layoutX="270.0" layoutY="225.0" prefHeight="30.0" prefWidth="273.0" promptText="Enter email" style="-fx-background-color: #D9D9D9; -fx-background-radius: 50px; -fx-border-color: transparent;" />
 
         <!-- Username -->
-        <Label layoutX="306.0" layoutY="260.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE">
+        <Label layoutX="270.0" layoutY="260.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Username:" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font></Label>
-        <TextField layoutX="300.0" layoutY="365.0" prefWidth="200.0" />
+        <TextField layoutX="270.0" layoutY="365.0" prefHeight="30.0" prefWidth="273.0" promptText="Enter password" style="-fx-background-color: #D9D9D9; -fx-background-radius: 50px; -fx-border-color: transparent;" />
 
         <!-- Password -->
-        <Label layoutX="302.0" layoutY="333.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
+        <Label layoutX="270.0" layoutY="333.0" style="-fx-font-size: 22px; -fx-text-fill: white;" text="Password:" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font></Label>
-        <PasswordField layoutX="300.0" layoutY="295.0" prefWidth="200.0" />
+        <PasswordField layoutX="270.0" layoutY="295.0" prefHeight="30.0" prefWidth="273.0" promptText="Enter username" style="-fx-background-color: #D9D9D9; -fx-background-radius: 50px; -fx-border-color: transparent;" />
 
         <!-- Buttons -->
-        <StackPane prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+        <StackPane layoutY="3.0" prefHeight="51.0" prefWidth="119.0" styleClass="hoverButton">
             <children>
-                <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/pink.png" />
                     </image>
                 </ImageView>
                 <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="RETURN" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                     <font>
-                        <Font name="Retro Gaming" size="16.0" />
+                        <Font size="15.0" />
                     </font>
                 </Text>
             </children>
         </StackPane>
 
-        <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+        <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton">
             <children>
                 <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                     <image>
