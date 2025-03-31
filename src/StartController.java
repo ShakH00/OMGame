@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,26 +47,23 @@ public class StartController extends Application {
     @FXML
     private AnchorPane helpPopup;
 
-    // Open the help popup overlay
+    // open the help popup overlay
     @FXML
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
         try {
-            // Load the Help.fxml content into a Parent (as before)
+            // load help.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Help.fxml"));
             Parent helpRoot = loader.load();
 
-            // Get the controller of the Help popup
+            // get help controller
             HelpController helpController = loader.getController();
 
-            // Add the helpRoot as a child of the main root (StackPane or your main container)
             rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
 
-            // Set the helpRoot visible (it will be hidden initially)
+            // set the helpRoot visible (it will be hidden initially)
             helpRoot.setVisible(true);
 
-            // Optionally, you can add an event listener to the root pane to close the popup
-            // or trigger the help controller's close method when clicking outside the popup
-            // e.g., to close the popup when clicking outside:
+            // to close the popup, click anywhere
             helpRoot.setOnMouseClicked(event -> {
                 helpRoot.setVisible(false);  // Hide the popup
             });
@@ -74,7 +72,6 @@ public class StartController extends Application {
             e.printStackTrace();
         }
     }
-
     public static void main(String[] args) {
         launch(args);
     }
