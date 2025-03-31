@@ -275,16 +275,7 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    /**
-     * Updates the account information after validating all provided fields.
-     * Returns false and prints an error message if any input is invalid.
-     *
-     * @param username     The new display name for the account
-     * @param //email        The new email address to associate with the account
-     * @param //password     The new password for the account (must be at least 6 characters)
-     * @param //phoneNumber  The new phone number (must be at least 10 digits)
-     * @return             true if all inputs are valid and update was successful; false otherwise
-     */
+
 
     /**
      * Checks whether the given username is valid (not null or empty).
@@ -330,6 +321,16 @@ public class Account {
         return phoneNumber != null && phoneNumber.matches("\\d{10,}");
     }
 
+    /**
+     * Updates the account information after validating all provided fields.
+     * Returns false and prints an error message if any input is invalid.
+     *
+     * @param username     The new display name for the account
+     * @param //email        The new email address to associate with the account
+     * @param //password     The new password for the account (must be at least 6 characters)
+     * @param //phoneNumber  The new phone number (must be at least 10 digits)
+     * @return             true if all inputs are valid and update was successful; false otherwise
+     */
 
     public boolean updateAccountInfo(String username, String email, String password, String phoneNumber) {
         if (!isValidUsername(username)) {
