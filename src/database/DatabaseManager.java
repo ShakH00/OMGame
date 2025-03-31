@@ -5,7 +5,7 @@ import player.Player;
 
 import java.util.ArrayList;
 
-public class databaseManager {
+public class DatabaseManager {
 
     /**
      * @return          Returns all accounts that are active and not a guest account

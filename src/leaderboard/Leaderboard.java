@@ -3,7 +3,7 @@ package leaderboard;
 import game.GamesEnum;
 import player.Account;
 import player.statistics.Statistics;
-import database.databaseManager;
+import database.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class Leaderboard {
      *
      */
     public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, Statistics gameStats, boolean isAscending) {
-        ArrayList<Account> accountsList = databaseManager.queryAllAccounts();
+        ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
 
         HashSet<Account> totalPlayersAccount = new HashSet<>();
         if (playerAccount == null) {
