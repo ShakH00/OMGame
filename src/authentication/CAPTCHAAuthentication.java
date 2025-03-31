@@ -44,6 +44,12 @@ public class CAPTCHAAuthentication {
         return answer;
     }
 
+
+    /**
+     * Stimulating a CAPTCHA authentication
+     * @param userInput - Takes in the user input for the answer to the math equation
+     * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
+     */
     public static void captchaAuthenticatorDriver(String userInput) throws CAPTCHAAuthenticationFailedException {
         int correctAnswer = CAPTCHAAuthentication.generateProblem();
 
