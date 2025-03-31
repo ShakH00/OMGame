@@ -1,5 +1,6 @@
 package authentication;
 
+import ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 import ExceptionsAuthentication.MFAAuthenticationFailedException;
 
 import java.util.Scanner;
@@ -17,6 +18,14 @@ public class AuthenticationTestMain {
         } catch (MFAAuthenticationFailedException e) {
             System.out.println("MFA Authentication failed: " + e.getMessage());
         }
+        System.out.println("\n**** CAPTCHA Authentication Test ****");
+        System.out.print("Enter your answer to the CAPTCHA equation: ");
+        String captchaInput = sc.nextLine();
 
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver(captchaInput);
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            System.out.println("CAPTCHA Authentication failed: " + e.getMessage());
+        }
     }
 }
