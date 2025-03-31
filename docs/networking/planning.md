@@ -1,88 +1,154 @@
 # **Network Planning Document**
 
+## P3 Edition
+
 ## Docs
+
 - [FigJam Diagram](https://www.figma.com/board/dpFR9WEMYuxA74ZvipXcZc/process-loop?node-id=1-25&t=nhEXUiFAzE8vcAcv-1)
 - [Google Doc Plan](https://docs.google.com/document/d/1O3nZ0WbedHbkeMzC8PnDiTGf0OVOONgV-Xe5WJszYR0/edit?usp=sharing)
+
 ### Networking Implementation
+
 - https://www.youtube.com/watch?v=HQoWN28H80w
 - https://www.youtube.com/watch?v=gLfuZrrfKes
 
-## Goals
-- Plan networking architecture (hosting, database, etc.) and interfaces
-
-- Create stubs for networking
-  - Databases
-    - User Auth.
-    - Game data (match history, leaderboard)
-    - Profiles
-  - Cloud hosting/server infra
-  - Profile management
-    - Stats visibility settings
-  - View own and others' profile stats
-    - Leaderboard
-  - **Skill-based** matchmaking
-  - Search for current games and queue
-
-- Design/demonstrate how online interface will be integrated
-  - Collaborate with GUI as how to expose this to end user
-
-- Have extensive and clear documentation for other teams to reference
-### Stretch Goals
-- Actual network implementation
-
-  See this videos (listed in Docs section) for details. Can use Nova's server/VPS, and domain.
-- Real Database?
-
-  MongoDB is cool and would be easier to implement. Nova has a `PostgreSQL` server running.
-
-- **MORE?**
-
-
-## Assignment Requirements
-List of requirements pertaining to networking given in the project document.
-
-"May not have a lot to do and be done quick fast, in like a week" - Sutcliffe
-### Email
-"don't need to worry about database [...] design how and where the database will connect [...] don't require you to host this platform online, but your code should contain stubs where the server communication logic will reside"
-### Multiplayer Interface
-- Users should be able to log in, create profiles, and manage their accounts.
-- Each profile should display games played, player stats, and win/loss records.
-- Players should have visibility into other users’ profiles to view their ranks, current status, and recent matches.
-### Matchmaking System
-- Implement skill-based matchmaking where players are paired with appropriate opponents.
-- Add a leaderboard where the top-ranked players can see how they stack up against the competition.
-- Enable players to search for and join ongoing games or queue up for new matches.
-### Game Hosting
-- While the platform won’t be hosted online in your version, you’ll need to design and demonstrate how an online interface would be integrated.
-- You will provide stubs/drivers for essential components, such as the database interface and online hosting logic. This ensures we understand where the platform will connect with other systems once live.
-### Design Architecture
-You will not need to implement the database or hosting backend (our database team will handle that). Instead, focus on designing where these interfaces will reside within your architecture.
-
-Provide stub functions to simulate how your system will connect to external services such as:
-- User authentication database
-- Game data storage (match history, leaderboard)
-- Cloud hosting or server infrastructure
-### GUI
-**More for GUI team, but these functions need to be exposed/documented to them**
-Select and join games from the available library.
-- View and challenge other players by searching their profile.
-- Communicate during gameplay using a basic in-game chat.
-
 ### Iteration Deliverable Requirements
-#### 1
-**Focus on designing and planning rather than code.**
 
-"You will need to construct a project task timeline, use case descriptions/diagrams, structure diagrams (Class Diagrams), and any other diagrams/documents you feel will best help you plan your work."
+## P3
 
-- Planning documents:
+### Integration 
 
-  Prepare any planning documents that you might need which lists all of the milestones, task completion dates, etc., for the programming part of your project. You should use these documents throughout your project to keep on track. Do not include personal/group info, and submit these to the public Dropbox. You should plan to begin working on the code for your project as soon as possible (especially before the P2 deadline).
-- Structure Diagram:
+- **Game Logic** Discuss with first, as how to best suit their needs and wrap around their code. We can offer some feedback as to what helps us most.
+- **Authentication** Work closely with in a more cohesive manner as to explain technical limitations and come up with a solution. 
+- **Leaderboard/Matchmaking** Work closely in a cohesive manner as to how to store game history and communicate it. 
+- **GUI** Work with GUI last as to how to surface network specific actions (connect, disconnect, authentication, etc.)
+- **Integration** Will have our code merged between Game Logic and GUI phases: **GL -> Net/Auth/LB/MM -> GUI**
+- **Website** Nova owns domain, CF Dashboard (DNS and Site Hosting on CF Pages), and Email hosting; speak to her RE: website/email changes for access. **Work on only if extra time!**
 
-  Include a `class_diagram.png` or `class_diagram.svg` that documents your program's most important, vital or complex parts. Include all the parts you consider vital, but feel free to abstract what isn’t essential. Do not include personal/group info; submit this to the public Dropbox.
-- Use Case Descriptions/Diagram:
+### Primary Goals
+- **First develop stubs that work on the client side as a failsafe**, then we can move to a functional + server based system afterwards.
 
-  Create a `use_case_descriptions.pdf` that includes a diagram and the use cases that cover your most important interactions. Do not include personal/group info; submit this to the public Dropbox.
-- Other diagrams/documentation:
+- Finalize a fully functional prototype of the networking system.
 
-  Include any other diagrams or documentation that would help a third party understand your development strategy and be able to critique it. Do not include personal/group info; submit these to the public Dropbox.
+- Ensure complete documentation to support the system.
+
+- Coordinate with GUI/Game Logic to ensure integration readiness.
+
+- Address all feedback and required changes from P2 critiques.
+
+- Contribute meaningfully to codebase and Git logs.
+
+- Prepare for video demos and individual deliverables.
+
+## Subteam Tasks (Based on Current Division)
+
+### 🔹 Hatem + Nova — Docs + Planning + Code
+
+#### ✅ Refine all documentation for P3:
+
+- networkingCodeExplanation.md (FINALIZED ✅)
+
+- apiDocumentation.md (UPDATED ✅)
+
+- error_handling_ideas.md (UPDATED ✅ with advanced strategies)
+
+- tentative_matchmaking_sessions_ideas.md (EXPERIMENTAL IDEAS ✅)
+
+#### ✅ Create visual diagrams:
+
+- Error handling flowcharts (mermaid diagrams ✅)
+
+- Game flow / client-server interaction diagrams ✅
+
+- Game class diagram
+
+- Use case Diagram
+
+- Finalize meetingNotes.md and planning.md
+
+##### 📌 Final check and review of all P3 documents
+
+### 🔹 Sultan + Uzair — Code + Research
+
+✅ Analyze GameServerT.java, PlayerT.java, PlayerData.java, PlayerDatabase.java
+
+✅ Identify and implement networking stub functions
+
+Incorporate chat feature if feasible (stretch goal)
+
+⏳ Begin functional networking implementation based on GUI/game logic feedback
+⏳ Integrate reconnection logic and move validation (if not already done)
+
+##### 📌 Coordinate with documentation team to align terminology and flow
+
+## Group Deliverables (Networking Team Must Contribute To)
+
+### These must be in GitLab and D2L:
+
+- team.md — Updated list of members/UCIDs
+
+- README.md — Instructions on running + overview of system
+
+- git_log.csv — Record of Git commits (everyone must be active!)
+
+- ChangesMade.md — Summary of P2 feedback and what was updated (include diagrams if applicable)
+
+##### Documentation Files:
+
+- All updated markdowns (networking)
+
+- Game logic, diagrams, API, and flow breakdowns
+
+- gitlab_link.txt
+
+### Video Demos
+
+#### Product Showcase (Group Video) — ~12 min
+
+- Networking must be shown working end-to-end:
+
+- Real-time interaction
+
+- Handling of turns
+
+- Reconnection behavior
+
+- (Optional: Chat functionality)
+
+### Tech Demo (Individual) — ~10 min
+
+#### Each member must:
+
+- Show their code contribution
+
+- Explain their design logic
+
+- Reflect on testing + future improvements
+
+## Individual Deliverables (P3)
+
+### Each member must submit to D2L:
+
+- [UCID]\_worklog_p3.xlsx
+
+- [UCID]\_peer_evaluations_p3.xlsx
+
+- [UCID]\_reflection_p3.pdf
+
+- [UCID]\_tech_demo_pNN.mp4 + timestamp file
+
+- AI disclosure (if applicable)
+
+### Stubbed Components Required (per professor's note)
+
+#### Even if full implementation is not possible:
+
+- Add stub methods for:
+
+- Database connections
+
+- Server hosting
+
+- Chat feature
+
+- Matchmaking integration

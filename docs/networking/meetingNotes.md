@@ -1,27 +1,32 @@
 # **Meeting Notes**
-## 2025-03-02
-**16:30 - 17:55**
+
+## 2025-03-26
+
+**18:00 - 18:45**
+
 ### What has been done
-- **Hatem:** Created a draft of API documentation
-- **Sultan:** Exploring implementing functional net code in Java
-- **Nova:** focus on writing structure/documentation (to be turned into class diagram)
-  - Has a functional prototype of a turn based game working with net code
-  - Want to make localhost (two players/server on same system) as a minimum
-- **Uzair:** Has not done yet, going to work tonight.
+
+- **Hatem:** Updated almost all diagrams and documentation necessary for p3, worked around sultans code by commenting on it and making it understandable to other teams.
+- **Sultan:** Added new stubs, and updated the codebase. Also made some new functional networking diagrams.
+- **Nova:** Updated documentation and added new ideas as well as leading the team, organizing all documents, and making sure everything in our team is on point.
+- **Uzair:** Designed some diagrams, as well as adding some ideas to documents.
+
 ### Need to do
-- Make it such that game logic does not need to touch net code, using arrays/strings as param./return values
-- **We need to make class diagrams**
-- **Focus on Iteration 1 deliverables** (Listed in `planning.md`)
-- Update GitLab issue board
-#### Full Team
-- **Discuss overall program file/project structure**
-- **Discuss diagram structure/formatting**
-- **Discuss Git etiquette** (How branches should be handled, merge conflicts, etc.)
-- **Group timeline document**
-- **Making use cases???**
-Above concerns addressed in 2025-03-05 Team Lead Meeting
+
+- If needed, make more diagrams and update the existing ones
+- Looking at existing code and drafting stubs (dependent on docs), also researching func. networking specifically a chat feature
+- Finalize chat with other teams to finally get the green light on implementing all of our networking into the codebase
+- Make sure each team member contributes enough to the codebase so that they won't be deducted any marks
+
+## Full Team
+
+### Plan a meeting for everyone to get on the same page
+- Finalize all planning / stubs and begin implementing code: Divide codebase workload for all team members to get sufficient work done
+- Make sure we have a neat timeline that allows us to be done early, so that we have a good amount of time to work on the demo videos
+
 ### Plans for the week
-- **Nova:** Writing docs./planning structure (eventually can make class diagram). Help **Hatem** with diagrams.
-- **Hatem:** Making diagrams (structure, and overall network flow/structure). Help **Nova** with docs.
-- **Sultan:** Translate current code into an informal diagram (to teach how practical netcode works). Create stubs for input/output (using arrays for data comms.).
-- **Uzair:** Diagrams (structure) with **Nova** and **Hatem**, based off the code that **Sultan** made.
+
+- **Nova:** Work with Hatem to finalize all documents/planning/diagrams so that when we get the green light from other teams to touch code, we can start immediately.
+- **Hatem:** Work with Nova to finalize all documents/planning/diagrams so that when we get the green light from other teams to touch code, we can start immediately.
+- **Sultan:** Work with Uzair to finalize Stubs, to make sure that when we get the green light to touch the codebase, we have everything ready and intact to build from. Also, research and implement a functional in-game chat system.
+- **Uzair:** Work with Sultan to finalize Stubs, to make sure that when we get the green light to touch the codebase, we have everything ready and intact to build from. Also, research and implement a functional in-game chat system.
