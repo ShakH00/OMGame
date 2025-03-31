@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSelect">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -37,22 +37,22 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="530.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
+      <ImageView fx:id="purpleCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
             <Image url="@images/purpleCartridge.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="406.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
+      <ImageView fx:id="pinkCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="406.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
             <Image url="@images/pinkCartridge.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="282.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
+      <ImageView fx:id="orangeCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="282.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
             <Image url="@images/orangeCartridge.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="158.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
+      <ImageView fx:id="greenCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="158.0" layoutY="292.0" onMouseClicked="#clicked" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
             <Image url="@images/greenCartridge.png" />
          </image>
