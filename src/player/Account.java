@@ -68,7 +68,7 @@ public class Account {
     }
 
     /**
-     * Initialize an Account with full details including phone number.
+     * Initialize an Account with full details including the phone number.
      *
      * @param id           the account ID
      * @param username     the account username
