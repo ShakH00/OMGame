@@ -319,9 +319,18 @@ public class Account {
         return password != null && password.length() >= 6;
     }
 
+    /**
+     * Checks whether the phone number is valid (only digits and at least 10 characters).
+     *
+     * @param phoneNumber the phone number to validate
+     * @return true if the phone number is valid; false otherwise
+     */
+
     private boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber != null && phoneNumber.matches("\\d{10,}");
     }
+
+
     public boolean updateAccountInfo(String username, String email, String password, String phoneNumber) {
         if (!isValidUsername(username)) {
             System.out.println("Invalid username.");
