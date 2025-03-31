@@ -191,6 +191,9 @@ public class GameServerT {
         }
 
         private void placeMove(String input, char symbol) {
+
+
+            //  networking -> Server game logic -> networking
             if (symbol == 'O'){
                 System.out.println("processGameLogic for player 2, input: " + input);
             }

@@ -18,20 +18,28 @@ public class PlayerT extends JFrame {
     private JTextArea testText;
     private JButton b1,b2,b3,b4;
 
-    private JButton b01,b02,b03,b04,b05,b06,b07,b08,b09;
+    JButton b01;
+    private JButton b02;
+    private JButton b03;
+    private JButton b04;
+    private JButton b05;
+    private JButton b06;
+    private JButton b07;
+    private JButton b08;
+    private JButton b09;
 
     private ClientSideConnection csc;
     private int playerID;
     private int otherPlayerID;
 
     private int[] values;
-    private char[][] server2dChar;
+    char[][] server2dChar;
 
     private int maxTurns;
     private int turnsMade;
     private int myPoints;
     private int enemyPoints;
-    private boolean buttonsEnabled;
+    boolean buttonsEnabled;
     private String playerInputSender;
     private JButton startb00;
     private boolean gameIsActive;
