@@ -1,4 +1,4 @@
-package authentication.Authentication;
+package authentication;
 
 public class EncryptionAuthentication {
 }
