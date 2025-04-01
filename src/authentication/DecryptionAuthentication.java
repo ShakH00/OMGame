@@ -2,17 +2,14 @@ package authentication;
 
 public class DecryptionAuthentication {
 
-    private static String decryptString(String input) {
-        StringBuilder decrypted = new StringBuilder();
+    private static final int SHIFT = 3;  // Fixed shift constant
+
+    private static String shiftCharacters(String input, int shift) {
+        StringBuilder output = new StringBuilder();
         for (char character : input.toCharArray()) {
-            if (Character.isLetter(character)) {
-                char base = Character.isLowerCase(character) ? 'a' : 'A';
-                char shifted = (char) (((character - base - 3 + 26) % 26) + base);
-                decrypted.append(shifted);
-            } else {
-                throw new IllegalArgumentException("Non-alphabetic characters are not supported.");
-            }
+            char shifted = (char) (character + shift);
+            output.append(shifted);
         }
-        return decrypted.toString();
+        return output.toString();
     }
 }
