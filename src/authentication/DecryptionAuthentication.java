@@ -12,4 +12,9 @@ public class DecryptionAuthentication {
         }
         return output.toString();
     }
+
+    private static String decryptString(String input) {
+        return shiftCharacters(input, -SHIFT);
+    }
+
 }

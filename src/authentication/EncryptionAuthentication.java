@@ -15,6 +15,10 @@ public class EncryptionAuthentication {
         return output.toString();
     }
 
+    private static String encryptString(String input) {
+        return shiftCharacters(input, SHIFT);
+    }
+
     public static String encryptionDriver(String input) throws EncryptionFailedException {
         if (input == null) {
             throw new EncryptionFailedException("Input cannot be null!");
