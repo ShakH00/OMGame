@@ -4,10 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
@@ -19,7 +16,7 @@ public class HelpController extends Application {
     @Override
         public void start(Stage primaryStage) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Help.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
                 Scene scene = new Scene(loader.load(), 800, 570);
 
                 primaryStage.setResizable(false);
@@ -36,7 +33,7 @@ public class HelpController extends Application {
 
         @FXML
         private void handleCloseButton() throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Help.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
             Parent helpRoot = loader.load();
             helpRoot.setOnMouseClicked(event -> {
                 helpRoot.setVisible(false);  // Hide the popup

@@ -1,4 +1,4 @@
-/**
+package checkers; /**
  *
  * This is the SHITTIEST code ive ever written in my life. It works and IDK why.
  * It's SO inefficient.
@@ -13,37 +13,38 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * Displays a chessboard and pieces on the board.
+ * Displays a checkers board and pieces on the board.
  *
  * @author Shakil Hussain
  */
-public class ChessController extends Application {
+public class CheckersController extends Application {
 
-    private static final int TILE_SIZE = 64; // Size of each tile on the chessboard
-    private static final int BOARD_SIZE = 8; // Number of rows and columns on the board
-    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/"; // Path to chess piece images
+    private static final int TILE_SIZE = 64;
+    private static final int BOARD_SIZE = 8;
+    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
-    // Initial chessboard layout
+    // Initial checkers board layout
     private final String[][] board = {
-            {"chessRookBlack", "chessKnightBlack", "chessBishopBlack", "chessQueenBlack", "chessKingBlack", "chessBishopBlack", "chessKnightBlack", "chessRookBlack"},
-            {"chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack"},
+            {null, "greenChecker", null, "greenChecker", null, "greenChecker", null, "greenChecker"},
+            {"greenChecker", null, "greenChecker", null, "greenChecker", null, "greenChecker", null},
+            {null, "greenChecker", null, "greenChecker", null, "greenChecker", null, "greenChecker"},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {"chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite"},
-            {"chessRookWhite", "chessKnightWhite", "chessBishopWhite", "chessQueenWhite", "chessKingWhite", "chessBishopWhite", "chessKnightWhite", "chessRookWhite"}
+            {"orangeChecker", null, "orangeChecker", null, "orangeChecker", null, "orangeChecker", null},
+            {null, "orangeChecker", null, "orangeChecker", null, "orangeChecker", null, "orangeChecker"},
+            {"orangeChecker", null, "orangeChecker", null, "orangeChecker", null, "orangeChecker", null}
     };
 
     private int selectedX = -1, selectedY = -1;
 
     /**
-     * Setting up the chessboard UI
+     * Setting up the checkers board UI
      *
      * @author Shakil Hussain
      */
@@ -53,28 +54,40 @@ public class ChessController extends Application {
         Canvas canvas = new Canvas(TILE_SIZE * BOARD_SIZE, TILE_SIZE * BOARD_SIZE);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        drawChessBoard(gc);
+        drawCheckersBoard(gc);
         drawPieces(gc);
 
         canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
-        root.getChildren().add(canvas);
+        // Create buttons
+        Button offerDrawButton = new Button("Offer Draw");
+        offerDrawButton.setLayoutX(650);
+        offerDrawButton.setLayoutY(10);
+        offerDrawButton.setOnAction(e -> handleOfferDraw());
+
+        Button resignButton = new Button("Resign");
+        resignButton.setLayoutX(650);
+        resignButton.setLayoutY(50);
+        resignButton.setOnAction(e -> handleResign());
+
+        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
+
         Scene scene = new Scene(root, 800, 600);
 
-        primaryStage.setTitle("Chess Board");
+        primaryStage.setTitle("Checkers Board");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     /**
-     * Draws the chessboard on the canvas
+     * Draws the checkers board on the canvas
      *
      * @param gc GraphicsContext used for drawing
      *
      * @author Shakil Hussain
      */
-    private void drawChessBoard(GraphicsContext gc) {
+    private void drawCheckersBoard(GraphicsContext gc) {
         boolean white = true;
         for (int y = 0; y < BOARD_SIZE; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {
@@ -87,7 +100,7 @@ public class ChessController extends Application {
     }
 
     /**
-     * Draws the chess pieces
+     * Draws the checkers pieces
      *
      * @param gc GraphicsContext used for drawing images
      *
@@ -130,8 +143,18 @@ public class ChessController extends Application {
             selectedX = -1;
             selectedY = -1;
         }
-        drawChessBoard(gc);
+        drawCheckersBoard(gc);
         drawPieces(gc);
+    }
+
+    private void handleOfferDraw() {
+        // Handle draw offer logic here, e.g., show a message or ask for confirmation
+        System.out.println("Draw offer sent!");
+    }
+
+    private void handleResign() {
+        // Handle resignation logic here, e.g., end the game or show a resignation message
+        System.out.println("You resigned!");
     }
 
     public static void main(String[] args) {

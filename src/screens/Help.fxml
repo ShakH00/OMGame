@@ -17,7 +17,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b3b3bb2" height="586.0" layoutX="-7.0" layoutY="-9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="813.0" />
       <ImageView fitHeight="570.0" fitWidth="802.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/tetriscat_swish.GIF" />
+            <Image url="@../images/tetriscat_swish.GIF" />
          </image>
       </ImageView>
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbf8f3" height="230.0" layoutX="93.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="7.0" width="615.0">
@@ -66,7 +66,7 @@
       </Rectangle>
       <ImageView fitHeight="570.0" fitWidth="802.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/tetriscat_paws.GIF" />
+            <Image url="@../images/tetriscat_paws.GIF" />
          </image>
       </ImageView>
       <Text fill="#1b3b5d" layoutX="167.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="need help? visit us at omgame.club for tips and other info!" textAlignment="CENTER" wrappingWidth="470.1367244720459">

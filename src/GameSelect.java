@@ -22,7 +22,7 @@ public class GameSelect extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("gameSelect.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/gameSelect.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             ImageView gifView = new ImageView(new Image(getClass().getResource("/images/twinklingstars.gif").toExternalForm()));

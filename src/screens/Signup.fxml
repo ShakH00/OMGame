@@ -20,12 +20,12 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
         <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
             <image>
-                <Image url="@images/twinklingstars.gif" />
+                <Image url="@../images/twinklingstars.gif" />
             </image>
         </ImageView>
         <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
             <image>
-                <Image url="@images/chessboard.png" />
+                <Image url="@../images/chessboard.png" />
             </image>
         </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="32.0" layoutX="328.0" layoutY="161.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
@@ -53,7 +53,7 @@
          </font></TextField>
           <ImageView fitHeight="49.0" fitWidth="114.0" layoutX="2.4000000953674316" layoutY="10.199999809265137" pickOnBounds="true" preserveRatio="true">
               <image>
-                  <Image url="@images/yellow.png" />
+                  <Image url="@../images/yellow.png" />
               </image>
          <effect>
             <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
@@ -72,7 +72,7 @@
         <StackPane layoutX="521.0" layoutY="415.0" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
           <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                  <Image url="@images/pink.png" />
+                  <Image url="@../images/pink.png" />
               </image>
          <effect>
             <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
@@ -115,7 +115,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
       <ImageView fitHeight="83.0" fitWidth="410.0" layoutX="240.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/signup_text.png" />
+            <Image url="@../images/signup_text.png" />
          </image>
       </ImageView>
     </children>

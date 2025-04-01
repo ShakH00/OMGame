@@ -1,4 +1,3 @@
-
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +18,10 @@ public class StartController extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Start.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Start.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
-            String fontPath = getClass().getResource("fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
             Font pressStartFont = Font.loadFont(fontPath, 40);
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
@@ -52,7 +51,7 @@ public class StartController extends Application {
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
         try {
             // load help.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Help.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
             Parent helpRoot = loader.load();
 
             // get help controller
