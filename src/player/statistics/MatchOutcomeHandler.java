@@ -47,6 +47,12 @@ public class MatchOutcomeHandler {
 
             int kFactor = getKFactor(game);
 
+            int player1EloChange = (int) Math.round(kFactor * (player1Score - player1Expected));
+            int player2EloChange = (int) Math.round(kFactor * (player2Score - player2Expected));
+
+            int player1NewElo = player1OldElo + player1EloChange;
+            int player2NewElo = player2OldElo + player2EloChange;
+
 
             player1.getAccount().updateElo(game, player1NewElo);
             player2.getAccount().updateElo(game, player2NewElo);
