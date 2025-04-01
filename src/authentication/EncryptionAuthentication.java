@@ -1,5 +1,7 @@
 package authentication;
 
+import ExceptionsAuthentication.EncryptionFailedException;
+
 public class EncryptionAuthentication {
 
     private static String encryptString(String input) {
@@ -14,6 +16,17 @@ public class EncryptionAuthentication {
             }
         }
         return encrypted.toString();
+    }
+
+    public static String encryptionDriver(String input) throws EncryptionFailedException {
+        if (input == null) {
+            throw new EncryptionFailedException("Input cannot be null!");
+        }
+        try {
+            return encryptString(input);
+        } catch (Exception e) {
+            throw new EncryptionFailedException("Encryption failed!");
+        }
     }
 
 }
