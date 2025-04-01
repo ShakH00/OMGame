@@ -1,4 +1,4 @@
-/**
+package game.connect4; /**
  * Connect 4 GUI - Visual
  * Click columns to drop pieces (alternating colors)
  * No game logic edition
@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -38,48 +39,29 @@ public class Connect4Controller extends Application {
         Pane root = new Pane();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        drawStylishBackground(gc);
-        drawTitle(gc);
+
         drawBoard(gc);
         
         canvas.setOnMouseClicked(e -> handleClick(e, gc));
-        
-        root.getChildren().add(canvas);
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        // Create buttons
+        Button offerDrawButton = new Button("Offer Draw");
+        offerDrawButton.setLayoutX(650);
+        offerDrawButton.setLayoutY(10);
+        offerDrawButton.setOnAction(e -> handleOfferDraw());
+
+        Button resignButton = new Button("Resign");
+        resignButton.setLayoutX(650);
+        resignButton.setLayoutY(50);
+        resignButton.setOnAction(e -> handleResign());
+
+        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
+        Scene scene = new Scene(root, 800, 600);
         
         primaryStage.setTitle("Connect 4 - Visual Demo");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    private void drawStylishBackground(GraphicsContext gc) {
-        // Diagonal gradient background
-        LinearGradient gradient = new LinearGradient(
-            0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
-            new Stop(0, Color.DARKBLUE),
-            new Stop(0.5, Color.PURPLE),
-            new Stop(1, Color.DARKRED)
-        );
-        gc.setFill(gradient);
-        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-        // Subtle grid pattern
-        gc.setStroke(Color.rgb(255, 255, 255, 0.1));
-        for (int x = 0; x < WINDOW_WIDTH; x += 30) {
-            gc.strokeLine(x, 0, x, WINDOW_HEIGHT);
-        }
-    }
-
-    private void drawTitle(GraphicsContext gc) {
-        gc.setFont(Font.font("Impact", 36));
-        gc.setFill(Color.WHITE);
-        gc.fillText("CONNECT 4", WINDOW_WIDTH/2 - 90, 50);
-        
-        gc.setFont(Font.font("Arial", 14));
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillText("Click columns to place pieces", WINDOW_WIDTH/2 - 90, 70);
     }
 
     private void drawBoard(GraphicsContext gc) {
@@ -111,18 +93,8 @@ public class Connect4Controller extends Application {
         double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
         double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
         
-        // Slot shadow
-        gc.setFill(Color.rgb(0, 0, 0, 0.3));
-        gc.fillOval(x + 2, y + 2, CIRCLE_SIZE, CIRCLE_SIZE);
-        
         if (color == null) {
-            // Empty slot (glass effect)
-            LinearGradient slotGradient = new LinearGradient(
-                0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.rgb(255, 255, 255, 0.7)),
-                new Stop(1, Color.rgb(220, 220, 255, 0.3))
-            );
-            gc.setFill(slotGradient);
+            gc.setFill(Color.rgb(255,255,255));
         } else {
             // Player piece with glossy effect
             RadialGradient pieceGradient = new RadialGradient(
@@ -156,10 +128,18 @@ public class Connect4Controller extends Application {
     }
 
     private void redrawBoard(GraphicsContext gc) {
-        gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        drawStylishBackground(gc);
-        drawTitle(gc);
+        gc.clearRect(0, 0, 800, 600);
         drawBoard(gc);
+    }
+
+    private void handleOfferDraw() {
+        // Handle draw offer logic here, e.g., show a message or ask for confirmation
+        System.out.println("Draw offer sent!");
+    }
+
+    private void handleResign() {
+        // Handle resignation logic here, e.g., end the game or show a resignation message
+        System.out.println("You resigned!");
     }
 
     public static void main(String[] args) {
