@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameServerT {
+    private Map<Integer, ServerSideConnection> disconnectedPlayers;
+    private boolean gameInProgress;
     private ServerSocket ss;
     private int numPlayers;
     private ServerSideConnection player1;
@@ -30,6 +34,8 @@ public class GameServerT {
         maxTurns = 90;
         values = new int[4];
         server2dChar = new char[3][3];
+        disconnectedPlayers = new HashMap<>();
+        gameInProgress = false;
 
         for (int i = 0; i < 4; i++) { //Ading the values fromt he server not
             values[i] = i;
@@ -83,6 +89,55 @@ public class GameServerT {
             System.out.println("2 player reach, no more looking for players");
         }catch(IOException e){
             System.out.println("IOException from game server acceptConnections");
+        }
+    }
+
+    public void handleDisconnection(int playerID) {
+        if (playerID == 1) {
+            disconnectedPlayers.put(playerID, player1);
+            player1 = null;
+        } else if (playerID == 2) {
+            disconnectedPlayers.put(playerID, player2);
+            player2 = null;
+        }
+        broadcastMessage("Player " + playerID + " disconnected");
+    }
+
+    public boolean handleReconnection(Socket socket, int playerID) {
+        try {
+            ServerSideConnection newConnection = new ServerSideConnection(socket, playerID);
+            if (playerID == 1) {
+                player1 = newConnection;
+            } else if (playerID == 2) {
+                player2 = newConnection;
+            }
+            disconnectedPlayers.remove(playerID);
+            new Thread(newConnection).start();
+            sendGameState(playerID);
+            return true;
+        } catch (Exception e) {
+            System.err.println("Reconnection failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void broadcastMessage(String message) {
+        try {
+            if (player1 != null) {
+                player1.sendChatMessage(message);
+            }
+            if (player2 != null) {
+                player2.sendChatMessage(message);
+            }
+        } catch (IOException e) {
+            System.out.println("IOException in broadcastMessage: " + e.getMessage());
+        }
+    }
+
+    public void sendGameState(int playerID) {
+        ServerSideConnection player = (playerID == 1) ? player1 : player2;
+        if (player != null) {
+            player.send2dCharArray();
         }
     }
 
@@ -213,8 +268,10 @@ public class GameServerT {
         }
         // END of chatgtp tentious work
 
-
-
+        public void sendChatMessage(String message) throws IOException {
+            dataOut.writeUTF("CHAT:" + message);
+            dataOut.flush();
+        }
     }
 
 
