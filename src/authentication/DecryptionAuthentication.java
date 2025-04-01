@@ -1,5 +1,7 @@
 package authentication;
 
+import ExceptionsAuthentication.DecryptionFailedException;
+
 public class DecryptionAuthentication {
 
     private static final int SHIFT = 3;  // Fixed shift constant
@@ -15,6 +17,17 @@ public class DecryptionAuthentication {
 
     private static String decryptString(String input) {
         return shiftCharacters(input, -SHIFT);
+    }
+
+    public static String decryptionDriver(String input) throws DecryptionFailedException {
+        if (input == null) {
+            throw new DecryptionFailedException("Input cannot be null!");
+        }
+        try {
+            return decryptString(input);
+        } catch (Exception e) {
+            throw new DecryptionFailedException("Decryption failed!");
+        }
     }
 
 }
