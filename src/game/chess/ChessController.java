@@ -1,4 +1,4 @@
-package chess; /**
+package game.chess; /**
  *
  * This is the SHITTIEST code ive ever written in my life. It works and IDK why.
  * It's SO inefficient.

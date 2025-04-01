@@ -1,4 +1,4 @@
-package tictactoe; /**
+package game.tictactoe; /**
  * This is probably equally bad as my checkers code but hey, it's Tic Tac Toe!
  * X's and O's everywhere, someone wins (or not), what more do you want?
  *
