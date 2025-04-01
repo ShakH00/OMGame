@@ -1,0 +1,118 @@
+package game;
+
+import game.pieces.Piece;
+
+public class Board{
+    private Piece[][] board;
+    private int rows;
+    private int cols;
+    private GameType gameType;
+
+    public Board(GameType gameType)
+    {
+        this.gameType = gameType;
+
+        if(gameType == GameType.CHESS || gameType == GameType.CHECKERS)
+        {
+            rows = 8;
+            cols = 8;
+        }
+        
+        else if(gameType == GameType.TICTACTOE)
+        {
+            rows = 3;
+            cols = 3;
+        }
+
+        else if(gameType == GameType.CONNECT4)
+        {
+            rows = 6;
+            cols = 7;
+        }
+
+        board = new Piece[rows][cols];
+    }
+
+    public void fillBoard(GameType gameType)
+    {
+        if(gameType == GameType.CHESS)
+        {
+            // Method to fill board with game.chess game.pieces
+        }
+
+        else if(gameType == GameType.CHECKERS)
+        {
+            // Method to fill board with game.checkers game.pieces
+        }
+
+        else if(gameType == gameType.TICTACTOE)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    board[i][j] = null; // Fill with empty cells
+                }
+            }
+        }
+
+        else if(gameType == GameType.CONNECT4)
+        {
+            // Method to fill empty board
+        }
+    }
+
+    public void displayBoard(){
+
+    }
+
+    public int getRows()
+    {
+        return rows;
+    }
+
+    public int getCols()
+    {
+        return cols;
+    }
+
+    public boolean isFull()
+    {
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                if(board[i][j] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public Piece[][] getBoardState(){
+        return board;
+    }
+
+    /*
+     * Will this just do a full wipe and set all values to null?
+     * Or does this return the board to the original state of any game? ~ Adam
+     */
+    public void resetBoard(){
+        
+    }
+
+    /* IGNORE THIS, FOR TICTACTOE
+
+    public game.pieces.Piece getCell(int rows, int cols) {
+        return board[rows][cols];
+    }
+
+    public void setCell(int rows, int cols, game.pieces.Piece value) {
+        board[rows][cols] = value;
+    }
+
+    */
+}
