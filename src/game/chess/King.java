@@ -16,19 +16,19 @@ import game.pieces.PieceType;
  * @author Abdulrahman
  */
 public class King extends MovingPiece {
-    private boolean firstMove;
+    private boolean doneFirstMove;
 
     public King(int x, int y, String colour, PieceType pieceType, Player ownedBy){
         super(x, y, colour, pieceType, ownedBy, -1);
-        this.firstMove = false;
+        this.doneFirstMove = false;
     }
 
-    public void setFirstMove(boolean firstMove){
-        this.firstMove = firstMove;
+    public void setDoneFirstMove(boolean doneFirstMove){
+        this.doneFirstMove = doneFirstMove;
     }
 
     public boolean getFirstMoveStatus(){
-        return this.firstMove;
+        return this.doneFirstMove;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class King extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            if(!firstMove){
-                firstMove = true;
+            if(!doneFirstMove){
+                doneFirstMove = true;
             }
         }
     }
@@ -62,15 +62,25 @@ public class King extends MovingPiece {
      */
     @Override
     protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        boolean out = false;
+        //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
         Piece[][] board = gameBoard.getBoardState();
-        PieceType pieceType = this.getPieceType();
-        if(board[newX][newY] == null){
-            //need to check for if moving here might put king in check
-            //need to check if trying to castle
-            out = false;
+        PieceType type = this.getPieceType();
+        Piece isPieceOnTile = board[newX][newY];
+        //might be trying to castle
+        if(!doneFirstMove){
+            //if to check which side trying to castle to
+                //find rook on that side, check if first move done
+                    //castle if possible
+        } else{
+            if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
+                return true;
+            }
         }
-        return out;
+        if(board[newX][newY] == null){
+            //need to check if trying to castle
+
+        }
+        return false;
     }
 
 
