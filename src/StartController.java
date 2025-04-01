@@ -22,9 +22,9 @@ public class StartController extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Start.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
-            String fontPath = getClass().getResource("/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String fontPath = getClass().getResource("fonts/PressStart2P-Regular.ttf").toExternalForm();
             Font pressStartFont = Font.loadFont(fontPath, 40);
-            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
 
             ImageView gifView = new ImageView(new Image(getClass().getResource("/images/twinklingstars.gif").toExternalForm()));
