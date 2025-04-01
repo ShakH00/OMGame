@@ -17,6 +17,9 @@ public class PlayerT extends JFrame {
     private JTextArea textGridMessage;
     private JTextArea testText;
     private JButton b1,b2,b3,b4;
+    private JTextArea chatArea;
+    private JTextField chatInput;
+    private JButton sendButton;
 
     JButton b01;
     private JButton b02;
@@ -412,8 +415,47 @@ public class PlayerT extends JFrame {
             }
         }
 
-
+        private void initializeChatComponents() {
+        chatArea = new JTextArea(10, 30);
+        chatArea.setEditable(false);
+        JScrollPane chatScroll = new JScrollPane(chatArea);
+        
+        chatInput = new JTextField(20);
+        sendButton = new JButton("Send");
+        
+        JPanel chatPanel = new JPanel();
+        chatPanel.add(chatInput);
+        chatPanel.add(sendButton);
+        
+        contentPane.add(chatScroll, BorderLayout.EAST);
+        contentPane.add(chatPanel, BorderLayout.SOUTH);
+        
+        sendButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sendChatMessage();
+            }
+        });
+        
+        chatInput.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sendChatMessage();
+            }
+        });
     }
+    
+    private void sendChatMessage() {
+        String message = chatInput.getText().trim();
+        if (!message.isEmpty()) {
+            csc.sendChatMessage(playerID + ": " + message + "\n");
+            chatInput.setText("");
+        }
+    }
+    
+    public void receiveChatMessage(String message) {
+        chatArea.append(playerID + ": " + message + "\n");
+        chatArea.setCaretPosition(chatArea.getDocument().getLength());
+    }
+}
 
 
     public static void main(String[] args) {
