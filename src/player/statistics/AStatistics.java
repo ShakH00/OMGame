@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public abstract class Statistics implements IStatistics {
+/**
+ * Abstract class for storing, updating, and retrieving statistics related to a certain Game for some Account.
+ */
+
+public abstract class AStatistics implements IStatistics {
     /**
      * Set of statistics that are updated through special methods, and cannot be added to like other statistics
      */
@@ -64,10 +68,12 @@ public abstract class Statistics implements IStatistics {
      * Add the statistics HashMap to existing statistics
      * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
      */
-    public void addStatistics(HashMap<StatisticsEnum, Number> statistics) {
+    public void addStatistics(HashMap<StatisticsEnum, Integer> statistics) {
         for (StatisticsEnum key : statistics.keySet()){
-            Integer value = (Integer) statistics.get(key);
-            addStatistic(key, value);
+            if (!isComplex(key)) {
+                Integer value = statistics.get(key);
+                addStatistic(key, value);
+            }
         }
     }
 

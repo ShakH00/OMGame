@@ -1,6 +1,6 @@
 package player.statistics;
 
-public class StatisticsTicTacToe extends Statistics implements IStatistics {
+public class StatisticsTicTacToe extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */

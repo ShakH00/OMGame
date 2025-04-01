@@ -1,6 +1,6 @@
 package player.statistics;
 
-public class StatisticsChess extends Statistics implements IStatistics {
+public class StatisticsChess extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */

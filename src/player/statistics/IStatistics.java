@@ -34,7 +34,7 @@ interface IStatistics {
      * Add the statistics HashMap to existing statistics
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      */
-    void addStatistics(HashMap<StatisticsEnum, Number> statistics);
+    void addStatistics(HashMap<StatisticsEnum, Integer> statistics);
 
     /**
      * Get the values of all statistics tracked for this game

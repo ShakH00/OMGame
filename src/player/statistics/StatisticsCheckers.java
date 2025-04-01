@@ -1,9 +1,6 @@
 package player.statistics;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class StatisticsCheckers extends Statistics implements IStatistics {
+public class StatisticsCheckers extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */

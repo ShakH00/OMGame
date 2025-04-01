@@ -43,8 +43,9 @@ public class Account {
      */
     private ArrayList<Account> friends;
 
-    private final HashMap<GamesEnum, Statistics> statistics;
-    private final ArrayList<MatchOutcomeHandler> matchHistory;
+    private final HashMap<GamesEnum, AStatistics> statistics;
+
+    private final String[][] matchHistory;
 
     /**
      * Initialize a guest Account
@@ -64,7 +65,7 @@ public class Account {
         statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
         statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
         statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
-        this.matchHistory = new ArrayList<>();
+        this.matchHistory = new String[10][5];  // Store information about the past 10 matches, each with 5 fields.
     }
 
     /**
@@ -103,7 +104,7 @@ public class Account {
         statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
         statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
         statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
-        this.matchHistory = new ArrayList<>();
+        this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 5 fields.
     }
 
     /**
@@ -121,6 +122,74 @@ public class Account {
         this.email = email;
         this.password = password;
         this.friends = new ArrayList<>();
+    }
+
+    /**
+     * Add a HashMap of statistics to
+     * @param game              GamesEnum game to update statistics for
+     * @param addStatistics     HashMap which assigns each statistic an Integer value to increase by
+     */
+    public void updateStatistics(GamesEnum game, HashMap<StatisticsEnum, Integer> addStatistics){
+        statistics.get(game).addStatistics(addStatistics);
+    }
+
+    /**
+     * Update this account's Elo for some game in GamesEnum.
+     * @param game      GamesEnum game to update Elo for
+     * @param newElo    Integer value to assign Elo
+     */
+    public void updateElo(GamesEnum game, Integer newElo){
+        statistics.get(game).updateElo(newElo);
+    }
+
+    /**
+     * Get the player's Elo for some game. This is a wrapper function for getStatistic()
+     * @param game  GamesEnum game to get Elo for
+     * @return      int Elo for the game
+     */
+    public int getElo(GamesEnum game){
+        return (int) getStatistic(game, StatisticsEnum.ELO);
+    }
+
+    /**
+     * Get a certain Statistic for the player from a given game.
+     * @param game          GamesEnum game to get statistic for
+     * @param statistic     StatisticsEnum which statistic to get
+     * @return              Number (Integer or Double) for the statistic
+     */
+    public Number getStatistic(GamesEnum game, StatisticsEnum statistic){
+        return statistics.get(game).getStatistic(statistic);
+    }
+
+    /**
+     * Adds a String[5] representing the most recent match results to the match history String[][]
+     * @param strings   String[] containing details about the player's last match
+     */
+    public void logMatch(String[] strings) {
+        // Move each match history String[] up by 1 index.
+        for (int i = 8; i >= 0; i--){
+            if (matchHistory[i] != null){
+                matchHistory[i + 1] = matchHistory[i];
+            }
+        }
+        // Set the first index as the most recent match history String[]
+        matchHistory[0] = strings;
+    }
+
+    /**
+     * Get the match history for this Account
+     * @return  String[][] for MatchHistory. Get the header row using getMatchHistoryHeader()
+     */
+    public String[][] getMatchHistory(){
+        return matchHistory;
+    }
+
+    /**
+     * Gives the header row for the String[][] given by getMatchHistory().
+     * @return  String[6] of Strings for the match history headers
+     */
+    public String[] getMatchHistoryHeader(){
+        return new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
     }
 
     /**
@@ -196,7 +265,7 @@ public class Account {
      */
     public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order){
         // Create a new CombinedStatistics object
-        HashSet<Statistics> setOfStatistics = new HashSet<>();
+        HashSet<AStatistics> setOfStatistics = new HashSet<>();
         for (GamesEnum game : games){
             setOfStatistics.add(statistics.get(game));
         }
@@ -372,5 +441,4 @@ public class Account {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
 }

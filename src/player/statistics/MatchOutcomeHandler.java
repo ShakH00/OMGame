@@ -28,12 +28,20 @@ public class MatchOutcomeHandler {
         // if the Player Statistics fields are not malformed, update PlayerStatistics and log match in Player match histories
         if (matchOutcomeIsValid(game, player1, player1Results, player2, player2Results)){
             // Update statistics for both Players
-            player1.updateStatistics(game, player1Results);
-            player2.updateStatistics(game, player2Results);
+            player1.getAccount().updateStatistics(game, player1Results);
+            player2.getAccount().updateStatistics(game, player2Results);
 
             // Add a String[] representation of the match outcome to both players' accounts
-            player1.logMatch(composeMatchLog(game, player1Results, player2, matchID));
-            player2.logMatch(composeMatchLog(game, player2Results, player1, matchID));
+            player1.getAccount().logMatch(composeMatchLog(game, player1Results, player2, matchID));
+            player2.getAccount().logMatch(composeMatchLog(game, player2Results, player1, matchID));
+
+            // Update both players' Elo
+            int player1OldElo = player1.getAccount().getElo(game);
+            int player2OldElo = player2.getAccount().getElo(game);
+            Integer player1NewElo = -1;  // TODO: Handle elo calculation. Use player1Results to figure out if it was a win or loss.
+            Integer player2NewElo = -1;  // TODO: Handle elo calculation. Use player2Results to figure out if it was a win or loss.
+            player1.getAccount().updateElo(game, player1NewElo);
+            player2.getAccount().updateElo(game, player2NewElo);
         }
     }
 
@@ -65,7 +73,7 @@ public class MatchOutcomeHandler {
                                             Player opponent,
                                             int matchID)
     {
-        String[] matchLog = new String[5];
+        String[] matchLog = new String[6];
 
         // index 0: game result (win/loss/draw)
         if (playerResults.get(StatisticsEnum.WINS) == 1){
@@ -92,8 +100,11 @@ public class MatchOutcomeHandler {
         // index 3: opponent ID
         matchLog[3] = String.valueOf(opponent.getAccount().getID());
 
-        // index 4: match ID
-        matchLog[4] = String.valueOf(matchID);
+        // index 4: opponent Elo
+        matchLog[4] = String.valueOf(opponent.getAccount().getElo(game));
+
+        // index 5: match ID
+        matchLog[5] = String.valueOf(matchID);
 
         // return
         return matchLog;

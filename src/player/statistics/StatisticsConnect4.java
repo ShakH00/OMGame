@@ -1,6 +1,6 @@
 package player.statistics;
 
-public class StatisticsConnect4 extends Statistics implements IStatistics {
+public class StatisticsConnect4 extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
