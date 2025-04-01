@@ -341,6 +341,7 @@ public class PlayerT extends JFrame {
         private Socket socket;
         private DataInputStream dataIn;
         private DataOutputStream dataOut;
+        private boolean connected;
         public ClientSideConnection(){   // I think this is waht is being send to the server
             System.out.println("Client side connection");
 
@@ -351,6 +352,7 @@ public class PlayerT extends JFrame {
                 dataOut = new DataOutputStream(socket.getOutputStream());
                 playerID = dataIn.readInt();
                 System.out.println("webSocketNotes.Player ID: " + playerID);
+                this.connected = true;
 
                 //VALUES TO SEND OVER THE NETWORK!
                 maxTurns = dataIn.readInt() / 2; // pass
@@ -376,6 +378,42 @@ public class PlayerT extends JFrame {
 
             }
         }
+
+        private void handleDisconnection() {
+        connected = false;
+        // Attempt reconnection
+        new Thread(() -> {
+            while (!connected) {
+                try {
+                    Thread.sleep(5000); // Wait 5 seconds between attempts
+                    reconnect();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
+    }
+    
+        private void reconnect() {
+            try {
+                socket = new Socket("localhost", 30000);
+                dataIn = new DataInputStream(socket.getInputStream());
+                dataOut = new DataOutputStream(socket.getOutputStream());
+                dataOut.writeInt(playerID); // Send player ID for reconnection
+                connected = true;
+            } catch (IOException e) {
+                System.err.println("Reconnection failed: " + e.getMessage());
+            }
+        }
+
+        public void sendChatMessage(String message) {
+        try {
+            dataOut.writeUTF("CHAT:" + message);
+        } catch (IOException e) {
+            handleDisconnection();
+        }
+    }
 
         public void sendButtonNum(String strBNum){
             try{
