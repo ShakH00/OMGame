@@ -1,3 +1,13 @@
+/**
+ * A game.chess.King object class for the game of Chess
+ * As with other pieces, it tracks x, y coordinates, colour, player who owns it, and score
+ * The score is set to -1 as a King is the most valuable piece on the board
+ * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
+ * but rather would only ever get checkmated
+ *
+ * @author Abdulrahman
+ */
+
 package game.chess;
 
 import game.Board;
@@ -6,15 +16,6 @@ import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 
-/**
- * A game.chess.King object class for the game of game.chess.Chess
- * As with other game.pieces, it tracks x, y coordinates, colour, player who owns it, and score
- * The score is set to -1 as a game.chess.King is the most valuable piece on the board
- * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
- * but rather would only ever get checkmated
- *
- * @author Abdulrahman
- */
 public class King extends MovingPiece {
     private boolean doneFirstMove;
 

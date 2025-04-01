@@ -1,3 +1,11 @@
+/**
+ * A pawn object class for pawn pieces in the game of Chess
+ * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
+ * Each pawn automatically has a score of 1 as it is the least valued piece on a Chess board
+ *
+ * @author Abdulrahman
+ */
+
 package game.chess;
 import game.Board;
 import game.Player;
@@ -5,13 +13,6 @@ import game.pieces.Piece;
 import game.pieces.PieceType;
 import game.pieces.MovingPiece;
 
-/**
- * A pawn object class for pawn game.pieces in the game of game.chess.Chess
- * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
- * Each pawn automatically has a score of 1 as it is the least valued piece on a game.chess.Chess board
- *
- * @author Abdulrahman
- */
 public class Pawn extends MovingPiece {
     boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
 
