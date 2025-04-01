@@ -53,7 +53,6 @@ public class MatchOutcomeHandler {
             int player1NewElo = player1OldElo + player1EloChange;
             int player2NewElo = player2OldElo + player2EloChange;
 
-
             player1.getAccount().updateElo(game, player1NewElo);
             player2.getAccount().updateElo(game, player2NewElo);
         }
