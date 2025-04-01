@@ -1,6 +1,6 @@
 package ExceptionsAuthentication;
 
-public class EncryptionFailedException extends RuntimeException {
+public class EncryptionFailedException extends Exception {
     public EncryptionFailedException(String message) {
         super(message);
     }
