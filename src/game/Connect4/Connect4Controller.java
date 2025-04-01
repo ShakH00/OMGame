@@ -2,7 +2,7 @@
  * Connect 4 GUI - Visual
  * Click columns to drop pieces (alternating colors)
  * No game logic edition
- * 
+ * Apologies btw (;﹏;)
  * - Amr Ibrahim
  */
 import javafx.application.Application;
