@@ -69,25 +69,25 @@
             <Image url="@../images/tetriscat_paws.GIF" />
          </image>
       </ImageView>
-      <Text fill="#1b3b5d" layoutX="167.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="need help? visit us at omgame.club for tips and other info!" textAlignment="CENTER" wrappingWidth="470.1367244720459">
+      <Text fill="#1b3b5d" layoutX="170.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="need help? visit us at omgame.club for tips and other info!" textAlignment="CENTER" wrappingWidth="470.1367244720459">
          <font>
-            <Font name="Retro Gaming" size="27.0" />
+            <Font name="Press Start 2P Regular" size="24.0" />
          </font>
       </Text>
-      <Text fill="#1b3b5d" layoutX="167.0" layoutY="401.0" lineSpacing="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(^. .^) " textAlignment="CENTER" wrappingWidth="470.1367244720459">
+      <Text fill="#1b3b5d" layoutX="304.0" layoutY="411.0" lineSpacing="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(^. .^)" textAlignment="CENTER" wrappingWidth="195.73676109313965">
          <font>
-            <Font name="Retro Gaming" size="27.0" />
+            <Font name="Press Start 2P Regular" size="24.0" />
          </font>
       </Text>
-      <Text fill="#1b3b5d" layoutX="162.0" layoutY="405.0" lineSpacing="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." textAlignment="CENTER" wrappingWidth="470.1367244720459">
+      <Text fill="#1b3b5d" layoutX="170.0" layoutY="420.0" lineSpacing="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="." textAlignment="CENTER" wrappingWidth="470.1367244720459">
          <font>
-            <Font name="Retro Gaming" size="16.0" />
+            <Font name="Press Start 2P Regular" size="20.0" />
          </font>
       </Text>
       <Rectangle arcHeight="28.0" arcWidth="28.0" fill="#42b531" height="47.0" layoutX="70.0" layoutY="201.0" rotate="-18.4" stroke="TRANSPARENT" strokeType="INSIDE" width="113.0" />
-      <Text fill="#fbf8f3" layoutX="78.0" layoutY="234.0" lineSpacing="100.0" rotate="-18.4" stroke="#faf7f2" strokeType="OUTSIDE" strokeWidth="0.3" text="SOS!!" textAlignment="CENTER" wrappingWidth="96.24358707666397">
+      <Text fill="#fbf8f3" layoutX="70.0" layoutY="235.0" lineSpacing="100.0" rotate="-18.4" stroke="#faf7f2" strokeType="OUTSIDE" strokeWidth="0.3" text="SOS!" textAlignment="CENTER" wrappingWidth="122.05849405234193">
          <font>
-            <Font name="Retro Gaming" size="27.0" />
+            <Font name="Press Start 2P Regular" size="22.0" />
          </font>
       </Text>
       <Label fx:id="closeButton" layoutX="676.0" layoutY="223.0" onMouseClicked="#handleCloseButton" text="x" textFill="#1b3b5d">
