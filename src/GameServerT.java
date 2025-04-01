@@ -55,9 +55,6 @@ public class GameServerT {
             System.out.println();
         }
 
-
-
-
         try{
             ss = new ServerSocket(30000);
         } catch(IOException e){
@@ -65,7 +62,6 @@ public class GameServerT {
             e.printStackTrace();
         }
     }
-
 
     public void acceptConnections(){
 
@@ -138,6 +134,31 @@ public class GameServerT {
         ServerSideConnection player = (playerID == 1) ? player1 : player2;
         if (player != null) {
             player.send2dCharArray();
+        }
+    }
+
+    private boolean isValidMove(String move, int playerID) {
+        try {
+            String[] coords = move.split(",");
+            int row = Integer.parseInt(coords[0]);
+            int col = Integer.parseInt(coords[1]);
+            
+            // Check if within bounds
+            if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+                return false;
+            }
+            
+            // Check if space is empty
+            if (server2dChar[row][col] != ' ') {
+                return false;
+            }
+            
+            // Check if it's player's turn
+            boolean isPlayer1Turn = turnsMade % 2 == 0;
+            return (playerID == 1 && isPlayer1Turn) || (playerID == 2 && !isPlayer1Turn);
+            
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -238,11 +259,21 @@ public class GameServerT {
 
             // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
         public void processGameLogicP1(String input) {
-            placeMove(input, 'X');  // P1 uses 'X'
+            if (isValidMove(input, 1)) {
+                placeMove(input, 'X');  // P1 uses 'X'
+            }
+            else {
+                System.out.println("Invalid move by Player 1: " + input);
+            }
         }
 
         public void processGameLogicP2(String input2) {
-            placeMove(input2, 'O');  // P2 uses 'O'
+            if (isValidMove(input2, 2)) {
+                placeMove(input2, 'O');  // P2 uses 'O'
+            }
+            else {
+                System.out.println("Invalid move by Player 2: " + input2);
+            } 
         }
 
         private void placeMove(String input, char symbol) {
