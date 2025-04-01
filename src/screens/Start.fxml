@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StartController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+      <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
+         <image>
+            <Image url="@../images/twinklingstars.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+         <image>
+            <Image url="@../images/chessboard.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1851.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="30.0" layoutX="-513.0" layoutY="73.0" opacity="0.22" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1849.0" />
+      <ImageView fitHeight="733.0" fitWidth="704.0" layoutX="-105.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+         <image>
+            <Image url="@../images/chessKnightPurple.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="689.0" fitWidth="715.0" layoutX="238.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+         <image>
+            <Image url="@../images/chessRookWhite.png" />
+         </image>
+         <effect>
+            <DropShadow height="65.45" radius="19.3575" spread="0.18" width="13.98" />
+         </effect>
+      </ImageView>
+      <Text fill="WHITE" layoutX="-512.0" layoutY="243.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="#0d1d296e" strokeType="OUTSIDE" strokeWidth="7.0" text="ONLINE MULTIPLAYER BOARD GAME" textAlignment="CENTER" wrappingWidth="1851.1750793457031" AnchorPane.topAnchor="176.0">
+         <font>
+            <Font name="Retro Gaming" size="67.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="309.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/omg_title.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <StackPane fx:id="startButton" layoutX="327.0" layoutY="246.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+         <children>
+            <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/pink.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="START" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+               <font>
+                  <Font name="Retro Gaming" size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+      <StackPane layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+         <children>
+            <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/yellow.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SETTINGS" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+               <font>
+                  <Font name="Retro Gaming" size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+      <StackPane layoutX="331.0" layoutY="366.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+         <children>
+            <ImageView fx:id="helpButton" fitHeight="111.0" fitWidth="147.0" onMouseClicked="#openHelpPopup" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/green.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="helpButtonText" fill="WHITE" onMouseClicked="#openHelpPopup" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="HELP" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+               <font>
+                  <Font name="Retro Gaming" size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

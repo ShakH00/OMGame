@@ -16,7 +16,7 @@ public class GameServerT {
     private int[] values;
     private char[][] server2dChar;
 
-    // store the  the button num that the player clicked on, befroe being sent to the other player
+    // store the button num that the player clicked on, befroe being sent to the other player
     // don in the run method while loop, for each turns
     private String player1ButtonNum;
     private String player2ButtonNum;
