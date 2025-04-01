@@ -1,3 +1,11 @@
+package game.checkers;
+
+import game.Board;
+import game.GameRules;
+import game.GameState;
+import game.Player;
+import game.pieces.Piece;
+
 public class Checkers{
     private Player player1;
     private Player player2;
@@ -33,7 +41,7 @@ public class Checkers{
                 boardState[capturedX][capturedY] = null;
             }
 
-            // King promotion, assuming black is p1 and red is p2
+            // game.chess.King promotion, assuming black is p1 and red is p2
             if (piece.getColour().equals("BLACK") && newX == 7 || piece.getColour().equals("RED") && newX == 0){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
@@ -103,9 +111,9 @@ public class Checkers{
 
 
     /**
-     * Check pieces on the board.
-     * Piece 1 = Player 1, BLACK
-     * Piece 2 = Player 2, RED
+     * Check game.pieces on the board.
+     * Piece 1 = game.Player 1, BLACK
+     * Piece 2 = game.Player 2, RED
      * If !Piece1Exists then P2 Wins
      * If !Piece2Exists then P1 Wins.
      * [!!!] How do we decide colours? Let colour be red/black and GUI do the rest?
@@ -114,9 +122,10 @@ public class Checkers{
     public void checkWinCondition(){
         boolean Piece1Exists = false;
         boolean Piece2Exists = false;
+        Piece[][] gameBoard = board.getBoardState();
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
-                Piece piece = board.getCell(i, j);
+                Piece piece = gameBoard[i][j];
                 if (piece != null){
                     if (piece.getColour().equals("BLACK")){
                         Piece1Exists = true;
@@ -155,10 +164,10 @@ public class Checkers{
      */
     public void matchOutcome(){
         if(gameState == GameState.P1_WIN){
-            System.out.println("Player 1 has won the game!");
+            System.out.println("game.Player 1 has won the game!");
         }
         else if(gameState == GameState.P2_WIN) {
-            System.out.println("Player 2 has won the game!");
+            System.out.println("game.Player 2 has won the game!");
         }
         else{
             System.out.println("The game is ongoing");

@@ -1,12 +1,12 @@
+package game.tictactoe;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-import TicTacToe;
 
 public class TicTacToe_Test {
 
     /*
-     * Creates a Board and Creates Another Using Code
+     * Creates a game.Board and Creates Another Using Code
      */
     @Test
     public void testInitializeBoard() {
@@ -24,8 +24,8 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
-     * Check if the Board is Empty
+     * Create a game.Board
+     * Check if the game.Board is Empty
      */
     @Test
     public void testIsBoardFull_EmptyBoard() {
@@ -34,13 +34,13 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
-     * Fill the Board (Draw)
-     * Check if the Board is Full
+     * Create a game.Board
+     * Fill the game.Board (Draw)
+     * Check if the game.Board is Full
      */
     @Test
     public void testIsBoardFull_FullBoard() {
-        TicTacToe game = new TicTacToe();
+        game.tictactoe.TicTacToe game = new TicTacToe();
         char[][] fullBoard = {
             {'O', 'X', 'O'},
             {'O', 'X', 'X'},
@@ -51,8 +51,8 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
-     * Fill the Board (Row Win)
+     * Create a game.Board
+     * Fill the game.Board (Row Win)
      * Call isGameOver()
      */
     @Test
@@ -68,8 +68,8 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
-     * Fill the Board (Column Win)
+     * Create a game.Board
+     * Fill the game.Board (Column Win)
      * Call isGameOver()
      */
     @Test
@@ -85,8 +85,8 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
-     * Fill the Board (Diagonal Win)
+     * Create a game.Board
+     * Fill the game.Board (Diagonal Win)
      * Call isGameOver()
      */
     @Test
@@ -102,7 +102,7 @@ public class TicTacToe_Test {
     }
 
     /*
-     * Create a Board
+     * Create a game.Board
      * Place a Piece at (0, 0)
      * makeMove() = isValidMove()
      */
@@ -115,7 +115,7 @@ public class TicTacToe_Test {
 
     /*
      * Not Completely Implemented Yet, Waiting for GIU Team
-     * Create a Board
+     * Create a game.Board
      * Place a Piece at (1, 2)
      * makeMove() = isValidMove()
      */
@@ -128,7 +128,7 @@ public class TicTacToe_Test {
 
     /*
      * Not Completely Implemented Yet, Waiting for GIU Team
-     * Create a Board
+     * Create a game.Board
      * Both Players Place Piece in the Same Location at (0, 0)
      * makeMove() = isValidMove()
      */
@@ -143,13 +143,13 @@ public class TicTacToe_Test {
     //Haven't Implemented Yet, Waiting for GIU Team
     @Test
     public void testMakeMove_SwitchPlayer() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe game = new game.tictactoe.TicTacToe();
         game.makeMove(0, 0);
         assertEquals('O', game.getCurrentPlayer());
     }
 
     /*
-     * Simulate a Game Where Player X Wins with a Row
+     * Simulate a Game Where game.Player X Wins with a Row
      */
     @Test
     public void testPlay_PlayerXRowWin() {
@@ -168,7 +168,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testPlay_DrawGame() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe game = new game.tictactoe.TicTacToe();
         game.makeMove(0, 0); // X
         game.makeMove(0, 1); // O
         game.makeMove(0, 2); // X
@@ -177,7 +177,7 @@ public class TicTacToe_Test {
         game.makeMove(1, 2); // O
         game.makeMove(2, 1); // X
         game.makeMove(2, 0); // O
-        game.makeMove(2, 2); // X - Full Board, Draw
+        game.makeMove(2, 2); // X - Full game.Board, Draw
         assertTrue(game.isBoardFull());
         assertFalse(game.isGameOver());
     }

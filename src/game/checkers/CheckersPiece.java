@@ -1,8 +1,15 @@
+package game.checkers;
+import game.Board;
+import game.Player;
+import game.pieces.MovingPiece;
+import game.pieces.Piece;
+import game.pieces.PieceType;
+
 /**
- * A CheckersPiece class for all checker pieces (objects), inherits MovingPiece which inherits Piece.
+ * A game.checkers.CheckersPiece class for all checker game.pieces (objects), inherits MovingPiece which inherits Piece.
  * Most of the piece's attributes are superclass-ed up to Piece
- * The CheckersPiece ovverrides two key methods present within MovingPiece: move, isValidMove.
- * This is done due to how a checkers piece moves differently than say a chess piece
+ * The game.checkers.CheckersPiece ovverrides two key methods present within MovingPiece: move, isValidMove.
+ * This is done due to how a game.checkers piece moves differently than say a game.chess piece
  *
  * @author Abdulrahman, Adam
  */
@@ -10,7 +17,7 @@ public class CheckersPiece extends MovingPiece {
     private boolean isKing; //boolean to track if the piece is a king or not
 
     /**
-     * Constructor to create a Checkers Piece
+     * Constructor to create a game.checkers.Checkers Piece
      * This object inherits a MovingPiece which is an abstract object that inherits Piece
      *
      * @param x: the x value location, row, of the piece initially
@@ -19,7 +26,7 @@ public class CheckersPiece extends MovingPiece {
      * @param ownedBy: the player who owns the piece
      * @param score: score of the piece once captured
      */
-    public CheckersPiece(int x, int y, String colour,  PieceType pieceType, Player ownedBy, int score){
+    public CheckersPiece(int x, int y, String colour, PieceType pieceType, Player ownedBy, int score){
         super(x, y, colour, pieceType, ownedBy, score);
         this.isKing = false;
     }
@@ -50,7 +57,7 @@ public class CheckersPiece extends MovingPiece {
      * @param gameBoard: board being played on
      */
     @Override
-    public void move(int currentX, int currentY, int newX, int newY, Board gameBoard){
+    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard){
         //if this move is valid, perform it
         if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
@@ -72,7 +79,7 @@ public class CheckersPiece extends MovingPiece {
      * @return true if move is valid, false if invalid
      */
     @Override
-    public boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
+    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
         return false; //temporary
     }
 }

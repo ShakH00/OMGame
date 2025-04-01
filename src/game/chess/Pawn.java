@@ -1,11 +1,17 @@
+package game.chess;
+import game.Board;
+import game.Player;
+import game.pieces.Piece;
+import game.pieces.PieceType;
+import game.pieces.MovingPiece;
 /**
- * A pawn object class for pawn pieces in the game of Chess
+ * A pawn object class for pawn game.pieces in the game of game.chess.Chess
  * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
- * Each pawn automatically has a score of 1 as it is the least valued piece on a Chess board
+ * Each pawn automatically has a score of 1 as it is the least valued piece on a game.chess.Chess board
  *
  * @author Abdulrahman
  */
-public class Pawn extends MovingPiece{
+public class Pawn extends MovingPiece {
     boolean firstMove; //used to determine if pawn can move two forward if its on its first move
 
     /**
@@ -15,7 +21,7 @@ public class Pawn extends MovingPiece{
      * @param colour: pawn colour
      * @param ownedBy: player who owns the pawn
      */
-    public Pawn(int x, int y, String colour, PieceType pieceType,  Player ownedBy){
+    public Pawn(int x, int y, String colour, PieceType pieceType, Player ownedBy){
         super(x, y, colour, pieceType, ownedBy, 1);
         firstMove = false;
     }
@@ -26,17 +32,17 @@ public class Pawn extends MovingPiece{
      * @param currentY: current y coordinate of pawn
      * @param newX: x coordinate pawn is being moved to
      * @param newY: y coordinate pawn is being moved to
-     * @param gameBoard: the chess game's board
+     * @param gameBoard: the game.chess game's board
      *
      * This method works by checking if isValidMove returns true and then moving the piece
      */
     @Override
-    void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
-            setX(newX);
-            setY(newY);
+            this.setX(newX);
+            this.setY(newY);
             board[newX][newY] = this;
             if(!firstMove){
                 firstMove = true;
@@ -48,13 +54,13 @@ public class Pawn extends MovingPiece{
 
     /**
      * A method to check if the tile the pawn is being moved to is a valid move
-     * Some notes to remember the rules of pawn movement in chess,
+     * Some notes to remember the rules of pawn movement in game.chess,
      * 1. A pawn's default movement is to move one tile forward
      *      However, a pawn can move two tiles forward, if it is the pawn's first move from starting position
      * 2. A pawn may move one tile diagonally, still forward, given that there is an enemy piece present there
      *      Under this second rule, the pawn proceeds to eat that enemy piece
-     * 3. PROMOTION: Once a pawn reaches the end of the board, it can be promoted to one of four pieces: Knight, Bishop, Rook, Queen
-     *      The choice of piece promotion is up to the player who owns the pawn. This rule is major for chess end-game
+     * 3. PROMOTION: Once a pawn reaches the end of the board, it can be promoted to one of four game.pieces: Knight, Bishop, Rook, Queen
+     *      The choice of piece promotion is up to the player who owns the pawn. This rule is major for game.chess end-game
      * 4. Special rules: EN PASSANT: One's pawn can take an enemy pawn if the enemy pawn hasn't moved yet,
      *      and proceeds to jump two tiles up on its first move, placing it directly next to your pawn.
      *      Your pawn can now take it, moving diagonally, being placed right behind the enemy pawn which then disappears
@@ -73,7 +79,7 @@ public class Pawn extends MovingPiece{
 
     //WILL BE REWORKED A BIT NOW THAT WE HAVE PIECETYPE!!!!
     @Override
-    boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         Piece[][] board = gameBoard.getBoardState();
         int compX = Math.abs(currentX-newX);
         int compY = Math.abs(currentY-newY);

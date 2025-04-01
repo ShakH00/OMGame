@@ -1,3 +1,7 @@
+package game;
+
+import game.pieces.Piece;
+
 public class Board{
     private Piece[][] board;
     private int rows;
@@ -33,12 +37,12 @@ public class Board{
     {
         if(gameType == GameType.CHESS)
         {
-            // Method to fill board with chess pieces
+            // Method to fill board with game.chess game.pieces
         }
 
         else if(gameType == GameType.CHECKERS)
         {
-            // Method to fill board with checkers pieces
+            // Method to fill board with game.checkers game.pieces
         }
 
         else if(gameType == gameType.TICTACTOE)
@@ -102,11 +106,11 @@ public class Board{
 
     /* IGNORE THIS, FOR TICTACTOE
 
-    public Piece getCell(int rows, int cols) {
+    public game.pieces.Piece getCell(int rows, int cols) {
         return board[rows][cols];
     }
 
-    public void setCell(int rows, int cols, Piece value) {
+    public void setCell(int rows, int cols, game.pieces.Piece value) {
         board[rows][cols] = value;
     }
 

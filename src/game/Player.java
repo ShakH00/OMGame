@@ -1,8 +1,10 @@
+package game;
+
 public class Player {
     private String team;
 
     public Player() {
-        System.out.println("Player Constructor");
+        System.out.println("game.Player Constructor");
     }
 
     private int getWinCount() {

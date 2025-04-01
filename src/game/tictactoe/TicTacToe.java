@@ -1,15 +1,20 @@
+package game.tictactoe;
+
+import game.GameState;
+import game.GameType;
+
 import java.util.Scanner;
 
 public class TicTacToe {
 
-    // Create a 3x3 Tic-Tac-Toe Board with char
+    // Create a 3x3 Tic-Tac-Toe game.Board with char
     private char[][] board;
     private char currentPlayer;
     private GameState gameState;
     private GameType gameType = GameType.TICTACTOE;
 
     /*
-     * TicTacToe Constructor
+     * game.tictactoe.TicTacToe Constructor
      * Initializes the board and sets the first player(current player) to 'X'
      * Calls initializeBoard() to set cells
      */
@@ -118,7 +123,7 @@ public class TicTacToe {
      * Makes a move on the board
      * If the cell is empty, place the current player's symbol
      * Invalid Move:
-     *      If the cell is not empty, print "Invalid Move, Outside of Board. Please Try Again."
+     *      If the cell is not empty, print "Invalid Move, Outside of game.Board. Please Try Again."
      *      Or If the placed cell is outside of the board, print "Invalid Move, Cell is Occupied. Please Try Again."
      */
     private void makeMove(int row, int col) {
@@ -126,7 +131,7 @@ public class TicTacToe {
             board[row][col] = currentPlayer;
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         } else if (row >= 3 || col >= 3 || row < 0 || col < 0) {
-            System.out.println("Invalid Move, Outside of Board. Please Try Again.");
+            System.out.println("Invalid Move, Outside of game.Board. Please Try Again.");
         } else {
             System.out.println("Invalid Move, Cell is Occupied. Please Try Again.");
         }
@@ -145,7 +150,7 @@ public class TicTacToe {
 
         while (!isGameOver() && !isBoardFull()) {
             gameState = (currentPlayer == 'X') ? GameState.P1_TURN : GameState.P2_TURN;
-            System.out.println("Player " + currentPlayer + ", Enter Your Move:");
+            System.out.println("game.Player " + currentPlayer + ", Enter Your Move:");
 
             System.out.print("Row [0, 1, 2]: ");
             int row = scanner.nextInt();
@@ -163,7 +168,7 @@ public class TicTacToe {
             }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             System.out.println("GameOver! Congratulations,");
-            System.out.println("Player " + currentPlayer + " Wins!");
+            System.out.println("game.Player " + currentPlayer + " Wins!");
         } else {
             System.out.println("GameOver!");
             System.out.println("It's a Draw!");
@@ -174,7 +179,7 @@ public class TicTacToe {
 
     /*
      * Main Method
-     * Creates a new TicTacToe object and calls play()
+     * Creates a new game.tictactoe.TicTacToe object and calls play()
      */
     public static void main(String[] args) {
         TicTacToe game = new TicTacToe();

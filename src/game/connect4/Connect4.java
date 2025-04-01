@@ -1,3 +1,9 @@
+package game.connect4;
+
+import game.*;
+import game.pieces.Piece;
+import game.pieces.PieceType;
+
 public class Connect4 extends Game {
     public Connect4() {
         super.player1 = new Player();
@@ -13,11 +19,13 @@ public class Connect4 extends Game {
     Connect4Piece piece1 = new Connect4Piece("red", PieceType.LIGHT, super.player1);
     Connect4Piece piece2 = new Connect4Piece("blue", PieceType.DARK, super.player2);
 
-    void move(Piece piece) {
+    @Override
+    protected void move(Piece piece) {
 
     }
 
-    void checkWinCondition()
+    @Override
+    protected void checkWinCondition()
     {
         // Check for wins in rows
         for(int row = 0; row < board.getRows(); row++)
@@ -192,8 +200,9 @@ public class Connect4 extends Game {
         return false;
     }
 
-    // Player surrenders and gives other player the win
-    void surrender()
+    // game.Player surrenders and gives other player the win
+    @Override
+    protected void surrender()
     {
         if(gameState == GameState.P1_TURN)
         {
@@ -204,8 +213,8 @@ public class Connect4 extends Game {
             gameState = GameState.P1_WIN;
         }
     }
-
-    void matchOutcome() {
+    @Override
+    protected void matchOutcome() {
 
     }
 }
