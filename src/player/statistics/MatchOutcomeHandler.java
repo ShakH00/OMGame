@@ -38,11 +38,39 @@ public class MatchOutcomeHandler {
             // Update both players' Elo
             int player1OldElo = player1.getAccount().getElo(game);
             int player2OldElo = player2.getAccount().getElo(game);
-            Integer player1NewElo = -1;  // TODO: Handle elo calculation. Use player1Results to figure out if it was a win or loss.
-            Integer player2NewElo = -1;  // TODO: Handle elo calculation. Use player2Results to figure out if it was a win or loss.
+
+            double player1Score = getMatchScore(player1Results);
+            double player2Score = getMatchScore(player2Results);
+
+            double player1Expected = getExpectedScore(player1OldElo, player2OldElo);
+            double player2Expected = getExpectedScore(player2OldElo, player1OldElo);
+
+            int kFactor = getKFactor(game);
+
+
             player1.getAccount().updateElo(game, player1NewElo);
             player2.getAccount().updateElo(game, player2NewElo);
         }
+    }
+
+
+    private static double getMatchScore(HashMap<StatisticsEnum, Integer> playerResults) {
+        if (playerResults.getOrDefault(StatisticsEnum.WINS, 0) == 1) return 1.0;
+        if (playerResults.getOrDefault(StatisticsEnum.DRAWS, 0) == 1) return 0.5;
+        return 0.0; // loss
+    }
+
+    private static double getExpectedScore(int ratingA, int ratingB) {
+        return 1 / (1 + Math.pow(10, (ratingB - ratingA) / 400.0));
+    }
+
+    private static int getKFactor(GamesEnum game) {
+        return switch (game) {
+            case CHESS -> 32;
+            case CHECKERS -> 20;
+            case CONNECT4 -> 15;
+            case TICTACTOE -> 10;
+        };
     }
 
     /**
