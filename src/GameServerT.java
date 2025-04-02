@@ -1,3 +1,5 @@
+import game.tictactoe.TicTacToe;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,12 +22,14 @@ public class GameServerT {
     private int[] values;
     private char[][] server2dChar;
 
-    // store the  the button num that the player clicked on, befroe being sent to the other player
+    // store  the button num that the player clicked on, befroe being sent to the other player
     // don in the run method while loop, for each turns
     private String player1ButtonNum;
     private String player2ButtonNum;
 
-    private char[] gameBoard;
+
+    //GAME LOGIC UHHH
+    private TicTacToe ticTacToeGame = new TicTacToe();
 
     public GameServerT() {
         System.out.println("--game server--");
@@ -191,14 +195,16 @@ public class GameServerT {
                     }
                 }
                 dataOut.flush();
-
+                TicTacToe game = new TicTacToe();
 
                 while (true) {
                     if(playerID == 1){
                         player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
-                        processGameLogicP1(player1ButtonNum);
+
+                        //processGameLogicP1(player1ButtonNum);
+                        processGameLogic(1,player1ButtonNum);
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
                         }
@@ -210,7 +216,9 @@ public class GameServerT {
                         player2ButtonNum = String.valueOf(dataIn.readChar());
                         System.out.println("Payer 2 clicked button #" + player2ButtonNum);
                         System.out.println("input before p2" + player2ButtonNum);
-                        processGameLogicP2(player2ButtonNum);
+                        //processGameLogicP2(player2ButtonNum);
+                        processGameLogic(2,player2ButtonNum);
+
 
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
@@ -257,28 +265,50 @@ public class GameServerT {
             return turnsMade >= maxTurns;
         }
 
-            // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
-        public void processGameLogicP1(String input) {
-            if (isValidMove(input, 1)) {
-                placeMove(input, 'X');  // P1 uses 'X'
-            }
-            else {
-                System.out.println("Invalid move by Player 1: " + input);
+        public void processMove(String input, int playerID) {
+            try {
+                int move = Integer.parseInt(input) - 1;
+                int row = move / 3;
+                int col = move % 3;
+
+                char expectedSymbol = (playerID == 1) ? 'X' : 'O';
+
+                char[][] boardBefore = ticTacToeGame.getBoard();
+                if (boardBefore[row][col] == '-') {
+                    // Apply move
+                    ticTacToeGame.getBoard()[row][col] = expectedSymbol;
+
+                    // Print move info
+                    System.out.println("Player " + playerID + " placed '" + expectedSymbol + "' at [" + row + "][" + col + "]");
+                } else {
+                    System.out.println("Invalid move by Player " + playerID + " at [" + row + "][" + col + "]");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error processing move for player " + playerID + ": " + e.getMessage());
             }
         }
 
-        public void processGameLogicP2(String input2) {
-            if (isValidMove(input2, 2)) {
-                placeMove(input2, 'O');  // P2 uses 'O'
+        public void processGameLogic(int playerNum, String input){
+
+            if(playerNum == 1 ){
+                ticTacToeGame.play(playerNum, input);
+                server2dChar = ticTacToeGame.getBoard();
+            }else {
+                ticTacToeGame.play(playerNum, input);
+                server2dChar = ticTacToeGame.getBoard();
             }
-            else {
-                System.out.println("Invalid move by Player 2: " + input2);
-            } 
+
+        }
+            // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
+        public void processGameLogicP1(String input) {
+            placeMove(input, 'X');
+        }
+        public void processGameLogicP2(String input2) {
+                placeMove(input2, 'O');  // P2 uses 'O'
         }
 
         private void placeMove(String input, char symbol) {
-
-
             //  networking -> Server game logic -> networking
             if (symbol == 'O'){
                 System.out.println("processGameLogic for player 2, input: " + input);
