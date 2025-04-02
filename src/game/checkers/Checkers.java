@@ -1,3 +1,8 @@
+/**
+ * Class that envelops the checkers game. 
+ * Utilizes CheckersPiece.java, Board.Java primarily 
+ * @author Adam, Abdu, Charls
+ * */
 package game.checkers;
 
 import game.Board;
@@ -82,6 +87,22 @@ public class Checkers{
                                 * Piece is trying to jump more than 1 space
                                 * Piece is not moving diagonally
                                 */
+        }
+
+        /**
+         * Check if King and king movement for Player 1
+         * Assuming Player 1 is bottom of the board (7,0)
+         */
+        if(selectedPiece.isKing()==false && selectedPiece.getOwnedBy() == player1 && newY <= currentY){
+            return false;
+        }
+
+        /**
+         * Check if King and king movement for Player 2
+         * Assuming Player 2 is top of board (0,0)
+         */
+        if(selectedPiece.isKing()==false && selectedPiece.getOwnedBy() == player1 && newY >= currentY){
+            return false;
         }
 
         // Since check above is constraints we know that if rowDiff == 1 the piece is only moving 1 tile.
