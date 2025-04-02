@@ -1,9 +1,13 @@
 package game;
 
+import account.Account;
+
 public class Player {
+    private final Account account;
     private String team;
 
-    public Player() {
+    public Player(Account account) {
+        this.account = account;
         System.out.println("game.Player Constructor");
     }
 
@@ -31,4 +35,7 @@ public class Player {
         
     }
 
+    public Account getAccount() {
+        return account;
+    }
 }

@@ -1,13 +1,13 @@
 package matchmaking;
 
-import matchmaking.Matchmaking;
-import player.Player;
+import account.Account;
+
 public class TicTacToeMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
     private int increment;
 
-    public boolean increaseRange(Player player1, Player player2) {
+    public boolean increaseRange(Account player1, Account player2) {
         int rating1 = player1.getElo();
         int rating2 = player2.getElo();
 

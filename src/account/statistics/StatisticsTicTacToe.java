@@ -1,6 +1,6 @@
-package player.statistics;
+package account.statistics;
 
-public class StatisticsConnect4 extends AStatistics implements IStatistics {
+public class StatisticsTicTacToe extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */

@@ -1,4 +1,4 @@
-package player.statistics;
+package account.statistics;
 
 public class StatisticsChess extends AStatistics implements IStatistics {
     /**

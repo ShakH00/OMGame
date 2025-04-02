@@ -1,6 +1,6 @@
 package authentication;
 import database.DatabaseManager;
-import player.Account;
+import account.Account;
 
 public class Admin {
 

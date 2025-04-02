@@ -1,6 +1,6 @@
 package matchmaking;
 
-import player.Player;
+import account.Player;
 
 public class MatchHandler {
 

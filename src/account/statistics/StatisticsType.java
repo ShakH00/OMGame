@@ -1,4 +1,4 @@
-package player.statistics;
+package account.statistics;
 
 /**
  * Enum for statistics that must be tracked by each game.

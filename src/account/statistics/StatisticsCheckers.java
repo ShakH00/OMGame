@@ -1,6 +1,6 @@
-package player.statistics;
+package account.statistics;
 
-public class StatisticsTicTacToe extends AStatistics implements IStatistics {
+public class StatisticsCheckers extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
@@ -12,6 +12,7 @@ public class StatisticsTicTacToe extends AStatistics implements IStatistics {
             StatisticsType.DRAWS,
             StatisticsType.MATCHES_PLAYED,
             StatisticsType.NUMBER_OF_TURNS,
-            StatisticsType.WINS_BLOCKED
+            StatisticsType.PIECES_CAPTURED,
+            StatisticsType.MULTI_CAPTURES
     };
 }

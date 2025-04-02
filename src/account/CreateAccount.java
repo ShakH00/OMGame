@@ -1,4 +1,4 @@
-package player;
+package account;
 
 import java.security.SecureRandom;
 import java.util.Scanner;

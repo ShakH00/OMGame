@@ -1,6 +1,6 @@
-package player.statistics;
+package account.statistics;
 
-public class StatisticsCheckers extends AStatistics implements IStatistics {
+public class StatisticsConnect4 extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
@@ -12,7 +12,6 @@ public class StatisticsCheckers extends AStatistics implements IStatistics {
             StatisticsType.DRAWS,
             StatisticsType.MATCHES_PLAYED,
             StatisticsType.NUMBER_OF_TURNS,
-            StatisticsType.PIECES_CAPTURED,
-            StatisticsType.MULTI_CAPTURES
+            StatisticsType.WINS_BLOCKED
     };
 }

@@ -1,8 +1,8 @@
 package leaderboard;
 
 import game.GameType;
-import player.Account;
-import player.statistics.AStatistics;
+import account.Account;
+import account.statistics.AStatistics;
 import database.DatabaseManager;
 
 import java.util.*;

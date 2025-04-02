@@ -2,38 +2,38 @@
 ## Note: The strategies outlined below are proposals intended for team discussion. No implementations will proceed without collective agreement.
 
 ## Overview
-   ### This document proposes strategies for handling network errors, player disconnections, and failure recovery within our multiplayer system. The goal is to ensure a seamless gaming experience despite potential connectivity issues.
+   ### This document proposes strategies for handling network errors, account disconnections, and failure recovery within our multiplayer system. The goal is to ensure a seamless gaming experience despite potential connectivity issues.
 
 ## Proposed Strategies for Handling Disconnections Mid-Game
    ### Detection of Disconnection:
 
-#### Implement a mechanism where the server monitors active connections to promptly identify when a player disconnects.
+#### Implement a mechanism where the server monitors active connections to promptly identify when a account disconnects.
 
 ### Temporary Game Pause:
 
-#### Upon detecting a disconnection, the server pauses the game temporarily, notifying the remaining player of their opponent's disconnection.
+#### Upon detecting a disconnection, the server pauses the game temporarily, notifying the remaining account of their opponent's disconnection.
 
 ### Reconnection Window:
 
-#### Allow a 30-second window for the disconnected player to reconnect and resume the game from the paused state.
+#### Allow a 30-second window for the disconnected account to reconnect and resume the game from the paused state.
 
 ### Automatic Forfeit:
 
-#### If the player fails to reconnect within the allotted time, the system automatically forfeits the game on their behalf, declaring the remaining player as the winner.
+#### If the account fails to reconnect within the allotted time, the system automatically forfeits the game on their behalf, declaring the remaining account as the winner.
 #### These strategies are proposed to maintain game integrity and provide a fair experience for all players.
 
 ## Proposed Reconnection Handling Process
    ### State Preservation:
 
-#### Ensure the server preserves the game state during a player's disconnection to facilitate seamless resumption upon reconnection.
+#### Ensure the server preserves the game state during a account's disconnection to facilitate seamless resumption upon reconnection.
 
 ### State Restoration:
 
-#### Upon reconnection within the allowed timeframe, the server restores the player's game state, allowing the match to continue from the point of interruption.
+#### Upon reconnection within the allowed timeframe, the server restores the account's game state, allowing the match to continue from the point of interruption.
 
 ### Session Termination:
 
-#### If the player does not reconnect within the specified period, the server terminates the session, and the remaining player is notified of their opponent's forfeiture.
+#### If the account does not reconnect within the specified period, the server terminates the session, and the remaining account is notified of their opponent's forfeiture.
 #### These proposals aim to balance fairness and continuity in gameplay.
 
 ## Proposed Handling of Move Transmission Failures
@@ -44,11 +44,11 @@
 
 ### Player Notification:
 
-#### After multiple failed attempts, the system notifies the player of a potential network issue affecting their move transmission.
+#### After multiple failed attempts, the system notifies the account of a potential network issue affecting their move transmission.
 
 ### Turn Skipping:
 
-#### If the move cannot be transmitted after retries, the system may skip the player's turn or apply a default action, depending on the game's design.
+#### If the move cannot be transmitted after retries, the system may skip the account's turn or apply a default action, depending on the game's design.
 #### These measures are suggested to ensure that temporary network issues do not unduly disrupt gameplay.
 
 ## Proposed Measures to Prevent Network Exploits
@@ -59,7 +59,7 @@
 
 ### Replay Attack Prevention:
 
-#### Implement checks to detect and prevent replay attacks, where a player might attempt to resend previous moves to manipulate the game state.
+#### Implement checks to detect and prevent replay attacks, where a account might attempt to resend previous moves to manipulate the game state.
 
 ### Session Integrity:
 
@@ -80,7 +80,7 @@
 
 ### Explore the possibility of a peer-to-peer fallback mechanism to maintain game continuity in the event of server issues.
 
-## These enhancements are suggestions for future discussion to further improve the system's resilience and player experience.
+## These enhancements are suggestions for future discussion to further improve the system's resilience and account experience.
 
 # Error Handling (Potential) Diagrams
 

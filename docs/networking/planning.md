@@ -46,7 +46,7 @@ List of requirements pertaining to networking given in the project document.
 "don't need to worry about database [...] design how and where the database will connect [...] don't require you to host this platform online, but your code should contain stubs where the server communication logic will reside"
 ### Multiplayer Interface
 - Users should be able to log in, create profiles, and manage their accounts.
-- Each profile should display games played, player stats, and win/loss records.
+- Each profile should display games played, account stats, and win/loss records.
 - Players should have visibility into other users’ profiles to view their ranks, current status, and recent matches.
 ### Matchmaking System
 - Implement skill-based matchmaking where players are paired with appropriate opponents.

@@ -1,11 +1,11 @@
-package player;
+package account;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import game.GameType;
-import player.statistics.*;
+import account.statistics.*;
 
 public class Account {
     /**
@@ -430,5 +430,25 @@ public class Account {
      */
     public ArrayList<Account> getFriends(){
         return this.friends;
+    }
+
+    /**
+     * Try to log in with a given username and password. Updates Player Account and returns true if successful.
+     * @param username              String username to try to log in with
+     * @param password              String password to try to log in with
+     * @return                      true only if the username and password match an existing Account in the database
+     */
+    public boolean TryLoginWithUsernameAndPassword(String username, String password){
+
+    }
+
+    private long joinTimestamp;
+
+    public void setJoinTimestamp(long timestamp) {
+        this.joinTimestamp = timestamp;
+    }
+
+    public long getJoinTimestamp() {
+        return this.joinTimestamp;
     }
 }

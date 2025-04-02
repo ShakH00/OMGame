@@ -1,15 +1,14 @@
 package matchmaking;
 
-import game.GamesEnum;
-import player.*;
+import game.GameType;
+import account.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PrivateMatch {
     private int roomID;
-    private List<Player> players = new ArrayList<>();
+    private ArrayList<Account> accounts = new ArrayList<>();
 
     String possibleIDCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     //FUNCTIONS TO ADD:
@@ -31,7 +30,7 @@ public class PrivateMatch {
      * @param game      game ENUM to set the rooms match game as
      * hostSelectGame is a function that changes the type of game that is being played in a private match
      */
-    public void hostSelectGame(GamesEnum game) {
+    public void hostSelectGame(GameType game) {
         //set match game to game from
     }
 

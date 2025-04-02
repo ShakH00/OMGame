@@ -1,7 +1,7 @@
 package matchmaking;
 
-import matchmaking.Matchmaking;
-import player.Player;
+import account.Player;
+
 public class ConnectFourMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;

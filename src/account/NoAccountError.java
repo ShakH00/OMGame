@@ -1,4 +1,4 @@
-package player;
+package account;
 
 /**
  * Error indicating that an attempt was made to access Account details that do not exist for a guest Account

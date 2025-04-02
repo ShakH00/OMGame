@@ -1,7 +1,7 @@
-package player.statistics;
+package account.statistics;
 
 import game.GameType;
-import player.Account;
+import account.Account;
 
 import java.util.HashMap;
 

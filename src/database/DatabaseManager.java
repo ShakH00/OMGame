@@ -1,7 +1,7 @@
 package database;
 
-import player.Account;
-import player.Player;
+import account.Account;
+import account.Player;
 
 import java.util.ArrayList;
 

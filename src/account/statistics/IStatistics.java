@@ -1,4 +1,4 @@
-package player.statistics;
+package account.statistics;
 
 import java.util.HashMap;
 import java.util.HashSet;

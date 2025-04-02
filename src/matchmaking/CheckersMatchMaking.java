@@ -1,7 +1,6 @@
 package matchmaking;
 
-import matchmaking.Matchmaking;
-import player.Player;
+import account.Player;
 public class CheckersMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;

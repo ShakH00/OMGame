@@ -25,7 +25,7 @@ This process is handled by **two key components**: the **Game Server** and the *
 - **Why it matters:** The game won’t start until both players join.
 
 ### **🔹 sendButtonNum(String buttonNum)**
-- **What it does:** Sends the player's move to the opponent.
+- **What it does:** Sends the account's move to the opponent.
 - **Why it matters:** Keeps both players updated in real time.
 
 ### **🔹 send2dCharArray()**
@@ -41,16 +41,16 @@ This process is handled by **two key components**: the **Game Server** and the *
 ## **4. Client Functions (PlayerT.java)**
 
 ### **🔹 connectToServer()**
-- **What it does:** Connects the player to the server.
-- **Why it matters:** A player can't play without a connection.
+- **What it does:** Connects the account to the server.
+- **Why it matters:** A account can't play without a connection.
 
 ### **🔹 sendButtonNum(String strBNum)**
 - **What it does:** Sends the clicked button (move) to the server.
-- **Why it matters:** Ensures the player’s move is registered in the game.
+- **Why it matters:** Ensures the account’s move is registered in the game.
 
 ### **🔹 receiveButtonNum()**
 - **What it does:** Receives the opponent’s move from the server.
-- **Why it matters:** Allows the player to see what their opponent did.
+- **Why it matters:** Allows the account to see what their opponent did.
 
 ### **🔹 updateTurn()**
 - **What it does:** Manages the turn-based system.
@@ -61,14 +61,14 @@ This process is handled by **two key components**: the **Game Server** and the *
 - **Why it matters:** Determines when the game is over and declares a winner or tie.
 
 ### **🔹 closeConnection()**
-- **What it does:** Closes the player’s connection to the server.
+- **What it does:** Closes the account’s connection to the server.
 - **Why it matters:** Prevents lingering connections after the game ends.
 
 ---
 
 ## **5. Key Takeaways for Other Teams**
 🔹 This system **relies on a client-server model**, where the server **handles game logic and turn management**, while the clients **send moves and update their displays**.
-🔹 **Turn-based interactions** are enforced, meaning only one player can move at a time.
+🔹 **Turn-based interactions** are enforced, meaning only one account can move at a time.
 🔹 **Game state synchronization** ensures both players see the same board at all times.
 🔹 If you are working on other components, (GUI and Game logic teams), this document provides a **high-level understanding** of how to integrate with the existing system.
 
