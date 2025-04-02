@@ -39,6 +39,7 @@
 - Chess (Highly strategic, skill-based)
   - Tighter Elo matching (±50-100) ensures fair competition.
   - High K-factor (32) to reflect skill progression.
+  
 - Checkers (Moderate complexity)
   - Moderate matchmaking (±100 Elo) keeps it fair but flexible.
   - K-factor = 20 to prevent large Elo swings.
@@ -58,3 +59,31 @@
 - Win against a lower-rated player → Gain fewer points. 
 - Lose against a weaker player → Lose more points. 
 - Lose against a stronger player → Lose fewer points.
+
+
+
+6. Thresholds for each Game
+
+CHESS
+- Starts off: ± 25
+- After 30 seconds: ±50
+- After 1 minute: ± 75
+- After 2 minutes: Match with closest available player
+
+CHECKERS
+- Starts off: ± 50
+- After 30 seconds: ±75
+- After 1 minute: ± 100
+- After 2 minutes: Match with closest available player
+
+CONNECT 4
+- Starts off: ± 50
+- After 30 seconds: ±75
+- After 1 minute: ± 100
+- After 2 minutes: Match with closest available player 
+
+Tic Tac Toe
+- Starts off: ± 100
+- After 30 seconds: ±150
+- After 1 minute: ± 175
+- After 2 minutes: Match with closest available player 
