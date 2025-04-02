@@ -15,6 +15,10 @@ public class StartController extends Application {
 
     public AnchorPane rootPane;
 
+    @FXML
+    ImageView start;
+    ImageView ranking;
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -71,6 +75,27 @@ public class StartController extends Application {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void switchToSignUp(javafx.scene.input.MouseEvent mouseEvent) {
+        try {
+            // load help.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
+            Parent helpRoot = loader.load();
+
+            // get help controller
+            SignUpController signUpController = loader.getController();
+
+            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
+
+            // set the helpRoot visible (it will be hidden initially)
+            helpRoot.setVisible(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

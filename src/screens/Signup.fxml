@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
     <children>
         <!-- Background -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -102,12 +102,12 @@
             <Font name="Press Start 2P Regular" size="11.0" />
          </font>
       </Text>
-      <Text fill="#9f988c" layoutX="276.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="309.12422943115234">
+      <Text fill="#0054ff" layoutX="154.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="301.7403564453127">
          <font>
             <Font name="Press Start 2P Regular" size="11.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" graphicTextGap="6.0" layoutX="291.0" layoutY="429.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="238.0" style="-fx-background-color: #fbbd3d;" text="have an account? login here!" textAlignment="CENTER" textFill="#1b3851">
+      <Button alignment="CENTER" graphicTextGap="6.0" layoutX="291.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#switchToLogin" prefHeight="20.0" prefWidth="238.0" style="-fx-background-color: #fbbd3d;" text="have an account? login here!" textAlignment="CENTER" textFill="#1b3851">
          <font>
             <Font name="Press Start 2P Regular" size="8.0" />
          </font>
