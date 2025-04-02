@@ -1,6 +1,7 @@
 package matchmaking;
 
 import matchmaking.Matchmaking;
+import player.Player;
 public class TicTacToeMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
