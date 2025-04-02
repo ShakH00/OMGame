@@ -1,10 +1,16 @@
+package matchmaking;
 
-public class CheckersMatchMaking extends MatchMaking {
+import matchmaking.Matchmaking;
+public class CheckersMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
     private int increment;
 
-    this.kFactor = 20;
+    public CheckersMatchMaking() {
+        this.kFactor = 20;
+
+    }
+
 
     @Override
     public void changeElo(int elo) {

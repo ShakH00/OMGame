@@ -2,7 +2,6 @@ package matchmaking;
 
 import player.Player;
 
-import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +77,8 @@ public class Matchmaking {
         } else if (waitTimeMillis > 30 * 1000) { // after 30 seconds
             baseThreshold += 50;
         }
+        //TEMP VALUE
+        return false;
     }
 
     /**

@@ -1,9 +1,14 @@
-public class ConnectFourMatchMaking extends MatchMaking {
+package matchmaking;
+
+import matchmaking.Matchmaking;
+public class ConnectFourMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
     private int increment;
 
-    this.kFactor = 15;
+    public ConnectFourMatchMaking() {
+        this.kFactor = 15;
+    }
 
     public void changeElo(int elo) {
 
