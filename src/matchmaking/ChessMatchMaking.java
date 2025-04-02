@@ -6,9 +6,6 @@ public class ChessMatchMaking extends Matchmaking {
     private int findElo;
     private int increment;
 
-    public ChessMatchMaking() {
-        this.kFactor = 32;
-    }
 
     public void increaseRange(int elo) {
 

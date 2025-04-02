@@ -6,9 +6,6 @@ public class TicTacToeMatchMaking extends Matchmaking {
     private int findElo;
     private int increment;
 
-    public TicTacToeMatchMaking() {
-        this.kFactor = 10;
-    }
 
     public void increaseRange(int elo) {
 

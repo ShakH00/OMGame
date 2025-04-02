@@ -7,8 +7,6 @@ import java.util.List;
 
 public class Matchmaking {
 
-
-
     public boolean isMatchSuitable(Player player1, Player player2) {
         int rating1 = player1.getElo();
         int rating2 = player2.getElo();

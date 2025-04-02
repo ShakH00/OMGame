@@ -6,9 +6,6 @@ public class ConnectFourMatchMaking extends Matchmaking {
     private int findElo;
     private int increment;
 
-    public ConnectFourMatchMaking() {
-        this.kFactor = 15;
-    }
 
     public void increaseRange(int elo) {
 

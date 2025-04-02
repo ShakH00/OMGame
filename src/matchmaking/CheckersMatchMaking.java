@@ -6,10 +6,6 @@ public class CheckersMatchMaking extends Matchmaking {
     private int findElo;
     private int increment;
 
-    public CheckersMatchMaking() {
-        this.kFactor = 20;
-
-    }
 
     public void increaseRange(int elo) {
 
