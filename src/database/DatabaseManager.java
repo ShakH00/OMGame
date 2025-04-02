@@ -1,7 +1,7 @@
 package database;
 
 import account.Account;
-import account.Player;
+import game.GameType;
 
 import java.util.ArrayList;
 
@@ -19,12 +19,21 @@ public class DatabaseManager {
 
     /**
      * @author Logan Olszak
-     * @return             Returns all players that are currently queueing for a match
+     * @return             Returns all players that are currently queueing for a match of a certain game
      *
      * queryPlayerPool returns a list of all players that are currently queued for a match
      */
-    public static ArrayList<Player> queryPlayerPool() {
-        return null;
+    public static ArrayList<Account> queryAccountPool(GameType game) {
+        ArrayList<Account> gameQueue = new ArrayList<Account>();
+        ArrayList<Account> allAccounts = queryAllAccounts();
+        for (Account current : allAccounts) {
+            if (current.getQueuedFor() != null) {
+                if (current.getQueuedFor() == game) {
+                    gameQueue.add(current);
+                }
+            }
+        }
+        return gameQueue;
     }
 
     /**

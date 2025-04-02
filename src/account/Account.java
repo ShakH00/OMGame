@@ -9,6 +9,11 @@ import account.statistics.*;
 
 public class Account {
     /**
+     * GameType queuedFor; shows the current game the account is queued for, null if not queued
+     */
+    private GameType queuedFor;
+
+    /**
      * boolean for isGuest; true if the Account is a guest Account, otherwise false
      */
     private boolean isGuest;
@@ -61,6 +66,7 @@ public class Account {
         statistics.put(GameType.CONNECT4, new StatisticsConnect4());
         statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
+        this.queuedFor = null;
     }
 
 
@@ -136,6 +142,31 @@ public class Account {
      */
     public int getElo(GameType game) {
         return (int) getStatistic(game, StatisticsType.ELO);
+    }
+
+    /**
+     * Set the player's queuedFor variable, this is used to define what game a player is queueing for
+     *
+     * @param type GameType that the player is queuing for
+     */
+    public void setQueuedFor(GameType type) {
+        this.queuedFor = type;
+    }
+
+    /**
+     * Empty the player's queuedFor variable, done whenever a player leaves a queue
+     */
+    public void clearQueuedFor() {
+        this.queuedFor = null;
+    }
+
+    /**
+     * Getter for the player's queuedFor variable.
+     *
+     * @return GameType that the player is currently queued for
+     */
+    public GameType getQueuedFor() {
+        return queuedFor;
     }
 
     /**
