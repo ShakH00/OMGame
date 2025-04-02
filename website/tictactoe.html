@@ -35,7 +35,7 @@
             <div class="contact-box">
                 <div class="sos-box">SOS!!</div>
                 <button class="close-btn" onclick="closePopup()">×</button>
-                <p id="popup-text"><strong>Click to start!</strong></p>
+                <p id="popup-text"></p>
             </div>
         </div>
 
@@ -68,8 +68,22 @@
                     cell.onclick = () => makeMove(i);
                     document.getElementById("board").appendChild(cell);
                 }
-                showPopup(`<strong>Hi! Welcome to TicTacToe instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Click the ${cellPositions[currentWinPattern[0]]} square to begin!`);
                 enableCell(currentWinPattern[0]);
+            }
+
+            function startGame() {
+                moveCount = 0;
+                currentWinPattern = winPatterns[Math.floor(Math.random() * winPatterns.length)];
+                document.getElementById("board").innerHTML = "";
+                for (let i = 0; i < 9; i++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("cell", "disabled");
+                    cell.id = `cell-${i}`;
+                    cell.onclick = () => makeMove(i);
+                    document.getElementById("board").appendChild(cell);
+                }
+                enableCell(currentWinPattern[0]);
+                showPopup(`<strong>Hi! Welcome to TicTacToe instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Click the highligted (${cellPositions[currentWinPattern[0]]}) square to begin!`);
             }
 
             function enableCell(index) {
@@ -119,7 +133,7 @@
                 document.getElementById("TTToverlay").classList.remove("show");
             }
 
-            resetGame();
+            startGame();
         </script>
     </body>
 </html>
