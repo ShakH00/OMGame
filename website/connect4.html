@@ -2,60 +2,114 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Connect Four Tutorial</title>
+        <link rel="stylesheet" href="all.css">
+        <link rel="stylesheet" href="connect4.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Connect Four</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                background-color: #fafafa;
+                font-family: 'Poppins', sans-serif;
                 text-align: center;
-                padding-top: 30px;
+                background-color: #9ed2e4;
+                padding-top: 90px;
             }
+
             h1 {
-                color: #333;
+                font-size: 45px;
             }
+
             .board {
+                width: fit-content;
                 display: grid;
-                grid-template-columns: repeat(7, 60px);
-                grid-template-rows: repeat(6, 60px);
-                gap: 5px;
+                grid-template-columns: repeat(7, 70px);
+                grid-template-rows: repeat(6, 70px);
+                gap: 8px;
                 justify-content: center;
-                background-color: #3498db;
-                padding: 10px;
-                border-radius: 8px;
+                background-color: #0054A2; /* Dark blue background to match the game */
+                padding: 20px;
+                border-radius: 12px;
                 margin: 20px auto;
+                position: relative;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Added shadow for realism */
             }
+
             .cell {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
                 background-color: #ecf0f1;
                 border-radius: 50%;
+                position: relative;
+                overflow: hidden;
                 cursor: pointer;
+                z-index: 1;
+                border: 3px solid #2980b9; /* Border around each cell */
+                box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2); /* Inner shadow to give depth */
             }
+
+            .piece {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                position: absolute;
+                top: -70px;
+                transition: transform 0.5s ease-out;
+                z-index: 2;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow for a 3D effect */
+            }
+
             .red {
                 background-color: #e74c3c;
             }
+
             .yellow {
                 background-color: #f1c40f;
             }
-            .disabled {
-                pointer-events: none;
-            }
-            #instruction {
-                font-size: 18px;
-                margin-top: 15px;
-            }
-            button {
-                padding: 8px 16px;
+
+            .button {
+                margin-top: 20px;
+                padding: 10px 20px;
                 font-size: 16px;
-                margin-top: 15px;
+                border: none;
+                border-radius: 8px;
+                background-color: #ff79c6;
+                color: white;
+                cursor: pointer;
+                transition: background 0.3s ease, transform 0.3s ease;
+            }
+
+            .button:hover {
+                transform: scale(1.05);
+                background-color: #f468b9;
             }
         </style>
     </head>
     <body>
-        <h1>Connect Four Tutorial</h1>
-        <div id="instruction">Click column 1 to start!</div>
+        <div class="header">
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
+            <div class="header-center">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="#" class="signup-btn">Sign up</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </div>
+
+        <h1>Connect Four</h1>
         <div class="board" id="board"></div>
-        <button onclick="resetGame()">Reset Game</button>
+        <button class="button" onclick="resetGame()">Reset Game</button>
+
+        <div class="overlay" id="C4overlay" onclick="closePopup()"></div>
+        <div class="container" id="C4popupBox">
+            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 285px; top: -148px;" src="assets/tetrisCat3.GIF" alt=""/>
+            <div class="contact-box">
+                <div class="sos-box">SOS!!</div>
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <p id="popup-text"></p>
+            </div>
+        </div>
 
         <script>
             const userMoves = [0, 0, 0, 0];
@@ -70,12 +124,13 @@
                     cell.classList.add('cell');
                     board.appendChild(cell);
                 }
+                showPopup('Click column 1 to start!');
             }
 
             function resetGame() {
                 moveIndex = 0;
                 createBoard();
-                document.getElementById('instruction').textContent = 'Click column 1 to start!';
+                showPopup('Click column 1 to start!');
                 enableColumn(userMoves[moveIndex]);
             }
 
@@ -92,7 +147,7 @@
             function userMove(col) {
                 dropPiece(col, 'red');
                 if (checkWin('red')) {
-                    document.getElementById('instruction').textContent = 'You won vertically! You can also win diagonally or horizontally.';
+                    showPopup('You won vertically! You can also win diagonally or horizontally.');
                     disableBoard();
                     return;
                 }
@@ -104,10 +159,10 @@
                     moveIndex++;
 
                     if (moveIndex < userMoves.length) {
-                        document.getElementById('instruction').textContent = `Good! Now click column ${userMoves[moveIndex] + 1}.`;
+                        showPopup(`Good! Now click column ${userMoves[moveIndex] + 1}.`);
                         enableColumn(userMoves[moveIndex]);
                     }
-                }, 500);
+                }, 400);
             }
 
             function dropPiece(col, color) {
@@ -134,6 +189,17 @@
                     }
                 }
                 return false;
+            }
+
+            function showPopup(text) {
+                document.getElementById('popup-text').innerHTML = text;
+                document.getElementById('C4overlay').classList.add("show");
+                document.getElementById('C4popupBox').classList.add("show");
+            }
+
+            function closePopup() {
+                document.getElementById('C4overlay').classList.remove("show");
+                document.getElementById('C4popupBox').classList.remove("show");
             }
 
             resetGame();
