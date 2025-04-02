@@ -5,83 +5,6 @@
         <link rel="stylesheet" href="all.css">
         <link rel="stylesheet" href="checkers.css">
         <title>Checkers Promotion and Capture Tutorial</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                background-color: #9ed2e4;
-                padding-top: 90px;
-            }
-
-            h1 {
-	            font-size: 45px;
-            }
-
-            .board {
-                width: 480px;
-                height: 480px;
-                margin: 20px auto;
-                display: grid;
-                grid-template: repeat(8, 1fr) / repeat(8, 1fr);
-                border: 2px solid #333;
-            }
-
-            .square {
-                width: 60px;
-                height: 60px;
-                position: relative;
-            }
-
-            .light {
-                background-color: #f0d9b5;
-            }
-
-            .dark {
-                background-color: #b58863;
-            }
-
-            .piece {
-                width: 50px;
-                height: 50px;
-                margin: 5px auto;
-                cursor: pointer;
-            }
-
-            .highlight {
-                position: absolute;
-                background-color: grey;
-                width: 14px;
-                height: 14px;
-                border-radius: 50%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                cursor: pointer;
-            }
-
-            #instruction {
-                margin-top: 20px;
-                font-size: 18px;
-            }
-
-            .button {
-                margin-top: 20px;
-                padding: 10px 20px;
-                font-size: 16px;
-                border: none;
-                border-radius: 8px;
-                background-color: #ff79c6;
-                color: white;
-                cursor: pointer;
-                transition: background 0.3s ease, transform 0.3s ease;
-
-            }
-
-            .button:hover {
-                transform: scale(1.05);
-                background-color: #f468b9;
-            }
-        </style>
     </head>
     <body>
         <div class="header">
@@ -102,24 +25,23 @@
         </div>
 
         <h1>Checkers Promotion and Capture Tutorial</h1>
-        <div id="instruction">Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.</div>
         <div class="board" id="board"></div>
         <button class="button" onclick="resetBoard()">Reset Board</button>
 
-        <div class="overlay" id="TTToverlay" onclick="closePopup()"></div>
-        <div class="container" id="TTTpopupBox">
-            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 285px; top: -148px;" src="assets/tetrisCat3.GIF" alt=""/>
+        <div class="overlay" id="CHoverlay" onclick="closePopup()"></div>
+        <div class="container" id="CHpopupBox">
+            <img class="popup-tetriscat" style="height: 150px; width: auto; left: 385px; top: -120px;" src="assets/tetrisCat1.GIF" alt=""/>
             <div class="contact-box">
                 <div class="sos-box">SOS!!</div>
                 <button class="close-btn" onclick="closePopup()">×</button>
-                <p id="popup-text"><strong>Click to start!</strong></p>
+                <p id="popup-text"></p>
             </div>
         </div>
 
         <script>
             const board = document.getElementById('board');
-            let piecePosition = 49;
-            let enemyPosition = 21;
+            let piecePosition = 10;
+            let enemyPosition = 7;
             let isKing = false;
             let isPlayerTurn = true;
 
@@ -132,6 +54,7 @@
                     board.appendChild(square);
                 }
                 placePiece();
+                showPopup(`<strong>Hi! Welcome to checkers instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Click your piece (purple), then choose a highlighted diagonal square to move and promote it to a king.`);
                 if (enemyPosition !== null) placeEnemy();
             }
 
@@ -177,7 +100,7 @@
                         highlightDot.classList.add('highlight');
                         squares[jumpPos].appendChild(highlightDot);
                         highlightDot.onclick = () => capturePiece(jumpPos);
-                        document.getElementById('instruction').textContent = 'Jump over the enemy piece to capture it!';
+                        showPopup('Jump over the enemy piece to capture it!');
                     }
                 }
             }
@@ -188,7 +111,10 @@
                 clearHighlights();
                 if (piecePosition < 8 && !isKing) {
                     isKing = true;
-                    document.getElementById('instruction').textContent = 'Your piece is now a king!';
+                    showPopup('Your piece is now a king!');
+                    setTimeout(() => {
+                        showPopup("It's your turn!");
+                    }, 1500);
                 }
 
                 isPlayerTurn = false;
@@ -200,7 +126,7 @@
                 enemyPosition = null;
                 updatePiece();
                 clearHighlights();
-                document.getElementById('instruction').textContent = 'Excellent! You captured the enemy piece by jumping over it.';
+                showPopup(`Excellent! You captured the enemy piece by jumping over it.<br><br>Remember, play strategically to win the game and try to win as many pieces as possible`);
                 isPlayerTurn = false;
                 setTimeout(enemyMove, 500);
             }
@@ -220,7 +146,6 @@
                     const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
                     enemyPosition = randomMove;
                     updatePiece();
-                    document.getElementById('instruction').textContent = "It's your turn!";
                 }
 
                 isPlayerTurn = true;
@@ -228,7 +153,6 @@
 
             function getEnemyValidMoves() {
                 let moves = [];
-                if (enemyPosition >= 8) moves.push(enemyPosition - 9, enemyPosition - 7);
                 if (enemyPosition <= 55) moves.push(enemyPosition + 7, enemyPosition + 9);
 
                 return moves.filter(pos => !isNearEdge(pos));
@@ -249,13 +173,25 @@
             }
 
             function resetBoard() {
-                piecePosition = 49;
-                enemyPosition = 21;
+                piecePosition = 10;
+                enemyPosition = 7;
                 isKing = false;
-                document.getElementById('instruction').textContent = 'Click your red piece, then choose a highlighted diagonal square to move and promote it to a king.';
+                showPopup(`<strong>Hi! Welcome to checkers instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Click your piece (purple), then choose a highlighted diagonal square to move and promote it to a king.`);
                 createBoard();
                 isPlayerTurn = true;
             }
+
+            function showPopup(text) {
+                document.getElementById('popup-text').innerHTML = text;
+                document.getElementById('CHoverlay').classList.add("show");
+                document.getElementById('CHpopupBox').classList.add("show");
+            }
+
+            function closePopup() {
+                document.getElementById('CHoverlay').classList.remove("show");
+                document.getElementById('CHpopupBox').classList.remove("show");
+            }
+
             createBoard();
         </script>
     </body>
