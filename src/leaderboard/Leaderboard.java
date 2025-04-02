@@ -1,6 +1,6 @@
 package leaderboard;
 
-import game.GamesEnum;
+import game.GameType;
 import player.Account;
 import player.statistics.AStatistics;
 import database.DatabaseManager;
@@ -21,7 +21,7 @@ public class Leaderboard {
      * isAscending is true, else it would be reversed...
      *
      */
-    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, AStatistics gameStats, boolean isAscending) {
+    public String[][] getGlobalLeaderboard(Account playerAccount, GameType games, AStatistics gameStats, boolean isAscending) {
         ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
 
         HashSet<Account> unsortedLeaderboardPlayers = new HashSet<>();
@@ -66,7 +66,7 @@ public class Leaderboard {
 //            for (Account players: leaderboardPlayers){
 //                                    //                          get this                fuck do I do with this
 //                                    //                                                  like how???
-//                //    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order){
+//                //    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsType[] order){
 //                leaderboardRows.add(players.getCombinedStatistics().toStringArray());
 //            }
 //            int sortPropertyIndex = totalPlayersAccount.getCombinedStatistics().getIndexOfPropertyInStringArray(sortProperty);

@@ -13,24 +13,24 @@ public abstract class AStatistics implements IStatistics {
     /**
      * Set of statistics that are updated through special methods, and cannot be added to like other statistics
      */
-    final HashSet<StatisticsEnum> complexStatistics = new HashSet<>(List.of(
-        StatisticsEnum.ELO,
-        StatisticsEnum.WIN_RATE
+    final HashSet<StatisticsType> complexStatistics = new HashSet<>(List.of(
+        StatisticsType.ELO,
+        StatisticsType.WIN_RATE
     ));
 
     /**
-     * Maps each StatisticsEnum in includedStatistics to some value (Integer or Double)
+     * Maps each StatisticsType in includedStatistics to some value (Integer or Double)
      */
-    final HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
+    final HashMap<StatisticsType, Number> statistics = new HashMap<>();
 
     /**
      * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      * @return              True if it is possible to add statistics to the statistics HashMap
      */
-    public boolean canAddStatistics(HashMap<StatisticsEnum, Number> statistics) {
+    public boolean canAddStatistics(HashMap<StatisticsType, Number> statistics) {
         // For each statistic...
-        for (StatisticsEnum statistic : statistics.keySet()){
+        for (StatisticsType statistic : statistics.keySet()){
             // Statistic must be possible for this game
             if (!isAccepted(statistic)){
                 return false;
@@ -48,16 +48,16 @@ public abstract class AStatistics implements IStatistics {
         }
 
         // Exactly one of WIN, LOSS, or DRAW is true.
-        if ((Integer) statistics.get(StatisticsEnum.WINS)
-                + (Integer) statistics.get(StatisticsEnum.LOSSES)
-                + (Integer) statistics.get(StatisticsEnum.DRAWS)
+        if ((Integer) statistics.get(StatisticsType.WINS)
+                + (Integer) statistics.get(StatisticsType.LOSSES)
+                + (Integer) statistics.get(StatisticsType.DRAWS)
                 != 1)
         {
             return false;
         }
 
         // MATCHES_PLAYED should be 1
-        if ((Integer) statistics.get(StatisticsEnum.MATCHES_PLAYED) != 1){
+        if ((Integer) statistics.get(StatisticsType.MATCHES_PLAYED) != 1){
             return false;
         }
 
@@ -68,8 +68,8 @@ public abstract class AStatistics implements IStatistics {
      * Add the statistics HashMap to existing statistics
      * @param statistics   HashMap that assigns an integer value to some set of StatisticsEnums
      */
-    public void addStatistics(HashMap<StatisticsEnum, Integer> statistics) {
-        for (StatisticsEnum key : statistics.keySet()){
+    public void addStatistics(HashMap<StatisticsType, Integer> statistics) {
+        for (StatisticsType key : statistics.keySet()){
             if (!isComplex(key)) {
                 Integer value = statistics.get(key);
                 addStatistic(key, value);
@@ -82,7 +82,7 @@ public abstract class AStatistics implements IStatistics {
      * @param statistic StatisticEnum statistic to increase
      * @param value     Integer value to increase statistic by
      */
-    public void addStatistic(StatisticsEnum statistic, Integer value){
+    public void addStatistic(StatisticsType statistic, Integer value){
         Integer currentValue = (Integer) this.statistics.get(statistic);
         this.statistics.put(statistic, currentValue + value);
 
@@ -91,10 +91,10 @@ public abstract class AStatistics implements IStatistics {
     }
 
     /**
-     * Return a list of statistics in StatisticsEnum that this game can have
-     * @return  StatisticsEnum[] of possible statistics for this game
+     * Return a list of statistics in StatisticsType that this game can have
+     * @return  StatisticsType[] of possible statistics for this game
      */
-    public StatisticsEnum[] getAcceptedStatistics(){
+    public StatisticsType[] getAcceptedStatistics(){
         return acceptedStatistics;
     }
 
@@ -104,7 +104,7 @@ public abstract class AStatistics implements IStatistics {
      */
     public Number[] getStatistics() {
         ArrayList<Number> statistics = new ArrayList<>();
-        for (StatisticsEnum statistic : acceptedStatistics) {
+        for (StatisticsType statistic : acceptedStatistics) {
             statistics.add(getStatistic(statistic));
         }
         return statistics.toArray(new Number[0]);  // Java should automatically resize the array.
@@ -115,10 +115,10 @@ public abstract class AStatistics implements IStatistics {
      * @param order     ArrayList that is the ordered list of statistics to retrieve for this game
      * @return          ArrayList containing the values of the requested statistics in the same order
      */
-    public Number[] getStatistics(StatisticsEnum[] order) {
+    public Number[] getStatistics(StatisticsType[] order) {
         Number[] statistics = new Number[order.length];
         for (int i = 0; i < order.length; i++){
-            StatisticsEnum statistic = order[i];
+            StatisticsType statistic = order[i];
             statistics[i] = getStatistic(statistic);
         }
         return statistics;
@@ -126,11 +126,11 @@ public abstract class AStatistics implements IStatistics {
 
     /**
      * Get a statistic
-     * @param statistic StatisticsEnum for which statistic to retrieve
-     * @return          int value associated with the StatisticsEnum input, or null if that statistic doesn't exist for
+     * @param statistic StatisticsType for which statistic to retrieve
+     * @return          int value associated with the StatisticsType input, or null if that statistic doesn't exist for
      *                  this game.
      */
-    public Number getStatistic(StatisticsEnum statistic) {
+    public Number getStatistic(StatisticsType statistic) {
         if (isAccepted(statistic)){
             return statistics.getOrDefault(statistic, 0);
         }
@@ -144,16 +144,16 @@ public abstract class AStatistics implements IStatistics {
      * @param newElo    int for new Elo to use. Overwrites previous Elo.
      */
     public void updateElo(int newElo){
-        statistics.put(StatisticsEnum.ELO, newElo);
+        statistics.put(StatisticsType.ELO, newElo);
     }
 
     /**
      * Recalculate the win rate statistic
      */
     void updateWinRate() {
-        Double wins = (Double) statistics.get(StatisticsEnum.WINS);
-        Double losses = (Double) statistics.get(StatisticsEnum.LOSSES);
-        statistics.put(StatisticsEnum.WIN_RATE, wins/(wins + losses));
+        Double wins = (Double) statistics.get(StatisticsType.WINS);
+        Double losses = (Double) statistics.get(StatisticsType.LOSSES);
+        statistics.put(StatisticsType.WIN_RATE, wins/(wins + losses));
     }
 
     /**
@@ -161,7 +161,7 @@ public abstract class AStatistics implements IStatistics {
      * @param statistic Statistic to query
      * @return          True if the statistic is complex; false otherwise
      */
-    boolean isComplex(StatisticsEnum statistic){
+    boolean isComplex(StatisticsType statistic){
         return complexStatistics.contains(statistic);
     }
 
@@ -170,8 +170,8 @@ public abstract class AStatistics implements IStatistics {
      * @param statistic Statistic to query
      * @return          True if the statistic applies to the related game
      */
-    private boolean isAccepted(StatisticsEnum statistic){
-        for (StatisticsEnum acceptedStatistic : acceptedStatistics){
+    private boolean isAccepted(StatisticsType statistic){
+        for (StatisticsType acceptedStatistic : acceptedStatistics){
             if (statistic == acceptedStatistic){
                 return true;
             }

@@ -5,35 +5,27 @@ package player.statistics;
  * When a match is complete, it should be logged using MatchOutcomeHandler with results HashMaps that contain all statistics
  * that are related to the specific game, as described in the comments of this class.
  */
-public enum StatisticsEnum {
-    // All games
+public enum StatisticsType {
     ELO,                // Complex; cannot be updated by simple addition/subtraction
     WIN_RATE,           // Complex; cannot be updated by simple addition/subtraction
+
     WINS,
     LOSSES,
     DRAWS,
     MATCHES_PLAYED,
     NUMBER_OF_TURNS,
-
-    // Chess, Checkers
-    PIECES_CAPTURED,    // Includes pawns
-
-    // Chess
-    PAWNS_CAPTURED,
-    KNIGHTS_CAPTURED,
-    BISHOPS_CAPTURED,
-    ROOKS_CAPTURED,
-    QUEENS_CAPTURED,
-    KINGS_CAPTURED,
-    CHECKS,
-    CHECKMATES,
-    PIECES_PROMOTED,
-
-    // Checkers
-    MULTI_CAPTURES,     // When a player captures multiple pieces in one turn
-
-    // Tic-Tac-Toe, Connect 4
-    WINS_BLOCKED;       // e.g. P1 has three red pieces in a line, and P2 places a yellow which blocks P1's potential win
+    PIECES_CAPTURED,    // Chess, Checkers      Includes pawns
+    PAWNS_CAPTURED,     // Chess
+    KNIGHTS_CAPTURED,   // Chess
+    BISHOPS_CAPTURED,   // Chess
+    ROOKS_CAPTURED,     // Chess
+    QUEENS_CAPTURED,    // Chess
+    KINGS_CAPTURED,     // Chess
+    CHECKS,             // Chess
+    CHECKMATES,         // Chess
+    PIECES_PROMOTED,    // Chess
+    MULTI_CAPTURES,     // Checkers             When a player captures multiple pieces in one turn
+    WINS_BLOCKED;       // Tic-Tac-Toe, Connect 4
 
 
     @Override

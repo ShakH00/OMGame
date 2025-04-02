@@ -1,7 +1,5 @@
 package player.statistics;
 
-import game.GamesEnum;
-
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -9,7 +7,7 @@ public class StatisticsCombined extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    final StatisticsEnum[] acceptedStatistics = StatisticsEnum.values();
+    final StatisticsType[] acceptedStatistics = StatisticsType.values();
 
     /**
      * Return an object that contains the combination of some set of other GameStatistics objects
@@ -21,7 +19,7 @@ public class StatisticsCombined extends AStatistics implements IStatistics {
         int eloSum = 0;
 
         for (AStatistics gameStatistics : setOfGameStatistics){
-            for (StatisticsEnum statistic : gameStatistics.statistics.keySet()){
+            for (StatisticsType statistic : gameStatistics.statistics.keySet()){
                 // If the statistic is not complex, add it.
                 if (!isComplex(statistic)){
                     Integer value = (Integer) gameStatistics.statistics.get(statistic);
@@ -29,15 +27,15 @@ public class StatisticsCombined extends AStatistics implements IStatistics {
                 }
 
                 // If the statistic is ELO, add it to the sum so the mean can be taken later.
-                else if (statistic == StatisticsEnum.ELO){
+                else if (statistic == StatisticsType.ELO){
                     eloCount += 1;
-                    eloSum += (int) gameStatistics.getStatistic(StatisticsEnum.ELO);
+                    eloSum += (int) gameStatistics.getStatistic(StatisticsType.ELO);
                 }
             }
 
             // Get all non-complex (i.e. integer statistics that can be incremented) and add them to the combined stats
-            HashMap<StatisticsEnum, Integer> nonComplexGameStatistics = new HashMap<>();
-            for (StatisticsEnum statistic : gameStatistics.statistics.keySet()){
+            HashMap<StatisticsType, Integer> nonComplexGameStatistics = new HashMap<>();
+            for (StatisticsType statistic : gameStatistics.statistics.keySet()){
                 if (!isComplex(statistic)){
                     Integer value = (Integer) gameStatistics.statistics.get(statistic);
                     nonComplexGameStatistics.put(statistic, value);

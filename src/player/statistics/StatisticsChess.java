@@ -4,23 +4,23 @@ public class StatisticsChess extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    final StatisticsEnum[] acceptedStatistics = new StatisticsEnum[]{
-            StatisticsEnum.ELO,
-            StatisticsEnum.WIN_RATE,
-            StatisticsEnum.WINS,
-            StatisticsEnum.LOSSES,
-            StatisticsEnum.DRAWS,
-            StatisticsEnum.MATCHES_PLAYED,
-            StatisticsEnum.NUMBER_OF_TURNS,
-            StatisticsEnum.PIECES_CAPTURED,
-            StatisticsEnum.PAWNS_CAPTURED,
-            StatisticsEnum.KNIGHTS_CAPTURED,
-            StatisticsEnum.BISHOPS_CAPTURED,
-            StatisticsEnum.ROOKS_CAPTURED,
-            StatisticsEnum.QUEENS_CAPTURED,
-            StatisticsEnum.KINGS_CAPTURED,
-            StatisticsEnum.CHECKS,
-            StatisticsEnum.CHECKMATES,
-            StatisticsEnum.PIECES_PROMOTED
+    final StatisticsType[] acceptedStatistics = new StatisticsType[]{
+            StatisticsType.ELO,
+            StatisticsType.WIN_RATE,
+            StatisticsType.WINS,
+            StatisticsType.LOSSES,
+            StatisticsType.DRAWS,
+            StatisticsType.MATCHES_PLAYED,
+            StatisticsType.NUMBER_OF_TURNS,
+            StatisticsType.PIECES_CAPTURED,
+            StatisticsType.PAWNS_CAPTURED,
+            StatisticsType.KNIGHTS_CAPTURED,
+            StatisticsType.BISHOPS_CAPTURED,
+            StatisticsType.ROOKS_CAPTURED,
+            StatisticsType.QUEENS_CAPTURED,
+            StatisticsType.KINGS_CAPTURED,
+            StatisticsType.CHECKS,
+            StatisticsType.CHECKMATES,
+            StatisticsType.PIECES_PROMOTED
     };
 }

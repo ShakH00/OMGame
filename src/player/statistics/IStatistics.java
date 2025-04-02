@@ -11,30 +11,30 @@ interface IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    StatisticsEnum[] acceptedStatistics = StatisticsEnum.values();
+    StatisticsType[] acceptedStatistics = StatisticsType.values();
 
     /**
      * Set of statistics that cannot be updated by simple addition/subtraction
      */
-    HashSet<StatisticsEnum> complexStatistics = new HashSet<>();
+    HashSet<StatisticsType> complexStatistics = new HashSet<>();
 
     /**
-     * Maps each StatisticsEnum in includedStatistics to some value
+     * Maps each StatisticsType in includedStatistics to some value
      */
-    HashMap<StatisticsEnum, Number> statistics = new HashMap<>();
+    HashMap<StatisticsType, Number> statistics = new HashMap<>();
 
     /**
      * Check if the statistics HashMap can be added to the current statistics
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      * @return              True if it is possible to add results to the statistics HashMap
      */
-    boolean canAddStatistics(HashMap<StatisticsEnum, Number> statistics);
+    boolean canAddStatistics(HashMap<StatisticsType, Number> statistics);
 
     /**
      * Add the statistics HashMap to existing statistics
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      */
-    void addStatistics(HashMap<StatisticsEnum, Integer> statistics);
+    void addStatistics(HashMap<StatisticsType, Integer> statistics);
 
     /**
      * Get the values of all statistics tracked for this game
@@ -47,14 +47,14 @@ interface IStatistics {
      * @param order     ArrayList that is the ordered list of statistics to retrieve for this game
      * @return          array containing the values of the requested statistics in the same order
      */
-    Number[] getStatistics(StatisticsEnum[] order);
+    Number[] getStatistics(StatisticsType[] order);
 
     /**
      * Get a specific Statistic from this object
      * @param statistic statistic to get
      * @return          value for the statistic
      */
-    Number getStatistic(StatisticsEnum statistic);
+    Number getStatistic(StatisticsType statistic);
 
     /**
      * Set ELO to a new value

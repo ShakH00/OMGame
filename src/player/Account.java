@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import game.GamesEnum;
+import game.GameType;
 import player.statistics.*;
 
 public class Account {
@@ -38,7 +38,7 @@ public class Account {
      */
     private ArrayList<Account> friends;
 
-    private final HashMap<GamesEnum, AStatistics> statistics;
+    private final HashMap<GameType, AStatistics> statistics;
 
     private final String[][] matchHistory;
 
@@ -56,11 +56,11 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new StatisticsChess());
-        statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
-        statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
-        statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
-        this.matchHistory = new String[10][5];  // Store information about the past 10 matches, each with 5 fields.
+        statistics.put(GameType.CHESS, new StatisticsChess());
+        statistics.put(GameType.CHECKERS, new StatisticsCheckers());
+        statistics.put(GameType.CONNECT4, new StatisticsConnect4());
+        statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
+        this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
     }
 
 
@@ -83,11 +83,11 @@ public class Account {
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
-        statistics.put(GamesEnum.CHESS, new StatisticsChess());
-        statistics.put(GamesEnum.CHECKERS, new StatisticsCheckers());
-        statistics.put(GamesEnum.CONNECT4, new StatisticsConnect4());
-        statistics.put(GamesEnum.TICTACTOE, new StatisticsTicTacToe());
-        this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 5 fields.
+        statistics.put(GameType.CHESS, new StatisticsChess());
+        statistics.put(GameType.CHECKERS, new StatisticsCheckers());
+        statistics.put(GameType.CONNECT4, new StatisticsConnect4());
+        statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
+        this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
     }
 
     /**
@@ -114,17 +114,17 @@ public class Account {
      * @param game          GamesEnum game to update statistics for
      * @param addStatistics HashMap which assigns each statistic an Integer value to increase by
      */
-    public void updateStatistics(GamesEnum game, HashMap<StatisticsEnum, Integer> addStatistics) {
+    public void updateStatistics(GameType game, HashMap<StatisticsType, Integer> addStatistics) {
         statistics.get(game).addStatistics(addStatistics);
     }
 
     /**
      * Update this account's Elo for some game in GamesEnum.
      *
-     * @param game   GamesEnum game to update Elo for
+     * @param game   GameType game to update Elo for
      * @param newElo Integer value to assign Elo
      */
-    public void updateElo(GamesEnum game, Integer newElo) {
+    public void updateElo(GameType game, Integer newElo) {
         statistics.get(game).updateElo(newElo);
     }
 
@@ -134,18 +134,18 @@ public class Account {
      * @param game GamesEnum game to get Elo for
      * @return int Elo for the game
      */
-    public int getElo(GamesEnum game) {
-        return (int) getStatistic(game, StatisticsEnum.ELO);
+    public int getElo(GameType game) {
+        return (int) getStatistic(game, StatisticsType.ELO);
     }
 
     /**
      * Get a certain Statistic for the player from a given game.
      *
      * @param game      GamesEnum game to get statistic for
-     * @param statistic StatisticsEnum which statistic to get
+     * @param statistic StatisticsType which statistic to get
      * @return Number (Integer or Double) for the statistic
      */
-    public Number getStatistic(GamesEnum game, StatisticsEnum statistic) {
+    public Number getStatistic(GameType game, StatisticsType statistic) {
         return statistics.get(game).getStatistic(statistic);
     }
 
@@ -189,8 +189,8 @@ public class Account {
      * @param game GamesEnum for which game to get statistics for
      * @return String[] containing statistic values as strings
      */
-    public String[] getGameStatistics(GamesEnum game) {
-        StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
+    public String[] getGameStatistics(GameType game) {
+        StatisticsType[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatistics(game, order);
     }
 
@@ -198,13 +198,13 @@ public class Account {
      * Get a String[] containing the Account's statistics for the game in the specified order
      *
      * @param game  GamesEnum for which game to get statistics for
-     * @param order StatisticsEnum array that determines which statistics will be returned and in what order
+     * @param order StatisticsType array that determines which statistics will be returned and in what order
      * @return String[] containing the specified statistics in the same order
      */
-    public String[] getGameStatistics(GamesEnum game, StatisticsEnum[] order) {
+    public String[] getGameStatistics(GameType game, StatisticsType[] order) {
         String[] output = new String[order.length];
         for (int i = 0; i < order.length; i++) {
-            StatisticsEnum statistic = order[i];
+            StatisticsType statistic = order[i];
             Number value = statistics.get(game).getStatistic(statistic);
 
             if (value instanceof Integer) {
@@ -222,18 +222,18 @@ public class Account {
      * @param game GamesEnum for which game to get statistics for
      * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
-    public String[] getGameStatisticsHeader(GamesEnum game) {
-        StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
+    public String[] getGameStatisticsHeader(GameType game) {
+        StatisticsType[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatisticsHeader(order);
     }
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game, order)
      *
-     * @param order StatisticsEnum array that determines which statistics will be returned and in what order
+     * @param order StatisticsType array that determines which statistics will be returned and in what order
      * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
-    public String[] getGameStatisticsHeader(StatisticsEnum[] order) {
+    public String[] getGameStatisticsHeader(StatisticsType[] order) {
         String[] headers = new String[order.length];
         for (int i = 0; i < order.length; i++) {
             headers[i] = order[i].toString();
@@ -247,8 +247,8 @@ public class Account {
      * @param games HashSet of GamesEnums for which games to include in the combined stats
      * @return String[] containing the combined statistics
      */
-    public String[] getCombinedStatistics(HashSet<GamesEnum> games) {
-        StatisticsEnum[] order = StatisticsEnum.values();
+    public String[] getCombinedStatistics(HashSet<GameType> games) {
+        StatisticsType[] order = StatisticsType.values();
         return getCombinedStatistics(games, order);
     }
 
@@ -256,13 +256,13 @@ public class Account {
      * Get a String[] containing the Account's combined statistics (in a specific order) for the specified games
      *
      * @param games HashSet of GamesEnums for which games to include in the combined stats
-     * @param order StatisticsEnum array that determines which statistics will be returned and in what order
+     * @param order StatisticsType array that determines which statistics will be returned and in what order
      * @return String[] containing the combined statistics
      */
-    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order) {
+    public String[] getCombinedStatistics(HashSet<GameType> games, StatisticsType[] order) {
         // Create a new CombinedStatistics object
         HashSet<AStatistics> setOfStatistics = new HashSet<>();
-        for (GamesEnum game : games) {
+        for (GameType game : games) {
             setOfStatistics.add(statistics.get(game));
         }
         StatisticsCombined statisticsCombined = new StatisticsCombined(setOfStatistics);
@@ -270,7 +270,7 @@ public class Account {
         // Get the string for combined statistics from CombinedStatistics object
         String[] output = new String[order.length];
         for (int i = 0; i < order.length; i++) {
-            StatisticsEnum statistic = order[i];
+            StatisticsType statistic = order[i];
             Number value = statisticsCombined.getStatistic(statistic);
 
             if (value instanceof Integer) {
@@ -288,7 +288,7 @@ public class Account {
      * @return String[] containing the names of each statistic given by getCombinedStatistics(...)
      */
     public static String[] getCombinedStatisticsHeader() {
-        StatisticsEnum[] order = StatisticsEnum.values();
+        StatisticsType[] order = StatisticsType.values();
         String[] headers = new String[order.length];
         for (int i = 0; i < order.length; i++) {
             headers[i] = order[i].toString();
@@ -406,10 +406,23 @@ public class Account {
     }
 
     /**
-     * @param friends, adds the friends to the friends-list of the player.
+     * @param friend, adds the friend to the friends-list of the player.
      */
-    public void setFriends(Account friends) {
-        this.friends.add(friends);
+    public void addFriend(Account friend) {
+        this.friends.add(friend);
+    }
+
+    /**
+     * Removes a Friend from the Account's friend list
+     * @param friend    Account belonging to friend that is to be removed from friends list
+     * @return          true if friend was in friends list; false otherwise
+     */
+    public boolean removeFriend(Account friend) {
+        if (this.friends.contains(friend)){
+            this.friends.remove(friend);
+            return true;
+        }
+        return false;
     }
 
     /**

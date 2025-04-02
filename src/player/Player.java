@@ -13,24 +13,6 @@ public class Player {
      */
     public Player(){
         this.account = new Account();   // initialize a guest account
-        this.elo = 1000; // Default Elo rating
-    }
-    /**
-     *
-     * Get the Elo rating of this Player
-     * @return  int representing the Player's Elo rating
-     */
-
-    public int getElo() {
-        return elo;
-    }
-    /**
-     * Set the Elo rating of this Player
-     * @param elo  int representing the new Elo rating to set for the Player
-     */
-
-    public void setElo(int elo) {
-        this.elo = elo;
     }
 
     /**

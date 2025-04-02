@@ -1,7 +1,7 @@
 package player.statistics;
 
-import game.GamesEnum;
-import player.Player;
+import game.GameType;
+import player.Account;
 
 import java.util.HashMap;
 
@@ -12,35 +12,35 @@ import java.util.HashMap;
 public class MatchOutcomeHandler {
     /**
      * Add the results of a Match to the participating players' statistics and match history.
-     * @param game                      GamesEnum for the game that is being played
-     * @param matchID                   int unique ID for this match to store in database
-     * @param player1                   Player 1 of this match
-     * @param player1Results            HashMap containing statistics for Player 1
-     * @param player2                   Player 2 of this match
-     * @param player2Results            HashMap containing statistics for Player 2
-     * @throws MatchOutcomeInvalidError Error thrown if the Match Outcome is malformed and cannot be processed
+     * @param game                          GameType for the game that is being played
+     * @param matchID                       int unique ID for this match to store in database
+     * @param account1                      Account for player 1 of this match
+     * @param account1Results               HashMap containing statistics for player 1
+     * @param account2                      Account for player 2 of this match
+     * @param account2Results               HashMap containing statistics for player 2
+     * @throws MatchOutcomeInvalidError     Error thrown if the Match Outcome is malformed and cannot be processed
      */
-    public static void RecordMatchOutcome(GamesEnum game, int matchID,
-                                          Player player1, HashMap<StatisticsEnum, Integer> player1Results,
-                                          Player player2, HashMap<StatisticsEnum, Integer> player2Results)
+    public static void RecordMatchOutcome(GameType game, int matchID,
+                                          Account account1, HashMap<StatisticsType, Integer> account1Results,
+                                          Account account2, HashMap<StatisticsType, Integer> account2Results)
                         throws MatchOutcomeInvalidError
     {
         // if the Player Statistics fields are not malformed, update PlayerStatistics and log match in Player match histories
-        if (matchOutcomeIsValid(game, player1, player1Results, player2, player2Results)){
+        if (matchOutcomeIsValid(game, account1, account1Results, account2, account2Results)){
             // Update statistics for both Players
-            player1.getAccount().updateStatistics(game, player1Results);
-            player2.getAccount().updateStatistics(game, player2Results);
+            account1.updateStatistics(game, account1Results);
+            account2.updateStatistics(game, account2Results);
 
             // Add a String[] representation of the match outcome to both players' accounts
-            player1.getAccount().logMatch(composeMatchLog(game, player1Results, player2, matchID));
-            player2.getAccount().logMatch(composeMatchLog(game, player2Results, player1, matchID));
+            account1.logMatch(composeMatchLog(game, account1Results, account2, matchID));
+            account2.logMatch(composeMatchLog(game, account2Results, account1, matchID));
 
             // Update both players' Elo
-            int player1OldElo = player1.getAccount().getElo(game);
-            int player2OldElo = player2.getAccount().getElo(game);
+            int player1OldElo = account1.getElo(game);
+            int player2OldElo = account2.getElo(game);
 
-            double player1Score = getMatchScore(player1Results);
-            double player2Score = getMatchScore(player2Results);
+            double player1Score = getMatchScore(account1Results);
+            double player2Score = getMatchScore(account2Results);
 
             double player1Expected = getExpectedScore(player1OldElo, player2OldElo);
             double player2Expected = getExpectedScore(player2OldElo, player1OldElo);
@@ -53,15 +53,15 @@ public class MatchOutcomeHandler {
             int player1NewElo = player1OldElo + player1EloChange;
             int player2NewElo = player2OldElo + player2EloChange;
 
-            player1.getAccount().updateElo(game, player1NewElo);
-            player2.getAccount().updateElo(game, player2NewElo);
+            account1.updateElo(game, player1NewElo);
+            account2.updateElo(game, player2NewElo);
         }
     }
 
 
-    private static double getMatchScore(HashMap<StatisticsEnum, Integer> playerResults) {
-        if (playerResults.getOrDefault(StatisticsEnum.WINS, 0) == 1) return 1.0;
-        if (playerResults.getOrDefault(StatisticsEnum.DRAWS, 0) == 1) return 0.5;
+    private static double getMatchScore(HashMap<StatisticsType, Integer> playerResults) {
+        if (playerResults.getOrDefault(StatisticsType.WINS, 0) == 1) return 1.0;
+        if (playerResults.getOrDefault(StatisticsType.DRAWS, 0) == 1) return 0.5;
         return 0.0; // loss
     }
 
@@ -69,7 +69,7 @@ public class MatchOutcomeHandler {
         return 1 / (1 + Math.pow(10, (ratingB - ratingA) / 400.0));
     }
 
-    private static int getKFactor(GamesEnum game) {
+    private static int getKFactor(GameType game) {
         return switch (game) {
             case CHESS -> 32;
             case CHECKERS -> 20;
@@ -83,16 +83,16 @@ public class MatchOutcomeHandler {
      * @return                          true if the Players exist and the results are well-formed
      * @throws MatchOutcomeInvalidError if the match outcome is not created properly
      */
-    private static boolean matchOutcomeIsValid( GamesEnum game,
-                                                Player player1,
-                                                HashMap<StatisticsEnum, Integer> player1Results,
-                                                Player player2,
-                                                HashMap<StatisticsEnum, Integer> player2Results)
+    private static boolean matchOutcomeIsValid( GameType game,
+                                                Account account1,
+                                                HashMap<StatisticsType, Integer> player1Results,
+                                                Account account2,
+                                                HashMap<StatisticsType, Integer> player2Results)
                                                 throws MatchOutcomeInvalidError
     {
-        if (player1 == null || player2 == null){
+        if (account1 == null || account2 == null){
             throw new MatchOutcomeInvalidError("A match must have two players."); }
-        else if (player1 == player2){
+        else if (account1 == account2){
             throw new MatchOutcomeInvalidError("A match must have two unique players.");
         }
 
@@ -101,40 +101,40 @@ public class MatchOutcomeHandler {
         return true;
     }
 
-    private static String[] composeMatchLog(GamesEnum game,
-                                            HashMap<StatisticsEnum, Integer> playerResults,
-                                            Player opponent,
+    private static String[] composeMatchLog(GameType game,
+                                            HashMap<StatisticsType, Integer> playerResults,
+                                            Account opponent,
                                             int matchID)
     {
         String[] matchLog = new String[6];
 
         // index 0: game result (win/loss/draw)
-        if (playerResults.get(StatisticsEnum.WINS) == 1){
+        if (playerResults.get(StatisticsType.WINS) == 1){
             matchLog[0] = "Win";
         }
-        else if (playerResults.get(StatisticsEnum.LOSSES) == 1){
+        else if (playerResults.get(StatisticsType.LOSSES) == 1){
             matchLog[0] = "Loss";
         }
-        else if (playerResults.get(StatisticsEnum.DRAWS) == 1){
+        else if (playerResults.get(StatisticsType.DRAWS) == 1){
             matchLog[0] = "Draw";
         }
 
         // index 1: game name (chess/checkers/connect 4/tic-tac-toe)
         switch(game){
-            case GamesEnum.CHESS -> matchLog[1] = "Chess";
-            case GamesEnum.CONNECT4 -> matchLog[1] = "Connect 4";
-            case GamesEnum.TICTACTOE -> matchLog[1] = "Tic-Tac-Toe";
-            case GamesEnum.CHECKERS -> matchLog[1] = "Checkers";
+            case GameType.CHESS -> matchLog[1] = "Chess";
+            case GameType.CONNECT4 -> matchLog[1] = "Connect 4";
+            case GameType.TICTACTOE -> matchLog[1] = "Tic-Tac-Toe";
+            case GameType.CHECKERS -> matchLog[1] = "Checkers";
         }
 
         // index 2: opponent name
-        matchLog[2] = opponent.getAccount().getUsername();
+        matchLog[2] = opponent.getUsername();
 
         // index 3: opponent ID
-        matchLog[3] = String.valueOf(opponent.getAccount().getID());
+        matchLog[3] = String.valueOf(opponent.getID());
 
         // index 4: opponent Elo
-        matchLog[4] = String.valueOf(opponent.getAccount().getElo(game));
+        matchLog[4] = String.valueOf(opponent.getElo(game));
 
         // index 5: match ID
         matchLog[5] = String.valueOf(matchID);
