@@ -34,11 +34,6 @@ public class Account {
     private String password;    // TODO: Handle encryption/decryption in Account class
 
     /**
-     * String for the phone number associated with this Account
-     */
-    private String phoneNumber;
-
-    /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
      */
     private ArrayList<Account> friends;
@@ -50,7 +45,7 @@ public class Account {
     /**
      * Initialize a guest Account
      */
-    public Account(){
+    public Account() {
         // Properties only possessed by permanent Accounts
         this.isGuest = true;
         this.id = null;
@@ -68,28 +63,16 @@ public class Account {
         this.matchHistory = new String[10][5];  // Store information about the past 10 matches, each with 5 fields.
     }
 
-    /**
-     * Initialize an Account with full details including the phone number.
-     *
-     * @param id           the account ID
-     * @param username     the account username
-     * @param email        the account email
-     * @param password     the account password
-     * @param phoneNumber  the account phone number
-     */
-    public Account(int id, String username, String email, String password, String phoneNumber) {
-        this(id, username, email, password); // Call the 4-param constructor
-        this.phoneNumber = phoneNumber;
-    }
 
     /**
      * Initialize an Account with a given id, username, email, and password
-     * @param id            int id for the account, unique in database
-     * @param username      String username for the account
-     * @param email         String email for account
-     * @param password      String password for the account
+     *
+     * @param id       int id for the account, unique in database
+     * @param username String username for the account
+     * @param email    String email for account
+     * @param password String password for the account
      */
-    public Account(int id, String username, String email, String password){
+    public Account(int id, String username, String email, String password) {
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
         this.id = id;
@@ -109,12 +92,13 @@ public class Account {
 
     /**
      * If the Player started with a guest Account, update it to form a permanent (i.e. non-guest) Account
-     * @param id            int id for the account, unique in database
-     * @param username      String username for the account
-     * @param email         String email for account
-     * @param password      String password for the account
+     *
+     * @param id       int id for the account, unique in database
+     * @param username String username for the account
+     * @param email    String email for account
+     * @param password String password for the account
      */
-    public void convertToNonGuestAccount(int id, String username, String email, String password){
+    public void convertToNonGuestAccount(int id, String username, String email, String password) {
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
         this.id = id;
@@ -126,49 +110,54 @@ public class Account {
 
     /**
      * Add a HashMap of statistics to
-     * @param game              GamesEnum game to update statistics for
-     * @param addStatistics     HashMap which assigns each statistic an Integer value to increase by
+     *
+     * @param game          GamesEnum game to update statistics for
+     * @param addStatistics HashMap which assigns each statistic an Integer value to increase by
      */
-    public void updateStatistics(GamesEnum game, HashMap<StatisticsEnum, Integer> addStatistics){
+    public void updateStatistics(GamesEnum game, HashMap<StatisticsEnum, Integer> addStatistics) {
         statistics.get(game).addStatistics(addStatistics);
     }
 
     /**
      * Update this account's Elo for some game in GamesEnum.
-     * @param game      GamesEnum game to update Elo for
-     * @param newElo    Integer value to assign Elo
+     *
+     * @param game   GamesEnum game to update Elo for
+     * @param newElo Integer value to assign Elo
      */
-    public void updateElo(GamesEnum game, Integer newElo){
+    public void updateElo(GamesEnum game, Integer newElo) {
         statistics.get(game).updateElo(newElo);
     }
 
     /**
      * Get the player's Elo for some game. This is a wrapper function for getStatistic()
-     * @param game  GamesEnum game to get Elo for
-     * @return      int Elo for the game
+     *
+     * @param game GamesEnum game to get Elo for
+     * @return int Elo for the game
      */
-    public int getElo(GamesEnum game){
+    public int getElo(GamesEnum game) {
         return (int) getStatistic(game, StatisticsEnum.ELO);
     }
 
     /**
      * Get a certain Statistic for the player from a given game.
-     * @param game          GamesEnum game to get statistic for
-     * @param statistic     StatisticsEnum which statistic to get
-     * @return              Number (Integer or Double) for the statistic
+     *
+     * @param game      GamesEnum game to get statistic for
+     * @param statistic StatisticsEnum which statistic to get
+     * @return Number (Integer or Double) for the statistic
      */
-    public Number getStatistic(GamesEnum game, StatisticsEnum statistic){
+    public Number getStatistic(GamesEnum game, StatisticsEnum statistic) {
         return statistics.get(game).getStatistic(statistic);
     }
 
     /**
      * Adds a String[5] representing the most recent match results to the match history String[][]
-     * @param strings   String[] containing details about the player's last match
+     *
+     * @param strings String[] containing details about the player's last match
      */
     public void logMatch(String[] strings) {
         // Move each match history String[] up by 1 index.
-        for (int i = 8; i >= 0; i--){
-            if (matchHistory[i] != null){
+        for (int i = 8; i >= 0; i--) {
+            if (matchHistory[i] != null) {
                 matchHistory[i + 1] = matchHistory[i];
             }
         }
@@ -178,46 +167,49 @@ public class Account {
 
     /**
      * Get the match history for this Account
-     * @return  String[][] for MatchHistory. Get the header row using getMatchHistoryHeader()
+     *
+     * @return String[][] for MatchHistory. Get the header row using getMatchHistoryHeader()
      */
-    public String[][] getMatchHistory(){
+    public String[][] getMatchHistory() {
         return matchHistory;
     }
 
     /**
      * Gives the header row for the String[][] given by getMatchHistory().
-     * @return  String[6] of Strings for the match history headers
+     *
+     * @return String[6] of Strings for the match history headers
      */
-    public String[] getMatchHistoryHeader(){
+    public String[] getMatchHistoryHeader() {
         return new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
     }
 
     /**
      * Get a String[] containing the Account's statistics for the game in a predetermined order
-     * @param game  GamesEnum for which game to get statistics for
-     * @return      String[] containing statistic values as strings
+     *
+     * @param game GamesEnum for which game to get statistics for
+     * @return String[] containing statistic values as strings
      */
-    public String[] getGameStatistics(GamesEnum game){
+    public String[] getGameStatistics(GamesEnum game) {
         StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatistics(game, order);
     }
 
     /**
      * Get a String[] containing the Account's statistics for the game in the specified order
+     *
      * @param game  GamesEnum for which game to get statistics for
      * @param order StatisticsEnum array that determines which statistics will be returned and in what order
-     * @return      String[] containing the specified statistics in the same order
+     * @return String[] containing the specified statistics in the same order
      */
-    public String[] getGameStatistics(GamesEnum game, StatisticsEnum[] order){
+    public String[] getGameStatistics(GamesEnum game, StatisticsEnum[] order) {
         String[] output = new String[order.length];
-        for (int i = 0; i < order.length; i++){
+        for (int i = 0; i < order.length; i++) {
             StatisticsEnum statistic = order[i];
             Number value = statistics.get(game).getStatistic(statistic);
 
-            if (value instanceof Integer){
+            if (value instanceof Integer) {
                 output[i] = value.toString();
-            }
-            else if (value instanceof Double){
+            } else if (value instanceof Double) {
                 output[i] = String.format("%.2f", value);   // Two decimals for a double.
             }
         }
@@ -226,22 +218,24 @@ public class Account {
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game)
-     * @param game  GamesEnum for which game to get statistics for
-     * @return      String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
+     *
+     * @param game GamesEnum for which game to get statistics for
+     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
-    public String[] getGameStatisticsHeader(GamesEnum game){
+    public String[] getGameStatisticsHeader(GamesEnum game) {
         StatisticsEnum[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatisticsHeader(order);
     }
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game, order)
+     *
      * @param order StatisticsEnum array that determines which statistics will be returned and in what order
-     * @return      String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
+     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
      */
     public String[] getGameStatisticsHeader(StatisticsEnum[] order) {
         String[] headers = new String[order.length];
-        for (int i = 0; i < order.length; i++){
+        for (int i = 0; i < order.length; i++) {
             headers[i] = order[i].toString();
         }
         return headers;
@@ -249,38 +243,39 @@ public class Account {
 
     /**
      * Get a String[] containing the Account's combined generic statistics (wins, losses, draws) for the specified games
+     *
      * @param games HashSet of GamesEnums for which games to include in the combined stats
-     * @return      String[] containing the combined statistics
+     * @return String[] containing the combined statistics
      */
-    public String[] getCombinedStatistics(HashSet<GamesEnum> games){
+    public String[] getCombinedStatistics(HashSet<GamesEnum> games) {
         StatisticsEnum[] order = StatisticsEnum.values();
         return getCombinedStatistics(games, order);
     }
 
     /**
      * Get a String[] containing the Account's combined statistics (in a specific order) for the specified games
+     *
      * @param games HashSet of GamesEnums for which games to include in the combined stats
      * @param order StatisticsEnum array that determines which statistics will be returned and in what order
-     * @return      String[] containing the combined statistics
+     * @return String[] containing the combined statistics
      */
-    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order){
+    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsEnum[] order) {
         // Create a new CombinedStatistics object
         HashSet<AStatistics> setOfStatistics = new HashSet<>();
-        for (GamesEnum game : games){
+        for (GamesEnum game : games) {
             setOfStatistics.add(statistics.get(game));
         }
         StatisticsCombined statisticsCombined = new StatisticsCombined(setOfStatistics);
 
         // Get the string for combined statistics from CombinedStatistics object
         String[] output = new String[order.length];
-        for (int i = 0; i < order.length; i++){
+        for (int i = 0; i < order.length; i++) {
             StatisticsEnum statistic = order[i];
             Number value = statisticsCombined.getStatistic(statistic);
 
-            if (value instanceof Integer){
+            if (value instanceof Integer) {
                 output[i] = value.toString();
-            }
-            else if (value instanceof Double){
+            } else if (value instanceof Double) {
                 output[i] = String.format("%.2f", value);   // Two decimals for a double.
             }
         }
@@ -289,34 +284,37 @@ public class Account {
 
     /**
      * Get a String[] with the names for the statistics corresponding to those given by getCombinedStatistics(games)
-     * @return      String[] containing the names of each statistic given by getCombinedStatistics(...)
+     *
+     * @return String[] containing the names of each statistic given by getCombinedStatistics(...)
      */
-    public static String[] getCombinedStatisticsHeader(){
+    public static String[] getCombinedStatisticsHeader() {
         StatisticsEnum[] order = StatisticsEnum.values();
         String[] headers = new String[order.length];
-        for (int i = 0; i < order.length; i++){
+        for (int i = 0; i < order.length; i++) {
             headers[i] = order[i].toString();
         }
         return headers;
     }
 
-    public boolean getIsGuest(){
+    public boolean getIsGuest() {
         return isGuest;
     }
 
     /**
      * Return the username of the Account, or "Guest" if it is a guest account
-     * @return  String username of the Account
+     *
+     * @return String username of the Account
      */
-    public String getUsername(){
+    public String getUsername() {
         return isGuest ? "Guest" : username;
     }
 
     /**
      * Return the ID of the Account, or "-1" if it is a guest account
-     * @return  int ID of the Account
+     *
+     * @return int ID of the Account
      */
-    public int getID(){
+    public int getID() {
         return isGuest ? -1 : id;
     }
 
@@ -347,17 +345,6 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    /**
-     * Sets the phone number associated with the account.
-     *
-     * @param phoneNumber the new phone number to set
-     */
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 
 
     /**
@@ -393,27 +380,16 @@ public class Account {
         return password != null && password.length() >= 6;
     }
 
-    /**
-     * Checks whether the phone number is valid (only digits and at least 10 characters).
-     *
-     * @param phoneNumber the phone number to validate
-     * @return true if the phone number is valid; false otherwise
-     */
-
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber != null && phoneNumber.matches("\\d{10,}");
-    }
 
     /**
      * Updates the account information after validating all provided fields.
      * Throws IllegalArgumentException if any input is invalid.
      *
-     * @param username     the new display name for the account
-     * @param email        the new email address for the account
-     * @param password     the new password (must be at least 6 characters)
-     * @param phoneNumber  the new phone number (must be at least 10 digits)
+     * @param username the new display name for the account
+     * @param email    the new email address for the account
+     * @param password the new password (must be at least 6 characters)
      */
-    public void updateAccountInfo(String username, String email, String password, String phoneNumber) {
+    public void updateAccountInfo(String username, String email, String password) {
         if (!isValidUsername(username)) {
             throw new IllegalArgumentException("Invalid username.");
         }
@@ -423,22 +399,9 @@ public class Account {
         if (!isValidPassword(password)) {
             throw new IllegalArgumentException("Password must be at least 6 characters.");
         }
-        if (!isValidPhoneNumber(phoneNumber)) {
-            throw new IllegalArgumentException("Phone number must be at least 10 digits.");
-        }
 
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setPhoneNumber(phoneNumber);
-    }
-    /**
-     * Returns the phone number associated with this account.
-     *
-     * @return the phone number as a String
-     */
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 }
