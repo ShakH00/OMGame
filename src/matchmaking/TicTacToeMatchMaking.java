@@ -10,11 +10,6 @@ public class TicTacToeMatchMaking extends Matchmaking {
         this.kFactor = 10;
     }
 
-    @Override
-    public void changeElo(int elo) {
-
-    }
-
     public void increaseRange(int elo) {
 
     }

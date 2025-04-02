@@ -10,10 +10,6 @@ public class ConnectFourMatchMaking extends Matchmaking {
         this.kFactor = 15;
     }
 
-    public void changeElo(int elo) {
-
-    }
-
     public void increaseRange(int elo) {
 
     }

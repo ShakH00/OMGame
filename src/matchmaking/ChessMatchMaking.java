@@ -10,11 +10,6 @@ public class ChessMatchMaking extends Matchmaking {
         this.kFactor = 32;
     }
 
-    @Override
-    public void changeElo(int elo) {
-
-    }
-
     public void increaseRange(int elo) {
 
     }

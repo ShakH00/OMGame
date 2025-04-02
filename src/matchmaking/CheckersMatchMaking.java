@@ -11,12 +11,6 @@ public class CheckersMatchMaking extends Matchmaking {
 
     }
 
-
-    @Override
-    public void changeElo(int elo) {
-
-    }
-
     public void increaseRange(int elo) {
 
     }
