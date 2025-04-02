@@ -8,6 +8,10 @@ import java.util.Random;
 
 public class PrivateMatch {
     private int roomID;
+
+    private Account host;
+
+    //letting accounts be greater than 2 in case future games have more than 2 players or spectator system implemented
     private ArrayList<Account> accounts = new ArrayList<>();
 
     String possibleIDCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -39,8 +43,14 @@ public class PrivateMatch {
      * hostStartGame is a function that starts the private matches selected game
      */
     public void hostStartGame() {
-        //checks that there are two players in the private match
-        //start the match when this function is called
+        if (accounts.size() >= 2) {
+            //start the match when this function is called
+        }
+    }
+
+    public void setHost(Account account) {
+        this.host = account;
+        accounts.add(host);
     }
 
     /**

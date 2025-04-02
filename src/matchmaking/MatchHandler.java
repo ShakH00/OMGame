@@ -1,6 +1,6 @@
 package matchmaking;
 
-import account.Player;
+import account.Account;
 
 public class MatchHandler {
 
@@ -11,17 +11,19 @@ public class MatchHandler {
      * @return          returns the new privateMatch object
      * createPrivateMatch is a method that initializes a new privateMatch object
      */
-    public PrivateMatch createPrivateMatch(Player host) {
-        return null;
+    public PrivateMatch createPrivateMatch(Account host) {
+        PrivateMatch match = new PrivateMatch();
+        match.setHost(host);
+        return match;
     }
 
     /**
      * @author Logan Olszak
-     * @param player    player object trying to join the privateMatch
+     * @param account   account object trying to join the privateMatch
      * @param inputID   input ID of the match the player is trying to join
      * joinUsingID is a method that adds a player to an existing private match, found by its room ID
      */
-    public void joinUsingID(Player player, int inputID) {
+    public void joinUsingID(Account account, int inputID) {
         //Find match using the inputID
         //If match exists and has space for player, add the player
         //match.players.add(player);
@@ -29,11 +31,11 @@ public class MatchHandler {
 
     /**
      * @author Logan Olszak
-     * @param player    player object trying to join the privateMatch
-     * @param friend    player object on player's friend list, this is the player hosting the private match
+     * @param account   account object trying to join the privateMatch
+     * @param friend    account object on player's friend list, this is the player hosting the private match
      * joinFromFriends is a method that adds a player to an existing private match, found by its host
      */
-    public void joinFromFriends(Player player, Player friend) {
+    public void joinFromFriends(Account account, Account friend) {
         //Find match using the player friend
         //If match exists and has space for player, add the player
         //match.players.add(player);

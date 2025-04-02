@@ -19,9 +19,10 @@ public class DatabaseManager {
 
     /**
      * @author Logan Olszak
+     * @param game         which GameType the returned accounts are queued for
      * @return             Returns all players that are currently queueing for a match of a certain game
      *
-     * queryPlayerPool returns a list of all players that are currently queued for a match
+     * queryPlayerPool returns a list of all players that are currently queued for a match of a specific game
      */
     public static ArrayList<Account> queryAccountPool(GameType game) {
         ArrayList<Account> gameQueue = new ArrayList<Account>();
