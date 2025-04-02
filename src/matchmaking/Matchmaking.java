@@ -7,57 +7,7 @@ import java.util.List;
 
 public class Matchmaking {
 
-    protected int kFactor;
 
-    /**
-     * @author Nebila Wako
-     * Updates players rating after match as we discussed in planning document
-     *
-     * @param player1
-     * @param player2
-     * @param result
-     */
-    public void updateElo(Player player1, Player player2, int result) {
-        // Get current Elo ratings
-        int elo1 = player1.getElo();
-        int elo2 = player2.getElo();
-
-        // Calculate expected scores based on current Elo ratings
-        double expectedScore1 = calculateExpectedScore(elo1, elo2);
-        double expectedScore2 = calculateExpectedScore(elo2, elo1);
-
-        double score1 = result;
-        double score2 = 1 - result;
-
-        int newElo1 = (int) Math.round(elo1 + kFactor * (score1 - expectedScore1));
-        int newElo2 = (int) Math.round(elo2 + kFactor * (score2 - expectedScore2));
-
-        player1.setElo(newElo1);
-        player2.setElo(newElo2);
-    }
-
-    /**
-     * @author Nebila Wako
-     * To calculate win probabiliy
-     *
-     * @param ratingA
-     * @param ratingB
-     * @return
-     */
-
-    public double calculateExpectedScore(double ratingA, double ratingB) {
-        return 1 / (1 + Math.pow(10, (ratingB - ratingA) / 400.0));
-
-    }
-
-    /**
-     * @author Nebila Wako
-     * To check if two players have acceptable skill proximity
-     *
-     * @param player1
-     * @param player2
-     * @return
-     */
 
     public boolean isMatchSuitable(Player player1, Player player2) {
         int rating1 = player1.getElo();

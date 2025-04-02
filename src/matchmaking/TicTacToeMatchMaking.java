@@ -13,7 +13,6 @@ public class TicTacToeMatchMaking extends Matchmaking {
     public void increaseRange(int elo) {
 
     }
-
     public void findTwoPlayers() {
 
     }
