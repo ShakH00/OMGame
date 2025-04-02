@@ -404,4 +404,18 @@ public class Account {
         setEmail(email);
         setPassword(password);
     }
+
+    /**
+     * @param friends, adds the friends to the friends-list of the player.
+     */
+    public void setFriends(Account friends) {
+        this.friends.add(friends);
+    }
+
+    /**
+     * @return returns all the friends from the players list.
+     */
+    public ArrayList<Account> getFriends(){
+        return this.friends;
+    }
 }
