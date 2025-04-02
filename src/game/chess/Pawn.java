@@ -102,7 +102,7 @@ public class Pawn extends MovingPiece {
             //eat an enemy piece diagonally
             if (isPieceOnTile != null && isPieceOnTile.getPieceType() != type){
                 return true;
-            //en passant!
+            //en passant, not done, need to make sure enemey piece is pawn and js made its first move
             } else if(isPieceOnTile == null && board[currentX][newY] != null && board[currentX][newY].getPieceType() != type){
                 return true;
             }

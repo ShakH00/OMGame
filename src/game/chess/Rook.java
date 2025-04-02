@@ -29,6 +29,14 @@ public class Rook extends MovingPiece {
         this.doneFirstMove = false;
     }
 
+    public boolean isDoneFirstMove(){
+        return doneFirstMove;
+    }
+
+    public void setDoneFirstMove(boolean doneFirstMove){
+        this.doneFirstMove = doneFirstMove;
+    }
+
     /**
      *
      * @param currentX

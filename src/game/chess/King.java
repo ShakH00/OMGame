@@ -68,7 +68,12 @@ public class King extends MovingPiece {
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
         //might be trying to castle
-        if(!doneFirstMove){
+        if(!doneFirstMove || board[newX][newY] == null){
+            if(type == PieceType.LIGHT){
+                if(newY-currentY == 2 && board[7][7].getClass() == Rook.class){
+                    //Rook Piece rook = board[7][7];
+                }
+            }
             //if to check which side trying to castle to
                 //find rook on that side, check if first move done
                     //castle if possible
@@ -76,10 +81,6 @@ public class King extends MovingPiece {
             if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
                 return true;
             }
-        }
-        if(board[newX][newY] == null){
-            //need to check if trying to castle
-
         }
         return false;
     }

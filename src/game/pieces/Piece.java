@@ -62,5 +62,8 @@ public abstract class Piece {
         return this.pieceType;
     }
 
+    public boolean isKing() {
+        return false;
+    }
 }
 
