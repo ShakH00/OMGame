@@ -60,6 +60,32 @@ public class PrivateMatch {
     }
 
     /**
+     * Getter method for the private matches host
+     */
+    public Account getHost() {
+        return this.host;
+    }
+
+    /**
+     * @param account account object that initialized the connection to the PrivateMatch
+     *
+     * Method to add a player to the PrivateMatch
+     */
+    public void connectToPrivateMatch(Account account) {
+        accounts.add(account);
+        //still need to work with GUI team to set up the private match GUI popping up
+    }
+
+    /**
+     * @param account account object that is disconnecting from the PrivateMatch
+     *
+     * Method to remove a player from the PrivateMatch
+     */
+    public void disconnectFromPrivateMatch(Account account) {
+        accounts.remove(account);
+    }
+
+    /**
      * @author Logan Olszak
      * @return Unique ID string of length 6
      * findUniqueID is a function that generates random 6 character room IDs until a unique ID is found
