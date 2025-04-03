@@ -484,4 +484,14 @@ public class Account {
     public long getJoinTimestamp() {
         return this.joinTimestamp;
     }
+
+    private int matchmakingThreshold;
+
+    public void setMatchmakingThreshold(int matchmakingThreshold){
+        this.matchmakingThreshold = matchmakingThreshold;
+    }
+
+    public int getMatchmakingThreshold(){
+        return matchmakingThreshold;
+    }
 }
