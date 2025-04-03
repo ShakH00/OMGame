@@ -21,8 +21,8 @@ public class MatchOutcomeHandler {
      * @throws MatchOutcomeInvalidError     Error thrown if the Match Outcome is malformed and cannot be processed
      */
     public static void RecordMatchOutcome(GameType game, int matchID,
-                                          Account account1, HashMap<StatisticsType, Integer> account1Results,
-                                          Account account2, HashMap<StatisticsType, Integer> account2Results)
+                                          Account account1, HashMap<StatisticType, Integer> account1Results,
+                                          Account account2, HashMap<StatisticType, Integer> account2Results)
                         throws MatchOutcomeInvalidError
     {
         // if the Player Statistics fields are not malformed, update PlayerStatistics and log match in Player match histories
@@ -59,9 +59,9 @@ public class MatchOutcomeHandler {
     }
 
 
-    private static double getMatchScore(HashMap<StatisticsType, Integer> playerResults) {
-        if (playerResults.getOrDefault(StatisticsType.WINS, 0) == 1) return 1.0;
-        if (playerResults.getOrDefault(StatisticsType.DRAWS, 0) == 1) return 0.5;
+    private static double getMatchScore(HashMap<StatisticType, Integer> playerResults) {
+        if (playerResults.getOrDefault(StatisticType.WINS, 0) == 1) return 1.0;
+        if (playerResults.getOrDefault(StatisticType.DRAWS, 0) == 1) return 0.5;
         return 0.0; // loss
     }
 
@@ -85,9 +85,9 @@ public class MatchOutcomeHandler {
      */
     private static boolean matchOutcomeIsValid( GameType game,
                                                 Account account1,
-                                                HashMap<StatisticsType, Integer> player1Results,
+                                                HashMap<StatisticType, Integer> player1Results,
                                                 Account account2,
-                                                HashMap<StatisticsType, Integer> player2Results)
+                                                HashMap<StatisticType, Integer> player2Results)
                                                 throws MatchOutcomeInvalidError
     {
         if (account1 == null || account2 == null){
@@ -102,20 +102,20 @@ public class MatchOutcomeHandler {
     }
 
     private static String[] composeMatchLog(GameType game,
-                                            HashMap<StatisticsType, Integer> playerResults,
+                                            HashMap<StatisticType, Integer> playerResults,
                                             Account opponent,
                                             int matchID)
     {
         String[] matchLog = new String[6];
 
         // index 0: game result (win/loss/draw)
-        if (playerResults.get(StatisticsType.WINS) == 1){
+        if (playerResults.get(StatisticType.WINS) == 1){
             matchLog[0] = "Win";
         }
-        else if (playerResults.get(StatisticsType.LOSSES) == 1){
+        else if (playerResults.get(StatisticType.LOSSES) == 1){
             matchLog[0] = "Loss";
         }
-        else if (playerResults.get(StatisticsType.DRAWS) == 1){
+        else if (playerResults.get(StatisticType.DRAWS) == 1){
             matchLog[0] = "Draw";
         }
 
