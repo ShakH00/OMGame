@@ -1,6 +1,5 @@
 package account;
 
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -122,7 +121,7 @@ public class Account {
      * @param game          GamesEnum game to update statistics for
      * @param addStatistics HashMap which assigns each statistic an Integer value to increase by
      */
-    public void updateStatistics(GameType game, HashMap<StatisticsType, Integer> addStatistics) {
+    public void updateStatistics(GameType game, HashMap<StatisticType, Integer> addStatistics) {
         statistics.get(game).addStatistics(addStatistics);
     }
 
@@ -143,7 +142,7 @@ public class Account {
      * @return int Elo for the game
      */
     public int getElo(GameType game) {
-        return (int) getStatistic(game, StatisticsType.ELO);
+        return (int) getStatistic(game, StatisticType.ELO);
     }
 
     /**
@@ -175,10 +174,10 @@ public class Account {
      * Get a certain Statistic for the player from a given game.
      *
      * @param game      GamesEnum game to get statistic for
-     * @param statistic StatisticsType which statistic to get
+     * @param statistic StatisticType which statistic to get
      * @return Number (Integer or Double) for the statistic
      */
-    public Number getStatistic(GameType game, StatisticsType statistic) {
+    public Number getStatistic(GameType game, StatisticType statistic) {
         return statistics.get(game).getStatistic(statistic);
     }
 
@@ -199,21 +198,19 @@ public class Account {
     }
 
     /**
-     * Get the match history for this Account
-     *
-     * @return String[][] for MatchHistory. Get the header row using getMatchHistoryHeader()
+     * Get the match history for this Account to display on the profile. Includes header row
+     * @return String[][] for MatchHistory, including header row
      */
     public String[][] getMatchHistory() {
-        return matchHistory;
-    }
+        String[][] matchHistoryOutput = new String[1 + matchHistory.length][6];
 
-    /**
-     * Gives the header row for the String[][] given by getMatchHistory().
-     *
-     * @return String[6] of Strings for the match history headers
-     */
-    public String[] getMatchHistoryHeader() {
-        return new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
+        // Add header to the output array
+        matchHistoryOutput[0] = new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
+
+        // Add rows to the output array
+        System.arraycopy(matchHistory, 0, matchHistoryOutput, 1, matchHistory.length);
+
+        return matchHistoryOutput;
     }
 
     /**
@@ -223,7 +220,7 @@ public class Account {
      * @return String[] containing statistic values as strings
      */
     public String[] getGameStatistics(GameType game) {
-        StatisticsType[] order = statistics.get(game).getAcceptedStatistics();
+        StatisticType[] order = statistics.get(game).getAcceptedStatistics();
         return getGameStatistics(game, order);
     }
 
@@ -231,13 +228,13 @@ public class Account {
      * Get a String[] containing the Account's statistics for the game in the specified order
      *
      * @param game  GamesEnum for which game to get statistics for
-     * @param order StatisticsType array that determines which statistics will be returned and in what order
+     * @param order StatisticType array that determines which statistics will be returned and in what order
      * @return String[] containing the specified statistics in the same order
      */
-    public String[] getGameStatistics(GameType game, StatisticsType[] order) {
+    public String[] getGameStatistics(GameType game, StatisticType[] order) {
         String[] output = new String[order.length];
         for (int i = 0; i < order.length; i++) {
-            StatisticsType statistic = order[i];
+            StatisticType statistic = order[i];
             Number value = statistics.get(game).getStatistic(statistic);
 
             if (value instanceof Integer) {
@@ -249,30 +246,6 @@ public class Account {
         return output;
     }
 
-    /**
-     * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game)
-     *
-     * @param game GamesEnum for which game to get statistics for
-     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
-     */
-    public String[] getGameStatisticsHeader(GameType game) {
-        StatisticsType[] order = statistics.get(game).getAcceptedStatistics();
-        return getGameStatisticsHeader(order);
-    }
-
-    /**
-     * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game, order)
-     *
-     * @param order StatisticsType array that determines which statistics will be returned and in what order
-     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
-     */
-    public String[] getGameStatisticsHeader(StatisticsType[] order) {
-        String[] headers = new String[order.length];
-        for (int i = 0; i < order.length; i++) {
-            headers[i] = order[i].toString();
-        }
-        return headers;
-    }
 
     /**
      * Get a String[] containing the Account's combined generic statistics (wins, losses, draws) for the specified games
@@ -281,7 +254,7 @@ public class Account {
      * @return String[] containing the combined statistics
      */
     public String[] getCombinedStatistics(HashSet<GameType> games) {
-        StatisticsType[] order = StatisticsType.values();
+        StatisticType[] order = StatisticType.values();
         return getCombinedStatistics(games, order);
     }
 
@@ -289,10 +262,10 @@ public class Account {
      * Get a String[] containing the Account's combined statistics (in a specific order) for the specified games
      *
      * @param games HashSet of GamesEnums for which games to include in the combined stats
-     * @param order StatisticsType array that determines which statistics will be returned and in what order
+     * @param order StatisticType array that determines which statistics will be returned and in what order
      * @return String[] containing the combined statistics
      */
-    public String[] getCombinedStatistics(HashSet<GameType> games, StatisticsType[] order) {
+    public String[] getCombinedStatistics(HashSet<GameType> games, StatisticType[] order) {
         // Create a new CombinedStatistics object
         HashSet<AStatistics> setOfStatistics = new HashSet<>();
         for (GameType game : games) {
@@ -303,7 +276,7 @@ public class Account {
         // Get the string for combined statistics from CombinedStatistics object
         String[] output = new String[order.length];
         for (int i = 0; i < order.length; i++) {
-            StatisticsType statistic = order[i];
+            StatisticType statistic = order[i];
             Number value = statisticsCombined.getStatistic(statistic);
 
             if (value instanceof Integer) {
@@ -313,20 +286,6 @@ public class Account {
             }
         }
         return output;
-    }
-
-    /**
-     * Get a String[] with the names for the statistics corresponding to those given by getCombinedStatistics(games)
-     *
-     * @return String[] containing the names of each statistic given by getCombinedStatistics(...)
-     */
-    public static String[] getCombinedStatisticsHeader() {
-        StatisticsType[] order = StatisticsType.values();
-        String[] headers = new String[order.length];
-        for (int i = 0; i < order.length; i++) {
-            headers[i] = order[i].toString();
-        }
-        return headers;
     }
 
     public boolean getIsGuest() {

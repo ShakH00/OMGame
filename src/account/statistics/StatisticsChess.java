@@ -4,23 +4,23 @@ public class StatisticsChess extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
      */
-    final StatisticsType[] acceptedStatistics = new StatisticsType[]{
-            StatisticsType.ELO,
-            StatisticsType.WIN_RATE,
-            StatisticsType.WINS,
-            StatisticsType.LOSSES,
-            StatisticsType.DRAWS,
-            StatisticsType.MATCHES_PLAYED,
-            StatisticsType.NUMBER_OF_TURNS,
-            StatisticsType.PIECES_CAPTURED,
-            StatisticsType.PAWNS_CAPTURED,
-            StatisticsType.KNIGHTS_CAPTURED,
-            StatisticsType.BISHOPS_CAPTURED,
-            StatisticsType.ROOKS_CAPTURED,
-            StatisticsType.QUEENS_CAPTURED,
-            StatisticsType.KINGS_CAPTURED,
-            StatisticsType.CHECKS,
-            StatisticsType.CHECKMATES,
-            StatisticsType.PIECES_PROMOTED
+    final StatisticType[] acceptedStatistics = new StatisticType[]{
+            StatisticType.ELO,
+            StatisticType.WIN_RATE,
+            StatisticType.WINS,
+            StatisticType.LOSSES,
+            StatisticType.DRAWS,
+            StatisticType.MATCHES_PLAYED,
+            StatisticType.NUMBER_OF_TURNS,
+            StatisticType.PIECES_CAPTURED,
+            StatisticType.PAWNS_CAPTURED,
+            StatisticType.KNIGHTS_CAPTURED,
+            StatisticType.BISHOPS_CAPTURED,
+            StatisticType.ROOKS_CAPTURED,
+            StatisticType.QUEENS_CAPTURED,
+            StatisticType.KINGS_CAPTURED,
+            StatisticType.CHECKS,
+            StatisticType.CHECKMATES,
+            StatisticType.PIECES_PROMOTED
     };
 }

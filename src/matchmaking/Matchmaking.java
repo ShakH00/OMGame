@@ -1,7 +1,10 @@
 package matchmaking;
 
 import account.Account;
+import database.DatabaseManager;
 import game.GameType;
+
+import java.util.ArrayList;
 
 public abstract class Matchmaking {
     /**
@@ -15,6 +18,7 @@ public abstract class Matchmaking {
         account.setQueuedFor(game);
         account.setJoinTimestamp(System.currentTimeMillis());
         updateMatchmakingRange(account);    // TODO: handle this through a server so that matchmaking can actually occur
+        searchForCompatible(account);
     }
 
     /**
@@ -69,9 +73,42 @@ public abstract class Matchmaking {
         // If threshold changed, return true and update matchmaking threshold for the Account
         if (new_threshold != account.getMatchmakingThreshold()) {
             account.setMatchmakingThreshold(new_threshold);
+            searchForCompatible(account);
             return true;
         }
         // Otherwise, return false
         return false;
+    }
+
+    /**
+     * @author Logan Olszak
+     * @param account1     account looking for a match
+     * @param account2     account checking for compatibility with
+     *
+     * areCompatible checks to see if two accounts are compatible to play a game with one another
+     */
+    public boolean areCompatible(Account account1, Account account2) {
+        int elo1 = account1.getElo(account1.getQueuedFor());
+        int elo2 = account2.getElo(account2.getQueuedFor());
+        int eloDif = Math.abs(elo1 - elo2);
+        int threshold1 = account1.getMatchmakingThreshold();
+        int threshold2 = account2.getMatchmakingThreshold();
+
+        return eloDif <= threshold1 && eloDif <= threshold2;
+    }
+
+    /**
+     * @author Logan Olszak
+     * @param account      account looking for a match
+     *
+     * searchForCompatible compares the player with all other players queued for the same game, starting a match if a compatible player is found
+     */
+    public void searchForCompatible(Account account) {
+        ArrayList<Account> accountList = DatabaseManager.queryAccountPool(account.getQueuedFor());
+        for (Account partner : accountList) {
+            if (areCompatible(account, partner)) {
+                //call code for starting a match with the account and partner
+            }
+        }
     }
 }
