@@ -45,10 +45,13 @@ public class MatchHandler {
      * @param inputID   input ID of the match the player is trying to join
      * joinUsingID is a method that adds a player to an existing private match, found by its room ID
      */
-    public void joinUsingID(Account account, int inputID) {
-        //Find match using the inputID
-        //If match exists and has space for player, add the player
-        //match.players.add(player);
+    public void joinUsingID(Account account, String inputID) {
+        for (PrivateMatch current : privateMatches) {
+            if (current.getRoomID() == inputID) {
+                current.connectToPrivateMatch(account);
+                break;
+            }
+        }
     }
 
     /**
@@ -58,9 +61,12 @@ public class MatchHandler {
      * joinFromFriends is a method that adds a player to an existing private match, found by its host
      */
     public void joinFromFriends(Account account, Account friend) {
-        //Find match using the player friend
-        //If match exists and has space for player, add the player
-        //match.players.add(player);
+        for (PrivateMatch current : privateMatches) {
+            if (current.getHost() == friend) {
+                current.connectToPrivateMatch(account);
+                break;
+            }
+        }
     }
 
     /**

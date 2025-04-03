@@ -61,9 +61,18 @@ public class PrivateMatch {
 
     /**
      * Getter method for the private matches host
+     * @return host Account
      */
     public Account getHost() {
         return this.host;
+    }
+
+    /**
+     * Getter method for the private matches room id
+     * @return roomID string
+     */
+    public String getRoomID() {
+        return this.roomID;
     }
 
     /**
