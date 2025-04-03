@@ -249,7 +249,7 @@ public class Connect4 extends Game {
             gameState = GameState.P2_TURN;
         }
 
-        if(gameState.equals(GameState.P2_TURN))
+        else if(gameState.equals(GameState.P2_TURN))
         {
             gameState = GameState.P1_TURN;
         }
