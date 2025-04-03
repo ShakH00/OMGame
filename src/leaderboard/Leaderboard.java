@@ -23,40 +23,40 @@ public class Leaderboard {
      * isAscending is true, else it would be reversed...
      *
      */
-    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, AStatistics gameStats, boolean isAscending) {
-        ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
-
-        HashSet<Account> totalPlayersAccount = new HashSet<>();
-        if (playerAccount == null) {
-            totalPlayersAccount.addAll(database.getAllPlayer());
-        } else {
-            totalPlayersAccount.add(playerAccount);
-            totalPlayersAccount.addAll(playerAccount.getFriends());
-        }
-        int lastIndex = firstIndex + min(lastIndex - firstIndex, totalPlayersAccount.size());
-
-        ArrayList<String[]> leaderboardRows = new ArrayList<>();
-
-        if (gameStats == null) {
-            for (Account players: totalPlayersAccount){
-                leaderboardRows.add(players.getCombinedStatistics().toStringArray());
-            }
-            int sortPropertyIndex = totalPlayersAccount[0].getCombinedStatistics().getIndexOfPropertyInStringArray(sortProperty);
-            leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-            leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-            leaderboardRows.add(0, totalPlayersAccount[0].getCombinedStatistics().getStringArrayHeaders());
-        } else {
-            for (Account players: totalPlayersAccount) {
-                leaderboardRows.add(player.getGameStatistics(games).toStringArray());
-                leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-                leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-                leaderboardRows.add(0, totalPlayersAccount[0].getGameStatistics(games).getStringArrayHeaders());
-
-            }
-        }
-
-        return new String[0][0];
-    }
+//    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, AStatistics gameStats, boolean isAscending) {
+//        ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
+//
+//        HashSet<Account> totalPlayersAccount = new HashSet<>();
+//        if (playerAccount == null) {
+//            totalPlayersAccount.addAll(database.getAllPlayer());
+//        } else {
+//            totalPlayersAccount.add(playerAccount);
+//            totalPlayersAccount.addAll(playerAccount.getFriends());
+//        }
+//        int lastIndex = firstIndex + min(lastIndex - firstIndex, totalPlayersAccount.size());
+//
+//        ArrayList<String[]> leaderboardRows = new ArrayList<>();
+//
+//        if (gameStats == null) {
+//            for (Account players: totalPlayersAccount){
+//                leaderboardRows.add(players.getCombinedStatistics().toStringArray());
+//            }
+//            int sortPropertyIndex = totalPlayersAccount[0].getCombinedStatistics().getIndexOfPropertyInStringArray(sortProperty);
+//            leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
+//            leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
+//            leaderboardRows.add(0, totalPlayersAccount[0].getCombinedStatistics().getStringArrayHeaders());
+//        } else {
+//            for (Account players: totalPlayersAccount) {
+//                leaderboardRows.add(player.getGameStatistics(games).toStringArray());
+//                leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
+//                leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
+//                leaderboardRows.add(0, totalPlayersAccount[0].getGameStatistics(games).getStringArrayHeaders());
+//
+//            }
+//        }
+//
+//        return new String[0][0];
+//    }
 
     /**
      * @param playerAccount,        Player's friends list

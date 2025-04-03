@@ -9,6 +9,15 @@ public class Chess extends Game {
 
     }
 
+    /**
+     * @author YOUSIF BEDAIR
+     * @return
+     */
+    public boolean isPiecePinned(Piece piece){
+        //check if moving the piece off its current tile puts that piece's king in check
+        return false; //temporary
+    }
+
     public void checkWinCondition() {
 
     }

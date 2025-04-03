@@ -3,6 +3,7 @@ package game.connect4;
 import game.*;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Connect4 extends Game {
     public Connect4() {
@@ -16,12 +17,20 @@ public class Connect4 extends Game {
         super.gameRules = new GameRules();
     }
 
-    Connect4Piece piece1 = new Connect4Piece("red", PieceType.LIGHT, super.player1);
-    Connect4Piece piece2 = new Connect4Piece("blue", PieceType.DARK, super.player2);
+    Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
+    Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
 
-    @Override
-    protected void move(Piece piece) {
-
+    protected void move(Piece piece, int col) {
+        if (col >= 0 && col < board.getCols()) {
+            // Find first empty row in this column (from bottom up)
+            for (int row = board.getRows() - 1; row >= 0; row--) {
+                if (board.getBoardState()[row][col] == null) {
+                    board.place(piece, row, col);
+                    checkWinCondition();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -104,13 +113,13 @@ public class Connect4 extends Game {
     }
 
     // Check for win in given row
-    boolean winInRow(int row, Piece piece)
+    public boolean winInRow(int row, Piece piece)
     {
         int counter = 0;
 
         for(int col = 0; col < board.getCols(); col++)
         {
-            if(board.getBoardState()[row][col] == piece)
+            if(board.getBoardState()[row][col] != null && board.getBoardState()[row][col].equals(piece))
             {
                 counter++;
             }
@@ -129,13 +138,13 @@ public class Connect4 extends Game {
     }
 
     // Check for win in given column
-    boolean winInCol(int col, Piece piece)
+    public boolean winInCol(int col, Piece piece)
     {
         int counter = 0;
         for (int row = 0; row < board.getRows(); row++)
         {
             Piece current = board.getBoardState()[row][col];
-            if (current != null && current.getColour().equals(piece.getColour()))
+            if (current != null && current.getColor().equals(piece.getColor()))
             {
                 counter++;
                 if (counter >= 4) return true;
@@ -148,7 +157,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in a backslash diagonal
-    boolean winInDiagonalBackslash(Piece piece)
+    public boolean winInDiagonalBackslash(Piece piece)
     {
         Piece[][] state = board.getBoardState();
         int rows = board.getRows();
@@ -161,7 +170,7 @@ public class Connect4 extends Game {
                 for (int i = 0; i < 4; i++)
                 {
                     Piece current = state[row + i][col + i];
-                    if (current == null || !current.getColour().equals(piece.getColour()))
+                    if (current == null || !current.getColor().equals(piece.getColor()))
                     {
                         match = false;
                         break;
@@ -174,7 +183,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in a frontslash diagonal
-    boolean winInDiagonalFrontslash(Piece piece)
+    public boolean winInDiagonalFrontslash(Piece piece)
     {
         Piece[][] state = board.getBoardState();
         int rows = board.getRows();
@@ -188,7 +197,7 @@ public class Connect4 extends Game {
                 for (int i = 0; i < 4; i++)
                 {
                     Piece current = state[row - i][col + i];
-                    if (current == null || !current.getColour().equals(piece.getColour()))
+                    if (current == null || !current.getColor().equals(piece.getColor()))
                     {
                         match = false;
                         break;
@@ -216,5 +225,33 @@ public class Connect4 extends Game {
     @Override
     protected void matchOutcome() {
 
+    }
+
+    public GameState getGameState()
+    {
+        return gameState;
+    }
+
+    protected Board getBoard()
+    {
+        return board;
+    }
+
+    public void start()
+    {
+        gameState = GameState.P1_TURN;
+    }
+
+    public void nextTurn()
+    {
+        if(gameState.equals(GameState.P1_TURN))
+        {
+            gameState = GameState.P2_TURN;
+        }
+
+        else if(gameState.equals(GameState.P2_TURN))
+        {
+            gameState = GameState.P1_TURN;
+        }
     }
 }
