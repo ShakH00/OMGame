@@ -66,7 +66,7 @@ public class Knight extends MovingPiece {
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
-        if(isPieceOnTile.getPieceType() != type || isPieceOnTile == null){
+        if(isPieceOnTile.getPieceType() != type){
             return true;
         }
         return false;

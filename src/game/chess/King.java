@@ -81,12 +81,12 @@ public class King extends MovingPiece {
         if(!doneFirstMove || board[newX][newY] == null){
                 if(newY-currentY == 2 && board[currentX][7] instanceof Rook){
                     Rook rook = (Rook) board[currentX][7];
-                    if(!rook.isDoneFirstMove() && board[currentX][6] == null && board[currentX][5] == null){
+                    if(rook.isDoneFirstMove() && board[currentX][6] == null && board[currentX][5] == null){
                         return true;
                     }
                 } else if(currentY-newY == 2 && board[currentX][0] instanceof Rook){
                     Rook rook = (Rook) board[currentX][0];
-                    if(!rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null){
+                    if(rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null){
                         return true;
                     }
                 }
