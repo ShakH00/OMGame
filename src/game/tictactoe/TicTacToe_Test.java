@@ -16,7 +16,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testInitializeBoard() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         char[][] expectedBoard = {
             {'-', '-', '-'},
             {'-', '-', '-'},
@@ -35,7 +35,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testIsBoardFull_EmptyBoard() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         assertFalse(game.isBoardFull());
     }
 
@@ -46,7 +46,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testIsBoardFull_FullBoard() {
-        game.tictactoe.TicTacToe game = new TicTacToe();
+        game.tictactoe.TicTacToe_Logic game = new TicTacToe_Logic();
         char[][] fullBoard = {
             {'O', 'X', 'O'},
             {'O', 'X', 'X'},
@@ -63,7 +63,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testIsGameOver_RowWin() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         char[][] boardWithRowWin = {
             {'X', 'X', 'X'},
             {'-', '-', '-'},
@@ -80,7 +80,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testIsGameOver_ColumnWin() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         char[][] boardWithColumnWin = {
             {'X', '-', '-'},
             {'X', '-', '-'},
@@ -97,7 +97,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testIsGameOver_DiagonalWin() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         char[][] boardWithDiagonalWin = {
             {'X', '-', '-'},
             {'-', 'X', '-'},
@@ -114,7 +114,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testMakeMove_ValidMove00() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         game.makeMove(0, 0);
         assertEquals('X', game.printBoard()[0][0]);
     }
@@ -127,7 +127,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testMakeMove_ValidMove12() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         game.makeMove(0, 0);
         assertEquals('X', game.printBoard()[0][0]);
     }
@@ -140,7 +140,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testMakeMove_InvalidMove() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         game.makeMove(0, 0);
         game.makeMove(0, 0);
         assertEquals('X', game.printBoard()[0][0]); 
@@ -149,7 +149,7 @@ public class TicTacToe_Test {
     //Haven't Implemented Yet, Waiting for GIU Team
     @Test
     public void testMakeMove_SwitchPlayer() {
-        TicTacToe game = new game.tictactoe.TicTacToe();
+        TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
         game.makeMove(0, 0);
         assertEquals('O', game.getCurrentPlayer());
     }
@@ -159,7 +159,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testPlay_PlayerXRowWin() {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         game.makeMove(0, 0); // X
         game.makeMove(1, 0); // O
         game.makeMove(0, 1); // X
@@ -174,7 +174,7 @@ public class TicTacToe_Test {
      */
     @Test
     public void testPlay_DrawGame() {
-        TicTacToe game = new game.tictactoe.TicTacToe();
+        TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
         game.makeMove(0, 0); // X
         game.makeMove(0, 1); // O
         game.makeMove(0, 2); // X
