@@ -1,7 +1,7 @@
 /**
- * Connect 4 revamped gui
+ * Connect 4 with Player Indicators
  * 
- * - Amr Ibrahim :) (tried matching design edition)
+ * - Amr Ibrahim (tried matching design edition) (player indicator edition too)
  */
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,9 +20,9 @@ public class Connect4Controller extends Application {
     private static final int CIRCLE_SIZE = 60;
     private static final int SPACING = 8;
     private static final int BOARD_OFFSET_X = 80;
-    private static final int BOARD_OFFSET_Y = 150;
+    private static final int BOARD_OFFSET_Y = 180;
     private static final int WINDOW_WIDTH = 650;
-    private static final int WINDOW_HEIGHT = 750;
+    private static final int WINDOW_HEIGHT = 800;
 
     private Color[][] board = new Color[ROWS][COLUMNS];
     private boolean isBlackTurn = true;
@@ -46,13 +46,17 @@ public class Connect4Controller extends Application {
         
         drawBackground(gc);
         drawBoard(gc);
+        drawPlayerIndicators(gc);
         
-        canvas.setOnMouseClicked(e -> handleClick(e, gc));
+        canvas.setOnMouseClicked(e -> {
+            handleClick(e, gc);
+            drawPlayerIndicators(gc); // Update indicators after move
+        });
         
         root.getChildren().add(canvas);
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         
-        primaryStage.setTitle("Retro Connect 4 - Outline Slots");
+        primaryStage.setTitle("Connect 4 - Player Indicators");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -67,7 +71,7 @@ public class Connect4Controller extends Application {
         gc.setFill(Color.WHITE);
         for (int i = 0; i < 100; i++) {
             double x = Math.random() * WINDOW_WIDTH;
-            double y = Math.random() * BOARD_OFFSET_Y;
+            double y = Math.random() * (BOARD_OFFSET_Y - 50);
             double size = 1 + Math.random() * 2;
             gc.fillOval(x, y, size, size);
         }
@@ -82,6 +86,18 @@ public class Connect4Controller extends Application {
         gc.setFont(Font.font("Impact", 48));
         gc.setFill(Color.YELLOW);
         gc.fillText("CONNECT 4", WINDOW_WIDTH/2 - 140, 80);
+    }
+
+    private void drawPlayerIndicators(GraphicsContext gc) {
+        // Player 1 (Black) indicator at top
+        gc.setFont(Font.font("Arial", 24));
+        gc.setFill(isBlackTurn ? Color.WHITE : Color.GRAY);
+        gc.fillText("PLAYER 1 (BLACK)", WINDOW_WIDTH/2 - 100, BOARD_OFFSET_Y - 30);
+        
+        // Player 2 (White) indicator at bottom
+        gc.setFill(!isBlackTurn ? Color.WHITE : Color.GRAY);
+        gc.fillText("PLAYER 2 (WHITE)", WINDOW_WIDTH/2 - 100, 
+                   BOARD_OFFSET_Y + ROWS * (CIRCLE_SIZE + SPACING) + 40);
     }
 
     private void drawCloud(GraphicsContext gc, double x, double y, double w, double h) {
@@ -161,6 +177,7 @@ public class Connect4Controller extends Application {
         gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         drawBackground(gc);
         drawBoard(gc);
+        drawPlayerIndicators(gc);
     }
 
     public static void main(String[] args) {
@@ -177,5 +194,4 @@ public class Connect4Controller extends Application {
             this.height = height;
         }
     }
-}
 }
