@@ -2,8 +2,10 @@ package matchmaking;
 
 import account.Account;
 
-public class MatchHandler {
+import java.util.ArrayList;
 
+public class MatchHandler {
+    private ArrayList<PrivateMatch> privateMatches;
 
     /**
      * @author Logan Olszak
@@ -14,6 +16,7 @@ public class MatchHandler {
     public PrivateMatch createPrivateMatch(Account host) {
         PrivateMatch match = new PrivateMatch();
         match.setHost(host);
+        privateMatches.add(match);
         return match;
     }
 
@@ -39,6 +42,13 @@ public class MatchHandler {
         //Find match using the player friend
         //If match exists and has space for player, add the player
         //match.players.add(player);
+    }
+
+    /**
+     * getter for the private matches arraylist
+     */
+    public ArrayList<PrivateMatch> getPrivateMatches() {
+        return privateMatches;
     }
 
 }
