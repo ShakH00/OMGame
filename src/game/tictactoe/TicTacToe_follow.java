@@ -19,7 +19,7 @@ public class TicTacToe_follow {
      * Initializes the board and sets the first player(current player) to 'X'
      * Calls initializeBoard() to set cells
      */
-    public TicTacToe_followGUI() {
+    public TicTacToe_follow() {
         board = new char[BOARD_SIZE][BOARD_SIZE];
         currentPlayer = 'X';
         initializeBoard();
@@ -183,7 +183,7 @@ public class TicTacToe_follow {
      * Creates a new game.tictactoe.TicTacToe object and calls play()
      */
     public static void main(String[] args) {
-        TicTacToe_followGUI game = new TicTacToe_followGUI();
+        TicTacToe_follow game = new TicTacToe_follow();
         game.play();
     }
 }

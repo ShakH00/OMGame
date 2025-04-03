@@ -147,6 +147,8 @@ public class CheckersController extends Application {
             if(checkersGame.isValidMove(selectedY, selectedX, y, x, board)){
                 checkersGame.move((CheckersPiece) board.getBoardState()[selectedY][selectedX], y, x);
             }
+            checkersGame.checkWinCondition();
+            checkersGame.matchOutcome();
 
             selectedX = -1;
             selectedY = -1;
@@ -162,7 +164,8 @@ public class CheckersController extends Application {
 
     private void handleResign() {
         // Handle resignation logic here, e.g., end the game or show a resignation message
-        System.out.println("You resigned!");
+        checkersGame.surrender();
+        checkersGame.matchOutcome();
     }
 
     public static void main(String[] args) {
