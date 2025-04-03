@@ -20,7 +20,7 @@ public class Bishop extends MovingPiece {
      *
      * @param x
      * @param y
-     * @param colour
+     * @param color
      * @param pieceType
      * @param ownedBy
      */
