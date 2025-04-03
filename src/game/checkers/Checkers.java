@@ -5,10 +5,7 @@
  * */
 package game.checkers;
 
-import game.Board;
-import game.GameRules;
-import game.GameState;
-import game.Player;
+import game.*;
 import game.pieces.Piece;
 import javafx.scene.paint.Color;
 
@@ -139,6 +136,25 @@ public class Checkers{
         return false;
     }
 
+    /**
+     * Method to initialize the GameState for P1 to make the first move.
+     */
+    public void start(){
+        gameState = GameState.P1_TURN;
+    }
+
+    /**
+     * Method for switching turn.
+     */
+    public void switchTurn() {
+        if (gameState == GameState.P1_TURN){
+            gameState = GameState.P2_TURN;
+        }
+        else if (gameState == GameState.P2_TURN){
+            gameState = GameState.P1_TURN;
+        }
+    }
+
 
     /**
      * Check game.pieces on the board.
@@ -177,10 +193,9 @@ public class Checkers{
 
     /**
      * surrender method that changes the gameState to the opposing player winning if a player calls it during their turn.
-     *
+     * called with a button in controller.
      */
     public void surrender(){
-        if (gameState == null) return;
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_WIN;
         } else if (gameState == GameState.P2_TURN) {
