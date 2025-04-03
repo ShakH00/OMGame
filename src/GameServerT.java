@@ -261,7 +261,16 @@ public class GameServerT {
         public void processGameLogicP1(String input) {
             if (isValidMove(input, 1)) {
                 placeMove(input, 'X');  // P1 uses 'X'
-            }
+                if (checkWin('X')) {
+                    System.out.println("Player 1 wins!");
+                    broadcastMessage("Player 1 wins!");
+                    gameInProgress = false;
+                } else if (checkDraw()) {
+                    System.out.println("It's a draw!");
+                    broadcastMessage("It's a draw!");
+                    gameInProgress = false;
+                }
+            } 
             else {
                 System.out.println("Invalid move by Player 1: " + input);
             }
@@ -270,6 +279,15 @@ public class GameServerT {
         public void processGameLogicP2(String input2) {
             if (isValidMove(input2, 2)) {
                 placeMove(input2, 'O');  // P2 uses 'O'
+                if (checkWin('O')) {
+                    System.out.println("Player 2 wins!");
+                    broadcastMessage("Player 2 wins!");
+                    gameInProgress = false;
+                } else if (checkDraw()) {
+                    System.out.println("It's a draw!");
+                    broadcastMessage("It's a draw!");
+                    gameInProgress = false;
+                }
             }
             else {
                 System.out.println("Invalid move by Player 2: " + input2);
@@ -298,6 +316,33 @@ public class GameServerT {
             }
         }
         // END of chatgtp tentious work
+
+        private boolean checkWin(char symbol) {
+            // Check rows and columns
+            for (int i = 0; i < 3; i++) {
+                if ((server2dChar[i][0] == symbol && server2dChar[i][1] == symbol && server2dChar[i][2] == symbol) || 
+                    (server2dChar[0][i] == symbol && server2dChar[1][i] == symbol && server2dChar[2][i] == symbol)) {
+                    return true;
+                }
+            }
+            // Check diagonals
+            if ((server2dChar[0][0] == symbol && server2dChar[1][1] == symbol && server2dChar[2][2] == symbol) || 
+                (server2dChar[0][2] == symbol && server2dChar[1][1] == symbol && server2dChar[2][0] == symbol)) {
+                return true;
+            }
+            return false;
+        }
+
+        private boolean checkDraw() {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (server2dChar[i][j] == ' ') {
+                        return false; // Empty space found, not a draw
+                    }
+                }
+            }
+            return true; // No empty spaces, it's a draw
+        }
 
         public void sendChatMessage(String message) throws IOException {
             dataOut.writeUTF("CHAT:" + message);
