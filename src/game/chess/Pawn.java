@@ -3,7 +3,7 @@
  * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
  * Each pawn automatically has a score of 1 as it is the least valued piece on a Chess board
  *
- * @author Abdulrahman
+ * @author Abdulrahman Negmeldin
  */
 
 package game.chess;
@@ -101,7 +101,6 @@ public class Pawn extends MovingPiece {
      * @param gameBoard: board being played on
      * @return true if this is a valid move
      */
-
     @Override
     protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         Piece[][] board = gameBoard.getBoardState();
