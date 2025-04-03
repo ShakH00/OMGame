@@ -67,7 +67,7 @@ public class Checkers extends Game {
             }
 
             // game.chess.King promotion, assuming black is p1 and red is p2
-            if ((piece.getColor().equals(Color.BLACK) && newX == 7) || (piece.getColor().equals(Color.RED) && newX == 0)){
+            if ((piece.getColor().equals(Color.BLACK) && newX == 7) || (piece.getColor().equals(Color.WHITE) && newX == 0)){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
