@@ -10,6 +10,8 @@ import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.LinkedTransferQueue;
+
 public class Checkers extends Game {
     private Player player1;
     private Player player2;
@@ -35,6 +37,11 @@ public class Checkers extends Game {
     public void move(CheckersPiece piece, int newX, int newY){
         int currentX = piece.getX();
         int currentY = piece.getY();
+
+        // Capture move must be confirmed first as it is forced.
+        if (forcedCapture(piece.getOwnedBy()){
+            return;
+        }
 
         // If valid moves, make the move.
         if (isValidMove(currentX, currentY, newX, newY, board)){
@@ -62,6 +69,54 @@ public class Checkers extends Game {
                 piece.promote();
             }
       }
+    }
+
+    /**
+     * Check the board and the player's piece to see if any capture is available.
+     * captures are forced in checkers.
+     */
+    public boolean forcedCapture (Player currentPlayer) {
+        // Get the board
+        Piece[][] boardState = board.getBoardState();
+        // Iterate through the board
+        for ( int i = 0; i < boardState.length; i++){
+            for (int j = 0; j < boardState[i].length; j++){
+                // Check for each cell
+                Piece piece = boardState[i][j];
+                // Check If not empty or it's not the current player's piece
+                if (piece != null && piece.getOwnedBy().equals(currentPlayer)){
+                    if (canCapture((CheckersPiece) piece)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * check if a piece can capture.
+     */
+    private boolean canCapture(CheckersPiece piece) {
+        int x = piece.getX();
+        int y = piece.getY();
+        // coordinates to calculate top left, top right, bottom left, bottom right captures.
+        int[][] coordinates = { {-2, -2}, {2, -2}, {-2, 2}, {2, 2} };
+        for (int[] diagonals : coordinates){
+            // get new coordinate
+            int newX = x + diagonals[0];
+            int newY = y + diagonals[1];
+
+            // if out of bounds, continue to check the other corners.
+            if (newX < 0 || newX > 7 || newY < 0 || newY > 7) {
+                continue;
+            }
+            // If the move is valid then can capture is true.
+            if (isValidMove(x, y, newX, newY, board)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
