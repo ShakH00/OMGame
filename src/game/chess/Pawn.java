@@ -21,7 +21,7 @@ public class Pawn extends MovingPiece {
      * Normal piece attributes that are superclass sent to MovingPiece which supers it to Piece
      * @param x: x coordinate of location in board
      * @param y: y coordinate
-     * @param colour: pawn colour
+     * @param color: pawn colour
      * @param ownedBy: player who owns the pawn
      */
     public Pawn(int x, int y, Color color, PieceType pieceType, Player ownedBy){

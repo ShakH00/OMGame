@@ -20,7 +20,7 @@ public class Knight extends MovingPiece {
      * A constructor method for creating a Knight piece
      * @param x: x coordinate of piece
      * @param y: y coordinate of piece
-     * @param colour: colour of the knight
+     * @param color: colour of the knight
      * @param pieceType: Type of piece (LIGHT or DARK)
      * @param ownedBy: Player who owns the knight
      */
