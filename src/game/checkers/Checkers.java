@@ -10,6 +10,7 @@ import game.GameRules;
 import game.GameState;
 import game.Player;
 import game.pieces.Piece;
+import javafx.scene.paint.Color;
 
 public class Checkers{
     private Player player1;
@@ -156,10 +157,10 @@ public class Checkers{
             for (int j = 0; j < 8; j++){
                 Piece piece = gameBoard[i][j];
                 if (piece != null){
-                    if (piece.getColor().equals("BLACK")){
+                    if (piece.getColor().equals(Color.BLACK)){
                         Piece1Exists = true;
                     }
-                    if (piece.getColor().equals("RED")){
+                    if (piece.getColor().equals(Color.RED)){
                         Piece2Exists = true;
                     }
                 }

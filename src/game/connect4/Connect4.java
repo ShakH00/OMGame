@@ -24,7 +24,7 @@ public class Connect4 extends Game {
         if (col >= 0 && col < board.getCols()) {
             // Find first empty row in this column (from bottom up)
             for (int row = board.getRows() - 1; row >= 0; row--) {
-                if (board.getBoardState()[row][col].equals(null)) {
+                if (board.getBoardState()[row][col] == null) {
                     board.place(piece, row, col);
                     checkWinCondition();
                     break;
@@ -119,7 +119,7 @@ public class Connect4 extends Game {
 
         for(int col = 0; col < board.getCols(); col++)
         {
-            if(board.getBoardState()[row][col].equals(piece))
+            if(board.getBoardState()[row][col] != null && board.getBoardState()[row][col].equals(piece))
             {
                 counter++;
             }
@@ -235,5 +235,23 @@ public class Connect4 extends Game {
     protected Board getBoard()
     {
         return board;
+    }
+
+    public void start()
+    {
+        gameState = GameState.P1_TURN;
+    }
+
+    public void nextTurn()
+    {
+        if(gameState.equals(GameState.P1_TURN))
+        {
+            gameState = GameState.P2_TURN;
+        }
+
+        if(gameState.equals(GameState.P2_TURN))
+        {
+            gameState = GameState.P1_TURN;
+        }
     }
 }
