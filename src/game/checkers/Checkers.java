@@ -37,9 +37,11 @@ public class Checkers extends Game {
     public void move(CheckersPiece piece, int newX, int newY){
         int currentX = piece.getX();
         int currentY = piece.getY();
+        boolean captureMove = Math.abs(currentX-newX) == 2;
 
-        // Capture move must be confirmed first as it is forced.
-        if (forcedCapture(piece.getOwnedBy()){
+        // If the move is not a capture move but a forced capture must be made then print string and return nothing.
+        if (!captureMove && forcedCapture(piece.getOwnedBy())) {
+            System.out.println("A capture is available and must be performed.");
             return;
         }
 
@@ -50,12 +52,13 @@ public class Checkers extends Game {
             boardState[newX][newY] = piece;
             // remove prev piece location
             boardState[currentX][currentY] = null;
+            // update the piece's location.
             piece.setX(newX);
             piece.setY(newY);
 
             // Capture move.
             // If the move made is 2 cells it is a capture move.
-            if (Math.abs(currentX-newX) == 2){
+            if (captureMove){
                 // Get the location of the captured piece.
                 int capturedX = (currentX + newX) / 2;
                 int capturedY = (currentY + newY) / 2;
@@ -68,6 +71,15 @@ public class Checkers extends Game {
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
+
+            // Multiple captures available
+            if (captureMove && canCapture(piece)){
+                System.out.println("Continuous jumps are available, continue capturing.");
+            }
+            else {
+                switchTurn();
+            }
+
       }
     }
 
@@ -83,7 +95,7 @@ public class Checkers extends Game {
             for (int j = 0; j < boardState[i].length; j++){
                 // Check for each cell
                 Piece piece = boardState[i][j];
-                // Check If not empty or it's not the current player's piece
+                // Check If not empty, or it's not the current player's piece
                 if (piece != null && piece.getOwnedBy().equals(currentPlayer)){
                     if (canCapture((CheckersPiece) piece)) {
                         return true;

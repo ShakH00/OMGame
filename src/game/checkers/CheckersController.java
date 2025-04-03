@@ -146,7 +146,6 @@ public class CheckersController extends Application {
             // Moving the selected piece using checkers logic
             if(checkersGame.isValidMove(selectedY, selectedX, y, x, board)){
                 checkersGame.move((CheckersPiece) board.getBoardState()[selectedY][selectedX], y, x);
-                checkersGame.switchTurn();
             }
 
             selectedX = -1;
