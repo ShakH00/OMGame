@@ -177,9 +177,11 @@ public class TicTacToe {
             char winner = (currentPlayer == 'X') ? 'O' : 'X'; // the *previous* player made the winning move
 
             if (winner == 'X') {
+                System.out.println("player 1 wins");
                 gameState = GameState.P1_WIN;
                 board[0][0] = '1';
             } else {
+                System.out.println("player 2 wins");
                 gameState = GameState.P2_WIN;
                 board[0][0] = '2';
             }
