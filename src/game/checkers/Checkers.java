@@ -7,9 +7,10 @@ package game.checkers;
 
 import game.*;
 import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
-public class Checkers{
+public class Checkers extends Game {
     private Player player1;
     private Player player2;
     private int score;
@@ -62,12 +63,12 @@ public class Checkers{
         selectedPiece = board[currentX][currentY];
 
         // Player1 is trying to move a piece when not their turn
-        if(selectedPiece.getOwnedBy().equals(player1) && !player1.isTurn()){
+        if(selectedPiece.getPieceType().equals(PieceType.DARK) && gameState != GameState.P1_TURN){
             return false;
         }
 
         // Player2 is trying to move a piece when not their turn
-        if(selectedPiece.getOwnedBy().equals(player2) && !player2.isTurn()){
+        if(selectedPiece.getPieceType().equals(PieceType.LIGHT) && gameState != GameState.P2_TURN){
             return false;
         }
 
