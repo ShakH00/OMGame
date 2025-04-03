@@ -51,6 +51,7 @@ public class AuthenticationTest {
 
         assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
+        assertEquals("Code Entered is Invalid!", "Please enter digits only!");
     }
 
 
