@@ -1,9 +1,11 @@
+package matchmaking;
+
 public class TicTacToeMatchMaking extends MatchMaking {
     private long startingTime;
     private int findElo;
     private int increment;
 
-    this.kFactor = 10;
+//    this.kFactor = 10;
 
     @Override
     public void changeElo(int elo) {

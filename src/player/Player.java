@@ -41,6 +41,7 @@ public class Player {
      */
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
 
+        return false;
     }
 
     /**
