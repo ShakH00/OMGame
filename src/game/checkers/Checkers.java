@@ -47,7 +47,7 @@ public class Checkers{
             }
 
             // game.chess.King promotion, assuming black is p1 and red is p2
-            if ((piece.getColour().equals("BLACK") && newX == 7) || (piece.getColour().equals("RED") && newX == 0)){
+            if ((piece.getColor().equals("BLACK") && newX == 7) || (piece.getColor().equals("RED") && newX == 0)){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
@@ -132,7 +132,7 @@ public class Checkers{
          * */
         if(rowDiff == 2) {
             return (intermediatePiece != null) &&
-                    !intermediatePiece.getColour().equals(selectedPiece.getColour());   // No Piece to capture
+                    !intermediatePiece.getColor().equals(selectedPiece.getColor());   // No Piece to capture
                                                                                         // Piece to Capture
         }
         return false;
@@ -156,10 +156,10 @@ public class Checkers{
             for (int j = 0; j < 8; j++){
                 Piece piece = gameBoard[i][j];
                 if (piece != null){
-                    if (piece.getColour().equals("BLACK")){
+                    if (piece.getColor().equals("BLACK")){
                         Piece1Exists = true;
                     }
-                    if (piece.getColour().equals("RED")){
+                    if (piece.getColor().equals("RED")){
                         Piece2Exists = true;
                     }
                 }

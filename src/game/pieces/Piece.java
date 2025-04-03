@@ -20,7 +20,7 @@ public abstract class Piece {
 
     /**
      * Constructor
-     * @param colour: String, colour
+     * @param color: String, colour
      * @param ownedBy: game.Player, player who owns the piece
      * @param score: int
      */
