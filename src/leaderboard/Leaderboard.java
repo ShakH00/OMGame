@@ -1,18 +1,22 @@
 package leaderboard;
 
+import account.statistics.StatisticsType;
 import game.GameType;
 import account.Account;
 import account.statistics.AStatistics;
 import database.DatabaseManager;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static account.statistics.StatisticsType.*;
 
 public class Leaderboard {
 
     /**
-     * @param games,                Game to sort by
-     * @param gameStats,            Stats of all players in the game chosen
+     * @param ,                Game to sort by
+     * @param ,            Stats of all players in the game chosen
      * @param isAscending,          If they want ascending or descending order.
      * @return                      Sorted list
      *
@@ -21,7 +25,7 @@ public class Leaderboard {
      * isAscending is true, else it would be reversed...
      *
      */
-    public String[][] getGlobalLeaderboard(Account playerAccount, GameType games, AStatistics gameStats, boolean isAscending) {
+    public String[][] getGlobalLeaderboard(Account playerAccount, GameType game, StatisticsType sortStatistic, StatisticsType additionalStats, boolean isAscending, int numberOfPlayerPerPage) {
         ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
 
         HashSet<Account> unsortedLeaderboardPlayers = new HashSet<>();
@@ -36,52 +40,31 @@ public class Leaderboard {
             unsortedLeaderboardPlayers.addAll(playerAccount.getFriends());
 
         }
-        /**
 
-             TODO: FIND A WAY to get combined stats without passing any parameter so this filter can do the job
+        // Filter for ascending and descending order.
+        Comparator<Account> filterGlobalLeaderboard = null;
+        if (isAscending) {
+            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) a.getStatistic(game, sortStatistic), (Double) b.getStatistic(game, sortStatistic));
 
-                 To get descending values just switch the ones being compared
-                  i.e a.getusername() ==> b.getUsername and b.getUsername() ==> a.getUserName();
-                  BEFORE:
-         Comparator<Account> filterGlobalLeaderboard = (a,b) -> CharSequence.compare(a.getUsername(), b.getUsername());
-
-                  AFTER:
-         Comparator<Account> filterGlobalLeaderboard = (a,b) -> CharSequence.compare(b.getUsername(), a.getUsername());
-
-
-         |this part you can change the beginning to do what ever you need
-                 Comparator<Account> globalLeaderboard = (a,b) -> Double.compare(a.getStats(), b.getStats());
-         **/
-        Comparator<Account> filterGlobalLeaderboard = (a,b) -> CharSequence.compare(a.getUsername(), b.getUsername());
-
+        } else {
+            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) b.getStatistic(game, sortStatistic), (Double) a.getStatistic(game, sortStatistic));
+        }
         // Even though it turns into a set you can modify like a hashset but this one is sorted and intern much cleaner to look at.
-        Set<Account> sortedGlobalLeaderboard = unsortedLeaderboardPlayers.stream().sorted(filterGlobalLeaderboard).collect(Collectors.toSet());
+
+        List<Account> sortedAccounts = unsortedLeaderboardPlayers.stream().sorted(filterGlobalLeaderboard).toList();
+
+        StatisticsType[] order = new StatisticsType[]{ELO, WIN_RATE, WINS, additionalStats};
+
+        String[][] leaderboard = new String[numberOfPlayerPerPage + 1][6];
+
+        leaderboard[0] = Account.getLeaderboardHeader(additionalStats);
+        for (int i = 1; i < numberOfPlayerPerPage; i++) {
+            leaderboard[i] = new String[]{String.valueOf(i),
+                    sortedAccounts.get(i).getUsername(), sortedAccounts.get(i).getStatistic(game, ELO).toString(), sortedAccounts.get(i).getStatistic(game, WIN_RATE).toString(), sortedAccounts.get(i).getStatistic(game, WINS).toString(),
+            };
+        }
 
 
-//        int lastIndex = firstIndex + Math.min(lastIndex - firstIndex, leaderboardPlayers.size());
-//
-//        ArrayList<String[]> leaderboardRows = new ArrayList<>();
-//
-//        if (gameStats == null) {
-//            for (Account players: leaderboardPlayers){
-//                                    //                          get this                fuck do I do with this
-//                                    //                                                  like how???
-//                //    public String[] getCombinedStatistics(HashSet<GamesEnum> games, StatisticsType[] order){
-//                leaderboardRows.add(players.getCombinedStatistics().toStringArray());
-//            }
-//            int sortPropertyIndex = totalPlayersAccount.getCombinedStatistics().getIndexOfPropertyInStringArray(sortProperty);
-//            leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-//            leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-//            leaderboardRows.add(0, totalPlayersAccount[0].getCombinedStatistics().getStringArrayHeaders());
-//        } else {
-//            for (Account players: totalPlayersAccount) {
-//                leaderboardRows.add(player.getGameStatistics(games).toStringArray());
-//                leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-//                leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-//                leaderboardRows.add(0, totalPlayersAccount[0].getGameStatistics(games).getStringArrayHeaders());
-//
-//            }
-//        }
 
         return new String[0][0];
     }

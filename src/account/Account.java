@@ -254,7 +254,7 @@ public class Account {
      * @param additionalStatistic
      * @return
      */
-    public String[] getLeaderboardHeader(StatisticsType additionalStatistic) {
+    public static String[] getLeaderboardHeader(StatisticsType additionalStatistic) {
         String[] headers = new String[6];
         headers[0] = "RANK";
         headers[1] = "USERNAME";
