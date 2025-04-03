@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
@@ -85,43 +84,55 @@ public class UserProfileController extends Application {
         //bannerRegion.setStyle("-fx-background-color: " + currentAccount.getBannerColor() + ";");
     }
 
-    /*
-This is a block comment.
-Everything inside will be ignored by the compiler.
 
     @FXML
-    public void handleOverviewSelection() {
-        overview.setOnSelectionChanged(event -> {
-            if (overview.isSelected()) {
-                overview.setStyle("-fx-text-base-color: white;");
-            }
-        });
-    }
+    private Pane rankPane;
 
     @FXML
-    public void handleMatchesSelection() {
-        matches.setOnSelectionChanged(event -> {
-            if (matches.isSelected()) {
-                matches.setStyle("-fx-text-base-color: white;");
-            }
-        });
+    private Pane chessPane;
+
+    @FXML
+    private Pane tictactoePane;
+
+    @FXML
+    private Pane checkersPane;
+
+    @FXML
+    private Pane connect4Pane;
+
+    @FXML
+    private Pane overallPane;
+
+    @FXML
+    private Pane friendsPane;
+
+    @FXML
+    public void initialize() {
+        // Apply hover effect to each pane
+        addHoverEffect(rankPane);
+        addHoverEffect(chessPane);
+        addHoverEffect(tictactoePane);
+        addHoverEffect(checkersPane);
+        addHoverEffect(connect4Pane);
+        addHoverEffect(overallPane);
+        addHoverEffect(friendsPane);
     }
 
-    public void addHoverEffect(Pane pane) {
-        ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
-        scaleIn.setToX(1.05);
-        scaleIn.setToY(1.05);
 
-        ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
-        scaleOut.setToX(1.0);
-        scaleOut.setToY(1.0);
+        public void addHoverEffect (Pane pane){
+            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
+            scaleIn.setToX(1.05);
+            scaleIn.setToY(1.05);
 
-        pane.setOnMouseEntered(e -> scaleIn.play());
-        pane.setOnMouseExited(e -> scaleOut.play());
+            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
+            scaleOut.setToX(1.0);
+            scaleOut.setToY(1.0);
+
+            pane.setOnMouseEntered(e -> scaleIn.play());
+            pane.setOnMouseExited(e -> scaleOut.play());
+        }
+
+    public static void main (String[]args){
+            launch(args);
+        }
     }
-
-    */
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
