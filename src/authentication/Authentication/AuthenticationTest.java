@@ -42,6 +42,7 @@ public class AuthenticationTest {
         );
     }
 
+    //test for if user enters letters instead of numbers for verification code
     @Test
     public void MFATest4() {
         MFAAuthentication.testMode = true;
@@ -51,6 +52,7 @@ public class AuthenticationTest {
         assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
     }
+
 
 
 
