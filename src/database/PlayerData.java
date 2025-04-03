@@ -13,5 +13,14 @@ public class PlayerData {
         players.add(player);
     }
 
+    //Find any player in the database
+    public static Player findPlayer(String username) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getAccount().getUsername().equals(username)) {
+                return players.get(i);
+            }
+        }
+        return null;
+    }
 
 }
