@@ -1,6 +1,5 @@
 package account;
 
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -250,27 +249,19 @@ public class Account {
     }
 
     /**
-     * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game)
+     * Get a String[] for the header of the leaderboard
      *
-     * @param game GamesEnum for which game to get statistics for
-     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
+     * @param additionalStatistic
+     * @return
      */
-    public String[] getGameStatisticsHeader(GameType game) {
-        StatisticsType[] order = statistics.get(game).getAcceptedStatistics();
-        return getGameStatisticsHeader(order);
-    }
-
-    /**
-     * Get a String[] with the names for the statistics corresponding to those given by getGameStatistics(game, order)
-     *
-     * @param order StatisticsType array that determines which statistics will be returned and in what order
-     * @return String[] containing the names of each statistic given by getGameStatistics(...) with same parameters
-     */
-    public String[] getGameStatisticsHeader(StatisticsType[] order) {
-        String[] headers = new String[order.length];
-        for (int i = 0; i < order.length; i++) {
-            headers[i] = order[i].toString();
-        }
+    public String[] getLeaderboardHeader(StatisticsType additionalStatistic) {
+        String[] headers = new String[6];
+        headers[0] = "RANK";
+        headers[1] = "USERNAME";
+        headers[2] = StatisticsType.ELO.toString();
+        headers[3] = StatisticsType.WIN_RATE.toString();
+        headers[4] = StatisticsType.WINS.toString();
+        headers[5] = additionalStatistic.toString();
         return headers;
     }
 
