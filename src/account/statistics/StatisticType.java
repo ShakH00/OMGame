@@ -5,7 +5,7 @@ package account.statistics;
  * When a match is complete, it should be logged using MatchOutcomeHandler with results HashMaps that contain all statistics
  * that are related to the specific game, as described in the comments of this class.
  */
-public enum StatisticsType {
+public enum StatisticType {
     ELO,                // Complex; cannot be updated by simple addition/subtraction
     WIN_RATE,           // Complex; cannot be updated by simple addition/subtraction
 
