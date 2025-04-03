@@ -27,3 +27,50 @@ loginHoverButton {
 .hoverCartridge:hover {
     -fx-translate-y: -10;
 }
+
+.tab-header-background {
+    -fx-background-color: #16304b;
+}
+
+.tab {
+    -fx-font-size: 16px;
+    fx-text-fill: #aeb7c0;
+}
+
+.tab-label {
+    -fx-text-fill: #aeb7c0 ;
+}
+
+#overview:selected {
+    -fx-text-fill: white;
+}
+
+#matches:selected {
+    -fx-text-fill: white;
+}
+
+.scroll-pane {
+    -fx-background-color:  #159ed3;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #9ed4e8;
+    -fx-background-radius: 5em;
+}
