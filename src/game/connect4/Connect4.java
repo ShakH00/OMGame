@@ -110,7 +110,7 @@ public class Connect4 extends Game {
 
         for(int col = 0; col < board.getCols(); col++)
         {
-            if(board.getBoardState()[row][col] == piece)
+            if(board.getBoardState()[row][col].equals(piece))
             {
                 counter++;
             }
