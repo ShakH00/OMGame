@@ -15,7 +15,8 @@ import game.pieces.MovingPiece;
 import javafx.scene.paint.Color;
 
 public class Pawn extends MovingPiece {
-    boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
+    private boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
+    private boolean doneSecondMove; //used to check if this pawn can be en pessant-ed
 
     /**
      * Normal piece attributes that are superclass sent to MovingPiece which supers it to Piece
@@ -27,6 +28,7 @@ public class Pawn extends MovingPiece {
     public Pawn(int x, int y, Color color, PieceType pieceType, Player ownedBy){
         super(x, y, color, pieceType, ownedBy, 1);
         doneFirstMove = false;
+        doneSecondMove = false;
     }
 
     /**
@@ -49,11 +51,31 @@ public class Pawn extends MovingPiece {
             board[newX][newY] = this;
             if(!doneFirstMove){
                 doneFirstMove = true;
+            } else if(!doneSecondMove){
+                doneSecondMove = true;
             }
         }
 
 
     }
+
+    /**
+     * A method to check if the pawn has done its first move yet
+     * @return true if first move performed
+     */
+    protected boolean isDoneFirstMove(){
+        return doneFirstMove;
+    }
+
+    /**
+     * A method to check if the pawn has done its second move
+     * This is used to check if the enemy player can perform en passant on your pawn
+     * @return true if the second move has been performed
+     */
+    protected boolean isDoneSecondMove(){
+        return doneSecondMove;
+    }
+
 
     /**
      * A method to check if the tile the pawn is being moved to is a valid move
@@ -103,9 +125,12 @@ public class Pawn extends MovingPiece {
             //eat an enemy piece diagonally
             if (isPieceOnTile != null && isPieceOnTile.getPieceType() != type){
                 return true;
-            //en passant, not done, need to make sure enemey piece is pawn and js made its first move
-            } else if(isPieceOnTile == null && board[currentX][newY] != null && board[currentX][newY].getPieceType() != type){
-                return true;
+            //en passant: essentially checks that tile moving to is empty, there's a piece next to your pawn, its an enemy piece
+            } else if(currentX == 3 && newX == 2 && isPieceOnTile == null && board[currentX][newY] != null && board[currentX][newY].getPieceType() != type){
+                //check this enemy piece is pawn and that it just did its first move
+                if(board[currentX][newY] instanceof Pawn && !((Pawn) board[currentX][newY]).isDoneSecondMove()){
+                    return true;
+                }
             }
         }
         return false; //if reached end of method then invalid move, return false
