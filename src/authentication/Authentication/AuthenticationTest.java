@@ -29,6 +29,16 @@ public class AuthenticationTest {
         );
     }
 
+    @Test
+    public void MFATest3() {
+        MFAAuthentication.testMode = true;
+        String userInput = "\n"; // user hits Enter without any input
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        assertThrows(MFAAuthenticationFailedException.class, () ->
+                MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
+        );
+    }
 
 
 
