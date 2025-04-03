@@ -42,6 +42,16 @@ public class AuthenticationTest {
         );
     }
 
+    @Test
+    public void MFATest4() {
+        MFAAuthentication.testMode = true;
+        String userInput = "abc123\n"; // entering alphabet letters instead of numbers
+        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
+
+        assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
+        );
+    }
+
 
 
 }
