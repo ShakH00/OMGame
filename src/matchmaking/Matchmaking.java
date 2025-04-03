@@ -73,6 +73,7 @@ public abstract class Matchmaking {
         // If threshold changed, return true and update matchmaking threshold for the Account
         if (new_threshold != account.getMatchmakingThreshold()) {
             account.setMatchmakingThreshold(new_threshold);
+            searchForCompatible(account);
             return true;
         }
         // Otherwise, return false
