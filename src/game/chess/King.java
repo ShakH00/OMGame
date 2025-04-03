@@ -15,12 +15,13 @@ import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class King extends MovingPiece {
     private boolean doneFirstMove;
 
-    public King(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, -1);
+    public King(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, -1);
         this.doneFirstMove = false;
     }
 

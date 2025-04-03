@@ -5,6 +5,7 @@ package game.connect4; /**
  * Apologies btw (;﹏;)
  * - Amr Ibrahim
  */
+import game.GameState;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -30,9 +31,7 @@ public class Connect4Controller extends Application {
     private static final int BOARD_OFFSET_Y = 80;
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 700;
-
-    private Color[][] board = new Color[ROWS][COLUMNS]; // Track piece colors
-    private Color currentPlayerColor = Color.RED; // Start with red
+    public static Connect4 game = new Connect4();
 
     @Override
     public void start(Stage primaryStage) {
@@ -84,7 +83,13 @@ public class Connect4Controller extends Application {
         // Draw all pieces (empty or placed)
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                drawSlot(gc, col, row, board[row][col]);
+                if(game.getBoard().getBoardState()[row][col] == null)
+                {
+                    drawSlot(gc, col, row, Color.WHITE);
+                }
+                else {
+                    drawSlot(gc, col, row, game.getBoard().getBoardState()[row][col].getColor());
+                }
             }
         }
     }
@@ -113,18 +118,18 @@ public class Connect4Controller extends Application {
 
     private void handleClick(MouseEvent e, GraphicsContext gc) {
         int col = (int) ((e.getX() - BOARD_OFFSET_X) / (CIRCLE_SIZE + SPACING));
-        
-        if (col >= 0 && col < COLUMNS) {
-            // Find first empty row in this column (from bottom up)
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if (board[row][col] == null) {
-                    board[row][col] = currentPlayerColor;
-                    currentPlayerColor = (currentPlayerColor == Color.RED) ? Color.GOLD : Color.RED;
-                    redrawBoard(gc);
-                    break;
-                }
-            }
+
+        if(game.getGameState().equals(GameState.P1_TURN))
+        {
+            game.move(game.piece1, col);
         }
+
+        if(game.getGameState().equals(GameState.P2_TURN))
+        {
+            game.move(game.piece2, col);
+        }
+
+        redrawBoard(gc);
     }
 
     private void redrawBoard(GraphicsContext gc) {

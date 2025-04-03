@@ -12,6 +12,7 @@ import game.Board;
 import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Queen extends MovingPiece {
 
@@ -23,8 +24,8 @@ public class Queen extends MovingPiece {
      * @param pieceType
      * @param ownedBy
      */
-    public Queen(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, 9);
+    public Queen(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, 9);
     }
 
     /**

@@ -2,6 +2,7 @@ package game.pieces;
 
 import game.Board;
 import game.Player;
+import javafx.scene.paint.Color;
 
 /**
  * Abstract game.pieces.MovingPiece class which is inherited by game.checkers.CheckersPiece and every game.chess.Chess piece object
@@ -17,8 +18,8 @@ import game.Player;
 public abstract class MovingPiece extends Piece{
     private int x;
     private int y;
-    public MovingPiece(int x, int y, String colour, PieceType pieceType, Player ownedBy, int score){
-        super(colour, pieceType, ownedBy, score);
+    public MovingPiece(int x, int y, Color color, PieceType pieceType, Player ownedBy, int score){
+        super(color, pieceType, ownedBy, score);
         this.x = x;
         this.y = y;
     }

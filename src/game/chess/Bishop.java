@@ -12,6 +12,7 @@ import game.Board;
 import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Bishop extends MovingPiece {
 
@@ -23,8 +24,8 @@ public class Bishop extends MovingPiece {
      * @param pieceType
      * @param ownedBy
      */
-    public Bishop(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, 3);
+    public Bishop(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, 3);
     }
 
     /**

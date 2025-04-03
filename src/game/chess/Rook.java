@@ -12,6 +12,7 @@ import game.Board;
 import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Rook extends MovingPiece {
     private boolean doneFirstMove;
@@ -24,8 +25,8 @@ public class Rook extends MovingPiece {
      * @param pieceType
      * @param ownedBy
      */
-    public Rook(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, -1);
+    public Rook(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, -1);
         this.doneFirstMove = false;
     }
 

@@ -3,6 +3,7 @@ package game;
 import game.pieces.Piece;
 import game.checkers.CheckersPiece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Board{
     private Piece[][] board;
@@ -59,7 +60,7 @@ public class Board{
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < cols; j++) {
                     if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
-                        board[i][j] = new CheckersPiece(i, j, "black", PieceType.DARK, player1, 1);
+                        board[i][j] = new CheckersPiece(i, j, Color.BLACK, PieceType.DARK, player1, 1);
                     }
                 }
             }
@@ -68,7 +69,7 @@ public class Board{
             for (int i = 5; i < 8; i++) {
                 for (int j = 0; j < cols; j++) {
                     if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
-                        board[i][j] = new CheckersPiece(i, j, "white", PieceType.LIGHT, player2, 1);
+                        board[i][j] = new CheckersPiece(i, j, Color.WHITE, PieceType.LIGHT, player2, 1);
                     }
                 }
             }
@@ -94,6 +95,11 @@ public class Board{
 
     public void displayBoard(){
 
+    }
+
+    public void place(Piece piece, int row, int col)
+    {
+        board[row][col] = piece;
     }
 
     public int getRows()

@@ -13,8 +13,6 @@ public abstract class Game {
     //game.pieces.Piece selectedPiece;
     protected GameRules gameRules;
 
-    protected abstract void move(Piece piece);
-
     protected abstract void checkWinCondition();
 
     protected abstract void surrender();

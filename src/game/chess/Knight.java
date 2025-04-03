@@ -12,6 +12,7 @@ import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Knight extends MovingPiece {
 
@@ -23,8 +24,8 @@ public class Knight extends MovingPiece {
      * @param pieceType: Type of piece (LIGHT or DARK)
      * @param ownedBy: Player who owns the knight
      */
-    public Knight(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, 3);
+    public Knight(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, 3);
     }
 
     /**

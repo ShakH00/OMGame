@@ -12,6 +12,7 @@ import game.Player;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import game.pieces.MovingPiece;
+import javafx.scene.paint.Color;
 
 public class Pawn extends MovingPiece {
     boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
@@ -23,8 +24,8 @@ public class Pawn extends MovingPiece {
      * @param colour: pawn colour
      * @param ownedBy: player who owns the pawn
      */
-    public Pawn(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, 1);
+    public Pawn(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, 1);
         doneFirstMove = false;
     }
 
