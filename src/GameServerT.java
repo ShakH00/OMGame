@@ -228,6 +228,17 @@ public class GameServerT {
             } catch (IOException e) {
                 System.out.println("IOException from run() : ServerSideConnection");
             }
+
+            try {
+                while (true) {
+                    String input = dataIn.readUTF();
+                    if (input.startsWith("CHAT:")) {
+                        handleChatMessage(input.substring(5)); // Remove "CHAT:" prefix
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("IOException from run() : ServerSideConnection");
+            }
         }
 
 
@@ -347,6 +358,20 @@ public class GameServerT {
         public void sendChatMessage(String message) throws IOException {
             dataOut.writeUTF("CHAT:" + message);
             dataOut.flush();
+        }
+
+        public void handleChatMessage(String message) {
+            try {
+                String formattedMessage = "CHAT:" + message;
+                if (player1 != null) {
+                    player1.sendChatMessage(formattedMessage);
+                }
+                if (player2 != null) {
+                    player2.sendChatMessage(formattedMessage);
+                }
+            } catch (IOException e) {
+                System.out.println("Error broadcasting chat message: " + e.getMessage());
+            }
         }
     }
 
