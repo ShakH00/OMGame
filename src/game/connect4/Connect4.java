@@ -146,7 +146,6 @@ public class Connect4 extends Game {
         }
         return false;
     }
-
     // Check for win in a backslash diagonal
     boolean winInDiagonalBackslash(Piece piece)
     {
