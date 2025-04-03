@@ -40,14 +40,14 @@ public class Checkers{
             // If the move made is 2 cells it is a capture move.
             if (Math.abs(currentX-newX) == 2){
                 // Get the location of the captured piece.
-                int capturedX = currentX + newX / 2;
-                int capturedY = currentY + newY / 2;
+                int capturedX = (currentX + newX) / 2;
+                int capturedY = (currentY + newY) / 2;
                 // remove the captured piece.
                 boardState[capturedX][capturedY] = null;
             }
 
             // game.chess.King promotion, assuming black is p1 and red is p2
-            if (piece.getColour().equals("BLACK") && newX == 7 || piece.getColour().equals("RED") && newX == 0){
+            if ((piece.getColour().equals("BLACK") && newX == 7) || (piece.getColour().equals("RED") && newX == 0)){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
@@ -62,9 +62,19 @@ public class Checkers{
     public boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
         Piece[][] board = gameBoard.getBoardState();
         selectedPiece = board[currentX][currentY];
-        
+
+        // Player1 is trying to move a piece when not their turn
+        if(selectedPiece.getOwnedBy().equals(player1) && !player1.isTurn()){
+            return false;
+        }
+
+        // Player2 is trying to move a piece when not their turn
+        if(selectedPiece.getOwnedBy().equals(player2) && !player2.isTurn()){
+            return false;
+        }
+
         // Check if move is within bounds
-        if(newX < 0 || newY > 7){
+        if (newX < 0 || newX > 7 || newY < 0 || newY > 7) {
         return false;           // Move out of bounds
         }
 
@@ -77,31 +87,31 @@ public class Checkers{
         int rowDiff = Math.abs(currentX-newX);
         int colDiff = Math.abs(currentY-newY);
 
-        /** 
+        /*
         * Check row validity. 
         * To move diagonal you must move same # of rows & cols.
         * Can max move 2 spaces if you are capturing.
         */  
         if(rowDiff > 2 || rowDiff != colDiff) {
-            return false;       /**
+            return false;       /*
                                 * Piece is trying to jump more than 1 space
                                 * Piece is not moving diagonally
                                 */
         }
 
-        /**
+        /*
          * Check if King and king movement for Player 1
          * Assuming Player 1 is bottom of the board (7,0)
          */
-        if(selectedPiece.isKing()==false && selectedPiece.getOwnedBy() == player1 && newY <= currentY){
+        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player1 && newX <= currentX) {
             return false;
         }
 
-        /**
+        /*
          * Check if King and king movement for Player 2
          * Assuming Player 2 is top of board (0,0)
          */
-        if(selectedPiece.isKing()==false && selectedPiece.getOwnedBy() == player1 && newY >= currentY){
+        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player2 && newX >= currentX) {
             return false;
         }
 
@@ -110,22 +120,20 @@ public class Checkers{
             return true;        // Piece is moving 1 space diagonally
         }
 
-        // index of piece inbetween starting position and end of jump
+        // index of piece in between starting position and end of jump
         int intermediateRow = (currentX + newX)/2;
         int intermediateCol = (currentY + newY)/2;
         Piece intermediatePiece = board[intermediateRow][intermediateCol];
 
-        /**
+        /*
          * Verify that the selected piece can capture.
          * Check if a Piece exists in the intermediate square.
          * If there is an intermediate Piece and if the colour matches the selected piece fail.
-         * */ 
+         * */
         if(rowDiff == 2) {
-            if((intermediatePiece == null) || 
-                intermediatePiece.getColour() == selectedPiece.getColour()){
-                return false;   // No Piece to capture
-            }
-            return true;        // Piece to Capture
+            return (intermediatePiece != null) &&
+                    !intermediatePiece.getColour().equals(selectedPiece.getColour());   // No Piece to capture
+                                                                                        // Piece to Capture
         }
         return false;
     }
@@ -171,6 +179,7 @@ public class Checkers{
      *
      */
     public void surrender(){
+        if (gameState == null) return;
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_WIN;
         } else if (gameState == GameState.P2_TURN) {
