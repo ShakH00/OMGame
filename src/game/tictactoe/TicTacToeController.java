@@ -168,26 +168,26 @@ public class TicTacToeController extends Application {
 
     private boolean checkRow(int row) {
         return board[row][0] == currentPlayer &&
-            board[row][1] == currentPlayer &&
-            board[row][2] == currentPlayer;
+               board[row][1] == currentPlayer &&
+               board[row][2] == currentPlayer;
     }
 
     private boolean checkColumn(int col) {
         return board[0][col] == currentPlayer &&
-            board[1][col] == currentPlayer &&
-            board[2][col] == currentPlayer;
+               board[1][col] == currentPlayer &&
+               board[2][col] == currentPlayer;
     }
 
     private boolean checkDiagonals() {
         // Check main diagonal
         boolean mainDiagonal = board[0][0] == currentPlayer &&
-                            board[1][1] == currentPlayer &&
-                            board[2][2] == currentPlayer;
+                               board[1][1] == currentPlayer &&
+                               board[2][2] == currentPlayer;
 
         // Check anti-diagonal
         boolean antiDiagonal = board[0][2] == currentPlayer &&
-                            board[1][1] == currentPlayer &&
-                            board[2][0] == currentPlayer;
+                               board[1][1] == currentPlayer &&
+                               board[2][0] == currentPlayer;
 
         return mainDiagonal || antiDiagonal;
     }
