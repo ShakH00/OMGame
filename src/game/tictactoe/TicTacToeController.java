@@ -202,6 +202,12 @@ package game.tictactoe; /**
          }
          return true;
      }
+
+     private boolean draw() {
+
+        return isBoardFull();
+     }
+
      private void handleOfferDraw() {
          // Handle draw offer logic here, e.g., show a message or ask for confirmation
          System.out.println("Draw offer sent!");
@@ -210,6 +216,11 @@ package game.tictactoe; /**
      private void handleResign() {
          // Handle resignation logic here, e.g., end the game or show a resignation message
          System.out.println("You resigned!");
+     }
+
+     private void drawGame() {
+            draw();
+            System.out.println("Draw Game!");
      }
 
      public static void main(String[] args) {

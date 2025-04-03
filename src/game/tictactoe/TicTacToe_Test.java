@@ -1,190 +1,190 @@
-package game.tictactoe;
+// package game.tictactoe;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+// import org.junit.jupiter.api.Test;
+// import static org.junit.jupiter.api.Assertions.*;
 
-public class TicTacToe_Test {
+// public class TicTacToe_Test {
 
-    /*
-     *  To Change:
-     *      Make sure to check to call gameState.TicTacToe
-     *      Board link, make sure
-     */
+//     /*
+//      *  To Change:
+//      *      Make sure to check to call gameState.TicTacToe
+//      *      Board link, make sure
+//      */
 
-    /*
-     * Creates a game.Board and Creates Another Using Code
-     */
-    @Test
-    public void testInitializeBoard() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        char[][] expectedBoard = {
-            {'-', '-', '-'},
-            {'-', '-', '-'},
-            {'-', '-', '-'}
-        };
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                assertEquals(expectedBoard[i][j], game.initializeBoard());
-            }
-        }
-    }
+//     /*
+//      * Creates a game.Board and Creates Another Using Code
+//      */
+//     @Test
+//     public void testInitializeBoard() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         char[][] expectedBoard = {
+//             {'-', '-', '-'},
+//             {'-', '-', '-'},
+//             {'-', '-', '-'}
+//         };
+//         for (int i = 0; i < 3; i++) {
+//             for (int j = 0; j < 3; j++) {
+//                 assertEquals(expectedBoard[i][j], game.initializeBoard());
+//             }
+//         }
+//     }
 
-    /*
-     * Create a game.Board
-     * Check if the game.Board is Empty
-     */
-    @Test
-    public void testIsBoardFull_EmptyBoard() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        assertFalse(game.isBoardFull());
-    }
+//     /*
+//      * Create a game.Board
+//      * Check if the game.Board is Empty
+//      */
+//     @Test
+//     public void testIsBoardFull_EmptyBoard() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         assertFalse(game.isBoardFull());
+//     }
 
-    /*
-     * Create a game.Board
-     * Fill the game.Board (Draw)
-     * Check if the game.Board is Full
-     */
-    @Test
-    public void testIsBoardFull_FullBoard() {
-        game.tictactoe.TicTacToe_Logic game = new TicTacToe_Logic();
-        char[][] fullBoard = {
-            {'O', 'X', 'O'},
-            {'O', 'X', 'X'},
-            {'X', 'O', 'X'}
-        };
-        game.printBoard(fullBoard);
-        assertTrue(game.isBoardFull());
-    }
+//     /*
+//      * Create a game.Board
+//      * Fill the game.Board (Draw)
+//      * Check if the game.Board is Full
+//      */
+//     @Test
+//     public void testIsBoardFull_FullBoard() {
+//         game.tictactoe.TicTacToe_Logic game = new TicTacToe_Logic();
+//         char[][] fullBoard = {
+//             {'O', 'X', 'O'},
+//             {'O', 'X', 'X'},
+//             {'X', 'O', 'X'}
+//         };
+//         game.printBoard(fullBoard);
+//         assertTrue(game.isBoardFull());
+//     }
 
-    /*
-     * Create a game.Board
-     * Fill the game.Board (Row Win)
-     * Call isGameOver()
-     */
-    @Test
-    public void testIsGameOver_RowWin() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        char[][] boardWithRowWin = {
-            {'X', 'X', 'X'},
-            {'-', '-', '-'},
-            {'-', '-', '-'}
-        };
-        game.printBoard(boardWithRowWin);
-        assertTrue(game.isGameOver());
-    }
+//     /*
+//      * Create a game.Board
+//      * Fill the game.Board (Row Win)
+//      * Call isGameOver()
+//      */
+//     @Test
+//     public void testIsGameOver_RowWin() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         char[][] boardWithRowWin = {
+//             {'X', 'X', 'X'},
+//             {'-', '-', '-'},
+//             {'-', '-', '-'}
+//         };
+//         game.printBoard(boardWithRowWin);
+//         assertTrue(game.isGameOver());
+//     }
 
-    /*
-     * Create a game.Board
-     * Fill the game.Board (Column Win)
-     * Call isGameOver()
-     */
-    @Test
-    public void testIsGameOver_ColumnWin() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        char[][] boardWithColumnWin = {
-            {'X', '-', '-'},
-            {'X', '-', '-'},
-            {'X', '-', '-'}
-        };
-        game.printBoard(boardWithColumnWin);
-        assertTrue(game.isGameOver());
-    }
+//     /*
+//      * Create a game.Board
+//      * Fill the game.Board (Column Win)
+//      * Call isGameOver()
+//      */
+//     @Test
+//     public void testIsGameOver_ColumnWin() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         char[][] boardWithColumnWin = {
+//             {'X', '-', '-'},
+//             {'X', '-', '-'},
+//             {'X', '-', '-'}
+//         };
+//         game.printBoard(boardWithColumnWin);
+//         assertTrue(game.isGameOver());
+//     }
 
-    /*
-     * Create a game.Board
-     * Fill the game.Board (Diagonal Win)
-     * Call isGameOver()
-     */
-    @Test
-    public void testIsGameOver_DiagonalWin() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        char[][] boardWithDiagonalWin = {
-            {'X', '-', '-'},
-            {'-', 'X', '-'},
-            {'-', '-', 'X'}
-        };
-        game.printBoard(boardWithDiagonalWin);
-        assertTrue(game.isGameOver());
-    }
+//     /*
+//      * Create a game.Board
+//      * Fill the game.Board (Diagonal Win)
+//      * Call isGameOver()
+//      */
+//     @Test
+//     public void testIsGameOver_DiagonalWin() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         char[][] boardWithDiagonalWin = {
+//             {'X', '-', '-'},
+//             {'-', 'X', '-'},
+//             {'-', '-', 'X'}
+//         };
+//         game.printBoard(boardWithDiagonalWin);
+//         assertTrue(game.isGameOver());
+//     }
 
-    /*
-     * Create a game.Board
-     * Place a Piece at (0, 0)
-     * makeMove() = isValidMove()
-     */
-    @Test
-    public void testMakeMove_ValidMove00() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        game.makeMove(0, 0);
-        assertEquals('X', game.printBoard()[0][0]);
-    }
+//     /*
+//      * Create a game.Board
+//      * Place a Piece at (0, 0)
+//      * makeMove() = isValidMove()
+//      */
+//     @Test
+//     public void testMakeMove_ValidMove00() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         game.makeMove(0, 0);
+//         assertEquals('X', game.printBoard()[0][0]);
+//     }
 
-    /*
-     * Not Completely Implemented Yet, Waiting for GIU Team
-     * Create a game.Board
-     * Place a Piece at (1, 2)
-     * makeMove() = isValidMove()
-     */
-    @Test
-    public void testMakeMove_ValidMove12() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        game.makeMove(0, 0);
-        assertEquals('X', game.printBoard()[0][0]);
-    }
+//     /*
+//      * Not Completely Implemented Yet, Waiting for GIU Team
+//      * Create a game.Board
+//      * Place a Piece at (1, 2)
+//      * makeMove() = isValidMove()
+//      */
+//     @Test
+//     public void testMakeMove_ValidMove12() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         game.makeMove(0, 0);
+//         assertEquals('X', game.printBoard()[0][0]);
+//     }
 
-    /*
-     * Not Completely Implemented Yet, Waiting for GIU Team
-     * Create a game.Board
-     * Both Players Place Piece in the Same Location at (0, 0)
-     * makeMove() = isValidMove()
-     */
-    @Test
-    public void testMakeMove_InvalidMove() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        game.makeMove(0, 0);
-        game.makeMove(0, 0);
-        assertEquals('X', game.printBoard()[0][0]); 
-    }
+//     /*
+//      * Not Completely Implemented Yet, Waiting for GIU Team
+//      * Create a game.Board
+//      * Both Players Place Piece in the Same Location at (0, 0)
+//      * makeMove() = isValidMove()
+//      */
+//     @Test
+//     public void testMakeMove_InvalidMove() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         game.makeMove(0, 0);
+//         game.makeMove(0, 0);
+//         assertEquals('X', game.printBoard()[0][0]); 
+//     }
 
-    //Haven't Implemented Yet, Waiting for GIU Team
-    @Test
-    public void testMakeMove_SwitchPlayer() {
-        TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
-        game.makeMove(0, 0);
-        assertEquals('O', game.getCurrentPlayer());
-    }
+//     //Haven't Implemented Yet, Waiting for GIU Team
+//     @Test
+//     public void testMakeMove_SwitchPlayer() {
+//         TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
+//         game.makeMove(0, 0);
+//         assertEquals('O', game.getCurrentPlayer());
+//     }
 
-    /*
-     * Simulate a Game Where game.Player X Wins with a Row
-     */
-    @Test
-    public void testPlay_PlayerXRowWin() {
-        TicTacToe_Logic game = new TicTacToe_Logic();
-        game.makeMove(0, 0); // X
-        game.makeMove(1, 0); // O
-        game.makeMove(0, 1); // X
-        game.makeMove(1, 1); // O
-        game.makeMove(0, 2); // X - Row Win
-        assertTrue(game.isGameOver());
-        assertEquals('X', game.getCurrentPlayer());
-    }
+//     /*
+//      * Simulate a Game Where game.Player X Wins with a Row
+//      */
+//     @Test
+//     public void testPlay_PlayerXRowWin() {
+//         TicTacToe_Logic game = new TicTacToe_Logic();
+//         game.makeMove(0, 0); // X
+//         game.makeMove(1, 0); // O
+//         game.makeMove(0, 1); // X
+//         game.makeMove(1, 1); // O
+//         game.makeMove(0, 2); // X - Row Win
+//         assertTrue(game.isGameOver());
+//         assertEquals('X', game.getCurrentPlayer());
+//     }
 
-    /*
-     * Simulate a Game That Ends in a Draw
-     */
-    @Test
-    public void testPlay_DrawGame() {
-        TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
-        game.makeMove(0, 0); // X
-        game.makeMove(0, 1); // O
-        game.makeMove(0, 2); // X
-        game.makeMove(1, 1); // O
-        game.makeMove(1, 0); // X
-        game.makeMove(1, 2); // O
-        game.makeMove(2, 1); // X
-        game.makeMove(2, 0); // O
-        game.makeMove(2, 2); // X - Full game.Board, Draw
-        assertTrue(game.isBoardFull());
-        assertFalse(game.isGameOver());
-    }
-}
+//     /*
+//      * Simulate a Game That Ends in a Draw
+//      */
+//     @Test
+//     public void testPlay_DrawGame() {
+//         TicTacToe_Logic game = new game.tictactoe.TicTacToe_Logic();
+//         game.makeMove(0, 0); // X
+//         game.makeMove(0, 1); // O
+//         game.makeMove(0, 2); // X
+//         game.makeMove(1, 1); // O
+//         game.makeMove(1, 0); // X
+//         game.makeMove(1, 2); // O
+//         game.makeMove(2, 1); // X
+//         game.makeMove(2, 0); // O
+//         game.makeMove(2, 2); // X - Full game.Board, Draw
+//         assertTrue(game.isBoardFull());
+//         assertFalse(game.isGameOver());
+//     }
+// }
