@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthenticationTest {
 
+    //test if user inputs in the correct verification code
     @Test
     public void MFATest1() {
         MFAAuthentication.testMode = true;
@@ -19,6 +20,7 @@ public class AuthenticationTest {
         assertDoesNotThrow(() -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca"));
     }
 
+    //test if user inputs in the wrong verification code
     @Test
     public void MFATest2() {
         MFAAuthentication.testMode = true; // force known code "123456"
@@ -29,14 +31,14 @@ public class AuthenticationTest {
         );
     }
 
+    //test for if user does not put in anything for the verification code
     @Test
     public void MFATest3() {
         MFAAuthentication.testMode = true;
         String userInput = "\n"; // user hits Enter without any input
         System.setIn(new ByteArrayInputStream(userInput.getBytes()));
 
-        assertThrows(MFAAuthenticationFailedException.class, () ->
-                MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
+        assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
     }
 
