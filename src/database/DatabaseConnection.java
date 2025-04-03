@@ -22,4 +22,6 @@ public class DatabaseConnection {
         return null;
     }
 
+    // TODO: Close connection code
+
 }
