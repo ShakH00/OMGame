@@ -23,4 +23,13 @@ public class PlayerData {
         return null;
     }
 
+    //Remove any player from the database
+    public static void removePlayer(Player player) {
+        for (int i = 0; i < players.size(); i++ ) {
+            if (players.get(i).equals(player)) {
+                //Changes the player to null
+                players.remove(i);
+            }
+        }
+    }
 }
