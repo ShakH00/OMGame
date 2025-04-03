@@ -66,6 +66,7 @@ public class UserProfileController extends Application {
     @FXML
     private Tab matches;
 
+
     public void setAccount(Account account) {
 
         // Bind the username, stats, avatar, and banner color to the UI components
@@ -78,6 +79,10 @@ public class UserProfileController extends Application {
         // banner region color binding
         //bannerRegion.setStyle("-fx-background-color: " + currentAccount.getBannerColor() + ";");
     }
+
+    /*
+This is a block comment.
+Everything inside will be ignored by the compiler.
 
     @FXML
     public void handleOverviewSelection() {
@@ -110,6 +115,7 @@ public class UserProfileController extends Application {
         pane.setOnMouseExited(e -> scaleOut.play());
     }
 
+    */
     public static void main(String[] args) {
         launch(args);
     }

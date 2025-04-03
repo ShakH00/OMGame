@@ -1,6 +1,14 @@
 * {
     -fx-font-family: 'Press Start 2P';
 }
+* {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+@font-face {
+    font-family: "Pixelite";
+}
 
 .hoverButton {
     -fx-transition: all 0.3s ease;
@@ -41,12 +49,12 @@ loginHoverButton {
     -fx-text-fill: #aeb7c0 ;
 }
 
-#overview:selected {
-    -fx-text-fill: white;
-}
-
-#matches:selected {
-    -fx-text-fill: white;
+.tab:focused {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .scroll-pane {
@@ -73,4 +81,17 @@ loginHoverButton {
 .scroll-bar:vertical .thumb {
     -fx-background-color: #9ed4e8;
     -fx-background-radius: 5em;
+}
+
+
+/* Style for all label headers */
+.header-label {
+    -fx-font-family: "Pixelite";
+    -fx-font-size: 20px;
+}
+
+/* Style for all label subheaders */
+.subheader-label {
+    -fx-font-family: "Pixelite";
+    -fx-font-size: 14px;
 }
