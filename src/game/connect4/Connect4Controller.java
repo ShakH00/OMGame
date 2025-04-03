@@ -119,14 +119,21 @@ public class Connect4Controller extends Application {
     private void handleClick(MouseEvent e, GraphicsContext gc) {
         int col = (int) ((e.getX() - BOARD_OFFSET_X) / (CIRCLE_SIZE + SPACING));
 
-        if(game.getGameState().equals(GameState.P1_TURN))
+        if(game.getGameState().equals(GameState.SETUP))
         {
-            game.move(game.piece1, col);
+            game.start();
         }
 
-        if(game.getGameState().equals(GameState.P2_TURN))
+        else if(game.getGameState().equals(GameState.P1_TURN))
+        {
+            game.move(game.piece1, col);
+            game.nextTurn();
+        }
+
+        else if(game.getGameState().equals(GameState.P2_TURN))
         {
             game.move(game.piece2, col);
+            game.nextTurn();
         }
 
         redrawBoard(gc);

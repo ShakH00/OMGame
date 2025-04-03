@@ -10,6 +10,7 @@ import game.GameRules;
 import game.GameState;
 import game.Player;
 import game.pieces.Piece;
+import javafx.scene.paint.Color;
 
 public class Checkers{
     private Player player1;
@@ -47,7 +48,7 @@ public class Checkers{
             }
 
             // game.chess.King promotion, assuming black is p1 and red is p2
-            if ((piece.getColor().equals("BLACK") && newX == 7) || (piece.getColor().equals("RED") && newX == 0)){
+            if ((piece.getColor().equals(Color.BLACK) && newX == 7) || (piece.getColor().equals(Color.RED) && newX == 0)){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
@@ -156,10 +157,10 @@ public class Checkers{
             for (int j = 0; j < 8; j++){
                 Piece piece = gameBoard[i][j];
                 if (piece != null){
-                    if (piece.getColor().equals("BLACK")){
+                    if (piece.getColor().equals(Color.BLACK)){
                         Piece1Exists = true;
                     }
-                    if (piece.getColor().equals("RED")){
+                    if (piece.getColor().equals(Color.RED)){
                         Piece2Exists = true;
                     }
                 }
