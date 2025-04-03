@@ -2,7 +2,6 @@ package database;
 
 import account.Account;
 import game.GameType;
-
 import java.util.ArrayList;
 
 public class DatabaseManager {

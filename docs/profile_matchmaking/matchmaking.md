@@ -64,6 +64,8 @@
 
 6. Thresholds for each Game
 
+
+
 CHESS
 - Starts off: ± 25
 - After 30 seconds: ±50

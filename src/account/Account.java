@@ -1,5 +1,6 @@
 package account;
 
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,6 +80,7 @@ public class Account {
      * @param password String password for the account
      */
     public Account(int id, String username, String email, String password) {
+
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
         this.id = id;
