@@ -1,10 +1,8 @@
 package game.tictactoe;
 
-import game.*;
-
 import java.util.Scanner;
 
-public class TicTacToe_followGUI {
+public class TicTacToe_follow {
 
     // Create a 3x3 Tic-Tac-Toe game.Board with char
     private char currentPlayer = 1;
@@ -152,7 +150,7 @@ public class TicTacToe_followGUI {
         System.out.println("Welcome to Tic Tac Toe!");
 
         while (!isGameOver() && !isBoardFull()) {
-            gameState = (currentPlayer == 'X') ? GameState.P1_TURN : GameState.P2_TURN;
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             System.out.println("game.Player " + currentPlayer + ", Enter Your Move:");
 
             System.out.print("Row [0, 1, 2]: ");
@@ -164,11 +162,11 @@ public class TicTacToe_followGUI {
         }
 
         if (isGameOver()) {
-            if(currentPlayer == 'X') {
-                gameState = GameState.P1_WIN;
-            } else {
-                gameState = GameState.P2_WIN;
-            }
+            // if(currentPlayer == 'X') {
+            //     gameState = GameState.P1_WIN;
+            // } else {
+            //     gameState = GameState.P2_WIN;
+            // }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             System.out.println("GameOver! Congratulations,");
             System.out.println("game.Player " + currentPlayer + " Wins!");
