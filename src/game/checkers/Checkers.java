@@ -286,6 +286,10 @@ public class Checkers extends Game {
         }
     }
 
+    public void draw(){
+        gameState = GameState.DRAW;
+    }
+
     /**
      * Match Outcome, checks the state of the game and depending on it,
      * will set out a line stating which player won or if the game is still ongoing otherwise.
