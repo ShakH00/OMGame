@@ -20,7 +20,18 @@ public class Checkers extends Game {
     private Board board;
     private GameState gameState;
     private GameRules gameRules;
-    
+
+    public Checkers() { //Constructor to initialize player 1 and 2
+        this.player1 = new Player();
+        this.player2 = new Player();
+    }
+
+    // Set Board for checkers game and fill it
+    public void setBoard(Board board){
+        this.board = board;
+        board.fillBoard(GameType.CHECKERS);
+    }
+
     public void move(CheckersPiece piece, int newX, int newY){
         int currentX = piece.getX();
         int currentY = piece.getY();
@@ -102,17 +113,21 @@ public class Checkers extends Game {
          * Check if King and king movement for Player 1
          * Assuming Player 1 is bottom of the board (7,0)
          */
-        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player1 && newX <= currentX) {
-            return false;
+
+        if (!selectedPiece.isKing()) {
+            if (selectedPiece.getColor().equals(Color.BLACK) && newX <= currentX) {
+                return false;
+            }
+            /*
+             * Check if King and king movement for Player 2
+             * Assuming Player 2 is top of board (0,0)
+             */
+            if (selectedPiece.getColor().equals(Color.WHITE) && newX >= currentX) {
+                return false;
+            }
         }
 
-        /*
-         * Check if King and king movement for Player 2
-         * Assuming Player 2 is top of board (0,0)
-         */
-        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player2 && newX >= currentX) {
-            return false;
-        }
+
 
         // Since check above is constraints we know that if rowDiff == 1 the piece is only moving 1 tile.
         if(rowDiff == 1){
