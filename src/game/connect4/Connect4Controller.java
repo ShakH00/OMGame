@@ -1,22 +1,15 @@
-package game.connect4; /**
- * Connect 4 GUI - Visual
- * Click columns to drop pieces (alternating colors)
- * No game logic edition
- * Apologies btw (;﹏;)
- * - Amr Ibrahim
+/**
+ * Connect 4 revamped gui
+ * 
+ * - Amr Ibrahim :) (tried matching design edition)
  */
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,125 +17,165 @@ public class Connect4Controller extends Application {
 
     private static final int COLUMNS = 7;
     private static final int ROWS = 6;
-    private static final int CIRCLE_SIZE = 70;
-    private static final int SPACING = 5;
-    private static final int BOARD_OFFSET_X = 40;
-    private static final int BOARD_OFFSET_Y = 80;
-    private static final int WINDOW_WIDTH = 600;
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int CIRCLE_SIZE = 60;
+    private static final int SPACING = 8;
+    private static final int BOARD_OFFSET_X = 80;
+    private static final int BOARD_OFFSET_Y = 150;
+    private static final int WINDOW_WIDTH = 650;
+    private static final int WINDOW_HEIGHT = 750;
 
-    private Color[][] board = new Color[ROWS][COLUMNS]; // Track piece colors
-    private Color currentPlayerColor = Color.RED; // Start with red
+    private Color[][] board = new Color[ROWS][COLUMNS];
+    private boolean isBlackTurn = true;
+    private Cloud[] clouds = new Cloud[5];
 
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
+        
+        // Initialize clouds
+        for (int i = 0; i < clouds.length; i++) {
+            clouds[i] = new Cloud(
+                Math.random() * WINDOW_WIDTH,
+                Math.random() * 100,
+                50 + Math.random() * 70,
+                30 + Math.random() * 50
+            );
+        }
+        
+        drawBackground(gc);
         drawBoard(gc);
         
         canvas.setOnMouseClicked(e -> handleClick(e, gc));
-
-        // Create buttons
-        Button offerDrawButton = new Button("Offer Draw");
-        offerDrawButton.setLayoutX(650);
-        offerDrawButton.setLayoutY(10);
-        offerDrawButton.setOnAction(e -> handleOfferDraw());
-
-        Button resignButton = new Button("Resign");
-        resignButton.setLayoutX(650);
-        resignButton.setLayoutY(50);
-        resignButton.setOnAction(e -> handleResign());
-
-        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
-        Scene scene = new Scene(root, 800, 600);
         
-        primaryStage.setTitle("Connect 4 - Visual Demo");
+        root.getChildren().add(canvas);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        
+        primaryStage.setTitle("Retro Connect 4 - Outline Slots");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
+    private void drawBackground(GraphicsContext gc) {
+        // Dark blue retro sky
+        gc.setFill(Color.rgb(20, 30, 80));
+        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        
+        // Draw stars
+        gc.setFill(Color.WHITE);
+        for (int i = 0; i < 100; i++) {
+            double x = Math.random() * WINDOW_WIDTH;
+            double y = Math.random() * BOARD_OFFSET_Y;
+            double size = 1 + Math.random() * 2;
+            gc.fillOval(x, y, size, size);
+        }
+        
+        // Draw clouds
+        gc.setFill(Color.rgb(220, 220, 255, 0.8));
+        for (Cloud cloud : clouds) {
+            drawCloud(gc, cloud.x, cloud.y, cloud.width, cloud.height);
+        }
+        
+        // Retro title
+        gc.setFont(Font.font("Impact", 48));
+        gc.setFill(Color.YELLOW);
+        gc.fillText("CONNECT 4", WINDOW_WIDTH/2 - 140, 80);
+    }
+
+    private void drawCloud(GraphicsContext gc, double x, double y, double w, double h) {
+        gc.fillOval(x, y + h/4, w, h);
+        gc.fillOval(x + w/3, y, w, h);
+        gc.fillOval(x + w*2/3, y + h/4, w, h);
+    }
+
     private void drawBoard(GraphicsContext gc) {
-        // Board frame
-        gc.setFill(Color.rgb(50, 50, 60));
+        // Dark yellow board border (retro style)
+        gc.setFill(Color.rgb(180, 150, 30));
         gc.fillRoundRect(
             BOARD_OFFSET_X - 15, BOARD_OFFSET_Y - 15,
             COLUMNS * (CIRCLE_SIZE + SPACING) + 30,
-            ROWS * (CIRCLE_SIZE + SPACING) + 30, 20, 20
+            ROWS * (CIRCLE_SIZE + SPACING) + 30, 25, 25
         );
         
-        // Blue playing surface
-        gc.setFill(Color.rgb(30, 80, 150, 0.8));
+        // Board interior matches sky background
+        gc.setFill(Color.rgb(20, 30, 80));
         gc.fillRoundRect(
             BOARD_OFFSET_X, BOARD_OFFSET_Y,
             COLUMNS * (CIRCLE_SIZE + SPACING),
-            ROWS * (CIRCLE_SIZE + SPACING), 10, 10
+            ROWS * (CIRCLE_SIZE + SPACING), 15, 15
         );
 
-        // Draw all pieces (empty or placed)
+        // Draw slot outlines (empty circles)
+        gc.setStroke(Color.rgb(220, 220, 255, 0.5));
+        gc.setLineWidth(2);
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                drawSlot(gc, col, row, board[row][col]);
+                double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
+                double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
+                gc.strokeOval(x, y, CIRCLE_SIZE, CIRCLE_SIZE);
+            }
+        }
+
+        // Draw placed pieces
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (board[row][col] != null) {
+                    drawPiece(gc, col, row, board[row][col]);
+                }
             }
         }
     }
 
-    private void drawSlot(GraphicsContext gc, int col, int row, Color color) {
+    private void drawPiece(GraphicsContext gc, int col, int row, Color color) {
         double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
         double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
         
-        if (color == null) {
-            gc.setFill(Color.rgb(255,255,255));
-        } else {
-            // Player piece with glossy effect
-            RadialGradient pieceGradient = new RadialGradient(
-                0, 0, 0.3, 0.3, 0.5, true, CycleMethod.NO_CYCLE,
-                new Stop(0, color.deriveColor(0, 1, 1, 1)),
-                new Stop(1, color.deriveColor(0, 1, 0.5, 1))
-            );
-            gc.setFill(pieceGradient);
-        }
-        gc.fillOval(x, y, CIRCLE_SIZE, CIRCLE_SIZE);
+        // Solid piece
+        gc.setFill(color);
+        gc.fillOval(x + 2, y + 2, CIRCLE_SIZE - 4, CIRCLE_SIZE - 4);
         
-        // Highlight
-        gc.setFill(Color.rgb(255, 255, 255, 0.4));
-        gc.fillOval(x + 5, y + 5, CIRCLE_SIZE/3, CIRCLE_SIZE/3);
+        // Piece outline
+        gc.setStroke(color == Color.BLACK ? Color.WHITE : Color.BLACK);
+        gc.setLineWidth(2);
+        gc.strokeOval(x + 2, y + 2, CIRCLE_SIZE - 4, CIRCLE_SIZE - 4);
     }
 
     private void handleClick(MouseEvent e, GraphicsContext gc) {
         int col = (int) ((e.getX() - BOARD_OFFSET_X) / (CIRCLE_SIZE + SPACING));
         
         if (col >= 0 && col < COLUMNS) {
-            // Find first empty row in this column (from bottom up)
             for (int row = ROWS - 1; row >= 0; row--) {
                 if (board[row][col] == null) {
-                    board[row][col] = currentPlayerColor;
-                    currentPlayerColor = (currentPlayerColor == Color.RED) ? Color.GOLD : Color.RED;
-                    redrawBoard(gc);
+                    board[row][col] = isBlackTurn ? Color.BLACK : Color.WHITE;
+                    isBlackTurn = !isBlackTurn;
+                    redraw(gc);
                     break;
                 }
             }
         }
     }
 
-    private void redrawBoard(GraphicsContext gc) {
-        gc.clearRect(0, 0, 800, 600);
+    private void redraw(GraphicsContext gc) {
+        gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        drawBackground(gc);
         drawBoard(gc);
-    }
-
-    private void handleOfferDraw() {
-        // Handle draw offer logic here, e.g., show a message or ask for confirmation
-        System.out.println("Draw offer sent!");
-    }
-
-    private void handleResign() {
-        // Handle resignation logic here, e.g., end the game or show a resignation message
-        System.out.println("You resigned!");
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
+    private class Cloud {
+        double x, y, width, height;
+        
+        Cloud(double x, double y, double width, double height) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+    }
+}
 }
