@@ -309,6 +309,23 @@
                                           </Label>
                                        </children>
                                     </Pane>
+                                    <Pane fx:id="drawPane" layoutX="6.0" layoutY="140.0" prefHeight="48.0" prefWidth="731.0">
+                                       <children>
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ffdca4f2" height="46.0" layoutX="3.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="725.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#b27b16" height="46.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbbd3d" height="46.0" layoutX="4.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle fill="#fbbd3d" height="46.0" layoutX="17.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="77.0" />
+                                          <Label fx:id="winmatchOpponent1" alignment="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="22.0" prefWidth="166.0" styleClass="subheader-label" text="chessfan" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchGame1" alignment="CENTER" layoutX="266.0" layoutY="15.0" prefHeight="22.0" prefWidth="142.0" styleClass="subheader-label" text="Chess" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchMoves1" alignment="CENTER" layoutX="418.0" layoutY="14.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="16" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchElo1" alignment="CENTER" layoutX="559.0" layoutY="13.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="-" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="22.0" prefWidth="91.0" style="-fx-font-family: Pixelite;" styleClass="winloss-label" text="DRAW" textAlignment="CENTER" textFill="#b27b16">
+                                             <font>
+                                                <Font name="Pixelite" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
                                  </children></AnchorPane>
                           </content>
                         </ScrollPane>
