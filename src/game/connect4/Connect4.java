@@ -104,7 +104,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in given row
-    boolean winInRow(int row, Piece piece)
+    public boolean winInRow(int row, Piece piece)
     {
         int counter = 0;
 
@@ -129,7 +129,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in given column
-    boolean winInCol(int col, Piece piece)
+    public boolean winInCol(int col, Piece piece)
     {
         int counter = 0;
         for (int row = 0; row < board.getRows(); row++)
@@ -148,7 +148,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in a backslash diagonal
-    boolean winInDiagonalBackslash(Piece piece)
+    public boolean winInDiagonalBackslash(Piece piece)
     {
         Piece[][] state = board.getBoardState();
         int rows = board.getRows();
@@ -174,7 +174,7 @@ public class Connect4 extends Game {
     }
 
     // Check for win in a frontslash diagonal
-    boolean winInDiagonalFrontslash(Piece piece)
+    public boolean winInDiagonalFrontslash(Piece piece)
     {
         Piece[][] state = board.getBoardState();
         int rows = board.getRows();
