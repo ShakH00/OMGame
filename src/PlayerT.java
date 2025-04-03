@@ -369,9 +369,19 @@ public class PlayerT extends JFrame {
                     System.out.println();
                 }
 
-
-
-
+                // Start a thread to listen for incoming messages
+                new Thread(() -> {
+                    try {
+                        while (true) {
+                            String message = dataIn.readUTF();
+                            if (message.startsWith("CHAT:")) {
+                                receiveChatMessage(message.substring(5)); // Remove "CHAT:" prefix
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error receiving chat message: " + e.getMessage());
+                    }
+                }).start();
 
             }catch (Exception e){
                 System.out.println("IO exception from CSC contructor");
@@ -468,17 +478,8 @@ public class PlayerT extends JFrame {
         contentPane.add(chatScroll, BorderLayout.EAST);
         contentPane.add(chatPanel, BorderLayout.SOUTH);
         
-        sendButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sendChatMessage();
-            }
-        });
-        
-        chatInput.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sendChatMessage();
-            }
-        });
+        sendButton.addActionListener(e -> sendChatMessage());
+        chatInput.addActionListener(e -> sendChatMessage());
     }
     
     private void sendChatMessage() {
