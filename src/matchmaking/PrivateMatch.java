@@ -1,15 +1,20 @@
 package matchmaking;
 
-import game.GamesEnum;
-import player.*;
+import game.GameType;
+import account.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PrivateMatch {
-    private int roomID;
-    private List<Player> players = new ArrayList<>();
+    private String roomID;
+
+    private Account host;
+
+    private GameType gameType;
+
+    //letting accounts be greater than 2 in case future games have more than 2 players or spectator system implemented
+    private ArrayList<Account> accounts = new ArrayList<>();
 
     String possibleIDCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     //FUNCTIONS TO ADD:
@@ -22,8 +27,7 @@ public class PrivateMatch {
      */
     public PrivateMatch() {
         //establish a unique room ID
-        String potentialID = generateRandomID();
-        //ensure no duplicates by comparing ID to all other private matches stored in database
+        this.roomID = findUniqueID();
     }
 
     /**
@@ -31,8 +35,8 @@ public class PrivateMatch {
      * @param game      game ENUM to set the rooms match game as
      * hostSelectGame is a function that changes the type of game that is being played in a private match
      */
-    public void hostSelectGame(GamesEnum game) {
-        //set match game to game from
+    public void hostSelectGame(GameType game) {
+        this.gameType = game;
     }
 
     /**
@@ -40,12 +44,50 @@ public class PrivateMatch {
      * hostStartGame is a function that starts the private matches selected game
      */
     public void hostStartGame() {
-        //checks that there are two players in the private match
-        //start the match when this function is called
+        if (accounts.size() >= 2) {
+            //start the match when this function is called
+        }
+    }
+
+    /**
+     * @param account account object that initialized the creation of the private match
+     *
+     * Setter method for the private matches host
+     */
+    public void setHost(Account account) {
+        this.host = account;
+        accounts.add(host);
     }
 
     /**
      * @author Logan Olszak
+     * @return Unique ID string of length 6
+     * findUniqueID is a function that generates random 6 character room IDs until a unique ID is found
+     */
+    public String findUniqueID() {
+        String potentialID = "";
+        boolean loop = true;
+        while (loop) {
+            potentialID = generateRandomID();
+            //NEED TO CREATE a MatchHandler object to call getPrivateMatches() on in main program once that exists
+            ArrayList<PrivateMatch> matches = null; //Should eventualy be getPrivateMatches() instead of null
+            boolean matching = false;
+            for (PrivateMatch current : matches) {
+                if (current.roomID == potentialID) {
+                    matching = true;
+                }
+            }
+            if (matching == false) {
+                loop = false;
+            }
+        }
+        return potentialID;
+    }
+
+    /**
+     * @author Logan Olszak
+     * @return String random string of length 6
+     *
      * generateRandomID is a function that generates a random 6 character room ID using characters A-Z and 0-9
      */
     public String generateRandomID() {

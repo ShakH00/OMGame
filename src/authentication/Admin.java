@@ -1,6 +1,6 @@
 package authentication;
 import database.DatabaseManager;
-import player.Account;
+import account.Account;
 
 public class Admin {
 
@@ -35,32 +35,6 @@ public class Admin {
     private void updatePassword(DatabaseManager db, int id, String newPassword){
         Account account = db.getAccount(id);
         account.setPassword(newPassword);
-        db.saveAccount(account);
-    }
-
-    /**
-     * Sets the password for the account.
-     *
-     * @param db the databaseManager being used
-     * @param id the id of the player being edited
-     * @param newNumber the new phone number to set
-     */
-    private void updatePhoneNumber(DatabaseManager db, int id, String newNumber){
-        Account account = db.getAccount(id);
-        account.setPhoneNumber(newNumber);
-        db.saveAccount(account);
-    }
-
-    /**
-     * Sets the password for the account.
-     *
-     * @param db the databaseManager being used
-     * @param id the id of the player being edited
-     * @param newEmail the new email to set
-     */
-    private void updateEmail(DatabaseManager db, int id, String newEmail){
-        Account account = db.getAccount(id);
-        account.setPassword(newEmail);
         db.saveAccount(account);
     }
 
