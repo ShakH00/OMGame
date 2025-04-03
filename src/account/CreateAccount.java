@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class CreateAccount {
 
     private static final Scanner scanner = new Scanner(System.in);
+    private static final int ID_LENGTH = 9; // Temporary change to fit within int range
 
     /**
      * Initiates the account creation process.
@@ -32,13 +33,14 @@ public class CreateAccount {
     }
 
     /**
-     * Generates a unique 6-digit account ID.
+     * Generates a unique numeric account ID within int range.
      *
-     * @return A randomly generated 6-digit integer.
+     * @return A randomly generated numeric int.
      */
     private static int generateAccountId() {
         SecureRandom random = new SecureRandom();
-        return random.nextInt(900000) + 100000; // Generates a 6-digit ID
+        int id = random.nextInt(900000000) + 100000000; // Generates a 9-digit ID
+        return id;
     }
 
     /**
@@ -77,13 +79,13 @@ public class CreateAccount {
 
     /**
      * Prompts the user to enter and confirm a valid password.
-     * The password must be at least 8 characters long and contain both letters and numbers.
+     * The password must be at least 8 characters long and contain a mix of uppercase and lowercase letters, numbers, and special characters.
      *
      * @return A valid password.
      */
     private static String getValidPassword() {
         while (true) {
-            System.out.print("Enter password (min 8 chars with letter and number): ");
+            System.out.print("Enter password (min 8 chars with uppercase, lowercase, number, and special character): ");
             String password = scanner.nextLine();
 
             System.out.print("Confirm password: ");
@@ -97,7 +99,7 @@ public class CreateAccount {
             if (isValidPassword(password)) {
                 return password;
             }
-            showError("Password must be at least 8 characters with both letters and numbers.");
+            showError("Password must be at least 8 characters long and include a mix of uppercase and lowercase letters, numbers, and special characters.");
         }
     }
 
@@ -123,13 +125,13 @@ public class CreateAccount {
 
     /**
      * Validates a password based on predefined criteria.
-     * The password must contain at least one letter and one number.
+     * The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.
      *
      * @param password The password to validate.
      * @return True if the password is valid, otherwise false.
      */
     private static boolean isValidPassword(String password) {
-        return Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d).{8,}$", password);
+        return Pattern.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$", password);
     }
 
     /**
