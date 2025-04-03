@@ -137,7 +137,12 @@ public class Board{
      * Or does this return the board to the original state of any game? ~ Adam
      */
     public void resetBoard(){
-        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                board[i][j] = null; // Fill with empty cells
+            }
+        }
+        fillBoard(gameType);
     }
 
     /* IGNORE THIS, FOR TICTACTOE

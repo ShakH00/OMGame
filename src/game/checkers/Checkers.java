@@ -5,14 +5,14 @@
  * */
 package game.checkers;
 
-import game.Board;
-import game.GameRules;
-import game.GameState;
-import game.Player;
+import game.*;
 import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
-public class Checkers{
+import java.util.concurrent.LinkedTransferQueue;
+
+public class Checkers extends Game {
     private Player player1;
     private Player player2;
     private int score;
@@ -22,10 +22,28 @@ public class Checkers{
     private Board board;
     private GameState gameState;
     private GameRules gameRules;
-    
+
+    public Checkers() { //Constructor to initialize player 1 and 2
+        this.player1 = new Player();
+        this.player2 = new Player();
+    }
+
+    // Set Board for checkers game and fill it
+    public void setBoard(Board board){
+        this.board = board;
+        board.fillBoard(GameType.CHECKERS);
+    }
+
     public void move(CheckersPiece piece, int newX, int newY){
         int currentX = piece.getX();
         int currentY = piece.getY();
+        boolean captureMove = Math.abs(currentX-newX) == 2;
+
+        // If the move is not a capture move but a forced capture must be made then print string and return nothing.
+        if (!captureMove && forcedCapture(piece.getOwnedBy())) {
+            System.out.println("A capture is available and must be performed.");
+            return;
+        }
 
         // If valid moves, make the move.
         if (isValidMove(currentX, currentY, newX, newY, board)){
@@ -34,12 +52,13 @@ public class Checkers{
             boardState[newX][newY] = piece;
             // remove prev piece location
             boardState[currentX][currentY] = null;
+            // update the piece's location.
             piece.setX(newX);
             piece.setY(newY);
 
             // Capture move.
             // If the move made is 2 cells it is a capture move.
-            if (Math.abs(currentX-newX) == 2){
+            if (captureMove){
                 // Get the location of the captured piece.
                 int capturedX = (currentX + newX) / 2;
                 int capturedY = (currentY + newY) / 2;
@@ -48,11 +67,68 @@ public class Checkers{
             }
 
             // game.chess.King promotion, assuming black is p1 and red is p2
-            if ((piece.getColor().equals(Color.BLACK) && newX == 7) || (piece.getColor().equals(Color.RED) && newX == 0)){
+            if ((piece.getColor().equals(Color.BLACK) && newX == 7) || (piece.getColor().equals(Color.WHITE) && newX == 0)){
                 // Promote IF the piece has reached the other end.
                 piece.promote();
             }
+
+            // Multiple captures available
+            if (captureMove && canCapture(piece)){
+                System.out.println("Continuous jumps are available, continue capturing.");
+            }
+            else {
+                switchTurn();
+            }
+
       }
+    }
+
+    /**
+     * Check the board and the player's piece to see if any capture is available.
+     * captures are forced in checkers.
+     */
+    public boolean forcedCapture (Player currentPlayer) {
+        // Get the board
+        Piece[][] boardState = board.getBoardState();
+        // Iterate through the board
+        for ( int i = 0; i < boardState.length; i++){
+            for (int j = 0; j < boardState[i].length; j++){
+                // Check for each cell
+                Piece piece = boardState[i][j];
+                // Check If not empty, or it's not the current player's piece
+                if (piece != null && piece.getOwnedBy().equals(currentPlayer)){
+                    if (canCapture((CheckersPiece) piece)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * check if a piece can capture.
+     */
+    private boolean canCapture(CheckersPiece piece) {
+        int x = piece.getX();
+        int y = piece.getY();
+        // coordinates to calculate top left, top right, bottom left, bottom right captures.
+        int[][] coordinates = { {-2, -2}, {2, -2}, {-2, 2}, {2, 2} };
+        for (int[] diagonals : coordinates){
+            // get new coordinate
+            int newX = x + diagonals[0];
+            int newY = y + diagonals[1];
+
+            // if out of bounds, continue to check the other corners.
+            if (newX < 0 || newX > 7 || newY < 0 || newY > 7) {
+                continue;
+            }
+            // If the move is valid then can capture is true.
+            if (isValidMove(x, y, newX, newY, board)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -65,12 +141,12 @@ public class Checkers{
         selectedPiece = board[currentX][currentY];
 
         // Player1 is trying to move a piece when not their turn
-        if(selectedPiece.getOwnedBy().equals(player1) && !player1.isTurn()){
+        if(selectedPiece.getPieceType().equals(PieceType.DARK) && gameState != GameState.P1_TURN){
             return false;
         }
 
         // Player2 is trying to move a piece when not their turn
-        if(selectedPiece.getOwnedBy().equals(player2) && !player2.isTurn()){
+        if(selectedPiece.getPieceType().equals(PieceType.LIGHT) && gameState != GameState.P2_TURN){
             return false;
         }
 
@@ -104,17 +180,21 @@ public class Checkers{
          * Check if King and king movement for Player 1
          * Assuming Player 1 is bottom of the board (7,0)
          */
-        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player1 && newX <= currentX) {
-            return false;
+
+        if (!selectedPiece.isKing()) {
+            if (selectedPiece.getColor().equals(Color.BLACK) && newX <= currentX) {
+                return false;
+            }
+            /*
+             * Check if King and king movement for Player 2
+             * Assuming Player 2 is top of board (0,0)
+             */
+            if (selectedPiece.getColor().equals(Color.WHITE) && newX >= currentX) {
+                return false;
+            }
         }
 
-        /*
-         * Check if King and king movement for Player 2
-         * Assuming Player 2 is top of board (0,0)
-         */
-        if (!selectedPiece.isKing() && selectedPiece.getOwnedBy() == player2 && newX >= currentX) {
-            return false;
-        }
+
 
         // Since check above is constraints we know that if rowDiff == 1 the piece is only moving 1 tile.
         if(rowDiff == 1){
@@ -137,6 +217,25 @@ public class Checkers{
                                                                                         // Piece to Capture
         }
         return false;
+    }
+
+    /**
+     * Method to initialize the GameState for P1 to make the first move.
+     */
+    public void start(){
+        gameState = GameState.P1_TURN;
+    }
+
+    /**
+     * Method for switching turn.
+     */
+    public void switchTurn() {
+        if (gameState == GameState.P1_TURN){
+            gameState = GameState.P2_TURN;
+        }
+        else if (gameState == GameState.P2_TURN){
+            gameState = GameState.P1_TURN;
+        }
     }
 
 
@@ -177,10 +276,9 @@ public class Checkers{
 
     /**
      * surrender method that changes the gameState to the opposing player winning if a player calls it during their turn.
-     *
+     * called with a button in controller.
      */
     public void surrender(){
-        if (gameState == null) return;
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_WIN;
         } else if (gameState == GameState.P2_TURN) {
