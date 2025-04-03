@@ -72,6 +72,12 @@ public class Rook extends MovingPiece {
 
     /**
      * Method to check if a move is valid to perform
+     * A few notes on Rook movement in chess:
+     * 1. A rook moves in a straight line, so long as nothing is obstructing its path
+     *      this means a rook can move from one edge of the board to the opposite one,
+     *      as long as it is either on the same row or column
+     * 2. The only special move performed using a Rook is castling, where it alternates with a king, moving closer
+     *      This special move is taken care of on the King's side as it can only be done through the King piece
      * @param currentX: current x coordinate of the rook
      * @param currentY: current y coordinate of the rook
      * @param newX: new x coordinate that the rook may be moved to
