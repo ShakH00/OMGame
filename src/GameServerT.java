@@ -384,3 +384,23 @@ public class GameServerT {
 
     }
 }
+
+// STUB – Handles invalid or unexpected input from a player.
+public void handleInvalidInput(String input, int playerID) {
+    System.out.println("⚠️ Invalid input received from Player " + playerID + ": " + input);
+    // TODO: Trigger UI warning or log error
+}
+
+
+// STUB – Sends an error message to a client.
+public void notifyClientOfError(int playerID, String message) {
+    System.out.println("🔔 Notifying Player " + playerID + " of error: " + message);
+    // TODO: Add network message sending logic here
+}
+
+
+// STUB – Logs and prepares recovery steps for player disconnection.
+public void logDisconnection(int playerID) {
+    System.out.println("⚠️ Player " + playerID + " disconnected unexpectedly.");
+    // TODO: Pause game session and notify opponent
+}
