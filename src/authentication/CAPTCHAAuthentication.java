@@ -45,7 +45,7 @@ public class CAPTCHAAuthentication {
     }
 
     public static String generateTextProblem() {
-        String[] words = {"abcd", "efg", "hijk", "lmno"};
+        String[] words = {"laptop", "cpsc", "software", "seng", "computer science", "math", "programming"};
         Random random = new Random();
         String word = words[random.nextInt(words.length)];
 
