@@ -11,22 +11,22 @@ public class Player {
         System.out.println("game.Player Constructor");
     }
 
-    private int getWinCount() {
+    public int getWinCount() {
 
         return 0;
     }
 
-    private int getLoseCount() {
+    public int getLoseCount() {
         
         return 0;
     }
 
-    private String getTeam() {
+    public String getTeam() {
     
         return team;
     }
     
-    private boolean isturn() {
+    public boolean isTurn() {
 
         return false;
     }
