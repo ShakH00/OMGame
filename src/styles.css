@@ -1,17 +1,17 @@
 * {
     -fx-font-family: 'Press Start 2P';
 }
-
-.hoverButton {
-    -fx-transition: all 0.3s ease;
+* {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
-.hoverButton:hover {
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2;
+@font-face {
+    font-family: "Pixelite";
 }
 
-loginHoverButton {
+
+.loginHoverButton {
     -fx-transition: all 0.3s ease;
 }
 
@@ -26,4 +26,79 @@ loginHoverButton {
 
 .hoverCartridge:hover {
     -fx-translate-y: -10;
+}
+
+.tab-header-background {
+    -fx-background-color: #16304b;
+}
+
+.tab {
+    -fx-font-size: 16px;
+    fx-text-fill: #aeb7c0;
+}
+
+.tab-label {
+    -fx-text-fill: #aeb7c0 ;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab:focused {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color:  transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-color: transparent; /* Makes the inner viewport transparent */
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+    -fx-pref-width: 11px;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #8cb7cc;
+
+    -fx-background-radius: 2em;
+}
+
+
+/* Style for all label headers */
+.header-label {
+    -fx-font-family: "Pixelite";
+    -fx-font-size: 20px;
+}
+
+/* Style for all label subheaders */
+.subheader-label {
+    -fx-font-family: "Pixelite";
+    -fx-font-size: 14px;
+}
+
+
+.winloss-label {
+    -fx-font-family: "Pixelite";
+    -fx-font-size: 18px;
 }

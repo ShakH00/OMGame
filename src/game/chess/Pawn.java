@@ -1,29 +1,34 @@
+/**
+ * A pawn object class for pawn pieces in the game of Chess
+ * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
+ * Each pawn automatically has a score of 1 as it is the least valued piece on a Chess board
+ *
+ * @author Abdulrahman Negmeldin
+ */
+
 package game.chess;
 import game.Board;
 import game.Player;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import game.pieces.MovingPiece;
-/**
- * A pawn object class for pawn game.pieces in the game of game.chess.Chess
- * Like other piece objects, it tracks x, y coordinates, colour, player who owns it, and score
- * Each pawn automatically has a score of 1 as it is the least valued piece on a game.chess.Chess board
- *
- * @author Abdulrahman
- */
+import javafx.scene.paint.Color;
+
 public class Pawn extends MovingPiece {
-    boolean firstMove; //used to determine if pawn can move two forward if its on its first move
+    private boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
+    private boolean doneSecondMove; //used to check if this pawn can be en pessant-ed
 
     /**
      * Normal piece attributes that are superclass sent to MovingPiece which supers it to Piece
      * @param x: x coordinate of location in board
      * @param y: y coordinate
-     * @param colour: pawn colour
+     * @param color: pawn colour
      * @param ownedBy: player who owns the pawn
      */
-    public Pawn(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, 1);
-        firstMove = false;
+    public Pawn(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, 1);
+        doneFirstMove = false;
+        doneSecondMove = false;
     }
 
     /**
@@ -44,13 +49,33 @@ public class Pawn extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            if(!firstMove){
-                firstMove = true;
+            if(!doneFirstMove){
+                doneFirstMove = true;
+            } else if(!doneSecondMove){
+                doneSecondMove = true;
             }
         }
 
 
     }
+
+    /**
+     * A method to check if the pawn has done its first move yet
+     * @return true if first move performed
+     */
+    protected boolean isDoneFirstMove(){
+        return doneFirstMove;
+    }
+
+    /**
+     * A method to check if the pawn has done its second move
+     * This is used to check if the enemy player can perform en passant on your pawn
+     * @return true if the second move has been performed
+     */
+    protected boolean isDoneSecondMove(){
+        return doneSecondMove;
+    }
+
 
     /**
      * A method to check if the tile the pawn is being moved to is a valid move
@@ -76,24 +101,37 @@ public class Pawn extends MovingPiece {
      * @param gameBoard: board being played on
      * @return true if this is a valid move
      */
-
-    //WILL BE REWORKED A BIT NOW THAT WE HAVE PIECETYPE!!!!
     @Override
     protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         Piece[][] board = gameBoard.getBoardState();
-        int compX = Math.abs(currentX-newX);
-        int compY = Math.abs(currentY-newY);
-        boolean out = false;
-        //normal move one forward
-        if(board[newX][newY] == null && compY == 0 && compX == 1){
-            out = true;
-        //move diagonal and eat enemy piece
-        } else if(board[newX][newY] != null && (newY == currentY+1 || newY == currentY-1) && compX == 1){
-            out = true;
-        //first move
-        } else if((compX == 2 && compY == 0) && !firstMove && board[newX][newY] == null && (board[newX+1][newY] == null || board[newX-1][newY] == null)){
-            out = true;
-        } //havent added en passant yet
-        return out;
+        PieceType type = this.getPieceType();
+        int compX = (type == PieceType.LIGHT) ? currentX-newX : newX-currentX;
+        int compY = Math.abs(newY-currentY);
+        Piece isPieceOnTile = board[newX][newY];
+
+        //move 1 tile forward
+        if(isPieceOnTile == null && compY == 0 && compX == 1){
+            return true;
+        //move 2 forward if first move
+        } else if(isPieceOnTile == null && compY == 0 && compX == 2 && !doneFirstMove){
+            if(type == PieceType.LIGHT && board[currentX-1][newY] == null){
+                return true;
+            } else if(type == PieceType.DARK && board[currentX+1][newY] == null){
+                return true;
+            }
+        //move diagonal
+        } else if(compX == 1 && compY == 1){
+            //eat an enemy piece diagonally
+            if (isPieceOnTile != null && isPieceOnTile.getPieceType() != type){
+                return true;
+            //en passant: essentially checks that tile moving to is empty, there's a piece next to your pawn, its an enemy piece
+            } else if(currentX == 3 && newX == 2 && isPieceOnTile == null && board[currentX][newY] != null && board[currentX][newY].getPieceType() != type){
+                //check this enemy piece is pawn and that it just did its first move
+                if(board[currentX][newY] instanceof Pawn && !((Pawn) board[currentX][newY]).isDoneSecondMove()){
+                    return true;
+                }
+            }
+        }
+        return false; //if reached end of method then invalid move, return false
     }
 }

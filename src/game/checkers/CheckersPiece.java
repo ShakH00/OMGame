@@ -4,6 +4,7 @@ import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 /**
  * A game.checkers.CheckersPiece class for all checker game.pieces (objects), inherits MovingPiece which inherits Piece.
@@ -26,8 +27,8 @@ public class CheckersPiece extends MovingPiece {
      * @param ownedBy: the player who owns the piece
      * @param score: score of the piece once captured
      */
-    public CheckersPiece(int x, int y, String colour, PieceType pieceType, Player ownedBy, int score){
-        super(x, y, colour, pieceType, ownedBy, score);
+    public CheckersPiece(int x, int y, Color color, PieceType pieceType, Player ownedBy, int score){
+        super(x, y, color, pieceType, ownedBy, score);
         this.isKing = false;
     }
 
