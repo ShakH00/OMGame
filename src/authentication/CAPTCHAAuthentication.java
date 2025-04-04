@@ -106,4 +106,12 @@ public class CAPTCHAAuthentication {
         File image = new File(files[index]);
         return image;
     }
+
+    public static boolean verifyCAPTCHA(String input, File file){
+        input = input.toLowerCase().trim();
+        String expected = file.getName();
+        expected = expected.substring(0, expected.length()-5);
+        return expected == input;
+    }
+
 }
