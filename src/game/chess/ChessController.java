@@ -31,14 +31,14 @@ public class ChessController extends Application {
 
     // Initial chessboard layout
     private final String[][] board = {
-            {"chessRookBlack", "chessKnightBlack", "chessBishopBlack", "chessQueenBlack", "chessKingBlack", "chessBishopBlack", "chessKnightBlack", "chessRookBlack"},
-            {"chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack", "chessPawnBlack"},
+            {"blackRookChess", "blackKnightChess", "blackBishopChess", "blackQueenChess", "blackKingChess", "blackBishopChess", "blackKnightChess", "blackRookChess"},
+            {"blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess"},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {"chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite", "chessPawnWhite"},
-            {"chessRookWhite", "chessKnightWhite", "chessBishopWhite", "chessQueenWhite", "chessKingWhite", "chessBishopWhite", "chessKnightWhite", "chessRookWhite"}
+            {"whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess"},
+            {"whiteRookChess", "whiteKnightChess", "whiteBishopChess", "whiteQueenChess", "whiteKingChess", "whiteBishopChess", "whiteKnightChess", "whiteRookChess"}
     };
 
     private int selectedX = -1, selectedY = -1;
