@@ -71,7 +71,7 @@ public class StartController extends Application {
         createScaleTransition(helpButton);
     }
 
-    private void createScaleTransition(StackPane button) {
+    public static void createScaleTransition(StackPane button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
         scaleTransition.setFromX(1);
         scaleTransition.setFromY(1);

@@ -5,14 +5,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SignUpController extends Application {
 
+
     @FXML
     AnchorPane rootPane;
+    @FXML
+    private StackPane backButtonSignUp;
+    @FXML
+    private StackPane toLogin;
+    @FXML
+    private StackPane submitButton;
+    @FXML
+    private StackPane guestButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -31,6 +42,14 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
+
+    public void initialize() {
+        StartController.createScaleTransition(backButtonSignUp);
+        StartController.createScaleTransition(toLogin);
+        StartController.createScaleTransition(submitButton);
+        StartController.createScaleTransition(guestButton);
+    }
+
     @FXML
     private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();

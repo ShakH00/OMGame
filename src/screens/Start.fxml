@@ -51,6 +51,7 @@
             <DropShadow />
          </effect>
       </ImageView>
+
       <StackPane fx:id="startButton" layoutX="327.0" layoutY="246.0" onMouseClicked="#switchToSignUp" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
             <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
@@ -65,6 +66,7 @@
             </Text>
          </children>
       </StackPane>
+
       <StackPane fx:id="rankingButton" layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
             <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
