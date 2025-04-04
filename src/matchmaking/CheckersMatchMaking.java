@@ -5,7 +5,7 @@ public class CheckersMatchMaking extends MatchMaking {
     private int findElo;
     private int increment;
 
-//    this.kFactor = 20;
+    //this.kFactor = 20;
 
     @Override
     public void changeElo(int elo) {

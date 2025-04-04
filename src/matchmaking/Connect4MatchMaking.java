@@ -1,11 +1,11 @@
 package matchmaking;
 
-public class ConnectFourMatchmaking extends MatchMaking {
+public class Connect4MatchMaking extends MatchMaking {
     private long startingTime;
     private int findElo;
     private int increment;
 
-//    this.kFactor = 15;
+    //this.kFactor = 15;
 
     public void changeElo(int elo) {
 
