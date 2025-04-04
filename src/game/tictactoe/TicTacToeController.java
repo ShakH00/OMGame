@@ -7,6 +7,7 @@ package game.tictactoe;
  * - Shakil :) (still sleep deprived)
  */
 
+import game.GameState;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -30,6 +31,8 @@ public class TicTacToeController extends Application {
     private final int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
     private int currentPlayer = 1; // Start with X
     private boolean gameOver = false;
+
+    public static TicTacToe_follow game = new TicTacToe_follow();
 
     @Override
     public void start(Stage primaryStage) {
@@ -99,9 +102,9 @@ public class TicTacToeController extends Application {
         // Draw X's and O's
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] == 1) {
+                if (game.getBoard().getBoardState()[row][col] == 1) {
                     drawX(gc, col, row);
-                } else if (board[row][col] == 2) {
+                } else if (game.getBoard().getBoardState()[row][col] == 2) {
                     drawO(gc, col, row);
                 }
             }
@@ -141,6 +144,23 @@ public class TicTacToeController extends Application {
     private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
         int col = (int) ((event.getX() - BOARD_PADDING) / TILE_SIZE);
         int row = (int) ((event.getY() - BOARD_PADDING) / TILE_SIZE);
+
+        if(game.getGameState().equals(GameState.SETUP))
+        {
+            game.start();
+        }
+
+        else if(game.getGameState().equals(GameState.P1_TURN))
+        {
+            game.drawX(game.piece1, col, row);
+            game.nextTurn();
+        }
+
+        else if(game.getGameState().equals(GameState.P2_TURN))
+        {
+            game.drawO(game.piece2, col, row);
+            game.nextTurn();
+        }
 
         // Check if click is within board bounds
         if (col >= 0 && col < BOARD_SIZE && row >= 0 && row < BOARD_SIZE) {
