@@ -23,7 +23,7 @@ public class CheckersPiece extends MovingPiece {
      *
      * @param x: the x value location, row, of the piece initially
      * @param y: the y value location, column, of the piece initially
-     * @param colour: the colour of the piece, important for visual player distinction
+     * @param color: the colour of the piece, important for visual player distinction
      * @param ownedBy: the player who owns the piece
      * @param score: score of the piece once captured
      */
@@ -51,16 +51,16 @@ public class CheckersPiece extends MovingPiece {
     /**
      * Move a piece on the board
      *
-     * @param currentX: current X location of piece
-     * @param currentY: current Y location of piece
      * @param newX: new x (row) location
      * @param newY: new y (column) location
      * @param gameBoard: board being played on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard){
+    protected void move(int newX, int newY, Board gameBoard){
+        int currentX = this.getX();
+        int currentY = this.getY();
         //if this move is valid, perform it
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             setX(newX);
@@ -72,15 +72,15 @@ public class CheckersPiece extends MovingPiece {
     /**
      * Check for a move's validity
      *
-     * @param currentX: current X location of piece
-     * @param currentY: current Y location of piece
      * @param newX: X location to check
      * @param newY: Y location to check
      * @param gameBoard: board to check on
      * @return true if move is valid, false if invalid
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard){
+    protected boolean isValidMove(int newX, int newY, Board gameBoard){
+        int currentX = this.getX();
+        int currentY = this.getY();
         return false; //temporary
     }
 }

@@ -33,8 +33,6 @@ public class Pawn extends MovingPiece {
 
     /**
      * Move method used to move the pawn to a different tile
-     * @param currentX: current x coordinate of pawn
-     * @param currentY: current y coordinate of pawn
      * @param newX: x coordinate pawn is being moved to
      * @param newY: y coordinate pawn is being moved to
      * @param gameBoard: the game.chess game's board
@@ -42,8 +40,10 @@ public class Pawn extends MovingPiece {
      * This method works by checking if isValidMove returns true and then moving the piece
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -94,15 +94,15 @@ public class Pawn extends MovingPiece {
      *              On black's turn, they move their pawn up two, in accordance with rule one (1). This places their pawn
      *              directly on the left of your pawn, on f5, or [3][5]. Now it is your turn, you can take black's pawn.
      *              This would result in your pawn ending up on f6, or [2][5], and black's pawn being eaten
-     * @param currentX: current x coordinate of the pawn
-     * @param currentY: current y coordinate of the pawn
      * @param newX: new x coordinate pawn might be moved to
      * @param newY: new y coordinate pawn might be moved to
      * @param gameBoard: board being played on
      * @return true if this is a valid move
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         int compX = (type == PieceType.LIGHT) ? currentX-newX : newX-currentX;

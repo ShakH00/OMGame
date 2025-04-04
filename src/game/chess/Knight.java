@@ -30,15 +30,15 @@ public class Knight extends MovingPiece {
 
     /**
      * A move method to move the knight
-     * @param currentX: current x coordinate of the knight
-     * @param currentY: current y coordinate of the knight
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board playing on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -54,15 +54,15 @@ public class Knight extends MovingPiece {
      * 2. A piece being in its way does not matter, as it is a Knight, think of it like having the ability to jump over pieces
      * 3. The only thing stopping it is if moving out of its current tile places your king in check, a rule that is across the board for all pieces
      *      Also a rule that is NOT being checked within this method but rather a different one in Chess.java
-     * @param currentX: current x coordinate of the knight
-     * @param currentY: current y coordinate of the knight
      * @param newX: new x coordinate it might move to
      * @param newY: new y coordinate it might move to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to make
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];

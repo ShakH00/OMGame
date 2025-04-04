@@ -50,15 +50,15 @@ public class Rook extends MovingPiece {
 
     /**
      * Method to move the rook
-     * @param currentX: current x coordinate of the rook
-     * @param currentY: current y coordinate of the rook
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board being played on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -78,15 +78,15 @@ public class Rook extends MovingPiece {
      *      as long as it is either on the same row or column
      * 2. The only special move performed using a Rook is castling, where it alternates with a king, moving closer
      *      This special move is taken care of on the King's side as it can only be done through the King piece
-     * @param currentX: current x coordinate of the rook
-     * @param currentY: current y coordinate of the rook
      * @param newX: new x coordinate that the rook may be moved to
      * @param newY: new y coordinate that the rook may be moved to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to amke
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];

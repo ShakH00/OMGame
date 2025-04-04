@@ -31,15 +31,15 @@ public class Bishop extends MovingPiece {
 
     /**
      * Method to move the bishop
-     * @param currentX: current x coordinate of the bishop
-     * @param currentY: current y coordinate of the bishop[
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board being played on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -54,15 +54,15 @@ public class Bishop extends MovingPiece {
      * 1. A bishop moves diagonally, so long as nothing is obstructing its path, a similar attribute to that of the Rook
      * 2. This means a Bishop can only move on tiles that are the same color as its home tile
      * There are no special moves for the Bishop
-     * @param currentX: current x coordinate of the bishop
-     * @param currentY: current y coordinate of the bishop
      * @param newX: new x coordinate it might move to
      * @param newY: new y coordinate it might move to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to perform
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];

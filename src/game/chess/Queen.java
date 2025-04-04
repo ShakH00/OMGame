@@ -31,15 +31,15 @@ public class Queen extends MovingPiece {
 
     /**
      * A move method to move the queen
-     * @param currentX: current x coordinate of the queen
-     * @param currentY: current y coordinate of the queen
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board being played on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -56,15 +56,15 @@ public class Queen extends MovingPiece {
      * 2. The only other condition is that every tile in between the current one and destination tile is empty
      * This means a queen can move diagonally like a bishop or straight like a rook, but NOT like a knight
      * However, it cannot move like a knight
-     * @param currentX: current x coordinate of the queen
-     * @param currentY: current y coordinate of the queen
      * @param newX: new x coordinate that the queen might move to
      * @param newY: new y coordinate that the queen might move to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to perform
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];

@@ -36,15 +36,15 @@ public class King extends MovingPiece {
 
     /**
      * Method to move the king
-     * @param currentX: current x coordinate that the king sits on
-     * @param currentY: current y coordinate that the king sits on
      * @param newX: new x coordinate that the king might move to
      * @param newY: new y coordinate that the king might move to
      * @param gameBoard: board being played on
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    protected void move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
@@ -64,15 +64,15 @@ public class King extends MovingPiece {
      *      was one of the rooks, with absolutely no piece in between them to stop it, then the rook and king
      *      will effectively alternate positions ending up side by side, clearing the edge
      * A king cannot move into a tile if it would cause him to end up in check, or checkmate
-     * @param currentX: current x coordinate of king's location
-     * @param currentY: current y coordinate of king's location
      * @param newX: x coordinate of tile that the king might be moved to
      * @param newY: y coordinate of tile that the king might be moved to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to perform for the king
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
