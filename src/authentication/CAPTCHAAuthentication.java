@@ -55,6 +55,9 @@ public class CAPTCHAAuthentication {
             String reversed = new StringBuilder(word).reverse().toString();
             System.out.println("CAPTCHA: Type this word reversed: " + reversed);
             return word;
+        } else {
+            System.out.println("CAPTCHA: Type this word in uppercase: " + word.toUpperCase());
+            return word.toUpperCase();
         }
     }
 
