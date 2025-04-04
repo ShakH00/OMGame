@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-public class GameSelect extends Application {
+public class GameSelectController extends Application {
     @FXML
     ImageView greenCartridge;
     AnchorPane set;
@@ -66,7 +66,7 @@ public class GameSelect extends Application {
 
     @FXML
      void clicked(){
-        animation(greenCartridge);
+        //animation(greenCartridge);
     }
 
     public static void main(String[] args) {
