@@ -78,10 +78,8 @@ public class Board{
 
         else if(gameType == GameType.TICTACTOE)
         {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
                     board[i][j] = null; // Fill with empty cells
                 }
             }
@@ -144,16 +142,4 @@ public class Board{
         }
         fillBoard(gameType);
     }
-
-    /* IGNORE THIS, FOR TICTACTOE
-
-    public game.pieces.Piece getCell(int rows, int cols) {
-        return board[rows][cols];
-    }
-
-    public void setCell(int rows, int cols, game.pieces.Piece value) {
-        board[rows][cols] = value;
-    }
-
-    */
 }

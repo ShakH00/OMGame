@@ -1,11 +1,11 @@
-package game.tictactoe; 
+package game.tictactoe;
 
 /**
-* This is probably equally bad as my checkers code but hey, it's Tic Tac Toe!
-* X's and O's everywhere, someone wins (or not), what more do you want?
-*
-* - Shakil :) (still sleep deprived)
-*/
+ * This is probably equally bad as my checkers code but hey, it's Tic Tac Toe!
+ * X's and O's everywhere, someone wins (or not), what more do you want?
+ *
+ * - Shakil :) (still sleep deprived)
+ */
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 /**
  * Displays a Tic Tac Toe board and handles game logic.
-*/
+ */
 public class TicTacToeController extends Application {
 
     private static final int TILE_SIZE = 100;
@@ -35,8 +35,8 @@ public class TicTacToeController extends Application {
     public void start(Stage primaryStage) {
         Pane root = new Pane();
         Canvas canvas = new Canvas(
-            BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING,
-            BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING
+                BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING,
+                BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING
         );
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -126,15 +126,15 @@ public class TicTacToeController extends Application {
         gc.setLineWidth(4);
 
         double padding = 15;
-        double x = BOARD_PADDING + col * TILE_SIZE + TILE_SIZE/2;
-        double y = BOARD_PADDING + row * TILE_SIZE + TILE_SIZE/2;
+        double x = BOARD_PADDING + col * TILE_SIZE + TILE_SIZE / 2;
+        double y = BOARD_PADDING + row * TILE_SIZE + TILE_SIZE / 2;
 
         // Draw O
         gc.strokeOval(
-            x - (TILE_SIZE/2 - padding),
-            y - (TILE_SIZE/2 - padding),
-            TILE_SIZE - 2*padding,
-            TILE_SIZE - 2*padding
+            x - (TILE_SIZE / 2 - padding),
+            y - (TILE_SIZE / 2 - padding),
+            TILE_SIZE - 2 * padding,
+            TILE_SIZE - 2 * padding
         );
     }
 
@@ -150,10 +150,10 @@ public class TicTacToeController extends Application {
 
                 if (checkWin(row, col)) {
                     gameOver = true;
-                    System.out.println("Player " + (currentPlayer == 1 ? "X" : "O") + " wins!");
+                    System.out.println("Player " + (currentPlayer == 1 ? "X" : "O") + " Wins!");
                 } else if (isBoardFull()) {
                     gameOver = true;
-                    System.out.println("It's a draw!");
+                    System.out.println("It's a Draw!");
                 } else {
                     // Switch players
                     currentPlayer = currentPlayer == 1 ? 2 : 1;
@@ -180,17 +180,17 @@ public class TicTacToeController extends Application {
     }
 
     private boolean checkDiagonals() {
-        // Check main diagonal
-        boolean mainDiagonal = board[0][0] == currentPlayer &&
-                               board[1][1] == currentPlayer &&
-                               board[2][2] == currentPlayer;
+        // Top-Left to Bottom-Right Diagonal
+        boolean topLeftDownDiagonal = board[0][0] == currentPlayer &&
+                                      board[1][1] == currentPlayer &&
+                                      board[2][2] == currentPlayer;
 
-        // Check anti-diagonal
-        boolean antiDiagonal = board[0][2] == currentPlayer &&
-                               board[1][1] == currentPlayer &&
-                               board[2][0] == currentPlayer;
+        // Top-Right to Bottom-Left Diagonal
+        boolean topRightDownDiagonal = board[0][2] == currentPlayer &&
+                                       board[1][1] == currentPlayer &&
+                                       board[2][0] == currentPlayer;
 
-        return mainDiagonal || antiDiagonal;
+        return topLeftDownDiagonal || topRightDownDiagonal;
     }
 
     private boolean isBoardFull() {
