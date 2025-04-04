@@ -24,7 +24,7 @@ public class CAPTCHAAuthentication {
 
         /**
          * conditional statements iterating through +, -, *, and /
-          */
+         */
         if (operation == 0) {
             problem = a + " + " + b;
             answer = a + b;
@@ -44,6 +44,14 @@ public class CAPTCHAAuthentication {
         return answer;
     }
 
+    public static String generateTextProblem() {
+        String[] words = {"abcd", "efg", "hijk", "lmno"};
+        Random random = new Random();
+        String word = words[random.nextInt(words.length)];
+
+        boolean reverse = random.nextBoolean();
+
+    }
 
     /**
      * Stimulating a CAPTCHA authentication
