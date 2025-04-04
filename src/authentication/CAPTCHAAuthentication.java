@@ -61,7 +61,13 @@ public class CAPTCHAAuthentication {
         }
     }
 
-
+    /**
+     * Stimulating a CAPTCHA authentication
+     * @param userInput - Takes in the user input for the answer to the math equation and text based CAPTCHA
+     * @param mode - Takes in the user input for if they want to do a math or text based equation
+     * @param correctAnswer - Checking if the correct answer is inputted for the math and text based CAPTCHA
+     * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
+     */
     public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
 
         if (mode.equalsIgnoreCase("math")) {
