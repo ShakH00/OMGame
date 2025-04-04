@@ -1,136 +1,148 @@
 package leaderboard;
 
-import game.GamesEnum;
-import player.Account;
-import player.statistics.AStatistics;
+import account.NoAccountError;
+import account.statistics.StatisticType;
+import game.GameType;
+import account.Account;
 import database.DatabaseManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+
+import static account.statistics.StatisticType.*;
 
 public class Leaderboard {
-
     /**
-     * @param games,                Game to sort by
-     * @param gameStats,            Stats of all players in the game chosen
-     * @param isAscending,          If they want ascending or descending order.
-     * @return                      Sorted list
-     *
-     * Getting global leaderboard (max = 100 or 500 if needed), from all players in the database, depending on the game
-     * the player sorted by, returning the sorted result 0 = 1st (highest player), 99 = 100th (highest player), if
-     * isAscending is true, else it would be reversed...
-     *
+     * Get a Leaderboard String[][] that includes all Accounts in the database to be displayed by the GUI
+     * @param game                  GameType game for leaderboard
+     * @param sortStatistic         StatisticType statistic to rank accounts by
+     * @param additionalStatistic   StatisticType statistic to show in the last column
+     * @param isAscending           boolean; if true, the lowest value in a given stat will be ranked highest
+     * @param accountsPerPage       int number of accounts to show per page
+     * @param pageNumber            int current page, starting at 1
+     * @return                      String[][] including the header row for the leaderboard
      */
-//    public String[][] getGlobalLeaderboard(Account playerAccount, GamesEnum games, AStatistics gameStats, boolean isAscending) {
-//        ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
-//
-//        HashSet<Account> totalPlayersAccount = new HashSet<>();
-//        if (playerAccount == null) {
-//            totalPlayersAccount.addAll(database.getAllPlayer());
-//        } else {
-//            totalPlayersAccount.add(playerAccount);
-//            totalPlayersAccount.addAll(playerAccount.getFriends());
-//        }
-//        int lastIndex = firstIndex + min(lastIndex - firstIndex, totalPlayersAccount.size());
-//
-//        ArrayList<String[]> leaderboardRows = new ArrayList<>();
-//
-//        if (gameStats == null) {
-//            for (Account players: totalPlayersAccount){
-//                leaderboardRows.add(players.getCombinedStatistics().toStringArray());
-//            }
-//            int sortPropertyIndex = totalPlayersAccount[0].getCombinedStatistics().getIndexOfPropertyInStringArray(sortProperty);
-//            leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-//            leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-//            leaderboardRows.add(0, totalPlayersAccount[0].getCombinedStatistics().getStringArrayHeaders());
-//        } else {
-//            for (Account players: totalPlayersAccount) {
-//                leaderboardRows.add(player.getGameStatistics(games).toStringArray());
-//                leaderboardRows.sort( (a,b) -> {return  (-1)^ascendingSort*Integer.parseInt((a[sortPropertyIndex]).compareTo(Integer.parseInt(b[sortPropertyIndex])));});
-//                leaderboardRows = leaderboardRows.subList(firstIndex, lastIndex + 1);
-//                leaderboardRows.add(0, totalPlayersAccount[0].getGameStatistics(games).getStringArrayHeaders());
-//
-//            }
-//        }
-//
-//        return new String[0][0];
-//    }
-
-    /**
-     * @param playerAccount,        Player's friends list
-     * @param games,                Game to sort by
-     * @param gameStats,            Stats of friends and player
-     * @param isAscending           Order of viewing...
-     * @return                      Sorted friends list
-     *
-     * Getting local leaderboard (max = friends added) from the player's friends list. Sorted by the chosen game
-     * selected by player. Returning the sorted result into a String[][] to be displayed properly
-     */
-    public String[][] getFriendsLeaderboard(Account playerAccount, GamesEnum games, AStatistics gameStats, boolean isAscending) {
-        return new String[0][0];
-    }
-
-
-    /**
-     * @param list,                 List given to be sorted
-     * @param left,                 Starting point          Mostly starting at 0
-     * @param right,                ending point            Mostly ending of the list length -1
-     *
-     *  the sort method allows the to sort a list array in ascending order.
-     *  This sorting algorithm is called quick sort.
-     */
-    public static void sort(List<Integer> list, int left, int right) {
-        if (right > left) {
-            int partitionIndex = partition(list, left, right);
-            sort(list, left, partitionIndex - 1);
-            sort(list, partitionIndex + 1, right);
-        }
+    public String[][] getGlobalLeaderboard(
+            GameType game,
+            StatisticType sortStatistic,
+            StatisticType additionalStatistic,
+            boolean isAscending,
+            int accountsPerPage,
+            int pageNumber)
+    {
+        ArrayList<Account> accountsList = DatabaseManager.queryAllAccounts();
+        return getLeaderboard(accountsList, game, sortStatistic, additionalStatistic, isAscending, accountsPerPage, pageNumber);
     }
 
     /**
-     * @param list,                 List given to be sorted
-     * @param left,                 Starting point          Mostly starting at 0
-     * @param right,                ending point            Mostly ending of the list length -1
-     * @return,                     Returned sorted array
-     *
-     * Another word for partition is division, as this method does the heavy lifting by dividing the list into two
-     * sections to check and sort to from ascending order.
+     * Get a Leaderboard String[][] that includes some account and their friends to be displayed by the GUI
+     * @param account               Account of user who is requesting the leaderboard
+     * @param game                  GameType game for leaderboard
+     * @param sortStatistic         StatisticType statistic to rank accounts by
+     * @param additionalStatistic   StatisticType statistic to show in the last column
+     * @param isAscending           boolean; if true, the lowest value in a given stat will be ranked highest
+     * @param accountsPerPage       int number of accounts to show per page
+     * @param pageNumber            int current page, starting at 1
+     * @return                      String[][] including the header row for the leaderboard
      */
-    static int partition(List<Integer> list, int left, int right) {
-        int median = list.get(left);
-        int leftSide = left;
-        int rightSide = right + 1;
+    public String[][] getFriendsLeaderboard(
+            Account account,
+            GameType game,
+            StatisticType sortStatistic,
+            StatisticType additionalStatistic,
+            boolean isAscending,
+            int accountsPerPage,
+            int pageNumber)
+            throws NoAccountError
+    {
+        // If the account is a guest, throw an error
+        if (account.getIsGuest()) { throw new NoAccountError(); }
 
-        // infinite loop
-        for (;;) {
-            // left side of the median
-            while (list.get(++leftSide) < median) {
-                if (leftSide >= right)
-                    break;
-            }
-            // right side of the median
-            while (list.get(--rightSide) > median) {
-                if (rightSide <= left)
-                    break;
-            }
-            // catch
-            if (leftSide >= rightSide) {
-                // catch if left side goes beyond the right side
-                break;
-            } else {
-                // swap the list
-                Collections.swap(list, leftSide, rightSide);
-            }
-        }
-        // return if the sorting is completed
-        if (rightSide == left) {
-            return rightSide;
-        }
-        // Swap the list
-        Collections.swap(list, left, rightSide);
-        return rightSide    ;
+        // Create a new ArrayList including the requesting Account and all of their friends
+        ArrayList<Account> accountsList = new ArrayList<>();
+        accountsList.add(account);
+        accountsList.addAll(account.getFriends());
+
+        // Get leaderboard composed of these players
+        return getLeaderboard(accountsList, game, sortStatistic, additionalStatistic, isAscending, accountsPerPage, pageNumber);
     }
 
+    /**
+     * Get a Leaderboard String[][] based on the given parameters to be displayed by the GUI
+     * @param accounts              Account arraylist for Accounts to include in the leaderboard
+     * @param game                  GameType game for leaderboard
+     * @param sortStatistic         StatisticType statistic to rank accounts by
+     * @param additionalStatistic   StatisticType statistic to show in the last column
+     * @param isAscending           boolean; if true, the lowest value in a given stat will be ranked highest
+     * @param accountsPerPage       int number of accounts to show per page
+     * @param pageNumber            int current page, starting at 1
+     * @return                      String[][] including the header row for the leaderboard
+     */
+    private String[][] getLeaderboard(
+            ArrayList<Account> accounts,
+            GameType game,
+            StatisticType sortStatistic,
+            StatisticType additionalStatistic,
+            boolean isAscending,
+            int accountsPerPage,
+            int pageNumber)
+    {
+        // Initialize comparator that sorts Accounts by the sortStatistic in ascending or descending order
+        Comparator<Account> filterGlobalLeaderboard;
+        if (isAscending) {
+            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) a.getStatistic(game, sortStatistic), (Double) b.getStatistic(game, sortStatistic));
+        }
+        else {
+            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) b.getStatistic(game, sortStatistic), (Double) a.getStatistic(game, sortStatistic));
+        }
+
+        // Sort the Accounts using the comparator
+        List<Account> sortedAccounts = accounts.stream().sorted(filterGlobalLeaderboard).toList();
+
+        // Initialize leaderboard String[][]. Rows = header + players. Columns = rank, name, elo, win%, wins, other
+        String[][] leaderboard = new String[1 + accountsPerPage][6];
+
+        // Add header row to leaderboard
+        leaderboard[0] = getLeaderboardHeader(additionalStatistic);
+
+        // Add player rows to leaderboard
+        int startRank = 1 + (pageNumber - 1) * accountsPerPage;
+        for (int rank = startRank; rank <= startRank + accountsPerPage; rank++) {
+            int row = rank - 1; // Current row of leaderboard String[][]
+
+            // Try to find the Player at this rank and add them to the leaderboard String[][]
+            try {
+                Account account = sortedAccounts.get(rank);
+                leaderboard[row] = new String[]{
+                        String.valueOf(rank),                                       // Rank
+                        account.getUsername(),                                      // Username
+                        account.getStatistic(game, ELO).toString(),                 // Elo/rating
+                        account.getStatistic(game, WIN_RATE).toString(),            // Win rate
+                        account.getStatistic(game, WINS).toString(),                // Total wins
+                        account.getStatistic(game, additionalStatistic).toString()  // Chosen statistic
+                };
+            }
+            // If there are no more Players, add an empty row.
+            catch (IndexOutOfBoundsException e) {
+                leaderboard[row] = new String[]{"", "", "", "", "", ""};
+            }
+        }
+
+        return leaderboard;
+    }
+
+    /**
+     * Get a String[] for the header of the leaderboard
+     * @param additionalStatistic   The additional statistic that is selected in the last column of the Leaderboard GUI
+     * @return                      String[] for the header row of the leaderboard
+     */
+    private String[] getLeaderboardHeader(StatisticType additionalStatistic) {
+        String[] headers = new String[6];
+        headers[0] = "RANK";
+        headers[1] = "USERNAME";
+        headers[2] = StatisticType.ELO.toString();
+        headers[3] = StatisticType.WIN_RATE.toString();
+        headers[4] = StatisticType.WINS.toString();
+        headers[5] = additionalStatistic.toString();
+        return headers;
+    }
 }

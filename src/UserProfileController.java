@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
-import player.Account;
+//import player.Account;
 import javafx.animation.ScaleTransition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -71,18 +71,18 @@ public class UserProfileController extends Application {
     private Tab matches;
 
 
-    public void setAccount(Account account) {
-
-        // bind text to get username
-        usernameLabel.setText(account.getUsername());
-
-        // do we even have avatars???
-        //avatarImageView.setImage(new Image(currentAccount.getAvatarImageUrl()));  // Assuming a method like this in Account
-
-        // they do not have banner colors either
-        // banner region color binding
-        //bannerRegion.setStyle("-fx-background-color: " + currentAccount.getBannerColor() + ";");
-    }
+//    public void setAccount(Account account) {
+//
+//        // bind text to get username
+//        usernameLabel.setText(account.getUsername());
+//
+//        // do we even have avatars???
+//        //avatarImageView.setImage(new Image(currentAccount.getAvatarImageUrl()));  // Assuming a method like this in Account
+//
+//        // they do not have banner colors either
+//        // banner region color binding
+//        //bannerRegion.setStyle("-fx-background-color: " + currentAccount.getBannerColor() + ";");
+//    }
 
 
     @FXML
