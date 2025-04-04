@@ -3,8 +3,6 @@ import database.DatabaseManager;
 import account.Account;
 
 public class Admin {
-
-
     /**
      * Integer ID; unique for this Account, given by the Database. 16 chars long
      */
