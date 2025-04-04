@@ -1,9 +1,11 @@
 package authentication.Authentication;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAAuthentication;
+import authentication.CAPTCHAAuthentication;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,6 +53,12 @@ public class AuthenticationTest {
         assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
         assertEquals("Code Entered is Invalid!", "Please enter digits only!");
+    }
+
+    @Test
+    public void RandomImageTest() {
+        File img = CAPTCHAAuthentication.chooseImage();
+        System.out.printf(img.getName());
     }
 
 
