@@ -1,13 +1,3 @@
-/**
- * A game.chess.King object class for the game of Chess
- * As with other pieces, it tracks x, y coordinates, colour, player who owns it, and score
- * The score is set to -1 as a King is the most valuable piece on the board
- * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
- * but rather would only ever get checkmated
- *
- * @author Abdulrahman
- */
-
 package game.chess;
 
 import game.Board;
@@ -16,20 +6,29 @@ import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 
+/**
+ * A game.chess.King object class for the game of game.chess.Chess
+ * As with other game.pieces, it tracks x, y coordinates, colour, player who owns it, and score
+ * The score is set to -1 as a game.chess.King is the most valuable piece on the board
+ * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
+ * but rather would only ever get checkmated
+ *
+ * @author Abdulrahman
+ */
 public class King extends MovingPiece {
-    private boolean doneFirstMove;
+    private boolean firstMove;
 
     public King(int x, int y, String colour, PieceType pieceType, Player ownedBy){
         super(x, y, colour, pieceType, ownedBy, -1);
-        this.doneFirstMove = false;
+        this.firstMove = false;
     }
 
-    public void setDoneFirstMove(boolean doneFirstMove){
-        this.doneFirstMove = doneFirstMove;
+    public void setFirstMove(boolean firstMove){
+        this.firstMove = firstMove;
     }
 
     public boolean getFirstMoveStatus(){
-        return this.doneFirstMove;
+        return this.firstMove;
     }
 
     @Override
@@ -40,8 +39,8 @@ public class King extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            if(!doneFirstMove){
-                doneFirstMove = true;
+            if(!firstMove){
+                firstMove = true;
             }
         }
     }
@@ -63,25 +62,15 @@ public class King extends MovingPiece {
      */
     @Override
     protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
+        boolean out = false;
         Piece[][] board = gameBoard.getBoardState();
-        PieceType type = this.getPieceType();
-        Piece isPieceOnTile = board[newX][newY];
-        //might be trying to castle
-        if(!doneFirstMove){
-            //if to check which side trying to castle to
-                //find rook on that side, check if first move done
-                    //castle if possible
-        } else{
-            if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
-                return true;
-            }
-        }
+        PieceType pieceType = this.getPieceType();
         if(board[newX][newY] == null){
+            //need to check for if moving here might put king in check
             //need to check if trying to castle
-
+            out = false;
         }
-        return false;
+        return out;
     }
 
 

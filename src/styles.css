@@ -1,0 +1,29 @@
+* {
+    -fx-font-family: 'Press Start 2P';
+}
+
+.hoverButton {
+    -fx-transition: all 0.3s ease;
+}
+
+.hoverButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+loginHoverButton {
+    -fx-transition: all 0.3s ease;
+}
+
+.loginHoverButton:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.hoverCartridge {
+    -fx-transition: all 0.5s ease;
+}
+
+.hoverCartridge:hover {
+    -fx-translate-y: -10;
+}
