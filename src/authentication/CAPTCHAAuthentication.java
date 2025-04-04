@@ -91,16 +91,4 @@ public class CAPTCHAAuthentication {
             throw new CAPTCHAAuthenticationFailedException("Invalid CAPTCHA mode.");
         }
     }
-//        try {
-//            int userAnswer = Integer.parseInt(userInput);
-//
-//            if (userAnswer == correctAnswer) {
-//                System.out.println("CAPTCHA verified");
-//            } else {
-//                throw new CAPTCHAAuthenticationFailedException("Invalid answer entered!");
-//            }
-//
-//        } catch (NumberFormatException e) {
-//            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
-//        }
-    }
+}
