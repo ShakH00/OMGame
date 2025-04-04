@@ -7,6 +7,9 @@ package game.chess; /**
  * - Shakil :) (im dying its 1am)
  */
 
+import game.Board;
+import game.GameType;
+import game.checkers.Checkers;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -28,20 +31,22 @@ public class ChessController extends Application {
     private static final int TILE_SIZE = 64; // Size of each tile on the chessboard
     private static final int BOARD_SIZE = 8; // Number of rows and columns on the board
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/"; // Path to chess piece images
+    private Board board;
+    private Chess chessGame;
+    private int selectedX = -1, selectedY = -1;
 
     // Initial chessboard layout
-    private final String[][] board = {
-            {"blackRookChess", "blackKnightChess", "blackBishopChess", "blackQueenChess", "blackKingChess", "blackBishopChess", "blackKnightChess", "blackRookChess"},
-            {"blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess"},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {"whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess"},
-            {"whiteRookChess", "whiteKnightChess", "whiteBishopChess", "whiteQueenChess", "whiteKingChess", "whiteBishopChess", "whiteKnightChess", "whiteRookChess"}
-    };
+//    private final String[][] board = {
+//            {"blackRookChess", "blackKnightChess", "blackBishopChess", "blackQueenChess", "blackKingChess", "blackBishopChess", "blackKnightChess", "blackRookChess"},
+//            {"blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess"},
+//            {null, null, null, null, null, null, null, null},
+//            {null, null, null, null, null, null, null, null},
+//            {null, null, null, null, null, null, null, null},
+//            {null, null, null, null, null, null, null, null},
+//            {"whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess"},
+//            {"whiteRookChess", "whiteKnightChess", "whiteBishopChess", "whiteQueenChess", "whiteKingChess", "whiteBishopChess", "whiteKnightChess", "whiteRookChess"}
+//    };
 
-    private int selectedX = -1, selectedY = -1;
 
     /**
      * Setting up the chessboard UI
@@ -53,6 +58,11 @@ public class ChessController extends Application {
         Pane root = new Pane();
         Canvas canvas = new Canvas(TILE_SIZE * BOARD_SIZE, TILE_SIZE * BOARD_SIZE);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        board = new Board(GameType.CHESS);
+        chessGame = new Chess(); // Initialize Checkers game logic
+        chessGame.setBoard(board); // Set the board in the checkers class.
+        chessGame.start();
 
         drawChessBoard(gc);
         drawPieces(gc);

@@ -1,13 +1,39 @@
 package game.chess;
 
-import game.Board;
-import game.Game;
-import game.Player;
+import game.*;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 
 public class Chess extends Game {
+    private Player player1;
+    private Player player2;
+    private GameState gameState;
+
+    public Chess(){
+        this.player1 = new Player();
+        this.player2 = new Player();
+    }
+
+    public void setBoard(Board board){
+        this.board = board;
+        board.fillBoard(GameType.CHESS);
+    }
+
+    public void start(){
+        gameState = GameState.P1_TURN;
+    }
+
+
+
+    public void switchTurn() {
+        if (gameState == GameState.P1_TURN){
+            gameState = GameState.P2_TURN;
+        }
+        else if (gameState == GameState.P2_TURN){
+            gameState = GameState.P1_TURN;
+        }
+    }
 
     public void move(Piece piece) {
 
