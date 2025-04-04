@@ -66,7 +66,7 @@ public class CAPTCHAAuthentication {
      * @param userInput - Takes in the user input for the answer to the math equation
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
      */
-    public static void captchaAuthenticatorDriver(String userInput) throws CAPTCHAAuthenticationFailedException {
+    public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
         int correctAnswer = CAPTCHAAuthentication.generateProblem();
 
         try {
