@@ -1,6 +1,6 @@
 package matchmaking;
 
-public class ConnectFourMatchMaking extends MatchMaking {
+public class ConnectFourMatchmaking extends MatchMaking {
     private long startingTime;
     private int findElo;
     private int increment;
