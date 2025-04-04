@@ -38,6 +38,12 @@ public class SignUpController extends Application {
     }
 
     @FXML
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
+
+    @FXML
     private void handleCloseButton() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
         Parent helpRoot = loader.load();

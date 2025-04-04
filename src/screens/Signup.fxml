@@ -63,7 +63,7 @@
             </DropShadow>
          </effect>
           </ImageView>
-          <Text fill="WHITE" layoutX="19.0" layoutY="36.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
+          <Text onMouseClicked="#switchToHome" fill="WHITE" layoutX="19.0" layoutY="36.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
               <font>
                   <Font name="Press Start 2P Regular" size="13.0" />
               </font>
