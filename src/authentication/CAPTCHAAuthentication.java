@@ -87,6 +87,8 @@ public class CAPTCHAAuthentication {
             } else {
                 throw new CAPTCHAAuthenticationFailedException("Incorrect text CAPTCHA!");
             }
+        } else {
+            throw new CAPTCHAAuthenticationFailedException("Invalid CAPTCHA mode.");
         }
     }
 //        try {
