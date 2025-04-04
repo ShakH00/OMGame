@@ -68,7 +68,23 @@ public class Bishop extends MovingPiece {
         Piece isPieceOnTile = board[newX][newY];
         //make sure it is diagonal movement
         if(Math.abs(newX-currentX) == Math.abs(newY-currentY) && isPieceOnTile.getPieceType() != type){
-            //check every tile in between is empty
+            //ensure we move in right direction
+            int xDir = (newX > currentX) ? 1 : -1; //if newX > currentX then one (1), else then negative one (-1)
+            int yDir = (newY > currentY) ? 1 : -1; //same deal as above
+
+            int x = currentX + xDir;
+            int y = currentY + yDir;
+
+            //check if all tiles are empty in between current and destination tiles
+            while(x != newX && y != newY){
+                if(board[x][y] != null){
+                    return false;
+                }
+                //update x and y to check next tile!
+                x += xDir;
+                y += yDir;
+            }
+            return isPieceOnTile.getPieceType() != type; //make sure destination tile is either empty or enemy piece
         }
         return false; //if reach end of method, invalid move
     }
