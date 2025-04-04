@@ -21,4 +21,12 @@
 - Enter: http://localhost/phpmyadmin/
 - You should now see the phpMyAdmin dashboard!
 
+# Step 4: Making it work with java
+- Download mysql connector from https://dev.mysql.com/downloads/connector/j/
+- Choose platform independent operating system.
+- Download the ZIP file, extract and you will see mysql-connector-j-<version>.jar, this is the file you'll use in your Java Project
+- Go to File > Project Structure > Libraries 
+- Click “+” → Java, then select the JAR file. 
+- Apply & OK.
+
 ## I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
