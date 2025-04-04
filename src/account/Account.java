@@ -201,7 +201,7 @@ public class Account {
      * Get the match history for this Account to display on the profile. Includes header row
      * @return String[][] for MatchHistory, including header row
      */
-    public String[][] getMatchHistory() {
+    public String[][] getMatchHistoryWithHeader() {
         String[][] matchHistoryOutput = new String[1 + matchHistory.length][6];
 
         // Add header to the output array
@@ -211,6 +211,14 @@ public class Account {
         System.arraycopy(matchHistory, 0, matchHistoryOutput, 1, matchHistory.length);
 
         return matchHistoryOutput;
+    }
+
+    /**
+     * Get the match history for this Account to display on the profile. Does not include header row.
+     * @return String[][] for MatchHistory, including header row
+     */
+    public String[][] getMatchHistory() {
+        return matchHistory;
     }
 
     /**

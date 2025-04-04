@@ -161,7 +161,7 @@ public abstract class AStatistics implements IStatistics {
      * @param statistic Statistic to query
      * @return          True if the statistic is complex; false otherwise
      */
-    boolean isComplex(StatisticType statistic){
+    public boolean isComplex(StatisticType statistic){
         return complexStatistics.contains(statistic);
     }
 
