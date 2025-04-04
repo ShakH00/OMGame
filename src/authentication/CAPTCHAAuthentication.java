@@ -67,7 +67,6 @@ public class CAPTCHAAuthentication {
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
      */
     public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
-        int correctAnswer = CAPTCHAAuthentication.generateProblem();
 
         if (mode.equalsIgnoreCase("math")) {
             try {
@@ -82,6 +81,14 @@ public class CAPTCHAAuthentication {
             } catch (NumberFormatException e) {
                 throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
             }
+        } else if (mode.equalsIgnoreCase("text")) {
+            if (userInput.equals(correctAnswer)) {
+                System.out.println("CAPTCHA verified");
+            } else {
+                throw new CAPTCHAAuthenticationFailedException("Incorrect text CAPTCHA!");
+            }
+        }
+    }
 //        try {
 //            int userAnswer = Integer.parseInt(userInput);
 //
@@ -95,4 +102,3 @@ public class CAPTCHAAuthentication {
 //            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
 //        }
     }
-}
