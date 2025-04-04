@@ -259,7 +259,7 @@ public class Checkers extends Game {
                     if (piece.getColor().equals(Color.BLACK)){
                         Piece1Exists = true;
                     }
-                    if (piece.getColor().equals(Color.RED)){
+                    if (piece.getColor().equals(Color.WHITE)){
                         Piece2Exists = true;
                     }
                 }
