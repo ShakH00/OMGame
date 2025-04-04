@@ -1,9 +1,11 @@
 package authentication.Authentication;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAAuthentication;
+import authentication.CAPTCHAAuthentication;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,6 +53,40 @@ public class AuthenticationTest {
         assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
         assertEquals("Code Entered is Invalid!", "Please enter digits only!");
+    }
+
+    @Test
+    public void RandomImageTest() {
+        File img = CAPTCHAAuthentication.chooseImage();
+        System.out.printf(img.getName());
+    }
+
+    @Test
+    public void verifyCaptchaTest1() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4f8yp";
+        assertTrue(CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest2() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4F8YP";
+        assertTrue(CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest3() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4F8YP.png";
+        assertFalse(CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest4() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "meepmorp";
+        assertFalse(CAPTCHAAuthentication.verifyCAPTCHA(input, img));
     }
 
 

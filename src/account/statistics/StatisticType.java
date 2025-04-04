@@ -28,6 +28,10 @@ public enum StatisticType {
     WINS_BLOCKED;       // Tic-Tac-Toe, Connect 4
 
 
+    /**
+     * Get a String representation of the enum value
+     * @return  String representation of enum. Example: WINS_BLOCKED --> "Wins Blocked"
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -44,5 +48,19 @@ public enum StatisticType {
 
         // Return string for enum
         return sb.toString().trim();
+    }
+
+    /**
+     * Given a String representation of the enumerator value, return the enumerator value.
+     * @param string    String given by a call to some StatisticType enum's toString() function.
+     * @return          StatisticType corresponding to that string.
+     */
+    public StatisticType fromString(String string){
+        for (StatisticType statisticType : StatisticType.values()){
+            if (statisticType.toString().equals(string)) {
+                return statisticType;
+            }
+        }
+        return null;
     }
 }
