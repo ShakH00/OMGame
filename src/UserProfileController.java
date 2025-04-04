@@ -73,7 +73,7 @@ public class UserProfileController extends Application {
 
     public void setAccount(Account account) {
 
-        // Bind the username, stats, avatar, and banner color to the UI components
+        // bind text to get username
         usernameLabel.setText(account.getUsername());
 
         // do we even have avatars???
