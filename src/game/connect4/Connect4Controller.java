@@ -1,3 +1,4 @@
+package game.connect4;
 /**
  * Connect 4 with Player Indicators
  * 
