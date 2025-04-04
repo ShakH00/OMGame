@@ -14,7 +14,7 @@ public class DatabaseTest {
             String sql = "INSERT INTO signup (name, email, phone, password) VALUES (?, ?, ?, ?)";
 
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, "Nebila Wako");
+                stmt.setString(1, "Elijah");
                 stmt.setString(2, "nebila@example.com");
                 stmt.setString(3, "1234567890");
                 stmt.setString(4, "securepassword123");
