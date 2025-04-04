@@ -66,9 +66,16 @@ public class Knight extends MovingPiece {
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
-        if(isPieceOnTile.getPieceType() != type){
-            return true;
+        //have to check for L shape movement!
+        int dx = Math.abs(newX - currentX);
+        int dy = Math.abs(newY - currentY);
+
+        //if not L shape then return false
+        if (!((dx == 2 && dy == 1) || (dx == 1 && dy == 2))) {
+            return false;
         }
-        return false;
+
+        //if tile is empty or enemy piece then move is allowed
+        return (isPieceOnTile == null || isPieceOnTile.getPieceType() != type);
     }
 }

@@ -91,46 +91,24 @@ public class Rook extends MovingPiece {
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
         //must move in a straight line
-        if(isPieceOnTile.getPieceType() != type){
-            if(currentX == newX && currentY != newY){
-                if(newY-currentY>0){ //moving right
-                    //have to check every tile in between is empty
-                    for(int i = currentY; i < newY; i++){
-                        if(board[newX][i] != null){
-                            return false; //not empty so return false
-                        }
-                    }
-                    return true; //empty so return true
-                } else { //moving left
-                    //check every piece between current y and new y as empty
-                    for(int i = newY; i < currentY; i++){
-                        if(board[newX][i] != null){
-                            return false; //not empty = return false
-                        }
-                    }
-                    return true; //empty, return true
+        if(currentX != newX && currentY != newY){ //not straight line
+            return false; //return false, end here
+        } else if(currentX == newX){ //move horizontal because x stays the same
+            int yStep = (newY > currentY) ? 1 : -1; //if move right = +1, move left = -1
+            for (int y = currentY + yStep; y != newY; y += yStep) {
+                if (board[newX][y] != null) {
+                    return false; //tile has piece so invalid move
                 }
-            } else if(currentY == newY && currentX != newX){
-                if(newX-currentX > 0){ //moving down
-                    //check every piece between current x and new x as empty
-                    for(int i = currentX; i < newX; i++){
-                        if(board[i][newY] != null){
-                            return false; //not empty = return false
-                        }
-                    }
-                    return true; //empty so return true
-                } else{ //moving up
-                    //check every piece between current and new x as empty
-                    for(int i = newX; i < currentX; i++){
-                        if(board[i][newY] != null){
-                            return false; //not empty so return false
-                        }
-                    }
-                    return true; //empty so return true
+            }
+        } else { //move vertical because y stays the same
+            int xStep = (newX > currentX) ? 1 : -1; // move down = +1, move up = -1
+            for (int x = currentX + xStep; x != newX; x += xStep) {
+                if (board[x][newY] != null) {
+                    return false; //tile has piece so invalid move
                 }
             }
         }
+        return isPieceOnTile == null || isPieceOnTile.getPieceType() != type; //true if destination tile is empty or has enemy piece to be eaten
 
-        return false; //if reach end then move is invalid
     }
 }
