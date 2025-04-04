@@ -79,9 +79,9 @@
             </Text>
          </children>
       </StackPane>
-      <StackPane layoutX="331.0" layoutY="366.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+      <StackPane fx:id="helpButton" layoutX="331.0" layoutY="366.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
-            <ImageView fx:id="helpButton" fitHeight="111.0" fitWidth="147.0" onMouseClicked="#openHelpPopup" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="111.0" fitWidth="147.0" onMouseClicked="#openHelpPopup" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/green.png" />
                </image>

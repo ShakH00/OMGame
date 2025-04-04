@@ -33,22 +33,8 @@ public class SignUpController extends Application {
     }
     @FXML
     private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
-            // load help.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Login.fxml"));
-            Parent helpRoot = loader.load();
-
-            // get help controller
-            LoginController loginController = loader.getController();
-
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
-
-            // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Login.fxml");
     }
 
     @FXML
