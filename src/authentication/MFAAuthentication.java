@@ -1,6 +1,6 @@
 package authentication;
 
-import ExceptionsAuthentication.MFAAuthenticationFailedException;
+import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 

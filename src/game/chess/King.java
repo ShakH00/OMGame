@@ -1,3 +1,13 @@
+/**
+ * A game.chess.King object class for the game of Chess
+ * As with other pieces, it tracks x, y coordinates, colour, player who owns it, and score
+ * The score is set to -1 as a King is the most valuable piece on the board
+ * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
+ * but rather would only ever get checkmated
+ *
+ * @author Abdulrahman Negmeldin
+ */
+
 package game.chess;
 
 import game.Board;
@@ -5,32 +15,33 @@ import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
-/**
- * A game.chess.King object class for the game of game.chess.Chess
- * As with other game.pieces, it tracks x, y coordinates, colour, player who owns it, and score
- * The score is set to -1 as a game.chess.King is the most valuable piece on the board
- * Hence, the -1 simply represents that it is valued at infinity. The king will never be eaten anyway
- * but rather would only ever get checkmated
- *
- * @author Abdulrahman
- */
 public class King extends MovingPiece {
-    private boolean firstMove;
+    private boolean doneFirstMove; //used to check if can castle
 
-    public King(int x, int y, String colour, PieceType pieceType, Player ownedBy){
-        super(x, y, colour, pieceType, ownedBy, -1);
-        this.firstMove = false;
+    /**
+     * Constructor class to make a King, uses the super method call as this inherits MovingPiece
+     * @param x: x coordinate of king
+     * @param y: y coordinate of king
+     * @param color: Color of king
+     * @param pieceType: PieceType, LIGHT or DARK
+     * @param ownedBy; Player who owns the piece
+     */
+    public King(int x, int y, Color color, PieceType pieceType, Player ownedBy){
+        super(x, y, color, pieceType, ownedBy, -1);
+        this.doneFirstMove = false;
     }
 
-    public void setFirstMove(boolean firstMove){
-        this.firstMove = firstMove;
-    }
 
-    public boolean getFirstMoveStatus(){
-        return this.firstMove;
-    }
-
+    /**
+     * Method to move the king
+     * @param currentX: current x coordinate that the king sits on
+     * @param currentY: current y coordinate that the king sits on
+     * @param newX: new x coordinate that the king might move to
+     * @param newY: new y coordinate that the king might move to
+     * @param gameBoard: board being played on
+     */
     @Override
     protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
         if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
@@ -39,8 +50,8 @@ public class King extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            if(!firstMove){
-                firstMove = true;
+            if(!doneFirstMove){
+                this.doneFirstMove = true;
             }
         }
     }
@@ -62,15 +73,30 @@ public class King extends MovingPiece {
      */
     @Override
     protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        boolean out = false;
+        //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
         Piece[][] board = gameBoard.getBoardState();
-        PieceType pieceType = this.getPieceType();
-        if(board[newX][newY] == null){
-            //need to check for if moving here might put king in check
-            //need to check if trying to castle
-            out = false;
+        PieceType type = this.getPieceType();
+        Piece isPieceOnTile = board[newX][newY];
+        //might be trying to castle
+        if(!doneFirstMove || board[newX][newY] == null){
+                if(newY-currentY == 2 && board[currentX][7] instanceof Rook){
+                    Rook rook = (Rook) board[currentX][7];
+                    if(rook.isDoneFirstMove() && board[currentX][6] == null && board[currentX][5] == null){
+                        return true;
+                    }
+                } else if(currentY-newY == 2 && board[currentX][0] instanceof Rook){
+                    Rook rook = (Rook) board[currentX][0];
+                    if(rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null){
+                        return true;
+                    }
+                }
+
+        } else{
+            if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
+                return true;
+            }
         }
-        return out;
+        return false;
     }
 
 

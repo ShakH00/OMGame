@@ -1,6 +1,7 @@
 package game.pieces;
 
 import game.Player;
+import javafx.scene.paint.Color;
 
 /**
  * An Abstract game.pieces.Piece class which is inherited by ALL game.pieces whether they are moving or stationary game.pieces
@@ -12,19 +13,19 @@ import game.Player;
  * @author Abdulrahman
  */
 public abstract class Piece {
-    private String colour;
+    private Color color;
     private Player ownedBy;
     private int score;
     private PieceType pieceType;
 
     /**
      * Constructor
-     * @param colour: String, colour
+     * @param color: String, colour
      * @param ownedBy: game.Player, player who owns the piece
      * @param score: int
      */
-    public Piece(String colour, PieceType pieceType, Player ownedBy, int score){
-        this.colour = colour;
+    public Piece(Color color, PieceType pieceType, Player ownedBy, int score){
+        this.color = color;
         this.pieceType = pieceType;
         this.ownedBy = ownedBy;
         this.score = score;
@@ -42,8 +43,8 @@ public abstract class Piece {
      * Get piece colour
      * @return colour: String
      */
-    public String getColour(){
-        return this.colour;
+    public Color getColor(){
+        return this.color;
     }
 
     /**
@@ -62,5 +63,8 @@ public abstract class Piece {
         return this.pieceType;
     }
 
+    public boolean isKing() {
+        return false;
+    }
 }
 

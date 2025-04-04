@@ -1,4 +1,4 @@
-package ExceptionsAuthentication;
+package authentication.ExceptionsAuthentication;
 
 /**
  * Exception thrown when CAPTCHA Authentication fails
