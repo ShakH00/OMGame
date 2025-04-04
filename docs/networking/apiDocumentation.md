@@ -2,20 +2,20 @@
 
 ## **1\. Overview**
 
-**The Networking System is responsible for handling real-time, turn-based communication between two players in a multiplayer game. This document outlines the core networking functions used for managing player connections, transmitting moves, and synchronizing game state between clients.**
+**The Networking System is responsible for handling real-time, turn-based communication between two players in a multiplayer game. This document outlines the core networking functions used for managing account connections, transmitting moves, and synchronizing game state between clients.**
 
 ## **2\. Core Components**
 
 ### **Server (`GameServerT.java`)**
 
-* **Manages player connections and enforces turn-based gameplay.**
+* **Manages account connections and enforces turn-based gameplay.**
 * **Maintains the game state and updates both players.**
 * **Handles network communication through TCP sockets.**
 
 ### **Client (`PlayerT.java`)**
 
 * **Provides a graphical interface for players.**
-* **Connects to the server and sends player moves.**
+* **Connects to the server and sends account moves.**
 * **Receives game updates and processes opponent moves.**
 
 ## **3\. API Functions**
@@ -29,7 +29,7 @@
 * **Purpose: Waits for two players to connect.**
 * **Behavior:**
   * **Accepts two client sockets.**
-  * **Starts a new thread for each player.**
+  * **Starts a new thread for each account.**
 * **Called by: Server during initialization.**
 
 #### **Send Player Move to Opponent**
@@ -38,7 +38,7 @@
 *Likely too be modified after collaborating with Game Logic*
 * **Purpose: Sends the clicked button (move) to the opponent.**
 * **Parameters:**
-  * **`buttonNum` (String) – The button number clicked by the player.**
+  * **`buttonNum` (String) – The button number clicked by the account.**
 * **Used by: Server to relay moves between players.**
 
 #### **Send Updated Game Board**
@@ -48,7 +48,7 @@
 * **Purpose: Sends the current game board to the opponent.**
 * **Behavior:**
   * **Iterates through `server2dChar[][]` and transmits board data.**
-* **Used by: Server after a player makes a move.**
+* **Used by: Server after a account makes a move.**
 
 #### **Process Game Logic for Player 1**
 
@@ -81,7 +81,7 @@
 * **Purpose: Establishes a connection to the game server.**
 * **Behavior:**
   * **Opens a TCP socket to `localhost:30000`.**
-  * **Receives player ID (`1` or `2`) from the server.**
+  * **Receives account ID (`1` or `2`) from the server.**
 * **Called by: Player during initialization.**
 
 #### **Send Move to Server**
@@ -90,7 +90,7 @@
 *See above, contact Game Logic*
 * **Purpose: Sends the selected move to the server.**
 * **Parameters:**
-  * **`strBNum` (String) – The button number clicked by the player.**
+  * **`strBNum` (String) – The button number clicked by the account.**
 * **Behavior:**
   * **Transmits move using `DataOutputStream`.**
 * **Used by: Player when clicking a button.**
@@ -114,7 +114,7 @@
 * **Behavior:**
   * **Waits for the opponent to make a move.**
   * **Updates the game board.**
-  * **Enables the player's buttons after receiving the opponent's move.**
+  * **Enables the account's buttons after receiving the opponent's move.**
 * **Called by: Background thread after a move is made.**
 
 #### **Check for Game Over**
@@ -123,7 +123,7 @@
 
 * **Purpose: Determines if the game has ended.**
 * **Behavior:**
-  * **Compares player scores.**
+  * **Compares account scores.**
   * **Displays a message indicating win, lose, or tie.**
 * **Called by: `updateTurn()` when the max number of turns is reached.**
 

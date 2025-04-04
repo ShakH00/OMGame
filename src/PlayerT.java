@@ -307,10 +307,6 @@ public class PlayerT extends JFrame {
                     System.out.println();
                 }
 
-
-
-
-
             }catch (Exception e){
                 System.out.println("IO exception from CSC contructor");
 
