@@ -55,6 +55,7 @@ public class CheckersController extends Application {
 
         canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
+
         // Create buttons
         Button offerDrawButton = new Button("Offer Draw");
         offerDrawButton.setLayoutX(650);
