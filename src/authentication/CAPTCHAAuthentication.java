@@ -49,8 +49,13 @@ public class CAPTCHAAuthentication {
         Random random = new Random();
         String word = words[random.nextInt(words.length)];
 
-        boolean reverse = random.nextBoolean();
+        boolean reverseText = random.nextBoolean();
 
+        if (reverseText) {
+            String reversed = new StringBuilder(word).reverse().toString();
+            System.out.println("CAPTCHA: Type this word reversed: " + reversed);
+            return word;
+        }
     }
 
     /**
