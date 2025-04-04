@@ -69,17 +69,28 @@ public class CAPTCHAAuthentication {
     public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
         int correctAnswer = CAPTCHAAuthentication.generateProblem();
 
-        try {
-            int userAnswer = Integer.parseInt(userInput);
+        if (mode.equalsIgnoreCase("math")) {
+            try {
+                int userAnswer = Integer.parseInt(userInput);
+                int expectedAnswer = Integer.parseInt(correctAnswer);
 
-            if (userAnswer == correctAnswer) {
-                System.out.println("CAPTCHA verified");
-            } else {
-                throw new CAPTCHAAuthenticationFailedException("Invalid answer entered!");
+                if (userAnswer == expectedAnswer) {
+                    System.out.println("CAPTCHA verified");
+                } else {
+                    throw new CAPTCHAAuthenticationFailedException("Invalid answer entered for Math CAPTCHA Equation!");
+                }
             }
-
-        } catch (NumberFormatException e) {
-            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
-        }
+//        try {
+//            int userAnswer = Integer.parseInt(userInput);
+//
+//            if (userAnswer == correctAnswer) {
+//                System.out.println("CAPTCHA verified");
+//            } else {
+//                throw new CAPTCHAAuthenticationFailedException("Invalid answer entered!");
+//            }
+//
+//        } catch (NumberFormatException e) {
+//            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
+//        }
     }
 }
