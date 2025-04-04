@@ -63,23 +63,34 @@ public class CAPTCHAAuthentication {
 
     /**
      * Stimulating a CAPTCHA authentication
-     * @param userInput - Takes in the user input for the answer to the math equation
+     * @param userInput - Takes in the user input for the answer to the math equation and text based CAPTCHA
+     * @param mode - Takes in the user input for if they want to do a math or text based equation
+     * @param correctAnswer - Checking if the correct answer is inputted for the math and text based CAPTCHA
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
      */
     public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
-        int correctAnswer = CAPTCHAAuthentication.generateProblem();
 
-        try {
-            int userAnswer = Integer.parseInt(userInput);
+        if (mode.equalsIgnoreCase("math")) {
+            try {
+                int userAnswer = Integer.parseInt(userInput);
+                int expectedAnswer = Integer.parseInt(correctAnswer);
 
-            if (userAnswer == correctAnswer) {
+                if (userAnswer == expectedAnswer) {
+                    System.out.println("CAPTCHA verified");
+                } else {
+                    throw new CAPTCHAAuthenticationFailedException("Invalid answer entered for Math CAPTCHA Equation!");
+                }
+            } catch (NumberFormatException e) {
+                throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
+            }
+        } else if (mode.equalsIgnoreCase("text")) {
+            if (userInput.equals(correctAnswer)) {
                 System.out.println("CAPTCHA verified");
             } else {
-                throw new CAPTCHAAuthenticationFailedException("Invalid answer entered!");
+                throw new CAPTCHAAuthenticationFailedException("Incorrect text CAPTCHA!");
             }
-
-        } catch (NumberFormatException e) {
-            throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
+        } else {
+            throw new CAPTCHAAuthenticationFailedException("Invalid CAPTCHA mode.");
         }
     }
 }
