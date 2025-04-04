@@ -79,6 +79,8 @@ public class CAPTCHAAuthentication {
                 } else {
                     throw new CAPTCHAAuthenticationFailedException("Invalid answer entered for Math CAPTCHA Equation!");
                 }
+            } catch (NumberFormatException e) {
+                throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
             }
 //        try {
 //            int userAnswer = Integer.parseInt(userInput);
