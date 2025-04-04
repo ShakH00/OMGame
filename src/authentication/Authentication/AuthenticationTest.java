@@ -61,6 +61,34 @@ public class AuthenticationTest {
         System.out.printf(img.getName());
     }
 
+    @Test
+    public void verifyCaptchaTest1() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4f8yp";
+        assertEquals(true, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest2() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4F8YP";
+        assertEquals(true, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest3() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "4F8YP.png";
+        assertEquals(false, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
+    @Test
+    public void verifyCaptchaTest4() {
+        File img = new File("authentication/CAPTCHAImages/4f8yp.png");
+        String input = "meepmorp";
+        assertEquals(false, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
+    }
+
 
 
 
