@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 public class PlayerT extends JFrame {
 
-
     private int width, height;
     private Container contentPane;
     private JTextArea message;
@@ -306,10 +305,6 @@ public class PlayerT extends JFrame {
                     }
                     System.out.println();
                 }
-
-
-
-
 
             }catch (Exception e){
                 System.out.println("IO exception from CSC contructor");

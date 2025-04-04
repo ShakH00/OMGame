@@ -6,9 +6,9 @@
 
 ## Player Assignment & Matchmaking Process
 
-   #### Step 1: A player connects to the server.
+   #### Step 1: A account connects to the server.
    #### Step 2: The server assigns them to a waiting pool if no opponent is available.
-   #### Step 3: When a second player connects, the server pairs them into a session.
+   #### Step 3: When a second account connects, the server pairs them into a session.
    #### Step 4: A new game session is created, and both players are notified that the game is starting.
    ### Key Implementation Points
    #### ✅ Each session is assigned a unique game ID.
@@ -17,16 +17,16 @@
 
 ## Handling Multiple Simultaneous Game Sessions
    #### The server uses a mapping system (gameID → players) to track active matches.
-   #### Each player's connection is stored in a session table, ensuring their messages are only forwarded to their opponent.
+   #### Each account's connection is stored in a session table, ensuring their messages are only forwarded to their opponent.
    #### When a session ends, its game state is removed from memory to free resources.
 
 ## What Happens If a Player Leaves Mid-Matchmaking?
-   #### If a player disconnects before the game starts, they are removed from the waiting pool.
-   #### If a game session is already assigned, the remaining player is given the option to:
+   #### If a account disconnects before the game starts, they are removed from the waiting pool.
+   #### If a game session is already assigned, the remaining account is given the option to:
    #### Wait for their opponent to reconnect within a time limit.
    #### End the session and return to matchmaking.
 
 ## Future Enhancements (tentative ideas)
    #### Implementing a queue system for ranked play.
    #### Expanding to support more than two players per session.
-   #### Adding player preference-based matchmaking (e.g., selecting a specific game mode).
+   #### Adding account preference-based matchmaking (e.g., selecting a specific game mode).

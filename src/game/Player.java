@@ -13,22 +13,22 @@ public class Player {
     }
 
     public int getLoseCount() {
-        
+
         return 0;
     }
 
     public String getTeam() {
-    
+
         return team;
     }
-    
+
     public boolean isTurn() {
 
         return false;
     }
 
     private void surrender() {
-        
+
     }
 
 }

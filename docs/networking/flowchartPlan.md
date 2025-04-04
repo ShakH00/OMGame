@@ -30,7 +30,7 @@ Flowchart Diagram Plan
 
 5. Handling Disconnections & Reconnections
 
-     - If a player disconnects, the server marks them as inactive.
+     - If a account disconnects, the server marks them as inactive.
 
      - Upon reconnection, the latest game state is sent.
 

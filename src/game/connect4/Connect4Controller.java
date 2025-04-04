@@ -40,7 +40,7 @@ public class Connect4Controller extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         drawBoard(gc);
-        
+
         canvas.setOnMouseClicked(e -> handleClick(e, gc));
 
         // Create buttons
@@ -56,7 +56,7 @@ public class Connect4Controller extends Application {
 
         root.getChildren().addAll(canvas, offerDrawButton, resignButton);
         Scene scene = new Scene(root, 800, 600);
-        
+
         primaryStage.setTitle("Connect 4 - Visual Demo");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
@@ -67,17 +67,17 @@ public class Connect4Controller extends Application {
         // Board frame
         gc.setFill(Color.rgb(50, 50, 60));
         gc.fillRoundRect(
-            BOARD_OFFSET_X - 15, BOARD_OFFSET_Y - 15,
-            COLUMNS * (CIRCLE_SIZE + SPACING) + 30,
-            ROWS * (CIRCLE_SIZE + SPACING) + 30, 20, 20
+                BOARD_OFFSET_X - 15, BOARD_OFFSET_Y - 15,
+                COLUMNS * (CIRCLE_SIZE + SPACING) + 30,
+                ROWS * (CIRCLE_SIZE + SPACING) + 30, 20, 20
         );
-        
+
         // Blue playing surface
         gc.setFill(Color.rgb(30, 80, 150, 0.8));
         gc.fillRoundRect(
-            BOARD_OFFSET_X, BOARD_OFFSET_Y,
-            COLUMNS * (CIRCLE_SIZE + SPACING),
-            ROWS * (CIRCLE_SIZE + SPACING), 10, 10
+                BOARD_OFFSET_X, BOARD_OFFSET_Y,
+                COLUMNS * (CIRCLE_SIZE + SPACING),
+                ROWS * (CIRCLE_SIZE + SPACING), 10, 10
         );
 
         // Draw all pieces (empty or placed)
@@ -97,20 +97,20 @@ public class Connect4Controller extends Application {
     private void drawSlot(GraphicsContext gc, int col, int row, Color color) {
         double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
         double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
-        
+
         if (color == null) {
             gc.setFill(Color.rgb(255,255,255));
         } else {
             // Player piece with glossy effect
             RadialGradient pieceGradient = new RadialGradient(
-                0, 0, 0.3, 0.3, 0.5, true, CycleMethod.NO_CYCLE,
-                new Stop(0, color.deriveColor(0, 1, 1, 1)),
-                new Stop(1, color.deriveColor(0, 1, 0.5, 1))
+                    0, 0, 0.3, 0.3, 0.5, true, CycleMethod.NO_CYCLE,
+                    new Stop(0, color.deriveColor(0, 1, 1, 1)),
+                    new Stop(1, color.deriveColor(0, 1, 0.5, 1))
             );
             gc.setFill(pieceGradient);
         }
         gc.fillOval(x, y, CIRCLE_SIZE, CIRCLE_SIZE);
-        
+
         // Highlight
         gc.setFill(Color.rgb(255, 255, 255, 0.4));
         gc.fillOval(x + 5, y + 5, CIRCLE_SIZE/3, CIRCLE_SIZE/3);

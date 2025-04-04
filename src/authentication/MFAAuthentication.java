@@ -1,6 +1,6 @@
 package authentication;
 
-import ExceptionsAuthentication.MFAAuthenticationFailedException;
+import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -12,7 +12,7 @@ public class MFAAuthentication {
     /**
      * protected boolean checking if the system is running a test mode or not
      */
-    protected static boolean testMode = false;
+    public static boolean testMode = false;
 
     /** Sends authentication code via email and then asks user to input the code sent
      *  Checking if the code is correct or not is done through conditional statements
