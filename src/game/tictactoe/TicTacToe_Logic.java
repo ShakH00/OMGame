@@ -5,7 +5,7 @@ import game.GameType;
 
 import java.util.Scanner;
 
-public class TicTacToe {
+public class TicTacToe_Logic {
 
     // Create a 3x3 Tic-Tac-Toe game.Board with char
     private char[][] board;
@@ -18,7 +18,7 @@ public class TicTacToe {
      * Initializes the board and sets the first player(current player) to 'X'
      * Calls initializeBoard() to set cells
      */
-    public TicTacToe() {
+    public TicTacToe_Logic() {
         board = new char[3][3];
         currentPlayer = 'X';
         initializeBoard();
@@ -182,7 +182,7 @@ public class TicTacToe {
      * Creates a new game.tictactoe.TicTacToe object and calls play()
      */
     public static void main(String[] args) {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         game.play();
     }
 }

@@ -9,11 +9,9 @@ public abstract class Game {
     protected int score2;
     protected GameType gameType;
     protected GameState gameState;
-    protected Board board;
+    public Board board;
     //game.pieces.Piece selectedPiece;
     protected GameRules gameRules;
-
-    protected abstract void move(Piece piece);
 
     protected abstract void checkWinCondition();
 

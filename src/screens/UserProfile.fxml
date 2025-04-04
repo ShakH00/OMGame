@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserProfileController">
+   <children>
+      <ImageView fitHeight="593.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/adjustedstars.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="497.0" layoutY="75.0" stroke="TRANSPARENT" strokeType="INSIDE" width="803.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.17061611374407584">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.11764705926179886" green="0.2549019753932953" blue="0.3960784375667572" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Rectangle fill="#169fd4" height="75.0" layoutX="-9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="812.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#16304b" height="68.0" layoutX="-1.0" layoutY="52.0" stroke="BLACK" strokeType="INSIDE" width="805.0" />
+      <Line endX="598.0" layoutX="205.0" layoutY="50.0" startX="-205.0" stroke="WHITE" strokeWidth="4.0" />
+      <ImageView fitHeight="45.0" fitWidth="167.0" layoutX="607.0" layoutY="26.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/yellow_whiteborder.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="636.0" layoutY="37.0" prefHeight="24.0" prefWidth="120.0" text="Settings" textFill="#754e04">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Line endX="598.0" layoutX="206.0" layoutY="120.0" startX="-205.0" stroke="#0f243a" strokeWidth="2.0" />
+      <Label id="usernameLabel" layoutX="151.0" layoutY="63.0" style="-fx-stroke: #ffffff; -fx-stroke-width: 0.5px;" text="Username" textFill="WHITE">
+         <font>
+            <Font name="Press Start 2P Regular" size="21.0" />
+         </font>
+      </Label>
+      <TabPane layoutX="-3.0" layoutY="86.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="478.0" prefWidth="807.0" stylesheets="@../styles.css" tabClosingPolicy="UNAVAILABLE" tabMinWidth="110.0">
+        <tabs>
+          <Tab disable="true" style="-fx-background-color: #16304b;" text="        ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="379.0" />
+            </content>
+          </Tab>
+          <Tab fx:id="overview" style="-fx-tab-min-width: 200px; -fx-background-color: #16304b; -fx-font-size: 15px;" text="  Overview ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="801.0">
+                     <children>
+                        <Line endX="94.0" layoutX="215.0" layoutY="5.0" startX="-28.666671752929688" stroke="#ff8fb7" strokeWidth="2.0" />
+                        <Pane fx:id="rankPane" layoutX="45.0" layoutY="46.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#159ed3" height="135.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0">
+                                 <effect>
+                                    <DropShadow height="10.5" radius="2.125" width="0.0" />
+                                 </effect>
+                              </Rectangle>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#9ed4e8" height="35.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0" />
+                              <Rectangle arcWidth="20.0" fill="#9ed4e8" height="29.0" layoutY="11.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0" />
+                              <Line endX="96.5" endY="-1.0" layoutX="53.0" layoutY="40.5" startX="-51.5" startY="-1.0" stroke="#007cac" strokeWidth="3.0" />
+                              <Label layoutX="45.0" layoutY="4.0" prefHeight="35.0" prefWidth="60.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="ELO" textFill="#007cac">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="chessPane" layoutX="224.0" layoutY="31.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ff8fb7" height="143.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ffbad3" height="35.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcWidth="20.0" fill="#ffbad3" height="29.0" layoutY="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Line endX="125.5" endY="-1.0" layoutX="53.0" layoutY="39.5" startX="-51.5" startY="-1.0" stroke="#d55c87" strokeWidth="3.0" />
+                              <Label layoutX="41.0" layoutY="-2.0" prefHeight="46.0" prefWidth="114.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="CHESS" textFill="#d55c87">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#d55c87" layoutX="7.0" layoutY="60.0" stroke="#d55c87" strokeWidth="0.5" text="Games Played" wrappingWidth="151.0" />
+                              <Label layoutX="6.0" layoutY="66.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="123456" textFill="#ffd2e3">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#d55c87" layoutX="6.0" layoutY="104.0" stroke="#d55c87" strokeWidth="0.5" text="Win Rate" wrappingWidth="151.0" />
+                              <Label layoutX="5.0" layoutY="110.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="100%" textFill="#ffd2e3">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="checkersPane" layoutX="432.0" layoutY="55.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#b14caa" height="143.0" layoutY="3.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#eba4e7" height="35.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Rectangle arcWidth="20.0" fill="#eba4e7" height="29.0" layoutY="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Line endX="125.5" endY="-1.0" layoutX="43.0" layoutY="39.5" startX="-41.5" startY="-1.0" stroke="#8c2485" strokeWidth="3.0" />
+                              <Label layoutX="13.0" layoutY="-1.0" prefHeight="46.0" prefWidth="172.0" style="-fx-font-family: &quot;Pixelite&quot;;" styleClass="header-label" text="CHECKERS" textFill="#8c2485">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#8c2485" layoutX="6.0" layoutY="62.0" stroke="#8c2485" strokeWidth="0.5" text="Games Played" wrappingWidth="151.0" />
+                              <Label layoutX="5.0" layoutY="68.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="123456" textFill="#eecbec">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#8c2485" layoutX="5.0" layoutY="106.0" stroke="#8c2485" strokeWidth="0.5" text="Win Rate" wrappingWidth="151.0" />
+                              <Label layoutX="4.0" layoutY="112.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="100%" textFill="#eecbec">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="connect4Pane" layoutX="230.0" layoutY="211.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbbd3d" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f0d7ae" height="35.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcWidth="20.0" fill="#f0d7ae" height="29.0" layoutY="9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Line endX="125.5" endY="-1.0" layoutX="53.0" layoutY="38.5" startX="-51.5" startY="-1.0" stroke="#c67f0d" strokeWidth="3.0" />
+                              <Label layoutX="17.0" layoutY="-1.0" prefHeight="46.0" prefWidth="172.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="CONNECT4" textFill="#c67f0d">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#c67f0d" layoutX="8.0" layoutY="62.0" stroke="#c67f0d" strokeWidth="0.5" text="Games Played" wrappingWidth="151.0" />
+                              <Label layoutX="7.0" layoutY="68.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="123456" textFill="#fff1da">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#c67f0d" layoutX="7.0" layoutY="106.0" stroke="#c67f0d" strokeWidth="0.5" text="Win Rate" wrappingWidth="151.0" />
+                              <Label layoutX="6.0" layoutY="112.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="100%" textFill="#fff1da">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="tictactoePane" layoutX="434.0" layoutY="238.0" prefWidth="164.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#42b531" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#d6ffba" height="35.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Rectangle arcWidth="20.0" fill="#d6ffba" height="29.0" layoutY="9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="170.0" />
+                              <Label layoutX="2.0" layoutY="-2.0" prefHeight="46.0" prefWidth="172.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="TICTACTOE" textFill="#2d9231">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#19651c" layoutX="7.0" layoutY="62.0" stroke="#19651c" strokeWidth="0.5" text="Games Played" wrappingWidth="151.0" />
+                              <Label layoutX="6.0" layoutY="68.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="123456" textFill="#d6ffba">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#19651c" layoutX="6.0" layoutY="106.0" stroke="#19651c" strokeWidth="0.5" text="Win Rate" wrappingWidth="151.0" />
+                              <Label layoutX="5.0" layoutY="112.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="100%" textFill="#d6ffba">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="friendsPane" layoutX="631.0" layoutY="58.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#159ed3" height="316.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#9ed4e8" height="35.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0" />
+                              <Rectangle arcWidth="20.0" fill="#9ed4e8" height="29.0" layoutY="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="151.0" />
+                              <Text fill="#9ed4e8" layoutX="9.0" layoutY="106.0" stroke="#9ed4e8" strokeWidth="0.5" text="friend2" wrappingWidth="151.0" />
+                              <Text fill="#9ed4e8" layoutX="7.0" layoutY="84.0" stroke="#9ed4e8" strokeWidth="0.5" text="friend3" wrappingWidth="151.0" />
+                              <Text fill="#9ed4e8" layoutX="7.0" layoutY="63.0" stroke="#9ed4e8" strokeWidth="0.5" text="tetriscat" wrappingWidth="151.0" />
+                              <Line endX="96.5" endY="-1.0" layoutX="53.0" layoutY="39.5" startX="-51.5" startY="-1.0" stroke="#007cac" strokeWidth="3.0" />
+                              <Label layoutX="13.0" layoutY="-1.0" prefHeight="46.0" prefWidth="129.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="FRIENDS" textFill="#007cac">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="overallPane" layoutX="29.0" layoutY="199.0">
+                           <children>
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#9f9f9f" height="189.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#d7d7d7" height="35.0" layoutY="1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Rectangle arcWidth="20.0" fill="#d7d7d7" height="29.0" layoutY="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="180.0" />
+                              <Line endX="125.5" endY="-1.0" layoutX="53.0" layoutY="39.5" startX="-51.5" startY="-1.0" stroke="#707070" strokeWidth="3.0" />
+                              <Label layoutX="27.0" prefHeight="46.0" prefWidth="131.0" style="-fx-font-family: Pixelite;" styleClass="header-label" text="OVERALL" textFill="#707070">
+                                 <font>
+                                    <Font name="Pixelite" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#707070" layoutX="8.0" layoutY="62.0" stroke="#707070" strokeWidth="0.5" text="Games Played" wrappingWidth="151.0" />
+                              <Label layoutX="7.0" layoutY="68.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="123456" textFill="#e4e4e4">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#707070" layoutX="7.0" layoutY="106.0" stroke="#707070" strokeWidth="0.5" text="Games Won" wrappingWidth="151.0" />
+                              <Label layoutX="6.0" layoutY="112.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="100%" textFill="#e4e4e4">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Text fill="#707070" layoutX="7.0" layoutY="149.0" stroke="#707070" strokeWidth="0.5" text="Best Game" wrappingWidth="151.0" />
+                              <Label layoutX="6.0" layoutY="155.0" style="-fx-font-family: Pixelite;" styleClass="subheader-label" text="Chess" textFill="#e4e4e4">
+                                 <font>
+                                    <Font name="Pixelite" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Line endX="125.5" endY="-1.0" layoutX="477.0" layoutY="277.0" startX="-41.5" startY="-1.0" stroke="#2d9231" strokeWidth="3.0" />
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+            <Tab id="matches" fx:id="matches" style="-fx-font-size: 15px; -fx-background-color: #16304b;" text="Matches">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Line endX="94.0" layoutX="362.0" layoutY="5.0" startX="-28.666671752929688" stroke="#fbbd3d" strokeWidth="2.0" />
+                        <Rectangle arcHeight="20.0" arcWidth="20.0" height="395.0" layoutX="24.0" layoutY="36.0" stroke="TRANSPARENT" strokeType="INSIDE" width="757.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.09130000323057175" green="0.6330133080482483" blue="0.8299999833106995" opacity="0.3778626024723053" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.046235378831624985" green="0.12011147290468216" blue="0.14473684132099152" opacity="0.20000000298023224" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </fill></Rectangle>
+                        <Text fill="#83aec4" layoutX="48.0" layoutY="32.0" stroke="#83aec4" strokeWidth="0.5" text="Result" wrappingWidth="76.5" />
+                        <Text fill="#83aec4" layoutX="172.0" layoutY="32.0" stroke="#83aec4" strokeWidth="0.5" text="Opponent" wrappingWidth="98.0" />
+                        <Text fill="#83aec4" layoutX="349.0" layoutY="32.0" stroke="#83aec4" strokeWidth="0.5" text="Game" wrappingWidth="52.5" />
+                        <Text fill="#83aec4" layoutX="468.0" layoutY="32.0" stroke="#83aec4" strokeWidth="0.5" text="Moves Played" wrappingWidth="150.0" />
+                        <Text fill="#83aec4" layoutX="659.0" layoutY="32.0" stroke="#83aec4" strokeWidth="0.5" text="ELO" wrappingWidth="39.5" />
+                        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="28.0" layoutY="40.0" prefHeight="390.0" prefWidth="751.0">
+                          <content>
+                            <AnchorPane fx:id="matchHistoryAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="746.0">
+                                 <children>
+                                    <Pane fx:id="lossPane" layoutX="4.0" layoutY="29.0" prefHeight="48.0" prefWidth="731.0">
+                                       <children>
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ffd8e6" height="46.0" layoutX="3.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="725.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#d55c87" height="46.0" layoutX="1.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ff8fb7" height="46.0" layoutX="4.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle fill="#ff8fb7" height="46.0" layoutX="17.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="77.0" />
+                                          <Label fx:id="matchOpponent" alignment="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="22.0" prefWidth="166.0" styleClass="subheader-label" text="waduodi" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="matchGame" alignment="CENTER" layoutX="266.0" layoutY="15.0" prefHeight="22.0" prefWidth="142.0" styleClass="subheader-label" text="TicTacToe" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="matchMoves" alignment="CENTER" layoutX="418.0" layoutY="14.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="4" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="matchElo" alignment="CENTER" layoutX="559.0" layoutY="13.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="-25" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="22.0" prefWidth="92.0" style="-fx-font-family: Pixelite;" styleClass="winloss-label" text="loss" textAlignment="CENTER" textFill="#d55c87">
+                                             <font>
+                                                <Font name="Pixelite" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane fx:id="winPane" layoutX="4.0" layoutY="84.0" prefHeight="48.0" prefWidth="731.0">
+                                       <children>
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#deffd9f1" height="46.0" layoutX="3.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="725.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#19651c" height="46.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#42b531" height="46.0" layoutX="4.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle fill="#42b531" height="46.0" layoutX="17.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="77.0" />
+                                          <Label fx:id="winmatchOpponent" alignment="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="22.0" prefWidth="166.0" styleClass="subheader-label" text="ilvoetetriscameowmeowmeo" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchGame" alignment="CENTER" layoutX="266.0" layoutY="15.0" prefHeight="22.0" prefWidth="142.0" styleClass="subheader-label" text="Checkers" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchMoves" alignment="CENTER" layoutX="418.0" layoutY="14.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="35" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchElo" alignment="CENTER" layoutX="559.0" layoutY="13.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="+26" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="22.0" prefWidth="91.0" style="-fx-font-family: Pixelite;" styleClass="winloss-label" text="win" textAlignment="CENTER" textFill="#19651c">
+                                             <font>
+                                                <Font name="Pixelite" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <Pane fx:id="drawPane" layoutX="6.0" layoutY="140.0" prefHeight="48.0" prefWidth="731.0">
+                                       <children>
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#ffdca4f2" height="46.0" layoutX="3.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="725.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#b27b16" height="46.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbbd3d" height="46.0" layoutX="4.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="85.0" />
+                                          <Rectangle fill="#fbbd3d" height="46.0" layoutX="17.0" layoutY="2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="77.0" />
+                                          <Label fx:id="winmatchOpponent1" alignment="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="22.0" prefWidth="166.0" styleClass="subheader-label" text="chessfan" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchGame1" alignment="CENTER" layoutX="266.0" layoutY="15.0" prefHeight="22.0" prefWidth="142.0" styleClass="subheader-label" text="Chess" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchMoves1" alignment="CENTER" layoutX="418.0" layoutY="14.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="16" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label fx:id="winmatchElo1" alignment="CENTER" layoutX="559.0" layoutY="13.0" prefHeight="22.0" prefWidth="151.0" styleClass="subheader-label" text="-" textAlignment="CENTER" textFill="#2d4c6b" />
+                                          <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="22.0" prefWidth="91.0" style="-fx-font-family: Pixelite;" styleClass="winloss-label" text="DRAW" textAlignment="CENTER" textFill="#b27b16">
+                                             <font>
+                                                <Font name="Pixelite" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children></AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <styleClass>
+            <String fx:value="tab-header-area" />
+            <String fx:value="tab-pane" />
+         </styleClass>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </TabPane>
+      <Circle fill="WHITE" layoutX="94.0" layoutY="70.0" radius="41.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" />
+      <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
+   </children>
+</AnchorPane>

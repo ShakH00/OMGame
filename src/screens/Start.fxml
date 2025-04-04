@@ -38,9 +38,9 @@
             <DropShadow height="65.45" radius="19.3575" spread="0.18" width="13.98" />
          </effect>
       </ImageView>
-      <Text fill="WHITE" layoutX="-512.0" layoutY="243.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="#0d1d296e" strokeType="OUTSIDE" strokeWidth="7.0" text="ONLINE MULTIPLAYER BOARD GAME" textAlignment="CENTER" wrappingWidth="1851.1750793457031" AnchorPane.topAnchor="176.0">
+      <Text fill="WHITE" layoutX="-514.0" layoutY="246.4" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="#0d1d296e" strokeType="OUTSIDE" strokeWidth="7.0" text="ONLINE MULTIPLAYER BOARD GAME" textAlignment="CENTER" wrappingWidth="1851.1750793457031" AnchorPane.topAnchor="191.4">
          <font>
-            <Font name="Retro Gaming" size="67.0" />
+            <Font name="Press Start 2P Regular" size="55.0" />
          </font>
       </Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="309.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
@@ -51,7 +51,8 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <StackPane fx:id="startButton" layoutX="327.0" layoutY="246.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+
+      <StackPane fx:id="startButton" layoutX="327.0" layoutY="246.0" onMouseClicked="#switchToSignUp" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
             <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -60,35 +61,36 @@
             </ImageView>
             <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="START" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
-                  <Font name="Retro Gaming" size="16.0" />
+                  <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Text>
          </children>
       </StackPane>
-      <StackPane layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+
+      <StackPane fx:id="rankingButton" layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
             <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/yellow.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SETTINGS" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="RANKING" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
-                  <Font name="Retro Gaming" size="16.0" />
+                  <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Text>
          </children>
       </StackPane>
-      <StackPane layoutX="331.0" layoutY="366.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+      <StackPane fx:id="helpButton" layoutX="331.0" layoutY="366.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
-            <ImageView fx:id="helpButton" fitHeight="111.0" fitWidth="147.0" onMouseClicked="#openHelpPopup" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="111.0" fitWidth="147.0" onMouseClicked="#openHelpPopup" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/green.png" />
                </image>
             </ImageView>
             <Text fx:id="helpButtonText" fill="WHITE" onMouseClicked="#openHelpPopup" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="HELP" textAlignment="CENTER" wrappingWidth="118.7403564453125">
                <font>
-                  <Font name="Retro Gaming" size="16.0" />
+                  <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Text>
          </children>
