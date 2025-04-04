@@ -39,22 +39,22 @@
       </ImageView>
       <ImageView fx:id="purpleCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
-            <Image url="@../images/purpleCartridge.png" />
+            <Image url="@../images/sprites/purpleCartridge.png" />
          </image>
       </ImageView>
       <ImageView fx:id="pinkCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="406.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
-            <Image url="@../images/pinkCartridge.png" />
+            <Image url="@../images/sprites/pinkCartridge.png" />
          </image>
       </ImageView>
       <ImageView fx:id="orangeCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="282.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
-            <Image url="@../images/orangeCartridge.png" />
+            <Image url="@../images/sprites/orangeCartridge.png" />
          </image>
       </ImageView>
       <ImageView fx:id="greenCartridge" fitHeight="150.0" fitWidth="200.0" layoutX="158.0" layoutY="292.0" onMouseClicked="#clicked" pickOnBounds="true" preserveRatio="true" styleClass="hoverCartridge">
          <image>
-            <Image url="@../images/greenCartridge.png" />
+            <Image url="@../images/sprites/greenCartridge.png" />
          </image>
       </ImageView>
    </children>

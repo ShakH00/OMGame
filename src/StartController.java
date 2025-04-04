@@ -1,5 +1,4 @@
 import javafx.animation.ScaleTransition;
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +55,7 @@ public class StartController extends Application {
             primaryStage.setTitle("Online Multiplayer Games - OMG");
             primaryStage.setScene(scene);
             primaryStage.show();
-            primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/tetrisCatIcon.png"))));
+            primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/tetrisCatIcon.png"))));
 
             SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml", "screens/Help.fxml");
 
