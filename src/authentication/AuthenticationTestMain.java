@@ -1,10 +1,5 @@
 package authentication;
 
-import ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
-import ExceptionsAuthentication.MFAAuthenticationFailedException;
-
-import java.util.Scanner;
-
 public class AuthenticationTestMain {
 //    public static void main(String[] args) {
 //        Scanner sc = new Scanner(System.in);

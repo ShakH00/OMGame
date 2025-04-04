@@ -1,6 +1,6 @@
 package authentication;
 
-import ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
 
 public class DecryptionAuthentication {
 

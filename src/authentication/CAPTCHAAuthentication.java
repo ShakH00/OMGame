@@ -1,6 +1,6 @@
 package authentication;
 
-import ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
+import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 
 import java.util.Random;
 
