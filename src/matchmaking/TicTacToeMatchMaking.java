@@ -1,6 +1,6 @@
 package matchmaking;
 
-public class TicTacToeMatchMaking extends MatchMaking {
+public class TicTacToeMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
     private int increment;

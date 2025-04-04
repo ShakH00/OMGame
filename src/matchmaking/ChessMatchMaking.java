@@ -1,6 +1,6 @@
 package matchmaking;
 
-public class ChessMatchMaking extends MatchMaking {
+public class ChessMatchMaking extends Matchmaking {
     private long startingTime;
     private int findElo;
     private int increment;

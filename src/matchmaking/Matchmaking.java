@@ -5,7 +5,7 @@ import player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MatchMaking {
+public abstract class Matchmaking {
 
     protected int kFactor;
 
