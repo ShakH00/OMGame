@@ -99,8 +99,11 @@ public class CAPTCHAAuthentication {
         Random rand = new Random();
         String[] files = {"4f8yp.png", "6t9bcds.png", "381057.png", "cdfen.png", "data.png", "dsjcbka.png" +
                 "eridati.png", "fche6.png", "finding.png", "following.png", "m8m4x.png"};
-        File image = new File(files[rand.nextInt()]);
-
+        Integer index = rand.nextInt() % files.length;
+        if(index < 0){
+            index = -index;
+        }
+        File image = new File(files[index]);
         return image;
     }
 }
