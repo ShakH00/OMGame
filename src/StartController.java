@@ -3,6 +3,7 @@ import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -79,12 +80,14 @@ public class StartController extends Application {
             scaleTransition.setToX(1.1);
             scaleTransition.setToY(1.1);
             scaleTransition.play();
+            button.setCursor(Cursor.HAND);
         });
 
         button.setOnMouseExited(event -> {
             scaleTransition.setToX(1);
             scaleTransition.setToY(1);
             scaleTransition.play();
+            button.setCursor(Cursor.DEFAULT);
         });
     }
 
