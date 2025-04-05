@@ -61,61 +61,6 @@ public class DatabaseManager {
      * saves an account to the database
      */
 
-//    public static Boolean saveAccount(Account account) {
-//        String username = account.getUsername();
-//        String email = account.getEmail();
-//        String password = account.getPassword();
-//        String friends = AccountStorageUtility.friendIDsToString(account.getFriendIDs());
-//        String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
-//        String matchHistory = AccountStorageUtility.matchHistoryToString(account.getMatchHistory());
-//
-//        String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?, ?, ?)";
-//        Connection conn = DatabaseConnection.getConnection();
-//
-//        if (conn != null) {
-//            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-//                stmt.setString(1, username);
-//                stmt.setString(2, email);
-//                stmt.setString(3, password);
-//                stmt.setString(4, friends);
-//                stmt.setString(5, statistics);
-//                stmt.setString(6, matchHistory);
-//
-//                int rowsInserted = stmt.executeUpdate();
-//                if (rowsInserted > 0) {
-//                    try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-//                        if (generatedKeys.next()) {
-//                            int generatedId = generatedKeys.getInt(1);
-//                            System.out.println("Account saved successfully. Your account ID is: " + generatedId);
-//                        }
-//                    }
-//                } else {
-//                    System.out.println("Insert failed");
-//                    return false;
-//                }
-//
-//            } catch (SQLException e) {
-//                if (e.getMessage().toLowerCase().contains("unique")) {
-//                    System.err.println("Error: Username and email must be unique.");
-//                } else {
-//                    System.err.println("Database error: " + e.getMessage());
-//                }
-//                return false;
-//            } finally {
-//                try {
-//                    conn.close();
-//                } catch (SQLException e) {
-//                    System.err.println("Failed to close connection");
-//                }
-//            }
-//        } else {
-//            System.out.println("Connection failed");
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
     public static Boolean saveAccount(Account account) {
         String username = account.getUsername();
         String email = account.getEmail();
