@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static account.AccountStorageUtility.*;
+
 public class DatabaseTest {
     public static void main(String[] args) {
         Connection conn = DatabaseConnection.getConnection();
@@ -14,10 +16,6 @@ public class DatabaseTest {
             String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?,?,?)";
 
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, "Elijah");
-                stmt.setString(2, "nebila@example.com");
-                stmt.setString(3, "1234567890");
-                stmt.setString(4, "securepassword123");
 
                 int rowsInserted = stmt.executeUpdate();
 
