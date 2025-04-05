@@ -168,8 +168,8 @@ public abstract class AStatistics implements IStatistics {
      * Recalculate the win rate statistic
      */
     void updateWinRate() {
-        double wins = (int) statistics.get(StatisticType.WINS);
-        double losses = (int) statistics.get(StatisticType.LOSSES);
+        double wins = (int) statistics.getOrDefault(StatisticType.WINS, 0);
+        double losses = (int) statistics.getOrDefault(StatisticType.LOSSES, 0);
         statistics.put(StatisticType.WIN_RATE, (Double) wins/(wins + losses));
     }
 
