@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AccountStorageUtility {
-    private static final String matchHistoryEntryDivider = "&";
-    private static final String matchHistoryLineDivider = "#";
-
 
     // MATCH HISTORY
+
+    private static final String matchHistoryEntryDivider = "&";
+    private static final String matchHistoryLineDivider = "#";
 
     public static String matchHistoryToString(String[][] matchHistory){
         // Create an ArrayList containing entries in a MatchHistory row, joined by the match history entry divider.

@@ -40,14 +40,17 @@ public class DatabaseManager {
      * @return Returns an account from the database given a phone number
      * get account returns an account from the database
      */
-    public static Account getAccount(Integer phoneNumber) {return new Account();}
+    public static Account queryAccountByID(Integer id)
+    {
+        return new Account();
+    }
 
 
     /**
      * @return Returns an account from the database
      * get account returns an account from the database
      */
-    public static Account getAccount(String email) {return new Account();}
+    public static Account queryAccountByEmail(String email) {return new Account();}
 
     /**
      * @return returns true if an account was saved to the database
