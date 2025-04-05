@@ -43,10 +43,10 @@ public class AccountStorageUtility {
 
     // STATISTICS
 
-    // String form example: "game#<statistic=value>&<statistic=value>...%game#<statistic=value>..."
+    // String form example: "game#<statistic=value>, <statistic=value>, ... %game#<statistic=value>, ..."
     private static final String gameDelimiter = "%";                // Separate game statistics objects
     private static final String gameStatisticsDelimiter = "#";      // Separate game name from statistics list
-    private static final String statisticsDelimiter = "&";          // Separate statistics in statistics list
+    private static final String statisticsDelimiter = ", ";         // Separate statistics in statistics list
     private static final String statisticTupleDelimiter = "=";      // Separate type and value in statistic
 
     public static String statisticsToString(HashMap<GameType, AStatistics> statistics){
@@ -109,5 +109,36 @@ public class AccountStorageUtility {
             // Add the game statistic object to the statistics hashmap
 
         return null;
+    }
+
+
+    // FRIENDS LIST
+    private static final String friendsDelimiter = ", ";
+
+    /**
+     *
+     * @param friendIDs
+     * @return
+     */
+    public static String friendIDsToString(ArrayList<Integer> friendIDs){
+        ArrayList<String> friendIDStrings = new ArrayList<>();
+        for (Integer friendID : friendIDs){
+            friendIDStrings.add(String.valueOf(friendID));
+        }
+        return String.join(friendsDelimiter, friendIDStrings);
+    }
+
+    /**
+     *
+     * @param string
+     * @return
+     */
+    public static ArrayList<Integer> friendIDsFromString(String string){
+        ArrayList<Integer> friendIDs = new ArrayList<>();
+        String[] friendIDStrings = string.split(friendsDelimiter);
+        for (String friendIDString : friendIDStrings){
+            friendIDs.add(Integer.valueOf(friendIDString));
+        }
+        return friendIDs;
     }
 }
