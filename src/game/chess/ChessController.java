@@ -118,7 +118,8 @@ public class ChessController extends Application {
     private void drawPieces(GraphicsContext gc) {
         for (int y = 0; y < BOARD_SIZE; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {
-                String pieceName = board[y][x];
+                String pieceName = "Pawn";
+                // String pieceName = board[y][x];
                 if (pieceName != null) {
                     Image pieceImage = new Image(ASSETS_PATH + pieceName + ".png", TILE_SIZE, TILE_SIZE, true, true);
                     gc.drawImage(pieceImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
