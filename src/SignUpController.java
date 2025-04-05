@@ -3,7 +3,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -32,8 +31,7 @@ public class SignUpController extends Application {
         }
     }
     @FXML
-    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
+    private void login(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
             // load help.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Login.fxml"));
             Parent helpRoot = loader.load();
@@ -45,19 +43,6 @@ public class SignUpController extends Application {
 
             // set the helpRoot visible (it will be hidden initially)
             helpRoot.setVisible(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleCloseButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
-        Parent helpRoot = loader.load();
-        helpRoot.setOnMouseClicked(event -> {
-            helpRoot.setVisible(false);  // Hide the popup
-        });
     }
 
     public static void main(String[] args) {

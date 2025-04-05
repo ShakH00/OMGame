@@ -107,7 +107,7 @@
             <Font name="Press Start 2P Regular" size="11.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" graphicTextGap="6.0" layoutX="291.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#switchToLogin" prefHeight="20.0" prefWidth="238.0" style="-fx-background-color: #fbbd3d;" text="have an account? login here!" textAlignment="CENTER" textFill="#1b3851">
+      <Button alignment="CENTER" graphicTextGap="6.0" layoutX="291.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#login" prefHeight="20.0" prefWidth="238.0" style="-fx-background-color: #fbbd3d;" text="have an account? login here!" textAlignment="CENTER" textFill="#1b3851">
          <font>
             <Font name="Press Start 2P Regular" size="8.0" />
          </font>

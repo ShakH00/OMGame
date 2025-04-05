@@ -77,8 +77,7 @@ public class StartController extends Application {
     }
 
     @FXML
-    private void switchToSignUp(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
+    public void signup(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
             // load help.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
             Parent helpRoot = loader.load();
@@ -90,10 +89,6 @@ public class StartController extends Application {
 
             // set the helpRoot visible (it will be hidden initially)
             helpRoot.setVisible(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void main(String[] args) {
