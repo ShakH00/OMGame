@@ -35,6 +35,16 @@ public class AuthenticationTest {
         }
     }
 
+    @Test
+    public void mathCAPTCHA_invalidInputFormat() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("ten", "math", "10");
+            fail("Expected CAPTCHAAuthenticationFailedException was not thrown.");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            assertEquals("Invalid input format! Please enter a number.", e.getMessage());
+        }
+    }
+
     //test if user inputs in the wrong verification code
     @Test
     public void MFATest2() {
