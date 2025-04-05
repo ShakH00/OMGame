@@ -60,7 +60,6 @@ public class GameServerT {
         }
     }
 
-
     public void acceptConnections(){
 
         try {

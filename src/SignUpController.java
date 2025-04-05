@@ -3,15 +3,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SignUpController extends Application {
 
+
     @FXML
     AnchorPane rootPane;
+    @FXML
+    private StackPane backButtonSignUp;
+    @FXML
+    private StackPane toLogin;
+    @FXML
+    private StackPane submitButton;
+    @FXML
+    private StackPane guestButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -30,19 +42,33 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
+
+    public void initialize() {
+        StartController.createScaleTransition(backButtonSignUp);
+        StartController.createScaleTransition(toLogin);
+        StartController.createScaleTransition(submitButton);
+        StartController.createScaleTransition(guestButton);
+    }
+
     @FXML
-    private void login(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
-            // load help.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Login.fxml"));
-            Parent helpRoot = loader.load();
+    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Login.fxml");
+    }
 
-            // get help controller
-            LoginController loginController = loader.getController();
+    @FXML
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
 
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
-
-            // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
+    @FXML
+    private void handleCloseButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
+        Parent helpRoot = loader.load();
+        helpRoot.setOnMouseClicked(event -> {
+            helpRoot.setVisible(false);  // Hide the popup
+        });
     }
 
     public static void main(String[] args) {
