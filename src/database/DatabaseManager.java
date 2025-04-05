@@ -60,8 +60,8 @@ public class DatabaseManager {
      * @return returns true if an account was saved to the database
      * saves an account to the database
      */
+
 //    public static Boolean saveAccount(Account account) {
-//        int id = account.getID();
 //        String username = account.getUsername();
 //        String email = account.getEmail();
 //        String password = account.getPassword();
@@ -69,11 +69,11 @@ public class DatabaseManager {
 //        String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
 //        String matchHistory = AccountStorageUtility.matchHistoryToString(account.getMatchHistory());
 //
-//        String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?,?,?)";
+//        String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?, ?, ?)";
 //        Connection conn = DatabaseConnection.getConnection();
 //
 //        if (conn != null) {
-//            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+//            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 //                stmt.setString(1, username);
 //                stmt.setString(2, email);
 //                stmt.setString(3, password);
@@ -83,14 +83,24 @@ public class DatabaseManager {
 //
 //                int rowsInserted = stmt.executeUpdate();
 //                if (rowsInserted > 0) {
-//                    System.out.println("Account saved successfully");
+//                    try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+//                        if (generatedKeys.next()) {
+//                            int generatedId = generatedKeys.getInt(1);
+//                            System.out.println("Account saved successfully. Your account ID is: " + generatedId);
+//                        }
+//                    }
 //                } else {
 //                    System.out.println("Insert failed");
 //                    return false;
 //                }
 //
 //            } catch (SQLException e) {
-//                throw new RuntimeException(e);
+//                if (e.getMessage().toLowerCase().contains("unique")) {
+//                    System.err.println("Error: Username and email must be unique.");
+//                } else {
+//                    System.err.println("Database error: " + e.getMessage());
+//                }
+//                return false;
 //            } finally {
 //                try {
 //                    conn.close();
@@ -102,9 +112,10 @@ public class DatabaseManager {
 //            System.out.println("Connection failed");
 //            return false;
 //        }
+//
 //        return true;
 //    }
-
+//
     public static Boolean saveAccount(Account account) {
         String username = account.getUsername();
         String email = account.getEmail();
@@ -139,8 +150,15 @@ public class DatabaseManager {
                 }
 
             } catch (SQLException e) {
-                if (e.getMessage().toLowerCase().contains("unique")) {
-                    System.err.println("Error: Username and email must be unique.");
+                String msg = e.getMessage().toLowerCase();
+                if (msg.contains("duplicate entry")) {
+                    if (msg.contains("username")) {
+                        System.err.println("Error: The username '" + username + "' is already taken. Please choose a different one.");
+                    } else if (msg.contains("email")) {
+                        System.err.println("Error: The email '" + email + "' is already registered. Try logging in or use a different email.");
+                    } else {
+                        System.err.println("Error: A unique constraint was violated.");
+                    }
                 } else {
                     System.err.println("Database error: " + e.getMessage());
                 }
