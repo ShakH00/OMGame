@@ -47,3 +47,7 @@
      MatchHistory TEXT
      )
 3. Then you should be able to see your database in the left side bar and your table inside!!
+
+# NOTE
+- We set ID to autoincrement so the database assigns an id to each account that gets saved to the database
+- Username and email are se to unique
