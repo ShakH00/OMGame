@@ -108,12 +108,22 @@ public class Chess extends Game {
         return false;
     }
 
+    /**
+     * author: YOUSIF BEDAIR
+     * checks if there is a checkmate, otherwise it goes backing to calling code
+     */
     public void checkWinCondition() {
         if (isCheckmate(player1) || isCheckmate(player2)) {
             matchOutcome();
         }
     }
 
+    /**
+     * author YOUSIF BEDAIR
+     * Checks if there is a checkmate for a given player by simulating all possible moves.
+     * @param player
+     * @return true/false
+     */
     private boolean isCheckmate(Player player) {
         if (!isKingInCheck(player)) return false;
 
@@ -166,7 +176,11 @@ public class Chess extends Game {
 
     }
 
+    /**
+     * updates gameState based on the match outcome
+     */
     public void matchOutcome() {
+        // Incomplete, still needs to check for stalemate and surrender.
         if (isCheckmate(player1)){
             gameState = GameState.P2_WIN;
         } else if (isCheckmate(player2)){
