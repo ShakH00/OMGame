@@ -27,7 +27,7 @@ public class Connect4Controller extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/game/connect4/Connect4.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Connect4.fxml"));
 
             Scene scene = new Scene(loader.load(), 800, 570);
 
