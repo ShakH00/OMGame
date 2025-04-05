@@ -21,7 +21,7 @@ interface IStatistics {
     /**
      * Maps each StatisticType in includedStatistics to some value
      */
-    HashMap<StatisticType, Number> statistics = new HashMap<>();
+//    HashMap<StatisticType, Number> statistics = new HashMap<>();
 
     /**
      * Check if the statistics HashMap can be added to the current statistics

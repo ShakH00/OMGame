@@ -65,6 +65,7 @@ public class DatabaseManager {
     public static Boolean saveAccount(Account account) {
         int id = account.getID();
         String username = account.getUsername();
+        String email = account.getEmail();
         String password = account.getPassword();
         String friends = AccountStorageUtility.friendIDsToString(account.getFriendIDs());
         String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
@@ -76,10 +77,11 @@ public class DatabaseManager {
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, username);
-                stmt.setString(2, password);
-                stmt.setString(3, friends);
-                stmt.setString(4, statistics);
-                stmt.setString(5, matchHistory);
+                stmt.setString(2, email);
+                stmt.setString(3, password);
+                stmt.setString(4, friends);
+                stmt.setString(5, statistics);
+                stmt.setString(6, matchHistory);
 
                 int rowsInserted = stmt.executeUpdate();
                 if (rowsInserted > 0) {

@@ -537,4 +537,8 @@ public class Account {
     public int getMatchmakingThreshold(){
         return matchmakingThreshold;
     }
+
+    public String getEmail() {
+        return  email;
+    }
 }
