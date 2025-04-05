@@ -9,6 +9,7 @@
 package game.chess;
 
 import game.Board;
+import game.GameState;
 import game.Player;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
@@ -34,9 +35,10 @@ public class Bishop extends MovingPiece {
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board being played on
+     * @return true if piece was moved
      */
     @Override
-    protected void move(int newX, int newY, Board gameBoard) {
+    public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         if(isValidMove(newX, newY, gameBoard)){
@@ -45,7 +47,9 @@ public class Bishop extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
+            return true;
         }
+        return false;
     }
 
     /**

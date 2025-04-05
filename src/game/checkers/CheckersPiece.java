@@ -54,9 +54,10 @@ public class CheckersPiece extends MovingPiece {
      * @param newX: new x (row) location
      * @param newY: new y (column) location
      * @param gameBoard: board being played on
+     * @return true if piece was moved
      */
     @Override
-    protected void move(int newX, int newY, Board gameBoard){
+    public boolean move(int newX, int newY, Board gameBoard){
         int currentX = this.getX();
         int currentY = this.getY();
         //if this move is valid, perform it
@@ -66,7 +67,9 @@ public class CheckersPiece extends MovingPiece {
             setX(newX);
             setY(newY);
             board[newX][newY] = this;
+            return true;
         }
+        return false;
     }
 
     /**

@@ -36,11 +36,12 @@ public class Pawn extends MovingPiece {
      * @param newX: x coordinate pawn is being moved to
      * @param newY: y coordinate pawn is being moved to
      * @param gameBoard: the game.chess game's board
-     *
+     * @return true if piece was moved
      * This method works by checking if isValidMove returns true and then moving the piece
+     *
      */
     @Override
-    protected void move(int newX, int newY, Board gameBoard) {
+    public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         if(isValidMove(newX, newY, gameBoard)){
@@ -49,14 +50,15 @@ public class Pawn extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
+            System.out.println("moved");
             if(!doneFirstMove){
                 doneFirstMove = true;
             } else if(!doneSecondMove){
                 doneSecondMove = true;
             }
+            return true;
         }
-
-
+        return false;
     }
 
     /**

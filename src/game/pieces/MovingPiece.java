@@ -40,7 +40,7 @@ public abstract class MovingPiece extends Piece{
         this.y = newY;
     }
 
-    protected abstract void move(int newX, int newY, Board gameBoard);
+    public abstract boolean move(int newX, int newY, Board gameBoard);
     protected abstract boolean isValidMove(int newX, int newY, Board gameBoard);
 
     // temp until we figure it out, added to access all chess pieces isValidMove() methods

@@ -23,7 +23,9 @@ public class Chess extends Game {
         gameState = GameState.P1_TURN;
     }
 
-
+    public GameState getState(){
+        return gameState;
+    }
 
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){

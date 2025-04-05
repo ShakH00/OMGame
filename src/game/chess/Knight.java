@@ -33,9 +33,10 @@ public class Knight extends MovingPiece {
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board playing on
+     * @return true if piece was moved
      */
     @Override
-    protected void move(int newX, int newY, Board gameBoard) {
+    public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         if(isValidMove(newX, newY, gameBoard)){
@@ -44,7 +45,9 @@ public class Knight extends MovingPiece {
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
+            return true;
         }
+        return false;
     }
 
     /**

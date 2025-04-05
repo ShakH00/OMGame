@@ -53,9 +53,10 @@ public class Rook extends MovingPiece {
      * @param newX: new x coordinate being moved to
      * @param newY: new y coordinate being moved to
      * @param gameBoard: board being played on
+     * @return true if piece was moved
      */
     @Override
-    protected void move(int newX, int newY, Board gameBoard) {
+    public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         if(isValidMove(newX, newY, gameBoard)){
@@ -67,7 +68,9 @@ public class Rook extends MovingPiece {
             if(!doneFirstMove){
                 this.doneFirstMove = true;
             }
+            return true;
         }
+        return false;
     }
 
     /**

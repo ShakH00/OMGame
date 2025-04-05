@@ -8,10 +8,13 @@ package game.chess; /**
  */
 
 import game.Board;
+import game.GameState;
 import game.GameType;
 import game.checkers.Checkers;
+import game.checkers.CheckersPiece;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -69,7 +72,7 @@ public class ChessController extends Application {
         drawChessBoard(gc);
         drawPieces(gc);
 
-        //canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
+        canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
         // Create buttons
         Button offerDrawButton = new Button("Offer Draw");
@@ -130,7 +133,7 @@ public class ChessController extends Application {
      *
      * @param gc GraphicsContext used for drawing images
      *
-     * @author Shakil Hussain
+     * @author Abdulrahman Negmeldin, base code by Shakil Hussain which used string pieces instead
      */
     private void drawPieces(GraphicsContext gc) {
         Piece[][] chessBoard = board.getBoardState();
@@ -156,26 +159,39 @@ public class ChessController extends Application {
      *
      * @author Shakil Hussain
      */
-//    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
-//        int x = (int) (event.getX() / TILE_SIZE);
-//        int y = (int) (event.getY() / TILE_SIZE);
-//
-//        if (selectedX == -1 && selectedY == -1) {
-//            // Selecting a piece
-//            if (board[y][x] != null) {
-//                selectedX = x;
-//                selectedY = y;
-//            }
-//        } else {
-//            // Moving the selected piece
-//            board[y][x] = board[selectedY][selectedX];
-//            board[selectedY][selectedX] = null;
-//            selectedX = -1;
-//            selectedY = -1;
-//        }
-//        drawChessBoard(gc);
-//        drawPieces(gc);
-//    }
+    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
+        int x = (int) (event.getX() / TILE_SIZE);
+        int y = (int) (event.getY() / TILE_SIZE);
+        Piece[][] chessBoard = board.getBoardState();
+        if (selectedX == -1 && selectedY == -1) {
+            // Selecting a piece
+            if (chessBoard[y][x] != null) {
+                selectedX = x;
+                selectedY = y;
+            }
+        } else {
+
+            //moving the piece!
+
+            MovingPiece piece = (MovingPiece) chessBoard[selectedY][selectedX];
+            PieceType type = piece.getPieceType();
+            if((type.equals(PieceType.LIGHT) && chessGame.getState() == GameState.P1_TURN) || type.equals(PieceType.DARK) && chessGame.getState() == GameState.P2_TURN){
+                boolean result = piece.move(y, x, board);
+                if(result){
+                    chessGame.switchTurn();
+                }
+            }
+
+
+            //chessGame.checkWinCondition();
+            //chessGame.matchOutcome();
+
+            selectedX = -1;
+            selectedY = -1;
+        }
+        drawChessBoard(gc);
+        drawPieces(gc);
+    }
 
     private void handleOfferDraw() {
         // Handle draw offer logic here, e.g., show a message or ask for confirmation
