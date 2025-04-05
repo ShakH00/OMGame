@@ -35,4 +35,14 @@
 # To create our DATABASE!!
 
 1. After opening phpMyAdmin http://localhost/phpmyadmin/ go to the SQL option should be in the top nav bar.
-2.  
+2. Enter these SQL Statements separately
+   - Create Database OMGAMEDB;
+   - CREATE TABLE Accounts(
+     ID INT AUTO_INCREMENT PRIMARY KEY,
+     Username VARCHAR (255) NOT NULL UNIQUE,
+     Email VARCHAR (255) NOT NULL UNIQUE,
+     Password VARCHAR (255) NOT NULL,
+     Friends VARCHAR (1024) NOT NULL,
+     Statistics TEXT,
+     MatchHistory TEXT
+     )
