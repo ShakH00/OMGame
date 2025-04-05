@@ -1,12 +1,17 @@
 package database;
 
 import account.Account;
+import account.statistics.MatchOutcomeHandler;
+import account.statistics.StatisticType;
+import game.GameType;
 
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import static account.AccountStorageUtility.*;
 
@@ -29,6 +34,27 @@ public class DatabaseTest {
         testAccount.addFriend(2);
         testAccount.addFriend(3);
 
+        GameType game = GameType.CHESS;
+
+        HashMap<StatisticType, Integer> testAccountResults = new HashMap<>();
+        testAccountResults.put(StatisticType.WINS, 1);
+        testAccountResults.put(StatisticType.MATCHES_PLAYED, 1);
+        testAccountResults.put(StatisticType.NUMBER_OF_TURNS, 10);
+        testAccountResults.put(StatisticType.PIECES_CAPTURED, 11);
+        testAccountResults.put(StatisticType.CHECKMATES, 1);
+
+        HashMap<StatisticType, Integer> testAccountResults1 = new HashMap<>();
+        testAccountResults1.put(StatisticType.LOSSES, 1);
+        testAccountResults1.put(StatisticType.MATCHES_PLAYED, 1);
+        testAccountResults1.put(StatisticType.NUMBER_OF_TURNS, 10);
+        testAccountResults1.put(StatisticType.PIECES_CAPTURED, 11);
+        testAccountResults1.put(StatisticType.CHECKMATES, 1);
+
+        try {
+            MatchOutcomeHandler.RecordMatchOutcome(game, 123, testAccount, testAccountResults, testAccount1, testAccountResults1);
+        } catch (Exception e){
+            System.out.println("Match outcome error: " + e);
+        }
 
         Boolean isSaved = DatabaseManager.saveAccount(testAccount);
 
