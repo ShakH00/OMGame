@@ -12,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthenticationTest {
 
+    /**
+     * MATH BASED CAPTCHA TEST CASES
+     */
+
     //test if user inputs in the correct verification code
     @Test
     public void MFATest1() {
@@ -21,6 +25,7 @@ public class AuthenticationTest {
 
         assertDoesNotThrow(() -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca"));
     }
+
 
     //test if user inputs in the wrong verification code
     @Test
@@ -56,6 +61,11 @@ public class AuthenticationTest {
         assertEquals("Code Entered is Invalid!", "Please enter digits only!");
     }
 
+
+    /**
+     * TEXT BASED CAPTCHA TEST CASES
+     */
+
     @Test
     public void textCAPTCHA_correctAnswer() {
         try {
@@ -84,6 +94,11 @@ public class AuthenticationTest {
             assertEquals("Invalid CAPTCHA mode.", e.getMessage());
         }
     }
+
+
+    /**
+     * IMAGE BASED CAPTCHA TEST CASES
+     */
 
     @Test
     public void RandomImageTest() {
