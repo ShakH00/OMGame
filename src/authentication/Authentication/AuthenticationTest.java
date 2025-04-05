@@ -66,6 +66,16 @@ public class AuthenticationTest {
     }
 
     @Test
+    public void textCAPTCHA_wrongAnswer() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("computer science", "text", "cpsc");
+            fail("Expected CAPTCHAAuthenticationFailedException was not thrown.");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            assertEquals("Incorrect text CAPTCHA!", e.getMessage());
+        }
+    }
+
+    @Test
     public void RandomImageTest() {
         File img = CAPTCHAAuthentication.chooseImage();
         System.out.printf(img.getName());
