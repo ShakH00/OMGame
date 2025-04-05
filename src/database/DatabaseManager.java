@@ -117,7 +117,7 @@ public class DatabaseManager {
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, username);
                 stmt.setString(2, email);
                 stmt.setString(3, password);
