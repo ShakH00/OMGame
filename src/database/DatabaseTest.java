@@ -53,14 +53,7 @@ public class DatabaseTest {
 
         MatchOutcomeHandler.RecordMatchOutcome(game, 123, testAccount, testAccountResults, testAccount1, testAccountResults1);
 
-        Boolean isSaved = DatabaseManager.saveAccount(testAccount);
-
-        if(isSaved){
-            System.out.println("Account was added successfully");
-        }
-        else{
-            System.out.println("Failed");
-        }
+        DatabaseManager.saveAccount(testAccount);
 
     }
 }
