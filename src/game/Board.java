@@ -1,6 +1,9 @@
 package game;
 
 import game.pieces.Piece;
+import game.checkers.CheckersPiece;
+import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 
 public class Board{
     private Piece[][] board;
@@ -35,6 +38,9 @@ public class Board{
 
     public void fillBoard(GameType gameType)
     {
+        Player player1 = new Player();
+        Player player2 = new Player();
+
         if(gameType == GameType.CHESS)
         {
             // Method to fill board with game.chess game.pieces
@@ -42,15 +48,38 @@ public class Board{
 
         else if(gameType == GameType.CHECKERS)
         {
-            // Method to fill board with game.checkers game.pieces
-        }
-
-        else if(gameType == gameType.TICTACTOE)
-        {
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
+                    board[i][j] = null; // Fill with empty cells
+                }
+            }
+            // Method to fill board with game.checkers game.pieces
+            // Place white pieces in rows 0, 1, 2
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
+                        board[i][j] = new CheckersPiece(i, j, Color.BLACK, PieceType.DARK, player1, 1);
+                    }
+                }
+            }
+
+            // Place white pieces in rows 5, 6, 7
+            for (int i = 5; i < 8; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if ((i % 2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0)) {
+                        board[i][j] = new CheckersPiece(i, j, Color.WHITE, PieceType.LIGHT, player2, 1);
+                    }
+                }
+            }
+        }
+
+
+        else if(gameType == GameType.TICTACTOE)
+        {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
                     board[i][j] = null; // Fill with empty cells
                 }
             }
@@ -64,6 +93,11 @@ public class Board{
 
     public void displayBoard(){
 
+    }
+
+    public void place(Piece piece, int row, int col)
+    {
+        board[row][col] = piece;
     }
 
     public int getRows()
@@ -101,18 +135,11 @@ public class Board{
      * Or does this return the board to the original state of any game? ~ Adam
      */
     public void resetBoard(){
-        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                board[i][j] = null; // Fill with empty cells
+            }
+        }
+        fillBoard(gameType);
     }
-
-    /* IGNORE THIS, FOR TICTACTOE
-
-    public game.pieces.Piece getCell(int rows, int cols) {
-        return board[rows][cols];
-    }
-
-    public void setCell(int rows, int cols, game.pieces.Piece value) {
-        board[rows][cols] = value;
-    }
-
-    */
 }
