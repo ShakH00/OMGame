@@ -3,7 +3,6 @@ package game.chess;
 import game.*;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
-import game.pieces.PieceType;
 
 public class Chess extends Game {
     private Player player1;
@@ -110,15 +109,68 @@ public class Chess extends Game {
     }
 
     public void checkWinCondition() {
-
+        if (isCheckmate(player1) || isCheckmate(player2)) {
+            matchOutcome();
+        }
     }
 
+    private boolean isCheckmate(Player player) {
+        if (!isKingInCheck(player)) return false;
+
+        Piece[][] state = board.getBoardState();
+
+        for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getCols(); j++) {
+                Piece piece = state[i][j];
+
+                if (piece == null || piece.getOwnedBy() != player || !(piece instanceof MovingPiece)) continue;
+
+                MovingPiece mp = (MovingPiece) piece;
+
+                for (int x = 0; x < board.getRows(); x++) {
+                    for (int y = 0; y < board.getCols(); y++) {
+                        if (!mp.canMoveTo(x, y, board)) continue;
+
+                        // save board state
+                        Piece captured = state[x][y];
+                        int originalX = mp.getX();
+                        int originalY = mp.getY();
+
+                        // simulate move
+                        state[originalX][originalY] = null;
+                        state[x][y] = mp;
+                        mp.setX(x);
+                        mp.setY(y);
+
+                        // check if king is still in check
+                        boolean stillInCheck = isKingInCheck(player);
+
+                        // undo move
+                        state[originalX][originalY] = mp;
+                        state[x][y] = captured;
+                        mp.setX(originalX);
+                        mp.setY(originalY);
+
+                        if (!stillInCheck) {
+                            return false; // player can get out of check
+                        }
+                    }
+                }
+            }
+        }
+
+        return true; // no legal move to escape check
+    }
 
     public void surrender() {
 
     }
 
     public void matchOutcome() {
-
+        if (isCheckmate(player1)){
+            gameState = GameState.P2_WIN;
+        } else if (isCheckmate(player2)){
+            gameState = GameState.P1_WIN;
+        }
     }
 }
