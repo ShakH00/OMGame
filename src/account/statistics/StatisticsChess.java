@@ -1,5 +1,7 @@
 package account.statistics;
 
+import java.util.HashMap;
+
 public class StatisticsChess extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
@@ -23,4 +25,13 @@ public class StatisticsChess extends AStatistics implements IStatistics {
             StatisticType.CHECKMATES,
             StatisticType.PIECES_PROMOTED
     };
+
+    public StatisticsChess(){
+        this.statistics = new HashMap<>();
+        updateElo(1000);
+    }
+
+    public StatisticsChess(HashMap<StatisticType, Number> statisticsHashMap){
+        this.statistics = statisticsHashMap;
+    }
 }

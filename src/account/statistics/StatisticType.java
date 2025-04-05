@@ -55,7 +55,7 @@ public enum StatisticType {
      * @param string    String given by a call to some StatisticType enum's toString() function.
      * @return          StatisticType corresponding to that string.
      */
-    public StatisticType fromString(String string){
+    public static StatisticType fromString(String string){
         for (StatisticType statisticType : StatisticType.values()){
             if (statisticType.toString().equals(string)) {
                 return statisticType;

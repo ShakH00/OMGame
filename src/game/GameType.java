@@ -36,7 +36,7 @@ public enum GameType {
      * @param string    String given by a call to some GameType enum's toString() function.
      * @return          GameType corresponding to that string.
      */
-    public GameType fromString(String string){
+    public static GameType fromString(String string){
         for (GameType gameType : GameType.values()){
             if (gameType.toString().equals(string)) {
                 return gameType;

@@ -1,5 +1,7 @@
 package account.statistics;
 
+import java.util.HashMap;
+
 public class StatisticsCheckers extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
@@ -15,4 +17,13 @@ public class StatisticsCheckers extends AStatistics implements IStatistics {
             StatisticType.PIECES_CAPTURED,
             StatisticType.MULTI_CAPTURES
     };
+
+    public StatisticsCheckers(){
+        this.statistics = new HashMap<>();
+        updateElo(1000);
+    }
+
+    public StatisticsCheckers(HashMap<StatisticType, Number> statisticsHashMap){
+        this.statistics = statisticsHashMap;
+    }
 }

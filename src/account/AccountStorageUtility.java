@@ -1,7 +1,7 @@
 package account;
 
-import account.statistics.AStatistics;
-import account.statistics.StatisticType;
+import account.statistics.*;
+import game.Game;
 import game.GameType;
 
 import java.util.ArrayList;
@@ -96,19 +96,58 @@ public class AccountStorageUtility {
 
     public static HashMap<GameType, AStatistics> statisticsFromString(String string){
         // Split the String by game
+        String[] gameStatistics = string.split(gameDelimiter);
 
-        // Initialize statistics hashmap with games from the above code
+        // Initialize HashMap that assigns a Statistics object to each GameType
+        HashMap<GameType, AStatistics> statisticsPerGame = new HashMap<>();
 
-        // For loop:
-            // Create game statistic object depending on GameType enum
+        // Iterate through each game in the String, adding a corresponding Statistic object to the initialized HashMap
+        for (String gameStatistic : gameStatistics) {
+            // Get GameType from the part of the string before the delimiter "#"
+            String gameTypeString = gameStatistic.split(gameStatisticsDelimiter)[0];
+            GameType gameType = GameType.fromString(gameTypeString);
 
-            // Create statistics hashmap from StatisticsType enums and int/doubles
+            // Form a HashMap of statistics from the statistics list string after the delimiter "#"
+            String statisticsListString = gameStatistic.split(gameStatisticsDelimiter)[1];
+            String[] statisticsList = statisticsListString.split(statisticsDelimiter);
 
-            // Add the statistics to the game statistic object
+            // Initialize a HashMap that relates each StatisticType enum to a value (Integer or Double)
+            HashMap<StatisticType, Number> statisticsHashMap = new HashMap<>();
 
-            // Add the game statistic object to the statistics hashmap
+            // Populate previously created HashMap using each statistic tuple in StatisticsList
+            for (String statisticTuple : statisticsList) {
+                // Get StatisticType from the part of the string before the delimiter "="
+                String statisticTypeString = statisticTuple.split(statisticTupleDelimiter)[0];
+                StatisticType statisticType = StatisticType.fromString(statisticTypeString);
 
-        return null;
+                // Get corresponding value from the part of the string after the delimiter "="
+                String valueString = statisticTuple.split(statisticTupleDelimiter)[1];
+
+                // Convert value to appropriate type then add an entry in statisticsHashMap
+                if (valueString.startsWith("i")){
+                    Integer value = Integer.valueOf(valueString.replace("i", ""));
+                    statisticsHashMap.put(statisticType, value);
+                }
+                else if (valueString.startsWith("d")){
+                    Double value = Double.valueOf(valueString.replace("d", ""));
+                    statisticsHashMap.put(statisticType, value);
+                }
+            }
+
+            // Initialize an appropriate Statistics object using the statisticsHashMap
+            AStatistics statistics = null;
+            switch (gameType){
+                case GameType.CHECKERS -> statistics = new StatisticsCheckers(statisticsHashMap);
+                case GameType.CHESS -> statistics = new StatisticsChess(statisticsHashMap);
+                case GameType.CONNECT4 -> statistics = new StatisticsConnect4(statisticsHashMap);
+                case GameType.TICTACTOE -> statistics = new StatisticsTicTacToe(statisticsHashMap);
+                case null -> {}     // not possible, this just hides the warning
+            }
+
+            statisticsPerGame.put(gameType, statistics);
+        }
+
+        return statisticsPerGame;
     }
 
 

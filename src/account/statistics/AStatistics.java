@@ -21,7 +21,7 @@ public abstract class AStatistics implements IStatistics {
     /**
      * Maps each StatisticType in includedStatistics to some value (Integer or Double)
      */
-    final HashMap<StatisticType, Number> statistics = new HashMap<>();
+    HashMap<StatisticType, Number> statistics = new HashMap<>();
 
     /**
      * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
