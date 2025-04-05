@@ -1,197 +1,208 @@
-/**
- * Connect 4 with Player Indicators
- * 
- * - Amr Ibrahim (tried matching design edition) (player indicator edition too)
- */
+package game.connect4;
+import game.GameState;
+import game.pieces.Piece;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+
 
 public class Connect4Controller extends Application {
 
-    private static final int COLUMNS = 7;
-    private static final int ROWS = 6;
-    private static final int CIRCLE_SIZE = 60;
-    private static final int SPACING = 8;
-    private static final int BOARD_OFFSET_X = 80;
-    private static final int BOARD_OFFSET_Y = 180;
-    private static final int WINDOW_WIDTH = 650;
-    private static final int WINDOW_HEIGHT = 800;
+    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
-    private Color[][] board = new Color[ROWS][COLUMNS];
-    private boolean isBlackTurn = true;
-    private Cloud[] clouds = new Cloud[5];
+    @FXML
+    private ImageView handImageView;
+    @FXML
+    private GridPane gameBoard;
+    private Connect4 game = new Connect4();
 
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        // Initialize clouds
-        for (int i = 0; i < clouds.length; i++) {
-            clouds[i] = new Cloud(
-                Math.random() * WINDOW_WIDTH,
-                Math.random() * 100,
-                50 + Math.random() * 70,
-                30 + Math.random() * 50
-            );
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/game/connect4/Connect4.fxml"));
+
+            Scene scene = new Scene(loader.load(), 800, 570);
+
+            // TODO: these refuse to work..
+            //String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            // Font pressStartFont = Font.loadFont(fontPath, 40);
+            // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+            primaryStage.setResizable(false);
+
+            // set up the primary stage
+            primaryStage.setTitle("OMG!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        drawBackground(gc);
-        drawBoard(gc);
-        drawPlayerIndicators(gc);
-        
-        canvas.setOnMouseClicked(e -> {
-            handleClick(e, gc);
-            drawPlayerIndicators(gc); // Update indicators after move
-        });
-        
-        root.getChildren().add(canvas);
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-        primaryStage.setTitle("Connect 4 - Player Indicators");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
     }
 
-    private void drawBackground(GraphicsContext gc) {
-        // Dark blue retro sky
-        gc.setFill(Color.rgb(20, 30, 80));
-        gc.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-        // Draw stars
-        gc.setFill(Color.WHITE);
-        for (int i = 0; i < 100; i++) {
-            double x = Math.random() * WINDOW_WIDTH;
-            double y = Math.random() * (BOARD_OFFSET_Y - 50);
-            double size = 1 + Math.random() * 2;
-            gc.fillOval(x, y, size, size);
-        }
-        
-        // Draw clouds
-        gc.setFill(Color.rgb(220, 220, 255, 0.8));
-        for (Cloud cloud : clouds) {
-            drawCloud(gc, cloud.x, cloud.y, cloud.width, cloud.height);
-        }
-        
-        // Retro title
-        gc.setFont(Font.font("Impact", 48));
-        gc.setFill(Color.YELLOW);
-        gc.fillText("CONNECT 4", WINDOW_WIDTH/2 - 140, 80);
-    }
+    @FXML
+    private void handleColumnClick0(MouseEvent event) { dropPiece(0); }
 
-    private void drawPlayerIndicators(GraphicsContext gc) {
-        // Player 1 (Black) indicator at top
-        gc.setFont(Font.font("Arial", 24));
-        gc.setFill(isBlackTurn ? Color.WHITE : Color.GRAY);
-        gc.fillText("PLAYER 1 (BLACK)", WINDOW_WIDTH/2 - 100, BOARD_OFFSET_Y - 30);
-        
-        // Player 2 (White) indicator at bottom
-        gc.setFill(!isBlackTurn ? Color.WHITE : Color.GRAY);
-        gc.fillText("PLAYER 2 (WHITE)", WINDOW_WIDTH/2 - 100, 
-                   BOARD_OFFSET_Y + ROWS * (CIRCLE_SIZE + SPACING) + 40);
-    }
+    @FXML
+    private void handleColumnClick1(MouseEvent event) { dropPiece(1); }
 
-    private void drawCloud(GraphicsContext gc, double x, double y, double w, double h) {
-        gc.fillOval(x, y + h/4, w, h);
-        gc.fillOval(x + w/3, y, w, h);
-        gc.fillOval(x + w*2/3, y + h/4, w, h);
-    }
+    @FXML
+    private void handleColumnClick2(MouseEvent event) { dropPiece(2); }
 
-    private void drawBoard(GraphicsContext gc) {
-        // Dark yellow board border (retro style)
-        gc.setFill(Color.rgb(180, 150, 30));
-        gc.fillRoundRect(
-            BOARD_OFFSET_X - 15, BOARD_OFFSET_Y - 15,
-            COLUMNS * (CIRCLE_SIZE + SPACING) + 30,
-            ROWS * (CIRCLE_SIZE + SPACING) + 30, 25, 25
-        );
-        
-        // Board interior matches sky background
-        gc.setFill(Color.rgb(20, 30, 80));
-        gc.fillRoundRect(
-            BOARD_OFFSET_X, BOARD_OFFSET_Y,
-            COLUMNS * (CIRCLE_SIZE + SPACING),
-            ROWS * (CIRCLE_SIZE + SPACING), 15, 15
-        );
+    @FXML
+    private void handleColumnClick3(MouseEvent event) { dropPiece(3); }
 
-        // Draw slot outlines (empty circles)
-        gc.setStroke(Color.rgb(220, 220, 255, 0.5));
-        gc.setLineWidth(2);
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
-                double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
-                double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
-                gc.strokeOval(x, y, CIRCLE_SIZE, CIRCLE_SIZE);
-            }
+    @FXML
+    private void handleColumnClick4(MouseEvent event) { dropPiece(4); }
+
+    @FXML
+    private void handleColumnClick5(MouseEvent event) { dropPiece(5); }
+
+    @FXML
+    private void handleColumnClick6(MouseEvent event) { dropPiece(6); }
+
+
+
+    // adds a piece to the gameboard, checks for win conditions, and switches turns.
+    public void dropPiece(int column) {
+
+        if (game.getGameState() == GameState.P1_WIN || game.getGameState() == GameState.P2_WIN || game.getGameState() == GameState.DRAW) {
+            return; // Game already over
         }
 
-        // Draw placed pieces
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
-                if (board[row][col] != null) {
-                    drawPiece(gc, col, row, board[row][col]);
+        // Correcting the turn assignment logic here
+        Piece currentPiece = game.getGameState() == GameState.P1_TURN ? game.piece1 : game.piece2;
+
+
+        game.move(currentPiece, column);
+        updateBoard();
+
+        GameState state = game.getGameState();
+        if (state == GameState.P1_WIN) {
+            System.out.println("Player 1 (Pink) wins!");
+        } else if (state == GameState.P2_WIN) {
+            System.out.println("Player 2 (Blue) wins!");
+        } else if (state == GameState.DRAW) {
+            System.out.println("It’s a draw!");
+        } else {
+            game.nextTurn(); // Switch turn
+        }
+    }
+
+
+    // edits the null image in gameboard to reflect the piece the player has put down.
+    private void updateBoard() {
+        Piece[][] state = game.getBoard().getBoardState();
+        // loop through board, find the designated cell, and update the image
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                ImageView imageView = getNodeByRowColumnIndex(row, col, gameBoard);
+                Piece piece = state[row][col];
+                if (piece == null) {
+                    imageView.setImage(null); // empty cell
+                } else {
+
+                    // TODO: need to adjust this to accept any color (green, blue, pink, purple) the player chooses
+                    if (piece.getColor().equals(Color.RED)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "pinkChecker.png"));
+                    //    System.out.println("Piece color: " + piece.getColor());
+                    } else if (piece.getColor().equals(Color.GOLD)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "blueChecker.png"));
+                    //    System.out.println("Piece color: " + piece.getColor());
+                    }
                 }
             }
         }
     }
 
-    private void drawPiece(GraphicsContext gc, int col, int row, Color color) {
-        double x = BOARD_OFFSET_X + col * (CIRCLE_SIZE + SPACING);
-        double y = BOARD_OFFSET_Y + row * (CIRCLE_SIZE + SPACING);
-        
-        // Solid piece
-        gc.setFill(color);
-        gc.fillOval(x + 2, y + 2, CIRCLE_SIZE - 4, CIRCLE_SIZE - 4);
-        
-        // Piece outline
-        gc.setStroke(color == Color.BLACK ? Color.WHITE : Color.BLACK);
-        gc.setLineWidth(2);
-        gc.strokeOval(x + 2, y + 2, CIRCLE_SIZE - 4, CIRCLE_SIZE - 4);
-    }
 
-    private void handleClick(MouseEvent e, GraphicsContext gc) {
-        int col = (int) ((e.getX() - BOARD_OFFSET_X) / (CIRCLE_SIZE + SPACING));
-        
-        if (col >= 0 && col < COLUMNS) {
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if (board[row][col] == null) {
-                    board[row][col] = isBlackTurn ? Color.BLACK : Color.WHITE;
-                    isBlackTurn = !isBlackTurn;
-                    redraw(gc);
-                    break;
-                }
+
+    // used to find the appropriate node on the gameboard that we need to adjust
+    public ImageView getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (javafx.scene.Node node : gridPane.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            Integer c = GridPane.getColumnIndex(node);
+
+            // used to catch null rows/cols to avoid exceptions
+            // no idea how this fixed it . . but it didn't work before it
+            // sets null rows/cols to 0 by default
+            int actualRow = (r == null) ? 0 : r;
+            int actualCol = (c == null) ? 0 : c;
+
+            // if actualRow and actualCol match existing rows/columns, no issues!!!
+            if (actualRow == row && actualCol == column) {
+                return (ImageView) node;
             }
         }
+        return null;
     }
 
-    private void redraw(GraphicsContext gc) {
-        gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        drawBackground(gc);
-        drawBoard(gc);
-        drawPlayerIndicators(gc);
-    }
 
+        public void initialize() {
+            // game.start to push game out of setup mode
+            game.start();
+
+            // setup layout for handview animation
+            handImageView.setLayoutX(-217); // starting x position
+            handImageView.setLayoutY(-23);  // fixed y position
+            handImageView.setVisible(false); // set hand to invisible by default
+        }
+
+
+
+        // method used to make tetriscat hand appear when hovering over columns !
+        // this is so silly . . might delete
+        @FXML
+        private void handleMouseEntered(MouseEvent event) {
+            // get the cell that triggered event to find the column #
+            ImageView source = (ImageView) event.getSource();
+            String id = source.getId();
+
+            // get column index (the last character)
+            int col = id.charAt(id.length() - 1) - '0';
+
+            // calculate X position
+            double baseX = -217; // starting X for column 0 and 1
+            double offset = 60;  // distance between columns
+
+            // col 0 and 1 use the same x, unfortunately, or the hand looks even weirder
+            if (col == 0 || col == 1) {
+                baseX = -217;
+                col = 1;
+            }
+
+            col = col - 1;
+
+            // calculate the updated x by multiplying offset by col #
+            double newX = baseX + col * offset;
+
+            handImageView.setLayoutX(newX);
+            handImageView.setLayoutY(-23);
+            handImageView.setVisible(true);
+
+            // if the game ends, immediately set hand to invisible (no more hovering!)
+            GameState currentState = game.getGameState();
+            if (currentState == GameState.P1_WIN ||
+                    currentState == GameState.P2_WIN ||
+                    currentState == GameState.DRAW) {
+                handImageView.setVisible(false);
+            }
+        }
+
+
+        // makes paw invisible when the user stops hovering over a column
+        @FXML
+        private void handleMouseExited(MouseEvent event) {
+            handImageView.setVisible(false);
+        }
     public static void main(String[] args) {
         launch(args);
-    }
-
-    private class Cloud {
-        double x, y, width, height;
-        
-        Cloud(double x, double y, double width, double height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-        }
     }
 }
