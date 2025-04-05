@@ -76,6 +76,16 @@ public class AuthenticationTest {
     }
 
     @Test
+    public void checkInvalidCaptchaMode() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("cpsc", "cpsc", "cpsc");
+            fail("Expected CAPTCHAAuthenticationFailedException was not thrown.");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            assertEquals("Invalid CAPTCHA mode.", e.getMessage());
+        }
+    }
+
+    @Test
     public void RandomImageTest() {
         File img = CAPTCHAAuthentication.chooseImage();
         System.out.printf(img.getName());
