@@ -46,3 +46,4 @@
      Statistics TEXT,
      MatchHistory TEXT
      )
+3. Then you should be able to see your database in the left side bar and your table inside!!
