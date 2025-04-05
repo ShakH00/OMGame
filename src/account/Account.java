@@ -453,6 +453,18 @@ public class Account {
      * @return                      true only if the username and password match an existing Account in the database
      */
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
+        /*Account accountFromDB = Database.getAccountByUsername(username);         // Waiting for database
+        if (accountFromDB != null && accountFromDB.password.equals(password)) {
+            // Update current account object with data from DB
+            this.isGuest = false;
+            this.id = accountFromDB.id;
+            this.username = accountFromDB.username;
+            this.email = accountFromDB.email;
+            this.password = accountFromDB.password;
+            this.friends = accountFromDB.friends;
+            this.statistics.putAll(accountFromDB.statistics);
+            return true;
+        }*/
         return false; // TODO: add login functionality here
     }
 
