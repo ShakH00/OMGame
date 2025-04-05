@@ -1,4 +1,5 @@
 package authentication.Authentication;
+import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAAuthentication;
 import authentication.CAPTCHAAuthentication;
@@ -53,6 +54,15 @@ public class AuthenticationTest {
         assertThrows(MFAAuthenticationFailedException.class, () -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca")
         );
         assertEquals("Code Entered is Invalid!", "Please enter digits only!");
+    }
+
+    @Test
+    public void textCAPTCHA_correctAnswer() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("computer science", "text", "computer science");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            fail("Exception should not have been thrown for correct text CAPTCHA input.");
+        }
     }
 
     @Test
