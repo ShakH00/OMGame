@@ -30,3 +30,9 @@
 - Apply & OK.
 
 ## I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
+
+
+# To create our DATABASE!!
+
+1. After opening phpMyAdmin http://localhost/phpmyadmin/ go to the SQL option should be in the top nav bar.
+2.  

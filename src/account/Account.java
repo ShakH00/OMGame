@@ -146,6 +146,7 @@ public class Account {
         return (int) getStatistic(game, StatisticType.ELO);
     }
 
+
     /**
      * Set the player's queuedFor variable, this is used to define what game a player is queueing for
      *
