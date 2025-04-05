@@ -10,6 +10,8 @@ package game.chess; /**
 import game.Board;
 import game.GameType;
 import game.checkers.Checkers;
+import game.pieces.MovingPiece;
+import game.pieces.Piece;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -67,7 +69,7 @@ public class ChessController extends Application {
         drawChessBoard(gc);
         drawPieces(gc);
 
-        canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
+        //canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
         // Create buttons
         Button offerDrawButton = new Button("Offer Draw");
@@ -108,6 +110,21 @@ public class ChessController extends Application {
         }
     }
 
+    public String colorToString(MovingPiece piece){
+        Color color = piece.getColor();
+        if(color.equals(Color.WHITE)){
+            return "white";
+        } else if(color.equals(Color.BLACK)){
+            return "black";
+        }
+        return null;
+    }
+
+    public static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) return str;
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
     /**
      * Draws the chess pieces
      *
@@ -116,13 +133,16 @@ public class ChessController extends Application {
      * @author Shakil Hussain
      */
     private void drawPieces(GraphicsContext gc) {
+        Piece[][] chessBoard = board.getBoardState();
         for (int y = 0; y < BOARD_SIZE; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {
-                String pieceName = "Pawn";
-                // String pieceName = board[y][x];
-                if (pieceName != null) {
-                    Image pieceImage = new Image(ASSETS_PATH + pieceName + ".png", TILE_SIZE, TILE_SIZE, true, true);
-                    gc.drawImage(pieceImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                if(chessBoard[x][y] != null){
+                    MovingPiece piece = (MovingPiece) chessBoard[x][y];
+                    String color = colorToString(piece);
+                    String path = color + capitalizeFirstLetter(piece.getClass().toString().toLowerCase().replace("class game.chess.","")) + "Chess";
+                    Image pieceImage = new Image(ASSETS_PATH + path + ".png", TILE_SIZE, TILE_SIZE, true, true);
+                    gc.drawImage(pieceImage, y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
                 }
             }
         }
@@ -136,26 +156,26 @@ public class ChessController extends Application {
      *
      * @author Shakil Hussain
      */
-    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
-        int x = (int) (event.getX() / TILE_SIZE);
-        int y = (int) (event.getY() / TILE_SIZE);
-
-        if (selectedX == -1 && selectedY == -1) {
-            // Selecting a piece
-            if (board[y][x] != null) {
-                selectedX = x;
-                selectedY = y;
-            }
-        } else {
-            // Moving the selected piece
-            board[y][x] = board[selectedY][selectedX];
-            board[selectedY][selectedX] = null;
-            selectedX = -1;
-            selectedY = -1;
-        }
-        drawChessBoard(gc);
-        drawPieces(gc);
-    }
+//    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
+//        int x = (int) (event.getX() / TILE_SIZE);
+//        int y = (int) (event.getY() / TILE_SIZE);
+//
+//        if (selectedX == -1 && selectedY == -1) {
+//            // Selecting a piece
+//            if (board[y][x] != null) {
+//                selectedX = x;
+//                selectedY = y;
+//            }
+//        } else {
+//            // Moving the selected piece
+//            board[y][x] = board[selectedY][selectedX];
+//            board[selectedY][selectedX] = null;
+//            selectedX = -1;
+//            selectedY = -1;
+//        }
+//        drawChessBoard(gc);
+//        drawPieces(gc);
+//    }
 
     private void handleOfferDraw() {
         // Handle draw offer logic here, e.g., show a message or ask for confirmation
