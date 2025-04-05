@@ -8,6 +8,7 @@ import game.connect4.Connect4;
 import game.connect4.Connect4Piece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import javafx.scene.paint.Color;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,8 @@ public class Connect4Testing {
         Connect4 game = new Connect4();
         Player player = game.player1;
         Board board = game.board;
-
-        Connect4Piece piece = new Connect4Piece("red", PieceType.DARK, player);
+        Color red = Color.RED;
+        Connect4Piece piece = new Connect4Piece(red, PieceType.DARK, player);
 
         for (int row = 5; row >= 2; row--) {
             board.getBoardState()[row][2] = piece;
@@ -34,7 +35,8 @@ public class Connect4Testing {
         Player player = game.player1;
         Board board = game.board;
 
-        Connect4Piece piece = new Connect4Piece("red", PieceType.DARK, player);
+        Color red = Color.RED;
+        Connect4Piece piece = new Connect4Piece(red, PieceType.DARK, player);
 
         // Place 4 red pieces in row 5 (bottom row), columns 1 to 4
         for (int col = 1; col <= 4; col++) {
@@ -48,9 +50,16 @@ public class Connect4Testing {
         Connect4 game = new Connect4();
         Player player = game.player1;
         Board board = game.board;
+        Color red = Color.RED;
+        Connect4Piece piece = new Connect4Piece(red, PieceType.DARK, player);
 
-        Connect4Piece piece = new Connect4Piece("red", PieceType.DARK, player);
-
+    /*
+     Diagonal like:
+     (2,0)
+        (3,1)
+           (4,2)
+              (5,3)
+    */
         for (int i = 0; i < 4; i++) {
             int row = 2 + i;
             int col = i;
@@ -64,8 +73,8 @@ public class Connect4Testing {
         Connect4 game = new Connect4();
         Player player = game.player1;
         Board board = game.board;
-
-        Connect4Piece piece = new Connect4Piece("red", PieceType.DARK, player);
+        Color red = Color.RED;
+        Connect4Piece piece = new Connect4Piece(red, PieceType.DARK, player);
 
         for (int i = 0; i < 4; i++) {
             int row = 5 - i;

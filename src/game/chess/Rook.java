@@ -92,13 +92,23 @@ public class Rook extends MovingPiece {
         int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
+
+        if (newX < 0 || newX >= board.length || newY < 0 || newY >= board[0].length) {
+            return false;
+        } // Added to pre-check bounds. - Yousif
+
         Piece isPieceOnTile = board[newX][newY];
+
         //must move in a straight line
         if(currentX != newX && currentY != newY){ //not straight line
             return false; //return false, end here
-        } else if(currentX == newX){ //move horizontal because x stays the same
+        }
+        if(currentX == newX){ //move horizontal because x stays the same
             int yStep = (newY > currentY) ? 1 : -1; //if move right = +1, move left = -1
             for (int y = currentY + yStep; y != newY; y += yStep) {
+
+                if (y < 0 || y >= board[0].length) return false; // Extra check - Yousif
+
                 if (board[newX][y] != null) {
                     return false; //tile has piece so invalid move
                 }
@@ -106,6 +116,9 @@ public class Rook extends MovingPiece {
         } else { //move vertical because y stays the same
             int xStep = (newX > currentX) ? 1 : -1; // move down = +1, move up = -1
             for (int x = currentX + xStep; x != newX; x += xStep) {
+
+                if (x < 0 || x >= board.length) return false; // extra check - Yousif
+
                 if (board[x][newY] != null) {
                     return false; //tile has piece so invalid move
                 }

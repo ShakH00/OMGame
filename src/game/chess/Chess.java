@@ -136,7 +136,7 @@ public class Chess extends Game {
      * @param player
      * @return true/false
      */
-    private boolean isCheckmate(Player player) {
+    public boolean isCheckmate(Player player) {
         if (!isKingInCheck(player)) return false;
 
         Piece[][] state = board.getBoardState();
