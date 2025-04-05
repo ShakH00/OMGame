@@ -113,10 +113,10 @@ public class Connect4Controller extends Application {
                     // TODO: need to adjust this to accept any color (green, blue, pink, purple) the player chooses
                     if (piece.getColor().equals(Color.RED)) {
                         imageView.setImage(new Image(ASSETS_PATH + "pinkChecker.png"));
-                        //    System.out.println("Piece color: " + piece.getColor());
+                    //    System.out.println("Piece color: " + piece.getColor());
                     } else if (piece.getColor().equals(Color.GOLD)) {
                         imageView.setImage(new Image(ASSETS_PATH + "blueChecker.png"));
-                        //    System.out.println("Piece color: " + piece.getColor());
+                    //    System.out.println("Piece color: " + piece.getColor());
                     }
                 }
             }
@@ -146,63 +146,63 @@ public class Connect4Controller extends Application {
     }
 
 
-    public void initialize() {
-        // game.start to push game out of setup mode
-        game.start();
+        public void initialize() {
+            // game.start to push game out of setup mode
+            game.start();
 
-        // setup layout for handview animation
-        handImageView.setLayoutX(-217); // starting x position
-        handImageView.setLayoutY(-23);  // fixed y position
-        handImageView.setVisible(false); // set hand to invisible by default
-    }
-
-
-
-    // method used to make tetriscat hand appear when hovering over columns !
-    // this is so silly . . might delete
-    @FXML
-    private void handleMouseEntered(MouseEvent event) {
-        // get the cell that triggered event to find the column #
-        ImageView source = (ImageView) event.getSource();
-        String id = source.getId();
-
-        // get column index (the last character)
-        int col = id.charAt(id.length() - 1) - '0';
-
-        // calculate X position
-        double baseX = -217; // starting X for column 0 and 1
-        double offset = 60;  // distance between columns
-
-        // col 0 and 1 use the same x, unfortunately, or the hand looks even weirder
-        if (col == 0 || col == 1) {
-            baseX = -217;
-            col = 1;
+            // setup layout for handview animation
+            handImageView.setLayoutX(-217); // starting x position
+            handImageView.setLayoutY(-23);  // fixed y position
+            handImageView.setVisible(false); // set hand to invisible by default
         }
 
-        col = col - 1;
 
-        // calculate the updated x by multiplying offset by col #
-        double newX = baseX + col * offset;
 
-        handImageView.setLayoutX(newX);
-        handImageView.setLayoutY(-23);
-        handImageView.setVisible(true);
+        // method used to make tetriscat hand appear when hovering over columns !
+        // this is so silly . . might delete
+        @FXML
+        private void handleMouseEntered(MouseEvent event) {
+            // get the cell that triggered event to find the column #
+            ImageView source = (ImageView) event.getSource();
+            String id = source.getId();
 
-        // if the game ends, immediately set hand to invisible (no more hovering!)
-        GameState currentState = game.getGameState();
-        if (currentState == GameState.P1_WIN ||
-                currentState == GameState.P2_WIN ||
-                currentState == GameState.DRAW) {
+            // get column index (the last character)
+            int col = id.charAt(id.length() - 1) - '0';
+
+            // calculate X position
+            double baseX = -217; // starting X for column 0 and 1
+            double offset = 60;  // distance between columns
+
+            // col 0 and 1 use the same x, unfortunately, or the hand looks even weirder
+            if (col == 0 || col == 1) {
+                baseX = -217;
+                col = 1;
+            }
+
+            col = col - 1;
+
+            // calculate the updated x by multiplying offset by col #
+            double newX = baseX + col * offset;
+
+            handImageView.setLayoutX(newX);
+            handImageView.setLayoutY(-23);
+            handImageView.setVisible(true);
+
+            // if the game ends, immediately set hand to invisible (no more hovering!)
+            GameState currentState = game.getGameState();
+            if (currentState == GameState.P1_WIN ||
+                    currentState == GameState.P2_WIN ||
+                    currentState == GameState.DRAW) {
+                handImageView.setVisible(false);
+            }
+        }
+
+
+        // makes paw invisible when the user stops hovering over a column
+        @FXML
+        private void handleMouseExited(MouseEvent event) {
             handImageView.setVisible(false);
         }
-    }
-
-
-    // makes paw invisible when the user stops hovering over a column
-    @FXML
-    private void handleMouseExited(MouseEvent event) {
-        handImageView.setVisible(false);
-    }
     public static void main(String[] args) {
         launch(args);
     }

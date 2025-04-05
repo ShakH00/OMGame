@@ -1,17 +1,37 @@
+import javafx.animation.FillTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class LoginController extends Application {
 
     @FXML
-    private Label closeButton;
+    AnchorPane rootPane;
+    @FXML
+    private StackPane backButtonLogin;
+    @FXML
+    private StackPane toSignUp;
+    @FXML
+    private StackPane submitButton;
+    @FXML
+    private StackPane guestButton;
+    @FXML
+    private Text guestText;
 
     @Override
     public void start(Stage primaryStage) {
@@ -31,14 +51,31 @@ public class LoginController extends Application {
         }
     }
 
-    @FXML
-    private void handleCloseButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Login.fxml"));
-        Parent helpRoot = loader.load();
-        helpRoot.setOnMouseClicked(event -> {
-            helpRoot.setVisible(false);  // Hide the popup
-        });
+    public void initialize() {
+        StartController.createScaleTransition(backButtonLogin);
+        StartController.createScaleTransition(toSignUp);
+        StartController.createScaleTransition(submitButton);
+        StartController.createScaleTransition(guestButton);
     }
+
+    @FXML
+    private void switchToSignup(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Signup.fxml");
+    }
+
+    @FXML
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
+
+    @FXML
+    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/gameSelect.fxml");
+    }
+
 
     public static void main(String[] args) {
         launch(args);
