@@ -147,17 +147,24 @@ public class TicTacToeController extends Application {
 
         if(game.getGameState().equals(GameState.SETUP))
         {
-            game.start();
+            gameState = GameState.SETUP;
+            gameState = GameState.P1_TURN;
+            game.setPiece1(game.piece1);
+            game.setPiece2(game.piece2);
+            game.drawX(game.piece1, col, row);
+            game.drawO(game.piece2, col, row);
         }
 
         else if(game.getGameState().equals(GameState.P1_TURN))
         {
+            gameState = GameState.P1_TURN;
             game.drawX(game.piece1, col, row);
             game.nextTurn();
         }
 
         else if(game.getGameState().equals(GameState.P2_TURN))
         {
+            gameState = GameState.P2_TURN;
             game.drawO(game.piece2, col, row);
             game.nextTurn();
         }
