@@ -10,6 +10,7 @@ package game.chess; /**
 import game.Board;
 import game.GameState;
 import game.GameType;
+import game.Player;
 import game.checkers.Checkers;
 import game.checkers.CheckersPiece;
 import game.pieces.MovingPiece;
@@ -29,7 +30,7 @@ import javafx.stage.Stage;
 /**
  * Displays a chessboard and pieces on the board.
  *
- * @author Shakil Hussain
+ * @author Shakil Hussain, Abdulrahman Negmeldin
  */
 public class ChessController extends Application {
 
@@ -39,6 +40,8 @@ public class ChessController extends Application {
     private Board board;
     private Chess chessGame;
     private int selectedX = -1, selectedY = -1;
+    private Player player1 = new Player();
+    private Player player2 = new Player();
 
     // Initial chessboard layout
 //    private final String[][] board = {
@@ -56,7 +59,7 @@ public class ChessController extends Application {
     /**
      * Setting up the chessboard UI
      *
-     * @author Shakil Hussain
+     * @author Shakil Hussain, Abdulrahman Negmeldin
      */
     @Override
     public void start(Stage primaryStage) {
@@ -65,7 +68,7 @@ public class ChessController extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         board = new Board(GameType.CHESS);
-        chessGame = new Chess(); // Initialize Checkers game logic
+        chessGame = new Chess(player1, player2); // Initialize Checkers game logic
         chessGame.setBoard(board); // Set the board in the checkers class.
         chessGame.start();
 
@@ -113,6 +116,12 @@ public class ChessController extends Application {
         }
     }
 
+    /**
+     * A basic helper method used to determine path to piece image
+     * @param piece: piece being drawn on board
+     * @return String colour
+     * @author Abdulrahman Negmeldin
+     */
     public String colorToString(MovingPiece piece){
         Color color = piece.getColor();
         if(color.equals(Color.WHITE)){
@@ -123,6 +132,12 @@ public class ChessController extends Application {
         return null;
     }
 
+    /**
+     * A helper method used to capitalize the first letter of a string
+     * Used for determing image path
+     * @param str: String that will have its first character capitalized
+     * @return String where first character is capitalized
+     */
     public static String capitalizeFirstLetter(String str) {
         if (str == null || str.isEmpty()) return str;
         return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -157,7 +172,9 @@ public class ChessController extends Application {
      * @param event MouseEvent containing click coordinates
      * @param gc GraphicsContext used to redraw the board
      *
-     * @author Shakil Hussain
+     * @author Shakil Hussain, Abdulrahman Negmeldin
+     * Modified by Abdulrahman Negmeldin to use actual pieces not strings and check for piece pinning
+     * Also modified to check for which player's turn it is and check if game ends
      */
     private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
         int x = (int) (event.getX() / TILE_SIZE);
@@ -175,7 +192,7 @@ public class ChessController extends Application {
 
             MovingPiece piece = (MovingPiece) chessBoard[selectedY][selectedX];
             PieceType type = piece.getPieceType();
-            if((type.equals(PieceType.LIGHT) && chessGame.getState() == GameState.P1_TURN) || type.equals(PieceType.DARK) && chessGame.getState() == GameState.P2_TURN){
+            if(!chessGame.isPiecePinned(piece) && (type.equals(PieceType.LIGHT) && chessGame.getState() == GameState.P1_TURN) || type.equals(PieceType.DARK) && chessGame.getState() == GameState.P2_TURN){
                 boolean result = piece.move(y, x, board);
                 if(result){
                     chessGame.switchTurn();
@@ -183,8 +200,8 @@ public class ChessController extends Application {
             }
 
 
-            //chessGame.checkWinCondition();
-            //chessGame.matchOutcome();
+            chessGame.checkWinCondition();
+            chessGame.matchOutcome();
 
             selectedX = -1;
             selectedY = -1;

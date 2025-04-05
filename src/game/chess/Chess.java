@@ -9,14 +9,20 @@ public class Chess extends Game {
     private Player player2;
     private GameState gameState;
 
-    public Chess(){
-        this.player1 = new Player();
-        this.player2 = new Player();
+    /**
+     * Constructor to initiate a chess game
+     * @param player1: The first player
+     * @param player2: The second player
+     * @author Abdulrahman Negmeldin
+     */
+    public Chess(Player player1, Player player2){
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
     public void setBoard(Board board){
         this.board = board;
-        board.fillBoard(GameType.CHESS);
+        board.fillChessBoard(GameType.CHESS, player1, player2);
     }
 
     public void start(){
@@ -72,7 +78,7 @@ public class Chess extends Game {
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[0].length; j++) {
                 Piece p = state[i][j];
-                if (p != null && p instanceof King && p.getOwnedBy() == player) {
+                if (p != null && p instanceof King && p.getOwnedBy().equals(player)) {
                     return (King) p;
                 }
             }
@@ -115,7 +121,11 @@ public class Chess extends Game {
      * checks if there is a checkmate, otherwise it goes backing to calling code
      */
     public void checkWinCondition() {
-        if (isCheckmate(player1) || isCheckmate(player2)) {
+        if(isCheckmate(player1)){
+            gameState = GameState.P2_WIN;
+            matchOutcome();
+        } else if(isCheckmate(player2)){
+            gameState = GameState.P1_WIN;
             matchOutcome();
         }
     }
@@ -183,10 +193,10 @@ public class Chess extends Game {
      */
     public void matchOutcome() {
         // Incomplete, still needs to check for stalemate and surrender.
-        if (isCheckmate(player1)){
-            gameState = GameState.P2_WIN;
-        } else if (isCheckmate(player2)){
-            gameState = GameState.P1_WIN;
+        if (gameState.equals(GameState.P2_WIN)){
+            System.out.println("Player 2 wins!");
+        } else if (gameState.equals(GameState.P1_WIN)){
+            System.out.println("Player 1 wins!");
         }
     }
 }
