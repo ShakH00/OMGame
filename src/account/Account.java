@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import database.DatabaseManager;
 import game.GameType;
 import account.statistics.*;
 
@@ -41,7 +42,7 @@ public class Account {
     /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
      */
-    private ArrayList<Account> friends;
+    private ArrayList<Integer> friends;
 
     private final HashMap<GameType, AStatistics> statistics;
 
@@ -406,10 +407,10 @@ public class Account {
     }
 
     /**
-     * @param friend, adds the friend to the friends-list of the player.
+     * @param friendID, adds the friend to the friends-list of the player.
      */
-    public void addFriend(Account friend) {
-        this.friends.add(friend);
+    public void addFriend(int friendID) {
+        this.friends.add(friendID);
     }
 
     /**
@@ -417,7 +418,7 @@ public class Account {
      * @param friend    Account belonging to friend that is to be removed from friends list
      * @return          true if friend was in friends list; false otherwise
      */
-    public boolean removeFriend(Account friend) {
+    public boolean removeFriend(int friend) {
         if (this.friends.contains(friend)){
             this.friends.remove(friend);
             return true;
@@ -426,10 +427,23 @@ public class Account {
     }
 
     /**
-     * @return returns all the friends from the players list.
+     * Get references to the Accounts of all friends
+     * @return  ArrayList containing the Account of each friend
      */
     public ArrayList<Account> getFriends(){
-        return this.friends;
+        ArrayList<Account> friendsList = new ArrayList<>();
+        for (int friendID : friends){
+            friendsList.add(DatabaseManager.queryAccountByID(friendID));
+        }
+        return friendsList;
+    }
+
+    /**
+     * Get the IDs of all friends
+     * @return  ArrayList containing the ID of each friend
+     */
+    public ArrayList<Integer> getFriendIDs(){
+        return friends;
     }
 
     /**
