@@ -31,7 +31,7 @@ public class Admin {
      * @param newPassword the new password to set
      */
     private void updatePassword(DatabaseManager db, int id, String newPassword){
-        Account account = db.queryAccountByEmail(id);
+        Account account = db.queryAccountByID(id);
         account.setPassword(newPassword);
         db.saveAccount(account);
     }
@@ -44,7 +44,7 @@ public class Admin {
      * @param newUsername the new username to set
      */
     private void updateUsername(DatabaseManager db, int id, String newUsername){
-        Account account = db.queryAccountByEmail(id);
+        Account account = db.queryAccountByID(id);
         account.setPassword(newUsername);
         db.saveAccount(account);
     }
