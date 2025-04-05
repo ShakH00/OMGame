@@ -9,8 +9,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+//import resources.fonts.*;
 
 
 public class Connect4Controller extends Application {
@@ -31,9 +33,9 @@ public class Connect4Controller extends Application {
             Scene scene = new Scene(loader.load(), 800, 570);
 
             // TODO: these refuse to work..
-            //String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-            // Font pressStartFont = Font.loadFont(fontPath, 40);
-            // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
 
