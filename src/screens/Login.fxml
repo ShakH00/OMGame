@@ -101,7 +101,7 @@
         </Text>
       <StackPane fx:id="guestButton" layoutX="157.0" layoutY="479.1298828125">
          <children>
-              <Text fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="396.12422943115234">
+              <Text fx:id="guestText" fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="396.12422943115234">
                   <font>
                       <Font name="Press Start 2P Regular" size="11.0" />
                   </font>
