@@ -58,6 +58,11 @@ public abstract class AStatistics implements IStatistics {
                 return false;
             }
 
+            // Statistic must not be null (i.e. uninitialized
+            else if (statistics.get(statistic) == null){
+                return false;
+            }
+
             // Statistic must not be negative
             else if ((int) statistics.get(statistic) < 0){
                 return false;
