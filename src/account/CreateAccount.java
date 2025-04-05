@@ -1,6 +1,5 @@
 package account;
 
-import java.security.SecureRandom;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -10,37 +9,24 @@ import java.util.regex.Pattern;
 public class CreateAccount {
 
     private static final Scanner scanner = new Scanner(System.in);
-    private static final int ID_LENGTH = 9; // Temporary change to fit within int range
 
     /**
      * Initiates the account creation process.
      *
-     * @return A new Account object with a unique ID, valid username, email, and password.
+     * @return A new Account object with valid username, email, and password.
      */
     public static Account createAccount() {
         System.out.println("\n=== Account Creation ===");
 
-        int id = generateAccountId();
         String username = getValidUsername();
         String email = getValidEmail();
         String password = getValidPassword();
 
-        Account newAccount = new Account(id, username, email, password);
+         Account newAccount = new Account( 1,username, email, password); // 1 is placeholder waiting for the database to be implemented
         System.out.println("\nAccount created successfully!");
         System.out.println("Welcome, " + newAccount.getUsername() + "!");
 
         return newAccount;
-    }
-
-    /**
-     * Generates a unique numeric account ID within int range.
-     *
-     * @return A randomly generated numeric int.
-     */
-    private static int generateAccountId() {
-        SecureRandom random = new SecureRandom();
-        int id = random.nextInt(900000000) + 100000000; // Generates a 9-digit ID
-        return id;
     }
 
     /**
@@ -78,7 +64,7 @@ public class CreateAccount {
     }
 
     /**
-     * Prompts the user to enter and confirm a valid password.
+     * Prompts the user to enter a valid password.
      * The password must be at least 8 characters long and contain a mix of uppercase and lowercase letters, numbers, and special characters.
      *
      * @return A valid password.
@@ -88,14 +74,6 @@ public class CreateAccount {
             System.out.print("Enter password (min 8 chars with uppercase, lowercase, number, and special character): ");
             String password = scanner.nextLine();
 
-            System.out.print("Confirm password: ");
-            String confirmPassword = scanner.nextLine();
-
-            if (!password.equals(confirmPassword)) {
-                showError("Passwords do not match. Please try again.");
-                continue;
-            }
-
             if (isValidPassword(password)) {
                 return password;
             }
@@ -103,42 +81,18 @@ public class CreateAccount {
         }
     }
 
-    /**
-     * Validates a username based on predefined criteria.
-     *
-     * @param username The username to validate.
-     * @return True if the username is valid, otherwise false.
-     */
     private static boolean isValidUsername(String username) {
         return Pattern.matches("^[a-zA-Z0-9]{4,20}$", username);
     }
 
-    /**
-     * Validates an email address based on predefined criteria.
-     *
-     * @param email The email to validate.
-     * @return True if the email is valid, otherwise false.
-     */
     private static boolean isValidEmail(String email) {
         return Pattern.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$", email);
     }
 
-    /**
-     * Validates a password based on predefined criteria.
-     * The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.
-     *
-     * @param password The password to validate.
-     * @return True if the password is valid, otherwise false.
-     */
     private static boolean isValidPassword(String password) {
         return Pattern.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$", password);
     }
 
-    /**
-     * Displays an error message to the user.
-     *
-     * @param message The error message to display.
-     */
     private static void showError(String message) {
         System.out.println("❌ " + message);
     }
