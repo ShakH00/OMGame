@@ -16,6 +16,14 @@ public class AuthenticationTest {
      * MATH BASED CAPTCHA TEST CASES
      */
 
+    @Test
+    public void mathCAPTCHA_correctAnswer() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("100", "math", "100");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            fail("Exception should not have been thrown for correct math input.");
+        }
+    }
 
     //test if user inputs in the wrong verification code
     @Test
