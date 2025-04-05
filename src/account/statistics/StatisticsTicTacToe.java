@@ -19,7 +19,7 @@ public class StatisticsTicTacToe extends AStatistics implements IStatistics {
 
     public StatisticsTicTacToe(){
         this.statistics = new HashMap<>();
-        updateElo(1000);
+        initializeHashMap();
     }
 
     public StatisticsTicTacToe(HashMap<StatisticType, Number> statisticsHashMap){

@@ -24,6 +24,23 @@ public abstract class AStatistics implements IStatistics {
     HashMap<StatisticType, Number> statistics = new HashMap<>();
 
     /**
+     * Initialize all values in the statistics hashmap to 0, except for Elo which starts at 1000
+     */
+    void initializeHashMap(){
+        for (StatisticType statisticType : acceptedStatistics){
+            if (statisticType == StatisticType.ELO){
+                statistics.put(statisticType, (Integer) 1000);
+            }
+            else if (isComplex(statisticType)){
+                statistics.put(statisticType, (Double) 0.0);
+            }
+            else {
+                statistics.put(statisticType, (Integer) 0);
+            }
+        }
+    }
+
+    /**
      * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums
      * @return              True if it is possible to add statistics to the statistics HashMap

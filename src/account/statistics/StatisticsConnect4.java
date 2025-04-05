@@ -19,7 +19,7 @@ public class StatisticsConnect4 extends AStatistics implements IStatistics {
 
     public StatisticsConnect4(){
         this.statistics = new HashMap<>();
-        updateElo(1000);
+        initializeHashMap();
     }
 
     public StatisticsConnect4(HashMap<StatisticType, Number> statisticsHashMap){

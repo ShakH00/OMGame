@@ -20,7 +20,7 @@ public class StatisticsCheckers extends AStatistics implements IStatistics {
 
     public StatisticsCheckers(){
         this.statistics = new HashMap<>();
-        updateElo(1000);
+        initializeHashMap();
     }
 
     public StatisticsCheckers(HashMap<StatisticType, Number> statisticsHashMap){

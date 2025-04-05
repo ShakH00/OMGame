@@ -28,7 +28,7 @@ public class StatisticsChess extends AStatistics implements IStatistics {
 
     public StatisticsChess(){
         this.statistics = new HashMap<>();
-        updateElo(1000);
+        initializeHashMap();
     }
 
     public StatisticsChess(HashMap<StatisticType, Number> statisticsHashMap){
