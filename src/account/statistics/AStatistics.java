@@ -83,7 +83,7 @@ public abstract class AStatistics implements IStatistics {
      * @param value     Integer value to increase statistic by
      */
     public void addStatistic(StatisticType statistic, Integer value){
-        Integer currentValue = (Integer) this.statistics.get(statistic);
+        Integer currentValue = (Integer) this.statistics.getOrDefault(statistic, 0);
         this.statistics.put(statistic, currentValue + value);
 
         // update win rate
