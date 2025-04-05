@@ -1,6 +1,7 @@
 package database;
 
 import account.Account;
+import account.AccountStorageUtility;
 import game.GameType;
 import java.util.ArrayList;
 
@@ -56,7 +57,16 @@ public class DatabaseManager {
      * @return returns true if an account was saved to the database
      * saves an account to the database
      */
-    public static Boolean saveAccount(Account account) {return true;}
+    public static Boolean saveAccount(Account account) {
+        int id = account.getID();
+        String username = account.getUsername();
+        String password = account.getPassword();
+        String friends = AccountStorageUtility.friendIDsToString(account.getFriendIDs());
+        String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
+        String matchHistory = AccountStorageUtility.matchHistoryToString(account.getMatchHistory());
+
+        return true; //TODO: decide purpose of return function
+    }
 
     /**
      * @return returns true if an account was deleted from the database

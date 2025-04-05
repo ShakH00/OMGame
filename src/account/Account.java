@@ -343,12 +343,30 @@ public class Account {
     }
 
     /**
+     * Return the password of the Account
+     *
+     * @return String password of the Account
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Return the ID of the Account, or "-1" if it is a guest account
      *
      * @return int ID of the Account
      */
     public int getID() {
         return isGuest ? -1 : id;
+    }
+
+    /**
+     * Return the statistics hashmap of the Account
+     *
+     * @return HashMap that relates GameType to a Statistics object in this Account
+     */
+    public HashMap<GameType, AStatistics> getStatisticsHashMap() {
+        return statistics;
     }
 
     /**
