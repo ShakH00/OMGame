@@ -25,6 +25,16 @@ public class AuthenticationTest {
         }
     }
 
+    @Test
+    public void mathCAPTCHA_wrongAnswer() {
+        try {
+            CAPTCHAAuthentication.captchaAuthenticatorDriver("100", "math", "-100");
+            fail("Expected CAPTCHAAuthenticationFailedException was not thrown.");
+        } catch (CAPTCHAAuthenticationFailedException e) {
+            assertEquals("Invalid answer entered for Math CAPTCHA Equation!", e.getMessage());
+        }
+    }
+
     //test if user inputs in the wrong verification code
     @Test
     public void MFATest2() {
