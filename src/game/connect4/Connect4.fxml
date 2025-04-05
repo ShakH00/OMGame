@@ -317,6 +317,5 @@
          </DropShadow>
       </effect>
    </ImageView>
-   <Label layoutX="45.0" layoutY="35.0" text="Label" />
 
 </AnchorPane>
