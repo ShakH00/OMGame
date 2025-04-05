@@ -96,6 +96,37 @@ public class Account {
         statistics.put(GameType.CONNECT4, new StatisticsConnect4());
         statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
+        this.queuedFor = null;
+    }
+
+    /**
+     * Initialize an Account with all parameters. Only use when loading from database.
+     * @param id            int ID of the player
+     * @param username      String unique username
+     * @param email         String unique email
+     * @param password      String unique password (decrypted!)
+     * @param friends       ArrayList of friend IDs
+     * @param statistics    HashSet of game types and their corresponding statistics
+     * @param matchHistory  String array with summaries of previous matches
+     */
+    public Account(
+            int id,
+            String username,
+            String email,
+            String password,
+            ArrayList<Integer> friends,
+            HashMap<GameType, AStatistics> statistics,
+            String[][] matchHistory)
+    {
+        this.isGuest = false;
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.friends = friends;
+        this.statistics = statistics;
+        this.matchHistory = matchHistory;
+        this.queuedFor = null;
     }
 
     /**
