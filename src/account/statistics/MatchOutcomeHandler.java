@@ -109,13 +109,13 @@ public class MatchOutcomeHandler {
         String[] matchLog = new String[6];
 
         // index 0: game result (win/loss/draw)
-        if (playerResults.get(StatisticType.WINS) == 1){
+        if (playerResults.getOrDefault(StatisticType.WINS, 0) == 1){
             matchLog[0] = "Win";
         }
-        else if (playerResults.get(StatisticType.LOSSES) == 1){
+        else if (playerResults.getOrDefault(StatisticType.LOSSES, 0) == 1){
             matchLog[0] = "Loss";
         }
-        else if (playerResults.get(StatisticType.DRAWS) == 1){
+        else if (playerResults.getOrDefault(StatisticType.DRAWS, 0) == 1){
             matchLog[0] = "Draw";
         }
 
