@@ -17,10 +17,10 @@ public class Connect4 extends Game {
         super.gameRules = new GameRules();
     }
 
-    Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
-    Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
+    public Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
+    public Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
 
-    protected void move(Piece piece, int col) {
+    public void move(Piece piece, int col) {
         if (col >= 0 && col < board.getCols()) {
             // Find first empty row in this column (from bottom up)
             for (int row = board.getRows() - 1; row >= 0; row--) {
@@ -232,7 +232,7 @@ public class Connect4 extends Game {
         return gameState;
     }
 
-    protected Board getBoard()
+    public Board getBoard()
     {
         return board;
     }
