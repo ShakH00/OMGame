@@ -2,6 +2,7 @@ package database;
 
 import account.Account;
 import account.statistics.MatchOutcomeHandler;
+import account.statistics.MatchOutcomeInvalidError;
 import account.statistics.StatisticType;
 import game.GameType;
 
@@ -16,7 +17,7 @@ import java.util.HashSet;
 import static account.AccountStorageUtility.*;
 
 public class DatabaseTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MatchOutcomeInvalidError {
         int accountID=0;
         String username="test";
         String email="nebilawako@gmail.com";
@@ -50,11 +51,7 @@ public class DatabaseTest {
         testAccountResults1.put(StatisticType.PIECES_CAPTURED, 11);
         testAccountResults1.put(StatisticType.CHECKMATES, 1);
 
-        try {
-            MatchOutcomeHandler.RecordMatchOutcome(game, 123, testAccount, testAccountResults, testAccount1, testAccountResults1);
-        } catch (Exception e){
-            System.out.println("Match outcome error: " + e);
-        }
+        MatchOutcomeHandler.RecordMatchOutcome(game, 123, testAccount, testAccountResults, testAccount1, testAccountResults1);
 
         Boolean isSaved = DatabaseManager.saveAccount(testAccount);
 
