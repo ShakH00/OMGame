@@ -45,12 +45,21 @@ public class Pawn extends MovingPiece {
         int currentX = this.getX();
         int currentY = this.getY();
         if(isValidMove(newX, newY, gameBoard)){
+            boolean enpassant = isEnpassant(newX, newY, gameBoard);
+
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            System.out.println("moved");
+            if(enpassant){
+                int enemyY = (this.getPieceType() == PieceType.LIGHT) ? newX + 1 : newX - 1; //adjust based on whether LIGHT or DARK
+
+                //enemy pawn is on  left or right of current position, diagonally
+                int enemyX = newY;  //enemy pawn x coordinates stay the same
+
+                board[enemyX][enemyY] = null; //kill enemy pawn!
+            }
             if(!doneFirstMove){
                 doneFirstMove = true;
             } else if(!doneSecondMove){
@@ -59,6 +68,42 @@ public class Pawn extends MovingPiece {
             return true;
         }
         return false;
+    }
+
+    /**
+     * A method to check if the move being made is en passant, used to eat enemy piece in such a special move
+     * @param newX: new x coordinate that pawn is being moved to
+     * @param newY: new y coordinate that pawn is being moved to
+     * @param gameBoard: board being played on
+     * @return true if this is indeed an en passant move
+     */
+    private boolean isEnpassant(int newX, int newY, Board gameBoard){
+        int currentX = this.getX();
+        int currentY = this.getY();
+        Piece[][] board = gameBoard.getBoardState();
+        PieceType type = this.getPieceType();
+        int compX = (type == PieceType.LIGHT) ? currentX-newX : newX-currentX;
+        int compY = Math.abs(newY-currentY);
+        Piece isPieceOnTile = board[newX][newY];
+        //en passant logic from isValidMove
+        if(compX == 1 && compY == 1){
+            if (compX == 1 && compY == 1 && isPieceOnTile == null) {
+                int sidePawnX = currentX;
+                int sidePawnY = newY;
+                Piece sidePiece = board[sidePawnX][sidePawnY];
+
+                if (sidePiece instanceof Pawn && sidePiece.getPieceType() != type) {
+                    Pawn enemyPawn = (Pawn) sidePiece;
+                    boolean correctRow = (type == PieceType.LIGHT && currentX == 3) || (type == PieceType.DARK && currentX == 4);
+                    boolean targetRow = (type == PieceType.LIGHT && newX == 2) || (type == PieceType.DARK && newX == 5);
+
+                    if (correctRow && targetRow && !enemyPawn.isDoneSecondMove()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false; //if reached end of method then this move is NOT en passant
     }
 
     /**
@@ -127,10 +172,19 @@ public class Pawn extends MovingPiece {
             if (isPieceOnTile != null && isPieceOnTile.getPieceType() != type){
                 return true;
             //en passant: essentially checks that tile moving to is empty, there's a piece next to your pawn, its an enemy piece
-            } else if(currentX == 3 && newX == 2 && isPieceOnTile == null && board[currentX][newY] != null && board[currentX][newY].getPieceType() != type){
-                //check this enemy piece is pawn and that it just did its first move
-                if(board[currentX][newY] instanceof Pawn && !((Pawn) board[currentX][newY]).isDoneSecondMove()){
-                    return true;
+            } else if (compX == 1 && compY == 1 && isPieceOnTile == null) {
+                int sidePawnX = currentX;
+                int sidePawnY = newY;
+                Piece sidePiece = board[sidePawnX][sidePawnY];
+
+                if (sidePiece instanceof Pawn && sidePiece.getPieceType() != type) {
+                    Pawn enemyPawn = (Pawn) sidePiece;
+                    boolean correctRow = (type == PieceType.LIGHT && currentX == 3) || (type == PieceType.DARK && currentX == 4);
+                    boolean targetRow = (type == PieceType.LIGHT && newX == 2) || (type == PieceType.DARK && newX == 5);
+
+                    if (correctRow && targetRow && !enemyPawn.isDoneSecondMove()) {
+                        return true;
+                    }
                 }
             }
         }
