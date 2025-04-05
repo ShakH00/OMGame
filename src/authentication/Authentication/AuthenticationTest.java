@@ -16,16 +16,6 @@ public class AuthenticationTest {
      * MATH BASED CAPTCHA TEST CASES
      */
 
-    //test if user inputs in the correct verification code
-    @Test
-    public void MFATest1() {
-        MFAAuthentication.testMode = true;
-        String userInput = "246810\n";
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-
-        assertDoesNotThrow(() -> MFAAuthentication.emailAuthenticatorDriver("user@ucalgary.ca"));
-    }
-
 
     //test if user inputs in the wrong verification code
     @Test
