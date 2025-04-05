@@ -6,160 +6,151 @@
 
 ## 🧭 Purpose
 
-This document consolidates two previous references: `apiDocumentation.md` and `networkingCodeExplanation.md`. It provides a **comprehensive breakdown of both the API interface and the internal code behavior** of the networking system for our multiplayer game. It reflects the **P3 iteration** of development, incorporating stubs, chat features, and integration hooks for the core `Game` system.
+This document consolidates previous references (`apiDocumentation.md` and `networkingCodeExplanation.md`) into one comprehensive breakdown of both the **API interface** and the **internal code behavior** of the networking system for our multiplayer game. It reflects the **P3 iteration** of development and includes:
+
+- Working and stubbed methods
+- Planned chat and matchmaking systems
+- Server and client behaviors
+- Internal profile data utilities
 
 ---
 
 ## 🔌 System Components Overview
 
-| Class/File               | Role |
-|--------------------------|------|
-| GameServerT.java         | Central server logic – receives, validates, and relays moves |
-| ServerSideConnection.java| Thread handler for each server-connected player |
-| PlayerT.java             | Main client logic (connects to server, sends/receives moves) |
-| ClientSideConnection.java| Handles incoming server data and UI handoff |
-| PlayerDatabase.java      | Stores persistent player profiles and rankings |
-| PlayerData.java          | POJO for usernames, ELO, session info |
-| Game.java                | Abstract logic for turn handling, win checking, etc. |
-| Board.java               | Game board container (2D) |
-| GameState.java / Enum    | Win/loss/draw/game-in-progress tracking |
-| Player.java              | Server-tracked representation of players |
+| Class/File                 | Role                                                                 |
+|----------------------------|----------------------------------------------------------------------|
+| GameServerT.java           | Central server logic – receives, validates, and relays moves         |
+| ServerSideConnection.java | Thread handler for each server-connected player                      |
+| PlayerT.java               | Main client logic (connects to server, sends/receives moves)         |
+| ClientSideConnection.java | Handles incoming server data and UI handoff                          |
+| PlayerDatabase.java        | Stores persistent player profiles and rankings                       |
+| PlayerData.java            | POJO for usernames, ELO, session info                                |
+| stubs.java                 | Central stub hub for game server, chat, database                     |
+| PlayerTStubs.java          | Stub simulation of GUI + local networking interactions               |
+| Networking.java            | Placeholder for final networking system abstraction                  |
 
 ---
 
 ## 📋 Server Methods (`GameServerT.java`)
 
 ### `acceptConnections()` ✅
-Waits for two players to join, assigns roles, and spawns ServerSideConnection threads.
+Waits for two players to join, assigns roles, and spawns `ServerSideConnection` threads.
 
 ### `processGameLogicP1(String input)` / `processGameLogicP2(String input)` ✅
-Parses input like "1,2" and updates the server2dChar[][] board.  
-📝 In the future, this will call into `Game.move()` to align with new game state logic.
+Parses move strings like "1,2" and updates `server2dChar[][]`. Assumes turn order and validity are managed.
 
 ### `sendButtonNum(String buttonNum, int receiverID)` 🟡
-Stubbed. Will transmit moves to the specified opponent.
+Stubbed. Transmits a move to the target player.
 
 ### `send2dCharArray(int receiverID)` 🟡
-Stubbed. Will sync full game state with clients.
+Stubbed. Will sync the updated board to a specified client.
 
 ---
 
 ## 💬 Chat & Future Network Additions
 
-Planned or partially implemented extensions:
+### **Chat System (`stubs.ChatStubs`)**
+- `sendMessage()` to append to history
+- `getChatHistory()` for retrieval
+- `clearChat()` to reset conversation
 
-- Chat relay system (via socket IO)
-- Matchmaking logic (`GameType`, `PlayerData`)
-- Graceful disconnect + reconnect handling
-- Server-side validation using `GameRules.java`
+### **Matchmaking & Sessions**
+- Will use `PlayerData`, ELO, and `PlayerDatabase`
+- Needs session manager (planned)
 
 ---
 
 ## 🤝 Server-Side Threading (`ServerSideConnection.java`)
 
 ### `run()` ✅
-Main loop: receives client input and sends responses back.
+Listens for messages and routes them to `GameServerT` logic.
 
 ### `sendButtonNum()` / `send2dCharArray()` 🟡
-Stubbed versions of outbound message logic.
+Stubbed methods for relaying board/move data.
 
 ---
 
 ## 🖥️ Client Methods (`PlayerT.java`)
 
 ### `connectToServer()` ✅
-Establishes socket to server and initializes session.
+Establishes connection to server, receives player ID, sets up game loop.
 
 ### `sendButtonNum(String strBNum)` 🟡
-Sends player’s move string to server.
+Stubbed. Sends move string to server.
 
 ### `receiveButtonNum()` 🟡
-Receives opponent's move from server and hands off to GUI.
+Stubbed. Retrieves move from server and updates GUI accordingly.
 
 ### `closeConnection()` ✅
-Ends the client-server session gracefully.
+Gracefully closes the socket.
 
 ---
 
-## 📶 Client-Side Socket Handling (`ClientSideConnection.java`)
+## 🧪 PlayerTStubs.java – Simulation Logic
 
-### `run()` ✅
-Monitors socket for server updates.
+### Purpose:
+Allows local testing of player move logic, GUI interaction, and networking placeholders.
 
-### `sendButtonNum()` / `receiveButtonNum()` 🟡
-Placeholder wrappers for player-server messaging.
+- Uses fake sockets and simulated players
+- Mimics click -> move -> board update loop
+- Interfaces with stubs, not live server
+
+Useful for demo, testing, and GUI debugging.
 
 ---
 
 ## 🧠 PlayerData & Backend Utilities
 
-Handled by `PlayerDatabase.java`. These methods support persistence and can be extended for login and leaderboard features.
+### `PlayerData.java`
+Stores a player's ID, name, and ELO per game mode.
 
-Example methods:
+### `PlayerDatabase.java`
+- Add, remove, or fetch players
+- Adjust ELO scores
+- Retrieve top-N players
 
-- `addPlayer(PlayerData pd)`
-- `playerExists(String username)`
-- `getTopTenPlayers()`
-
----
-
-## 🧩 Integration with Game Logic System (NEW)
-
-With the addition of `Game.java`, `Board.java`, `Player.java`, and `GameState`, the networking system now connects more deeply with backend logic.
-
-### What This Means:
-
-- The server no longer just sends button numbers – it tracks and transmits full board state using `Board.java`.
-- The turn and win logic now lives in `Game.java`, which includes:
-    - `move(...)`
-    - `checkWinCondition(...)`
-    - `getGameState()` (based on `GameState.java`)
-- Client messages will eventually map to `Game` method calls, and updated states will be transmitted via `send2dCharArray()`.
-
-🧠 Developers should treat networking as a relay and sync engine for what the `Game` class determines as legal.
+Both files will serve as the backend for matchmaking and leaderboard features.
 
 ---
 
-## 🔄 Networking Flow Summary
+## 🔄 Flow Summary
 
-1. Client connects to server → gets ID
-2. Client clicks a button → `sendButtonNum()`
-3. Server thread parses and passes to `processGameLogic()` → calls into `Game.move()`
-4. Game logic updates → new board and state sent via `send2dCharArray()`
-5. Client receives → GUI updates
-6. Repeat until `Game.getGameState()` returns win/draw/end
-
----
-
-## ⚠️ Integration Roles
-
-| Team         | Responsibility |
-|--------------|----------------|
-| GUI          | Connect GUI events to client methods like `sendButtonNum()` |
-| Game Logic   | Ensure `Game.move()` handles input from server, and returns valid board updates |
-| Profiles     | Enable persistence for `Player.java` across sessions if needed |
-| Matchmaking  | Interface with `PlayerData` and `GameType` to launch different games or assign fair matchups |
+1. Client connects via `connectToServer()`
+2. Click sends move using `sendButtonNum()`
+3. Server receives → `processGameLogic*()` applies it
+4. Server updates board → sends via `send2dCharArray()`
+5. Opponent receives and sees update via `receiveButtonNum()`
+6. Game continues until win/draw condition
 
 ---
 
-## 🧪 Stubbed vs Final – Status Table
+## ⚠️ Integration Notes
 
-| Function             | File/Class                 | Status     |
-|----------------------|----------------------------|------------|
-| sendButtonNum(...)   | GameServerT.java           | 🟡 Stubbed |
-| send2dCharArray(...) | GameServerT.java           | 🟡 Stubbed |
-| receiveButtonNum()   | PlayerT.java               | 🟡 Stubbed |
-| run()                | ClientSideConnection.java  | 🟡 Stubbed |
-| run()                | ServerSideConnection.java  | ✅ Working |
-| connectToServer()    | PlayerT.java               | ✅ Working |
-| closeConnection()    | PlayerT.java               | ✅ Working |
-| move()               | Game.java                  | ✅ Implemented |
-| getGameState()       | Game.java / GameState.java | ✅ Implemented |
+| Team         | Responsibility                                                                 |
+|--------------|----------------------------------------------------------------------------------|
+| GUI          | UI buttons trigger move send, display updates, handle disconnects               |
+| Game Logic   | Owns move format, validation, game rule enforcement                             |
+| Profile/Auth | Links `PlayerData` to login and session storage                                 |
 
 ---
 
-## 📎 Additional References
+## 📋 Stub Status Table
 
-- `error_handling_ideas.md` – disconnects and retry logic
-- `NetworkingSystemOverview.md` – project management and planning
-- Flowcharts and class diagrams are hosted on [Figma](https://www.figma.com/board/dpFR9WEMYuxA74ZvipXcZc/process-loop?node-id=1-25)
+| Function/Class             | Status     | Notes                                     |
+|---------------------------|------------|-------------------------------------------|
+| `acceptConnections()`     | ✅         | Basic socket listener and thread manager  |
+| `processGameLogic*()`     | ✅         | Parses + updates board                    |
+| `sendButtonNum()`         | 🟡 Stubbed | Pending move structure/target logic       |
+| `send2dCharArray()`       | 🟡 Stubbed | Format of board data to be finalized      |
+| `PlayerTStubs.java`       | ✅         | Runs locally as GUI + pseudo-network sim  |
+| `PlayerDatabase.java`     | ✅         | Internal DB for player tracking           |
+| `ChatStubs`               | ✅         | Simple message queue with console output  |
+
+---
+
+## 📎 Additional Resources
+
+- `error_handling_ideas.md` – Disconnection flow, reconnection windows
+- `NetworkingConcepts.md` – Stub roles, session planning, high-level overview
+- Diagrams available in shared FigJam + docs folder
+

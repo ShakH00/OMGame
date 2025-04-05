@@ -1,141 +1,117 @@
-# **Networking System Overview & Planning**
+# **Networking System Overview & Planning (P3 up-to-date)**
 
 ## 📍 Docs & References
 
 - [📊 FigJam Diagram (Architecture & Flow)](https://www.figma.com/board/dpFR9WEMYuxA74ZvipXcZc/process-loop?node-id=1-25&t=nhEXUiFAzE8vcAcv-1)
 - [📄 Google Doc Master Plan](https://docs.google.com/document/d/1O3nZ0WbedHbkeMzC8PnDiTGf0OVOONgV-Xe5WJszYR0/edit?usp=sharing)
-- 🔗 Helpful videos for implementation:
+- 🔗 Videos for implementation concepts:
   - https://www.youtube.com/watch?v=HQoWN28H80w
   - https://www.youtube.com/watch?v=gLfuZrrfKes
 
 ---
 
-## 🧠 System Architecture: Network Flow (P3 Level)
+## 🧠 System Architecture: Core Networking Flow
 
-### **1. Game Creation & Player Join**
-- Player connects via GUI → triggers `connectToServer()`
-- Assigned ID → passed to `PlayerT`/`Game.java`
-- Game session initialized with `GameType`, `GameState`, and player profiles
+### **1. Game Initialization & Player Join**
+- `PlayerT` connects to server via `connectToServer()`
+- Receives player ID and matchmaking begins
+- GUI launched or updated accordingly
 
-### **2. Client Sends a Move**
-- GUI triggers `sendMoveToServer(gameId, playerId, move)`
-- Move sent through `ClientSideConnection` → server thread (`ServerSideConnection`)
+### **2. Client Sends Move**
+- Local move input triggers `sendButtonNum(strBNum)` from `PlayerT` (or `PlayerTStubs`)
+- Message handled through `ClientSideConnection` or stub connection
+- Sent to server
 
-### **3. Server Processes the Move**
-- `GameServerT` relays input to `processGameLogic()` in `Game.java`
-- Validated using `GameRules` and `Board` state
-- If valid: updates board + score; if invalid: returns structured error
+### **3. Server Validates & Updates**
+- `GameServerT` receives move and calls `processGameLogicP1/P2()`
+- Updates internal 2D board `server2dChar`
+- Validity is assumed (to be improved via GameRules integration)
 
-### **4. Server Broadcasts Updated State**
-- Server invokes `sendButtonNum()` and/or `send2dCharArray()` to relay move
-- Format handled via shared serialization logic (TBD)
+### **4. Server Broadcasts Update**
+- Calls `send2dCharArray()` and/or `sendButtonNum()` (stubbed or real)
+- Move or board sent to both clients
+- Format standardization pending (currently raw char array or string)
 
 ### **5. Clients Receive Update**
-- `ClientSideConnection` receives updated state
-- `PlayerT` uses GUI handler to refresh display
-- Turn indicators, win states updated via `GameState`
+- `PlayerT` or `PlayerTStubs` receives update via `receiveButtonNum()`
+- GUI reflects board state and message updates
+- Turn toggles handled locally
 
-### **6. Disconnection & Reconnection Logic**
-- Server detects dropped socket → marks player as inactive
-- If reconnects in time: restores session using `PlayerData` + preserved `Game`
-- Otherwise, match is forfeited and state closed
+### **6. Chat Feature**
+- Enabled using `ChatStubs.sendMessage()` and `getChatHistory()`
+- Console-only for now, to be linked with GUI if time permits
 
----
-
-## 📌 Project Planning (P3)
-
-### 🧩 Inter-Team Integration Strategy
-
-| Team            | Integration Plan |
-|-----------------|------------------|
-| Game Logic      | Integrated with `Game.java`, `GameRules`, and `Board`. Networking validates move format + wraps server control. |
-| Authentication  | Collaborate on binding `PlayerData` to user logins; ensure persistent state. |
-| Leaderboard/MM  | Use `PlayerDatabase` for ELO stats and rankings. Ensure format consistency. |
-| GUI             | GUI must react to all states – moves, turns, errors. Buttons call `sendMove()`, chat triggers `sendMessage()`. |
-| Website         | Low priority – potential use for leaderboard display or archived games. |
-
-⚠️ Integration Flow: **Game Logic → Networking → GUI**
+### **7. Disconnection & Reconnection**
+- Placeholder logic to detect socket drop and restore session
+- `PlayerData` will be used to retain ELO and status across reconnect
 
 ---
 
-## 🎯 Networking Objectives (P3 Focus)
+## 🗂️ Key Code Components
 
-- ✅ Deliver stubs across server, chat, session handlers
-- ✅ Implement fallback-safe client behavior (disconnects, invalid moves)
-- ✅ Begin chat integration via `ChatStubs`
-- ✅ Diagram and document all system functions and flows
-- 🔄 Respond to feedback re: doc structure and clarity
-- 📹 Prepare for recorded demos and worklog documentation
-
----
-
-## 👥 Team Roles (Latest Breakdown)
-
-### 🔹 **Hatem + Nova – Docs, Planning, Integration**
-
-- Reorganized `networkingFunctionDocs.md`, `NetworkingConcepts.md`, `NetworkErrorHandling.md`
-- Consolidated diagrams and flowcharts into final structure
-- Supporting code mapping and fallback scenarios
-
-### 🔹 **Sultan + Uzair – Code & Research**
-
-- Built stubs for network connection, messaging, player profile logic
-- Developed `ChatStubs`, backend profile/ELO utils
-- Working on real-time message handling and reconnection testing
+| Component               | Description |
+|-------------------------|-------------|
+| `Networking.java`       | Placeholder for future abstraction or socket centralization |
+| `GameServerT.java`      | Server entry point: handles sessions, move processing |
+| `PlayerT.java`          | Client-side player logic: connects, sends moves, updates UI |
+| `PlayerTStubs.java`     | Local GUI simulator for testing logic and flow |
+| `PlayerData.java`       | POJO to track username, ID, and game ELOs |
+| `PlayerDatabase.java`   | Central hub to manage and rank players |
+| `stubs.java`            | Consolidated stubbed behaviors for DB, game, and chat |
 
 ---
 
-## 🧭 System Structure Summary
+## 🧩 Inter-Team Integration Strategy
 
-| Component              | Description |
-|------------------------|-------------|
-| `Game.java`            | Holds game session metadata, logic, board, and state |
-| `GameRules.java`       | Evaluates move legality and win conditions |
-| `Board.java`           | Manages piece placement and board config |
-| `PlayerData.java`      | Stores username, ELO, ID |
-| `PlayerDatabase.java`  | Tracks ranked players, matchmaking eligibility |
-| `GameServerT.java`     | Accepts connections, validates moves, distributes updates |
-| `PlayerT.java`         | Connects client to server, handles GUI signals |
-| `ServerSideConnection` | Thread managing inbound player messages |
-| `ClientSideConnection` | Handles inbound messages from server to GUI |
+| Team            | Role |
+|-----------------|------|
+| Game Logic      | Works with `GameRules`, `Board`, `Game.java` to define valid move logic |
+| GUI             | Connects buttons and inputs to `PlayerT` methods; handles visual updates |
+| Leaderboard/MM  | Integrates with `PlayerDatabase.java` and `PlayerData.java` for ranking |
+| Auth/Profile    | May use `PlayerDataStubs` to simulate login/session profiles |
 
 ---
 
-## 📆 Timeline & Deliverables
+## 🎯 Networking Team Goals (P3)
 
-### 🔧 Priorities
-- 🔁 Refactor and finalize all docs for alignment
-- 📎 Verify methods across files for consistency
-- 🎨 Add visual diagrams to support planning
-
-### 🧾 Submission Checklist
-
-| Deliverable           | Status |
-|-----------------------|--------|
-| `README.md`           | Pending – must describe socket setup |
-| `ChangesMade.md`      | Pending – summarize P3 work |
-| `team.md`             | ✅ Completed |
-| `git_log.csv`         | Ongoing – track actual work |
-| `meetingNotes.md`     | In progress – ensure decisions documented |
+- ✅ Deliver working stubs (server, chat, matchmaking)
+- ✅ Simulate all main interactions using `PlayerTStubs`
+- ✅ Modularize with clear file-level responsibilities
+- 🔁 Integrate move validation + reconnection safety
+- 📑 Refine and consolidate all documentation
+- 🎨 Add matching diagrams and maintain consistency
 
 ---
 
-## ✅ Individual Deliverables (To Submit on D2L)
+## 🧪 Required Stub Coverage
+
+| Feature            | Stub Source         | Example Method               |
+|--------------------|---------------------|------------------------------|
+| Server Hosting     | `GameServerStubs`   | `startServer()`, `acceptConnection()` |
+| Player Records     | `PlayerDatabaseStubs` | `addPlayer()`, `getElo()`   |
+| Game Session       | `PlayerDataStubs`   | `setUserID()`, `getAPlayerElo()` |
+| Communication      | `PlayerTStubs`, `ClientSideConnection` | `sendButtonNum()`, `receiveButtonNum()` |
+| Chat               | `ChatStubs`         | `sendMessage()`, `clearChat()` |
+
+---
+
+## 🧾 Deliverables Summary
+
+| Item                      | Status |
+|---------------------------|--------|
+| Codebase integration      | In progress |
+| Documentation (final)     | Ongoing (modular + updated) |
+| Demo-ready stubs          | ✅ Complete |
+| `README.md` networking    | Pending update |
+| `ChangesMade.md`          | Pending (stub strategy + structure) |
+| Git commit logs           | Ongoing |
+
+---
+
+## ✅ Individual D2L Deliverables
 
 - `[UCID]_worklog_p3.xlsx`
 - `[UCID]_peer_evaluations_p3.xlsx`
 - `[UCID]_reflection_p3.pdf`
 - `[UCID]_tech_demo_pNN.mp4`
 - `AI_disclosure.txt`
-
----
-
-## 🧪 Stubbed Requirements (Must Exist)
-
-| Feature Area       | Stubs Required |
-|--------------------|----------------|
-| Server Hosting     | `acceptConnections()`, session manager |
-| Game Mechanics     | `Game`, `Board`, `GameRules` |
-| Communication      | `sendButtonNum()`, `sendMessage()` |
-| Reconnection       | Fallback if client drops mid-turn |
-| Matchmaking        | ELO tracking, timed queue expansion |
