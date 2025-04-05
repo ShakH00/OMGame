@@ -1,42 +1,36 @@
 package database;
 
+import account.Account;
+
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static account.AccountStorageUtility.*;
 
 public class DatabaseTest {
     public static void main(String[] args) {
-        Connection conn = DatabaseConnection.getConnection();
+        int accountID=0;
+        String username="test";
+        String email="nebilawako@gmail.com";
+        String password="test@123";
 
-        if (conn != null) {
-            System.out.println("Connection successful!");
+        int accountID1=1;
+        String username1="test1";
+        String email1="nebilawako@gmail.com1";
+        String password1="test@123";
 
-            String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?,?,?)";
+        Account testAccount = new Account(accountID, username, email, password);
+        Account testAccount1 = new Account(accountID1, username1, email1, password1);
 
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        testAccount.addFriend(1);
+        testAccount.addFriend(2);
+        testAccount.addFriend(3);
 
-                int rowsInserted = stmt.executeUpdate();
 
-                if (rowsInserted > 0) {
-                    System.out.println("Row inserted successfully!");
-                } else {
-                    System.out.println("Insert failed.");
-                }
+        Boolean isSaved = DatabaseManager.saveAccount(testAccount);
 
-            } catch (SQLException e) {
-                System.err.println("SQL Error: " + e.getMessage());
-            } finally {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    System.err.println("Failed to close connection.");
-                }
-            }
-
-        } else {
-            System.out.println("Connection failed!");
-        }
     }
 }
