@@ -1,216 +1,204 @@
 package game.tictactoe;
 
-/**
- * This is probably equally bad as my checkers code but hey, it's Tic Tac Toe!
- * X's and O's everywhere, someone wins (or not), what more do you want?
- *
- * - Shakil :) (still sleep deprived)
- */
-
+import game.GameState;
+import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-/**
- * Displays a Tic Tac Toe board and handles game logic.
- */
+
 public class TicTacToeController extends Application {
 
-    private static final int TILE_SIZE = 100;
-    private static final int BOARD_SIZE = 3;
-    private static final int BOARD_PADDING = 20;
+    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
-    // 0 = empty, 1 = X, 2 = O
-    private final int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
-    private int currentPlayer = 1; // Start with X
-    private boolean gameOver = false;
+    @FXML
+    private GameState currentState;
+    @FXML
+    private Label p1Label;
+    @FXML
+    private Label p2Label;
+    @FXML
+    private GridPane gameBoard;
+    @FXML
+    private TicTacToe game = new TicTacToe();
 
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Canvas canvas = new Canvas(
-                BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING,
-                BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING
-        );
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/TicTacToe.fxml"));
 
-        drawBoard(gc);
+            Scene scene = new Scene(loader.load(), 800, 570);
 
-        canvas.setOnMouseClicked(event -> {
-            if (!gameOver) {
-                handleMouseClick(event, gc);
+              // TODO: idk if these will work while this controller is in tictactoe and not with her friends
+//            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+//            Font pressStartFont = Font.loadFont(fontPath, 40);
+//            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+            primaryStage.setResizable(false);
+
+            // set up the primary stage
+            primaryStage.setTitle("OMG!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleCellClick0(MouseEvent event) { handleMove(0, 0); }
+
+    @FXML
+    private void handleCellClick1(MouseEvent event) { handleMove(0, 1); }
+
+    @FXML
+    private void handleCellClick2(MouseEvent event) { handleMove(0, 2); }
+
+    @FXML
+    private void handleCellClick3(MouseEvent event) { handleMove(1, 0); }
+
+    @FXML
+    private void handleCellClick4(MouseEvent event) { handleMove(1, 1); }
+
+    @FXML
+    private void handleCellClick5(MouseEvent event) { handleMove(1, 2); }
+
+    @FXML
+    private void handleCellClick6(MouseEvent event) { handleMove(2, 0); }
+
+    @FXML
+    private void handleCellClick7(MouseEvent event) { handleMove(2, 1); }
+
+    @FXML
+    private void handleCellClick8(MouseEvent event) { handleMove(2, 2); }
+
+
+
+    // adds a piece to the gameboard, checks for win conditions, and switches turns.
+    private void handleMove(int row, int col) {
+        if (currentState == GameState.P1_WIN || currentState == GameState.P2_WIN || currentState == GameState.DRAW) {
+            return; // game over
+        }
+
+        updatePlayerLabels();
+
+        // who's turn is it?
+        Piece currentPiece = game.getGameState() == GameState.P1_TURN ? game.piece1 : game.piece2;
+        Piece[][] board = game.getBoard().getBoardState();
+
+        // check if the cell is already occupied
+        if (board[row][col] != null) {
+            // if it's already occupied, return early to prevent a move
+            System.out.println("Cell is already occupied! Try a different one.");
+            return;
+        }
+
+
+        game.move(currentPiece, row, col); // make a move
+        updateBoard(); // update the board to reflect the move
+        game.nextTurn(); // switch to the next player's turn
+
+
+
+        // check game state
+        currentState = game.getGameState();
+
+        if (currentState == GameState.P1_WIN) {
+            System.out.println("Player 1 wins!");
+        } else if (currentState == GameState.P2_WIN) {
+            System.out.println("Player 2 wins!");
+        } else if (currentState == GameState.DRAW) {
+            System.out.println("It’s a draw!");
+        }
+    }
+
+    // update the player labels based on the pieces (and make the active player's name stand out!)
+    private void updatePlayerLabels() {
+        if (game.piece1.getPieceType() == PieceType.LIGHT) {
+            // player 1 is X (blue)
+            p1Label.setStyle("-fx-text-fill: #42b0da;");
+            p2Label.setStyle("-fx-text-fill: #fe8fb7;");
+
+            if (currentState == GameState.P1_TURN || currentState == GameState.SETUP) {
+                p1Label.setOpacity(.5);
+                p2Label.setOpacity(1);
+            } else if (currentState == GameState.P2_TURN) {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(.5);
+            } else {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(1);
             }
-        });
 
-        // Create buttons
-        Button offerDrawButton = new Button("Offer Draw");
-        offerDrawButton.setLayoutX(650);
-        offerDrawButton.setLayoutY(10);
-        offerDrawButton.setOnAction(e -> handleOfferDraw());
+        } else {
+            // player 1 is O (pink)
+            p1Label.setStyle("-fx-text-fill: #fe8fb7;");
+            p2Label.setStyle("-fx-text-fill: #42b0da;");
 
-        Button resignButton = new Button("Resign");
-        resignButton.setLayoutX(650);
-        resignButton.setLayoutY(50);
-        resignButton.setOnAction(e -> handleResign());
-
-        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
-        Scene scene = new Scene(root, 800, 600);
-
-        primaryStage.setTitle("Tic Tac Toe");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
-    private void drawBoard(GraphicsContext gc) {
-        // Clear board
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0,
-            BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING,
-            BOARD_SIZE * TILE_SIZE + 2 * BOARD_PADDING
-        );
-
-        // Draw grid
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(3);
-
-        // Vertical lines
-        for (int i = 1; i < BOARD_SIZE; i++) {
-            gc.strokeLine(
-                BOARD_PADDING + i * TILE_SIZE, BOARD_PADDING,
-                BOARD_PADDING + i * TILE_SIZE, BOARD_PADDING + BOARD_SIZE * TILE_SIZE
-            );
-        }
-
-        // Horizontal lines
-        for (int i = 1; i < BOARD_SIZE; i++) {
-            gc.strokeLine(
-                BOARD_PADDING, BOARD_PADDING + i * TILE_SIZE,
-                BOARD_PADDING + BOARD_SIZE * TILE_SIZE, BOARD_PADDING + i * TILE_SIZE
-            );
-        }
-
-        // Draw X's and O's
-        for (int row = 0; row < BOARD_SIZE; row++) {
-            for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] == 1) {
-                    drawX(gc, col, row);
-                } else if (board[row][col] == 2) {
-                    drawO(gc, col, row);
-                }
+            if (currentState == GameState.P1_TURN) {
+                p1Label.setOpacity(0.5);
+                p2Label.setOpacity(1);
+            } else if (currentState == GameState.P2_TURN) {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(0.5);
+            } else {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(1);
             }
+
         }
     }
 
-    private void drawX(GraphicsContext gc, int col, int row) {
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(4);
+    // edits the null image in gameboard to reflect the piece the player has put down.
+    private void updateBoard() {
+        Piece[][] board = game.getBoard().getBoardState();
 
-        double padding = 15;
-        double x = BOARD_PADDING + col * TILE_SIZE;
-        double y = BOARD_PADDING + row * TILE_SIZE;
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                ImageView imageView = getNodeByRowColumnIndex(row, col, gameBoard);
+                Piece currentPiece = board[row][col];
 
-        // Draw X
-        gc.strokeLine(x + padding, y + padding, x + TILE_SIZE - padding, y + TILE_SIZE - padding);
-        gc.strokeLine(x + TILE_SIZE - padding, y + padding, x + padding, y + TILE_SIZE - padding);
-    }
-
-    private void drawO(GraphicsContext gc, int col, int row) {
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(4);
-
-        double padding = 15;
-        double x = BOARD_PADDING + col * TILE_SIZE + TILE_SIZE / 2;
-        double y = BOARD_PADDING + row * TILE_SIZE + TILE_SIZE / 2;
-
-        // Draw O
-        gc.strokeOval(
-            x - (TILE_SIZE / 2 - padding),
-            y - (TILE_SIZE / 2 - padding),
-            TILE_SIZE - 2 * padding,
-            TILE_SIZE - 2 * padding
-        );
-    }
-
-    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
-        int col = (int) ((event.getX() - BOARD_PADDING) / TILE_SIZE);
-        int row = (int) ((event.getY() - BOARD_PADDING) / TILE_SIZE);
-
-        // Check if click is within board bounds
-        if (col >= 0 && col < BOARD_SIZE && row >= 0 && row < BOARD_SIZE) {
-            // Check if cell is empty
-            if (board[row][col] == 0) {
-                board[row][col] = currentPlayer;
-
-                if (checkWin(row, col)) {
-                    gameOver = true;
-                    System.out.println("Player " + (currentPlayer == 1 ? "X" : "O") + " Wins!");
-                } else if (isBoardFull()) {
-                    gameOver = true;
-                    System.out.println("It's a Draw!");
+                if (currentPiece == null) {
+                    imageView.setImage(null); // empty cell
                 } else {
-                    // Switch players
-                    currentPlayer = currentPlayer == 1 ? 2 : 1;
-                }
-                drawBoard(gc);
-            }
-        }
-    }
-
-    private boolean checkWin(int row, int col) {
-        return checkRow(row) || checkColumn(col) || checkDiagonals();
-    }
-
-    private boolean checkRow(int row) {
-        return board[row][0] == currentPlayer &&
-               board[row][1] == currentPlayer &&
-               board[row][2] == currentPlayer;
-    }
-
-    private boolean checkColumn(int col) {
-        return board[0][col] == currentPlayer &&
-               board[1][col] == currentPlayer &&
-               board[2][col] == currentPlayer;
-    }
-
-    private boolean checkDiagonals() {
-        // Top-Left to Bottom-Right Diagonal
-        boolean topLeftDownDiagonal = board[0][0] == currentPlayer &&
-                                      board[1][1] == currentPlayer &&
-                                      board[2][2] == currentPlayer;
-
-        // Top-Right to Bottom-Left Diagonal
-        boolean topRightDownDiagonal = board[0][2] == currentPlayer &&
-                                       board[1][1] == currentPlayer &&
-                                       board[2][0] == currentPlayer;
-
-        return topLeftDownDiagonal || topRightDownDiagonal;
-    }
-
-    private boolean isBoardFull() {
-        for (int row = 0; row < BOARD_SIZE; row++) {
-            for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] == 0) {
-                    return false;
+                    if (currentPiece.getPieceType().equals(PieceType.LIGHT)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "X.png"));
+                    } else if (currentPiece.getPieceType().equals(PieceType.DARK)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "O.png"));
+                    }
                 }
             }
         }
-        return true;
-    }
-    private void handleOfferDraw() {
-        // Handle draw offer logic here, e.g., show a message or ask for confirmation
-        System.out.println("Draw offer sent!");
     }
 
-    private void handleResign() {
-        // Handle resignation logic here, e.g., end the game or show a resignation message
-        System.out.println("You resigned!");
+    // used to find the appropriate node on the gameboard that we need to adjust
+    private ImageView getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (javafx.scene.Node node : gridPane.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            Integer c = GridPane.getColumnIndex(node);
+            int actualRow = (r == null) ? 0 : r;
+            int actualCol = (c == null) ? 0 : c;
+
+            if (actualRow == row && actualCol == column) {
+                return (ImageView) node;
+            }
+        }
+        return null;
+    }
+
+
+    public void initialize() {
+        game.start(); // push game out of setup mode
+        updateBoard(); // Ensure the board is updated once everything is initialized
     }
 
     public static void main(String[] args) {
