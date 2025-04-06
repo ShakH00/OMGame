@@ -33,9 +33,9 @@ public class CensorshipTest {
         String[] badWords = { "stupid", "idiot", "dumb" };
 
         for (String badWord : badWords) {
+            // \b = word boundary, (?i) = case-insensitive
             message = message.replaceAll("(?i)\\b" + badWord + "\\b", "****");
         }
 
         return message;
     }
-}
