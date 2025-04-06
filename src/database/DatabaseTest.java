@@ -20,13 +20,18 @@ public class DatabaseTest {
     public static void main(String[] args) throws MatchOutcomeInvalidError {
 
         // To delete all entries from accounts table for testing purpsoes
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM Accounts")) {
-            stmt.executeUpdate();
-            System.out.println("All records deleted from Accounts table.");
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            try (PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM Accounts");
+                 PreparedStatement resetAIStmt = conn.prepareStatement("ALTER TABLE Accounts AUTO_INCREMENT = 1")) {
+
+                deleteStmt.executeUpdate();
+                resetAIStmt.executeUpdate();
+                System.out.println("All records deleted and auto-increment reset in Accounts table.");
+            }
         } catch (SQLException e) {
-            System.err.println("Failed to delete records: " + e.getMessage());
+            System.err.println("Failed to reset table: " + e.getMessage());
         }
+
 
         int accountID=0;
         String username="test";
