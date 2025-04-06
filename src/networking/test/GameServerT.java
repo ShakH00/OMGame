@@ -179,7 +179,6 @@ public class GameServerT {
                         player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
-
                         //processGameLogicP1(player1ButtonNum);
                         processGameLogic(1,player1ButtonNum);
                         for (char[] row : server2dChar) {
