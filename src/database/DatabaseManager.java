@@ -97,19 +97,19 @@ public class DatabaseManager {
                 }
 
             } catch (SQLException e) {
-                String msg = e.getMessage().toLowerCase();
-                if (msg.contains("duplicate entry")) {
-                    if (msg.contains("username")) {
-                        System.err.println("Error: The username '" + username + "' is already taken. Please choose a different one.");
-                    } else if (msg.contains("email")) {
-                        System.err.println("Error: The email '" + email + "' is already registered. Try logging in or use a different email.");
-                    } else {
-                        System.err.println("Error: A unique constraint was violated.");
-                    }
-                } else {
-                    System.err.println("Database error: " + e.getMessage());
-                }
-                return false;
+//                String msg = e.getMessage().toLowerCase();
+//                if (msg.contains("duplicate entry")) {
+//                    if (msg.contains("username")) {
+//                        System.err.println("Error: The username '" + username + "' is already taken. Please choose a different one.");
+//                    } else if (msg.contains("email")) {
+//                        System.err.println("Error: The email '" + email + "' is already registered. Try logging in or use a different email.");
+//                    } else {
+//                        System.err.println("Error: A unique constraint was violated.");
+//                    }
+//                } else {
+//                    System.err.println("Database error: " + e.getMessage());
+//                }
+                throw new RuntimeException(e);
             } finally {
                 DatabaseConnection.closeConnection(conn);
             }
