@@ -28,11 +28,9 @@ public class TicTacToeController extends Application {
     private static final int BOARD_PADDING = 20;
 
     // 0 = empty, 1 = X, 2 = O
-    private final int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
-    private int currentPlayer = 1; // Start with X
     private boolean gameOver = false;
 
-    public static TicTacToe_follow game = new TicTacToe_follow();
+    public static TicTacToe game = new TicTacToe();
 
     @Override
     public void start(Stage primaryStage) {
@@ -102,10 +100,13 @@ public class TicTacToeController extends Application {
         // Draw X's and O's
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
-                if (game.getBoard().getBoardState()[row][col] == 1) {
-                    drawX(gc, col, row);
-                } else if (game.getBoard().getBoardState()[row][col] == 2) {
-                    drawO(gc, col, row);
+                if(game.getBoard().getBoardState()[row][col] != null)
+                {
+                    if (game.getBoard().getBoardState()[row][col].equals(game.piece1)) {
+                        drawX(gc, col, row);
+                    } else if (game.getBoard().getBoardState()[row][col].equals(game.piece2)) {
+                        drawO(gc, col, row);
+                    }
                 }
             }
         }
@@ -147,89 +148,31 @@ public class TicTacToeController extends Application {
 
         if(game.getGameState().equals(GameState.SETUP))
         {
-            gameState = GameState.SETUP;
-            gameState = GameState.P1_TURN;
-            game.setPiece1(game.piece1);
-            game.setPiece2(game.piece2);
-            game.drawX(game.piece1, col, row);
-            game.drawO(game.piece2, col, row);
+            game.start();
+            game.move(game.piece1, row, col);
+            game.nextTurn();
         }
 
         else if(game.getGameState().equals(GameState.P1_TURN))
         {
-            gameState = GameState.P1_TURN;
-            game.drawX(game.piece1, col, row);
+            game.move(game.piece1, row, col);
             game.nextTurn();
         }
 
         else if(game.getGameState().equals(GameState.P2_TURN))
         {
-            gameState = GameState.P2_TURN;
-            game.drawO(game.piece2, col, row);
+            game.move(game.piece2, row, col);
             game.nextTurn();
         }
 
-        // Check if click is within board bounds
-        if (col >= 0 && col < BOARD_SIZE && row >= 0 && row < BOARD_SIZE) {
-            // Check if cell is empty
-            if (board[row][col] == 0) {
-                board[row][col] = currentPlayer;
-
-                if (checkWin(row, col)) {
-                    gameOver = true;
-                    System.out.println("Player " + (currentPlayer == 1 ? "X" : "O") + " Wins!");
-                } else if (isBoardFull()) {
-                    gameOver = true;
-                    System.out.println("It's a Draw!");
-                } else {
-                    // Switch players
-                    currentPlayer = currentPlayer == 1 ? 2 : 1;
-                }
-                drawBoard(gc);
-            }
-        }
+        redrawBoard(gc);
     }
 
-    private boolean checkWin(int row, int col) {
-        return checkRow(row) || checkColumn(col) || checkDiagonals();
+    private void redrawBoard(GraphicsContext gc) {
+        gc.clearRect(0, 0, 800, 600);
+        drawBoard(gc);
     }
 
-    private boolean checkRow(int row) {
-        return board[row][0] == currentPlayer &&
-               board[row][1] == currentPlayer &&
-               board[row][2] == currentPlayer;
-    }
-
-    private boolean checkColumn(int col) {
-        return board[0][col] == currentPlayer &&
-               board[1][col] == currentPlayer &&
-               board[2][col] == currentPlayer;
-    }
-
-    private boolean checkDiagonals() {
-        // Top-Left to Bottom-Right Diagonal
-        boolean topLeftDownDiagonal = board[0][0] == currentPlayer &&
-                                      board[1][1] == currentPlayer &&
-                                      board[2][2] == currentPlayer;
-
-        // Top-Right to Bottom-Left Diagonal
-        boolean topRightDownDiagonal = board[0][2] == currentPlayer &&
-                                       board[1][1] == currentPlayer &&
-                                       board[2][0] == currentPlayer;
-
-        return topLeftDownDiagonal || topRightDownDiagonal;
-    }
-
-    private boolean isBoardFull() {
-        for (int row = 0; row < BOARD_SIZE; row++) {
-            for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
     private void handleOfferDraw() {
         // Handle draw offer logic here, e.g., show a message or ask for confirmation
         System.out.println("Draw offer sent!");

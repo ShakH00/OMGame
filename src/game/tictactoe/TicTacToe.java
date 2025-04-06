@@ -1,15 +1,15 @@
-package game.connect4;
+package game.tictactoe;
 
 import game.*;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
-public class Connect4 extends Game {
-    public Connect4() {
+public class TicTacToe extends Game {
+    public TicTacToe() {
         super.player1 = new Player();
         super.player2 = new Player();
-        super.gameType = GameType.CONNECT4;
+        super.gameType = GameType.TICTACTOE;
         super.board = new Board(gameType);
         super.score1 = 0;
         super.score2 = 0;
@@ -17,17 +17,16 @@ public class Connect4 extends Game {
         super.gameRules = new GameRules();
     }
 
-    public Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
-    public Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
+    public TicTacToePiece piece1 = new TicTacToePiece(Color.RED, PieceType.LIGHT, super.player1);
+    public TicTacToePiece piece2 = new TicTacToePiece(Color.GOLD, PieceType.DARK, super.player2);
 
-    public void move(Piece piece, int col) {
-        if (col >= 0 && col < board.getCols()) {
-            // Find first empty row in this column (from bottom up)
-            for (int row = board.getRows() - 1; row >= 0; row--) {
+    public void move(Piece piece, int row, int col) {
+        if(row >= 0 && row < board.getRows())
+        {
+            if (col >= 0 && col < board.getCols()) {
                 if (board.getBoardState()[row][col] == null) {
                     board.place(piece, row, col);
                     checkWinCondition();
-                    break;
                 }
             }
         }
@@ -115,98 +114,33 @@ public class Connect4 extends Game {
     // Check for win in given row
     public boolean winInRow(int row, Piece piece)
     {
-        int counter = 0;
-
-        for(int col = 0; col < board.getCols(); col++)
-        {
-            if(board.getBoardState()[row][col] != null && board.getBoardState()[row][col].equals(piece))
-            {
-                counter++;
-            }
-            else if(counter < 4)
-            {
-                counter = 0;
-            }
-        }
-
-        if(counter >= 4)
-        {
-            return true;
-        }
-
-        return false;
+        if(board.getBoardState()[row][0] == null || board.getBoardState()[row][1] == null || board.getBoardState()[row][2] == null)
+            return false;
+        return board.getBoardState()[row][0].equals(piece) && board.getBoardState()[row][1].equals(piece) && board.getBoardState()[row][2].equals(piece);
     }
 
     // Check for win in given column
     public boolean winInCol(int col, Piece piece)
     {
-        int counter = 0;
-        for (int row = 0; row < board.getRows(); row++)
-        {
-            Piece current = board.getBoardState()[row][col];
-            if (current != null && current.getColor().equals(piece.getColor()))
-            {
-                counter++;
-                if (counter >= 4) return true;
-            } else
-            {
-                counter = 0;
-            }
-        }
-        return false;
+        if(board.getBoardState()[0][col] == null || board.getBoardState()[1][col] == null || board.getBoardState()[2][col] == null)
+            return false;
+        return board.getBoardState()[0][col].equals(piece) && board.getBoardState()[0][col].equals(piece) && board.getBoardState()[0][col].equals(piece);
     }
 
     // Check for win in a backslash diagonal
     public boolean winInDiagonalBackslash(Piece piece)
     {
-        Piece[][] state = board.getBoardState();
-        int rows = board.getRows();
-        int cols = board.getCols();
-        for (int row = 0; row <= rows - 4; row++)   // Loop through the rows except the last 4 since we're checking diagonal
-        {
-            for (int col = 0; col <= cols - 4; col++) // Loop through columns except the last 4
-            {
-                boolean match = true;
-                for (int i = 0; i < 4; i++)
-                {
-                    Piece current = state[row + i][col + i];
-                    if (current == null || !current.getColor().equals(piece.getColor()))
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match) return true;
-            }
-        }
-        return false;
+        if(board.getBoardState()[0][0] == null || board.getBoardState()[1][1] == null || board.getBoardState()[2][2] == null)
+            return false;
+        return board.getBoardState()[0][0].equals(piece) && board.getBoardState()[1][1].equals(piece) && board.getBoardState()[2][2].equals(piece);
     }
 
     // Check for win in a frontslash diagonal
     public boolean winInDiagonalFrontslash(Piece piece)
     {
-        Piece[][] state = board.getBoardState();
-        int rows = board.getRows();
-        int cols = board.getCols();
-
-        for (int row = 3; row < rows; row++)
-        {
-            for (int col = 0; col <= cols - 4; col++)
-            {
-                boolean match = true;
-                for (int i = 0; i < 4; i++)
-                {
-                    Piece current = state[row - i][col + i];
-                    if (current == null || !current.getColor().equals(piece.getColor()))
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match) return true;
-            }
-        }
-        return false;
+        if(board.getBoardState()[0][2] == null || board.getBoardState()[1][1] == null || board.getBoardState()[2][0] == null)
+            return false;
+        return board.getBoardState()[0][2].equals(piece) && board.getBoardState()[1][1].equals(piece) && board.getBoardState()[2][0].equals(piece);
     }
 
     // game.Player surrenders and gives other player the win
@@ -255,5 +189,3 @@ public class Connect4 extends Game {
         }
     }
 }
-
-
