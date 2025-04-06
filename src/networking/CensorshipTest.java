@@ -2,14 +2,22 @@ package networking;
 
 public class CensorshipTest {
     public static void main(String[] args) {
-        String msg1 = "you are stupid";
-        String msg2 = "hello friend";
+        String[] testMessages = {
+                "you are stupid",
+                "hello friend",
+                "StUpId",
+                "stupidly done",
+                "you are stupid, dumb, and an idiot!",
+                "what a stupid stupid person",
+                "",
+                "this is fine"
+        };
 
-        System.out.println("Before: " + msg1);
-        System.out.println("After: " + censorChat(msg1));
-
-        System.out.println("Before: " + msg2);
-        System.out.println("After: " + censorChat(msg2));
+        for (String msg : testMessages) {
+            System.out.println("Before: " + msg);
+            System.out.println("After:  " + censorChat(msg));
+            System.out.println();
+        }
     }
 
     /**
@@ -22,11 +30,9 @@ public class CensorshipTest {
      * @return The sanitized string with bad words replaced by asterisks.
      */
     public static String censorChat(String message) {
-        // Example list of bad words (consider expanding this list as needed)
         String[] badWords = { "stupid", "idiot", "dumb" };
 
         for (String badWord : badWords) {
-            // Using regex to perform case-insensitive replacement
             message = message.replaceAll("(?i)\\b" + badWord + "\\b", "****");
         }
 
