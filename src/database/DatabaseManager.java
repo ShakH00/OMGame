@@ -56,6 +56,8 @@ public class DatabaseManager {
         return new Account();
     }
 
+
+
     /**
      * @return returns true if an account was saved to the database
      * saves an account to the database
@@ -109,11 +111,7 @@ public class DatabaseManager {
                 }
                 return false;
             } finally {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    System.err.println("Failed to close connection");
-                }
+                DatabaseConnection.closeConnection(conn);
             }
         } else {
             System.out.println("Connection failed");
