@@ -37,7 +37,8 @@ public class CensorshipTest {
     public static String censorChat(String message) {
         List<String> badWords = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/networking/badwords.txt"))) {
+        // Adjusted path for when the program is run from the src directory
+        try (BufferedReader br = new BufferedReader(new FileReader("networking/badwords.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 badWords.add(line.trim());
@@ -52,4 +53,3 @@ public class CensorshipTest {
 
         return message;
     }
-}
