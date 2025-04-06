@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 public class GameServer {
     private ServerSocket ss;
@@ -26,9 +27,15 @@ public class GameServer {
     private String player2ButtonNum;
     private PracticeGameObj practiceGameObj;
     private char[] gameBoard;
+    private HashMap<Integer, String> chatLogs;
+
+
 
     public GameServer() {
         System.out.println("--game server--");
+
+        chatLogs = new HashMap<>();
+
         numPlayers = 0;
         turnsMade = 0;
 
@@ -41,6 +48,8 @@ public class GameServer {
             e.printStackTrace();
         }
     }
+
+
 
 
     public void acceptConnections(){
@@ -66,10 +75,15 @@ public class GameServer {
         }
     }
 
+
+
     private class ServerSideConnection implements Runnable{
         private Socket socket;
         private DataOutputStream dataOut;
         private DataInputStream dataIn;
+        //private DataInputStream dataInChat;
+        //private DataOutputStream dataOutChat;
+
         private ObjectOutputStream objectOut;
         private ObjectInputStream objectIn;
         private int playerID;
@@ -85,6 +99,7 @@ public class GameServer {
                 objectOut = new ObjectOutputStream(socket.getOutputStream());
                 objectIn = new ObjectInputStream(socket.getInputStream());
 
+
             } catch (IOException e) {
                 System.out.println("IOException from game server constructor: ServerSideConnection");
             }
@@ -93,6 +108,10 @@ public class GameServer {
             try {
                 System.out.println("sent player ID: " + playerID);
                 dataOut.writeInt(playerID);
+
+                /*new Thread(() -> {
+                    handleChatThread();
+                }).start();*/
 
                 while (true) {
                     if(playerID == 1){
@@ -135,6 +154,46 @@ public class GameServer {
             }
         }
 
+       /* public void handleChatThread(){
+            System.out.println(chatLogs.toString());
+            receiveChats();
+
+        }*/
+
+        public String censorChat(String message){
+            return message;
+        }
+
+        /*public void receiveChats() {
+            try {
+                while (true) {
+                    Message mesage = (Message) objectIn.readObject();
+                    String msg = mesage.getMessage();
+                    PlayerNum =
+                    msg = censorChat(msg);
+                    chatLogs.put(playerNum, msg);
+                    System.out.println("chat Player #" + playerNum + ": " + msg);
+                        if (playerID == 1 && player2 != null) {
+                            player2.sendChatMessage();
+                        } else if (playerID == 2 && player1 != null) {
+                            player1.sendChatMessage();
+                        }
+
+                }
+            } catch (IOException e) {
+                System.out.println("Chat thread crashed for Player " + playerID);
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        public void sendChatMessage(){
+            try {
+                dataOut.
+            }
+        }*/
 
 
         public void processGameLogic(int playerID){

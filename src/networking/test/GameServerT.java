@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class GameServerT {
     private Map<Integer, ServerSideConnection> disconnectedPlayers;
     private boolean gameInProgress;
@@ -27,6 +28,8 @@ public class GameServerT {
     private int maxTurns;
     private int[] values;
     private char[][] server2dChar;
+    private HashMap<Integer, String> chatlogs;
+
 
     // store  the button num that the player clicked on, befroe being sent to the other player
     // don in the run method while loop, for each turns
@@ -46,6 +49,8 @@ public class GameServerT {
         server2dChar = new char[3][3];
         disconnectedPlayers = new HashMap<>();
         gameInProgress = false;
+
+
 
         for (int i = 0; i < 4; i++) { //Ading the values fromt he server not
             values[i] = i;

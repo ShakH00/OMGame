@@ -7,34 +7,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.*;
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
-// ✅ Step 1: Confirm PlayerData Object is Created on Player2ST
-// - Initialize PlayerData with user ID, username, and ELO rating
-// - Print out all values to confirm correct creation
-
-// ✅ Step 2: Confirm PlayerData is Sent to Server
-// - Ensure sendPlayerData() actually sends the object using ObjectOutputStream
-// - Print a success message after sending
-
-// ✅ Step 3: Confirm PlayerData is Received by Server
-// - Read the PlayerData object from ObjectInputStream on the server side
-// - Print out received values to verify successful transmission
-
-// ✅ Step 4: Store PlayerData in an Array (Matchmaking Queue)
-// - Use an ArrayList to store PlayerData for matchmaking
-// - Ensure new players are properly added to the queue
 
 public class PlayerClient extends Application {
 
@@ -59,6 +48,9 @@ public class PlayerClient extends Application {
 
     private PracticeGameObj practiceGameObj;
 
+    private Button sendchat;
+    private HashMap<Integer, String> chatLogs;
+
     @Override
     public void start(Stage primaryStage) {
         playerMenu(primaryStage);
@@ -71,7 +63,7 @@ public class PlayerClient extends Application {
         primaryStage.setWidth(width);
         primaryStage.setHeight(height);
         primaryStage.setTitle("The Game Menu");
-
+        chatLogs = new HashMap<>();
 
         practiceGameObj = new PracticeGameObj(false, new char[2][2], "test");
         // Initialize arrays and variables
@@ -117,6 +109,7 @@ public class PlayerClient extends Application {
         primaryStage.setY(newY);
 
         primaryStage.show();
+
         // end of CHAT GTP
     }
 
@@ -162,6 +155,7 @@ public class PlayerClient extends Application {
         buttonGrid.setHgap(10);
         buttonGrid.setVgap(10);
         buttonGrid.setAlignment(Pos.CENTER);
+
         b01 = new Button("1");
         b02 = new Button("2");
         b03 = new Button("3");
@@ -180,6 +174,48 @@ public class PlayerClient extends Application {
         primaryStage.setScene(gameScene);
         primaryStage.show();
         // END of CHAT GTP
+
+        // === Chat UI ===
+        Label chatLabel = new Label("Chat with opponent:");
+        TextArea chatArea = new TextArea();
+        chatArea.setEditable(false);
+        chatArea.setWrapText(true);
+        chatArea.setPrefHeight(150);
+
+        HBox chatInputBox = new HBox(10);
+        chatInputBox.setAlignment(Pos.CENTER);
+        chatInputBox.setPadding(new Insets(10));
+
+        TextField chatInput = new TextField();
+        chatInput.setPromptText("Type your message...");
+        chatInput.setPrefWidth(300);
+
+        sendchat = new Button("Send");
+
+        sendchat.setOnAction(e -> {
+            String msg = chatInput.getText().trim();
+            if (!msg.isEmpty()) {
+                String formatted = "player" + playerID + ": " + msg + "\n";
+                chatArea.appendText(formatted);
+                // Log message under current player ID
+                String currentLog = chatLogs.get(playerID);
+                chatLogs.put(playerID, currentLog + formatted);
+
+                // (Later: send to server)
+                System.out.println("Log for player " + playerID + ":");
+                System.out.println(chatLogs.get(playerID));
+
+                chatInput.clear();
+            }
+        });
+
+
+        chatInputBox.getChildren().addAll(chatInput, sendchat);
+
+// 🔥 Add chat components once (in order)
+        root.getChildren().addAll(chatLabel, chatArea, chatInputBox);
+        
+        
         if (playerID == 1) {
             message.setText("You are player 1, you go first");
             otherPlayerID = 2;
@@ -195,6 +231,7 @@ public class PlayerClient extends Application {
         toggleButtons();
     }
 
+
     /**
      * Sets the onAction for each of the 9 game buttons.
      */
@@ -208,6 +245,7 @@ public class PlayerClient extends Application {
         b07.setOnAction(e -> handleButtonClick("7"));
         b08.setOnAction(e -> handleButtonClick("8"));
         b09.setOnAction(e -> handleButtonClick("9"));
+
     }
 
     /**
