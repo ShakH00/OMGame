@@ -1,5 +1,9 @@
 package networking;
 
+import java.io.*;
+import java.util.*;
+import java.util.regex.Pattern;
+
 public class CensorshipTest {
     public static void main(String[] args) {
         String[] testMessages = {
@@ -23,19 +27,29 @@ public class CensorshipTest {
     /**
      * Censors predefined bad words in the input message by replacing them with asterisks.
      *
-     * This method is inspired by the approach discussed in the Stack Overflow post:
-     * https://stackoverflow.com/questions/2966172/censoring-selected-words-replacing-them-with-using-a-single-replaceall
+     * This version reads the list of bad words from an external file for easier updates.
+     * Inspired by file-reading patterns from Stack Overflow:
+     * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
      *
-     * @param message The input string potentially containing offensive words.
-     * @return The sanitized string with bad words replaced by asterisks.
+     * @param message The input chat message
+     * @return Censored message with offensive words replaced by ****
      */
     public static String censorChat(String message) {
-        String[] badWords = { "stupid", "idiot", "dumb" };
+        List<String> badWords = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("src/networking/badwords.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                badWords.add(line.trim());
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading bad words: " + e.getMessage());
+        }
 
         for (String badWord : badWords) {
-            // \b = word boundary, (?i) = case-insensitive
-            message = message.replaceAll("(?i)\\b" + badWord + "\\b", "****");
+            message = message.replaceAll("(?i)\\b" + Pattern.quote(badWord) + "\\b", "****");
         }
 
         return message;
     }
+}
