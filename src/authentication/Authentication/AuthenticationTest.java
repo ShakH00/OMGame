@@ -12,9 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthenticationTest {
 
-    /**
-     * MATH BASED CAPTCHA TEST CASES
-     */
+    /** MATH BASED CAPTCHA TEST CASES */
 
     @Test
     public void mathCAPTCHA_correctAnswer() {
@@ -57,9 +55,7 @@ public class AuthenticationTest {
         assertNotNull(mathProblem, "The generated math CAPTCHA should not be null!");
     }
 
-    /**
-     * TEXT BASED CAPTCHA TEST CASES
-     */
+    /** TEXT BASED CAPTCHA TEST CASES */
 
     @Test
     public void textCAPTCHA_correctAnswer() {
@@ -102,9 +98,7 @@ public class AuthenticationTest {
         assertNotNull(captcha, "The generated CAPTCHA text should not be null!");
     }
 
-    /**
-     * IMAGE BASED CAPTCHA TEST CASES
-     */
+    /** IMAGE BASED CAPTCHA TEST CASES */
 
     @Test
     public void RandomImageTest() {
@@ -141,9 +135,7 @@ public class AuthenticationTest {
     }
 
 
-    /**
-     * MFA TEST CASES
-     */
+    /** MFA TEST CASES */
 
     //test if user inputs in the correct verification code
     @Test
