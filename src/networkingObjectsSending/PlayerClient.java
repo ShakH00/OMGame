@@ -46,7 +46,7 @@ public class PlayerClient extends JFrame {
     // to wait the other players turn
 
     public PlayerClient(int w, int h) {
-        practiceGameObj = null;
+        practiceGameObj = new PracticeGameObj(false, new char[1][1], "test");
         width = w;
         height = h;
         contentPane = this.getContentPane();

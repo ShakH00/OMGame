@@ -5,6 +5,8 @@ import game.GameType;
 
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class TicTacToe_Logic {
 
     // Create a 3x3 Tic-Tac-Toe game.Board with char
@@ -200,7 +202,7 @@ public class TicTacToe_Logic {
      * Creates a new game.tictactoe.TicTacToe object and calls play()
      */
     public static void main(String[] args) {
-        TicTacToe game = new TicTacToe();
+        TicTacToe_Logic game = new TicTacToe_Logic();
         //game.play();
     }
 }

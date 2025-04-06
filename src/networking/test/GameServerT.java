@@ -1,4 +1,6 @@
-import game.tictactoe.TicTacToe;
+package networking.test;
+
+import game.tictactoe.TicTacToe_Logic;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -33,7 +35,7 @@ public class GameServerT {
 
 
     //GAME LOGIC UHHH
-    private TicTacToe ticTacToeGame = new TicTacToe();
+    private TicTacToe_Logic ticTacToeGame = new TicTacToe_Logic();
 
     public GameServerT() {
         System.out.println("--game server--");
@@ -170,7 +172,7 @@ public class GameServerT {
                     }
                 }
                 dataOut.flush();
-                TicTacToe game = new TicTacToe();
+                TicTacToe_Logic game = new TicTacToe_Logic();
 
                 while (true) {
                     if(playerID == 1){

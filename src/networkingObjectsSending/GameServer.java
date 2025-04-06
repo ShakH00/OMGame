@@ -96,24 +96,21 @@ public class GameServer {
 
                 while (true) {
                     if(playerID == 1){
-                        player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
+                        practiceGameObj = (PracticeGameObj) objectIn.readObject();  // Reads one char and converts to String // read it from player 1
+                        player1ButtonNum = practiceGameObj.getTestString();
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
                         processGameLogic(1);
-                        player2.sendButtonNum(player1ButtonNum);
                         player2.sendPracticeGameObj(); // sending server2dChar
 
                     }
                     else{
-                        player2ButtonNum = String.valueOf(dataIn.readChar());
-                        System.out.println("Payer 2 clicked button #" + player2ButtonNum);
-                        System.out.println("input before p2" + player2ButtonNum);
+                        practiceGameObj = (PracticeGameObj) objectIn.readObject();
+                        player2ButtonNum = practiceGameObj.getTestString();
+                        System.out.println("PLayer 2 clicked button #" + player2ButtonNum);
+
                         processGameLogic(2);
 
-                        for (char[] row : server2dChar) {
-                            System.out.println(Arrays.toString(row));
-                        }
-                        player1.sendButtonNum(player2ButtonNum);
                         player1.sendPracticeGameObj();
                     }
                     turnsMade++;
@@ -125,6 +122,8 @@ public class GameServer {
                 }
             } catch (IOException e) {
                 System.out.println("IOException from run() : ServerSideConnection");
+            } catch (ClassNotFoundException e) {
+                System.out.println("ClassNotFoundException from run() : ServerSideConnection");
             }
         }
         public void sendPracticeGameObj(){
