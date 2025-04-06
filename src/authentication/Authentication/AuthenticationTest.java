@@ -84,6 +84,12 @@ public class AuthenticationTest {
         assertFalse(CAPTCHA.trim().isEmpty(), "The generated CAPTCHA text should not be empty!");
     }
 
+    @Test
+    public void checkIfGeneratedTextIsNotNull() {
+        String captcha = CAPTCHAAuthentication.generateTextProblem();
+        assertNotNull(captcha, "The generated CAPTCHA text should not be null!");
+    }
+
     /**
      * IMAGE BASED CAPTCHA TEST CASES
      */
