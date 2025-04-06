@@ -51,6 +51,12 @@ public class AuthenticationTest {
         assertFalse(mathProblem.trim().isEmpty(), "The generated math CAPTCHA should not be empty!");
     }
 
+    @Test
+    public void checkIfGeneratedProblemIsNotNull() {
+        String mathProblem = String.valueOf(CAPTCHAAuthentication.generateProblem());
+        assertNotNull(mathProblem, "The generated math CAPTCHA should not be null!");
+    }
+
     /**
      * TEXT BASED CAPTCHA TEST CASES
      */
