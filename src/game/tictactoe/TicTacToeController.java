@@ -103,35 +103,35 @@ public class TicTacToeController extends Application {
                 if(game.getBoard().getBoardState()[row][col] != null)
                 {
                     if (game.getBoard().getBoardState()[row][col].equals(game.piece1)) {
-                        drawX(gc, col, row);
+                        drawX(gc, row, col);
                     } else if (game.getBoard().getBoardState()[row][col].equals(game.piece2)) {
-                        drawO(gc, col, row);
+                        drawO(gc, row, col);
                     }
                 }
             }
         }
     }
 
-    private void drawX(GraphicsContext gc, int col, int row) {
+    private void drawX(GraphicsContext gc, int row, int col) {
         gc.setStroke(Color.RED);
         gc.setLineWidth(4);
 
         double padding = 15;
-        double x = BOARD_PADDING + col * TILE_SIZE;
-        double y = BOARD_PADDING + row * TILE_SIZE;
+        double x = BOARD_PADDING + row * TILE_SIZE;
+        double y = BOARD_PADDING + col * TILE_SIZE;
 
         // Draw X
         gc.strokeLine(x + padding, y + padding, x + TILE_SIZE - padding, y + TILE_SIZE - padding);
         gc.strokeLine(x + TILE_SIZE - padding, y + padding, x + padding, y + TILE_SIZE - padding);
     }
 
-    private void drawO(GraphicsContext gc, int col, int row) {
+    private void drawO(GraphicsContext gc, int row, int col) {
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(4);
 
         double padding = 15;
-        double x = BOARD_PADDING + col * TILE_SIZE + TILE_SIZE / 2;
-        double y = BOARD_PADDING + row * TILE_SIZE + TILE_SIZE / 2;
+        double x = BOARD_PADDING + row * TILE_SIZE + TILE_SIZE / 2;
+        double y = BOARD_PADDING + col * TILE_SIZE + TILE_SIZE / 2;
 
         // Draw O
         gc.strokeOval(
@@ -143,8 +143,8 @@ public class TicTacToeController extends Application {
     }
 
     private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
-        int col = (int) ((event.getX() - BOARD_PADDING) / TILE_SIZE);
-        int row = (int) ((event.getY() - BOARD_PADDING) / TILE_SIZE);
+        int row = (int) ((event.getX() - BOARD_PADDING) / TILE_SIZE);
+        int col = (int) ((event.getY() - BOARD_PADDING) / TILE_SIZE);
 
         if(game.getGameState().equals(GameState.SETUP))
         {

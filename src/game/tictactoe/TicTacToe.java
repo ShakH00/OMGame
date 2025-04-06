@@ -105,9 +105,12 @@ public class TicTacToe extends Game {
         }
 
         // Check for draw
-        if(board.isFull() && (gameState != GameState.P1_WIN || gameState != GameState.P2_WIN))
+        if(gameState != GameState.P1_WIN && gameState != GameState.P2_WIN && gameState != GameState.DRAW)
         {
-            gameState = GameState.DRAW;
+            if(board.isFull())
+            {
+                gameState = GameState.DRAW;
+            }
         }
     }
 
@@ -124,7 +127,7 @@ public class TicTacToe extends Game {
     {
         if(board.getBoardState()[0][col] == null || board.getBoardState()[1][col] == null || board.getBoardState()[2][col] == null)
             return false;
-        return board.getBoardState()[0][col].equals(piece) && board.getBoardState()[0][col].equals(piece) && board.getBoardState()[0][col].equals(piece);
+        return board.getBoardState()[0][col].equals(piece) && board.getBoardState()[1][col].equals(piece) && board.getBoardState()[2][col].equals(piece);
     }
 
     // Check for win in a backslash diagonal

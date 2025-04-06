@@ -106,9 +106,12 @@ public class Connect4 extends Game {
         }
 
         // Check for draw
-        if(board.isFull() && (gameState != GameState.P1_WIN || gameState != GameState.P2_WIN))
+        if(gameState != GameState.P1_WIN && gameState != GameState.P2_WIN && gameState != GameState.DRAW)
         {
-            gameState = GameState.DRAW;
+            if(board.isFull())
+            {
+                gameState = GameState.DRAW;
+            }
         }
     }
 
