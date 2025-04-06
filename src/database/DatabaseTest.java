@@ -18,6 +18,16 @@ import static account.AccountStorageUtility.*;
 
 public class DatabaseTest {
     public static void main(String[] args) throws MatchOutcomeInvalidError {
+
+        // To delete all entries from accounts table for testing purpsoes
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM Accounts")) {
+            stmt.executeUpdate();
+            System.out.println("All records deleted from Accounts table.");
+        } catch (SQLException e) {
+            System.err.println("Failed to delete records: " + e.getMessage());
+        }
+
         int accountID=0;
         String username="test";
         String email="nebilawako@gmail.com";
