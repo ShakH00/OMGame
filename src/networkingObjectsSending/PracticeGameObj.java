@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class PracticeGameObj implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private boolean win;
     private char[][] board;
     private String testString;
