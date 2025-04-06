@@ -15,7 +15,7 @@
 
 ### **1. Client Sends a Move**
 - GUI triggers `sendMoveToServer(gameId, playerId, move)`
-- `NetworkingStub` forwards to `GameServer`
+- `NetworkingStub` forwards to `networkingObjectsSending.GameServer`
 
 ### **2. Server Processes the Move**
 - Validates move using `processMove(gameId, move)`
