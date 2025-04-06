@@ -5,7 +5,12 @@ import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 public class TicTacToe extends Game {
+    public TicTacToePiece piece1;
+    public TicTacToePiece piece2;
+
     public TicTacToe() {
         super.player1 = new Player();
         super.player2 = new Player();
@@ -15,10 +20,20 @@ public class TicTacToe extends Game {
         super.score2 = 0;
         super.gameState = GameState.SETUP;
         super.gameRules = new GameRules();
-    }
+        Random random = new Random();
+        int randomNumber = random.nextInt(2);
 
-    public TicTacToePiece piece1 = new TicTacToePiece(Color.RED, PieceType.LIGHT, super.player1);
-    public TicTacToePiece piece2 = new TicTacToePiece(Color.GOLD, PieceType.DARK, super.player2);
+        if(randomNumber == 0)
+        {
+            piece1 = new TicTacToePiece(Color.RED, PieceType.LIGHT, super.player1);
+            piece2 = new TicTacToePiece(Color.GOLD, PieceType.DARK, super.player2);
+        }
+        else
+        {
+            piece1 = new TicTacToePiece(Color.RED, PieceType.DARK, super.player1);
+            piece2 = new TicTacToePiece(Color.GOLD, PieceType.LIGHT, super.player2);
+        }
+    }
 
     public void move(Piece piece, int row, int col) {
         if(row >= 0 && row < board.getRows())

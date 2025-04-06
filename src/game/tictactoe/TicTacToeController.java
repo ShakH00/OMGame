@@ -8,6 +8,7 @@ package game.tictactoe;
  */
 
 import game.GameState;
+import game.pieces.PieceType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -102,9 +103,9 @@ public class TicTacToeController extends Application {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 if(game.getBoard().getBoardState()[row][col] != null)
                 {
-                    if (game.getBoard().getBoardState()[row][col].equals(game.piece1)) {
+                    if (game.getBoard().getBoardState()[row][col].getPieceType() == PieceType.LIGHT) {
                         drawX(gc, row, col);
-                    } else if (game.getBoard().getBoardState()[row][col].equals(game.piece2)) {
+                    } else if (game.getBoard().getBoardState()[row][col].getPieceType() == PieceType.DARK) {
                         drawO(gc, row, col);
                     }
                 }
