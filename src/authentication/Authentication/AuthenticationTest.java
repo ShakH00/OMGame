@@ -44,7 +44,13 @@ public class AuthenticationTest {
             assertEquals("Invalid input format! Please enter a number.", e.getMessage());
         }
     }
-    
+
+    @Test
+    public void checkIfGeneratedProblemIsNotEmpty() {
+        String mathProblem = String.valueOf(CAPTCHAAuthentication.generateProblem());
+        assertFalse(mathProblem.trim().isEmpty(), "The generated math CAPTCHA should not be empty!");
+    }
+
     /**
      * TEXT BASED CAPTCHA TEST CASES
      */
