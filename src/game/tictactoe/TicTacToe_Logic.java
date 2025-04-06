@@ -5,6 +5,8 @@ import game.GameType;
 
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class TicTacToe_Logic {
 
     // Create a 3x3 Tic-Tac-Toe game.Board with char
@@ -22,6 +24,13 @@ public class TicTacToe_Logic {
         board = new char[3][3];
         currentPlayer = 'X';
         initializeBoard();
+    }
+
+    public void setBoard(char[][] board) {
+        this.board = board;
+    }
+    public void setCurrentPlayer(char currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     /*
@@ -137,6 +146,10 @@ public class TicTacToe_Logic {
         }
     }
 
+    public char[][] getBoard() {
+        return board;
+    }
+
     /*
      * Main Game Loop
      * Asks the current player to make a move
@@ -144,37 +157,44 @@ public class TicTacToe_Logic {
      * If the game is over, print the winner
      * If the board is full, print "It's a Draw!"
      */
-    public void play() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Tic Tac Toe!");
+    public void play( int playerNum, String input) {
 
-        while (!isGameOver() && !isBoardFull()) {
-            gameState = (currentPlayer == 'X') ? GameState.P1_TURN : GameState.P2_TURN;
+            gameState = (playerNum == 1) ? GameState.P1_TURN : GameState.P2_TURN;
             System.out.println("game.Player " + currentPlayer + ", Enter Your Move:");
 
-            System.out.print("Row [0, 1, 2]: ");
-            int row = scanner.nextInt();
-            System.out.print("Column [0, 1, 2]: ");
-            int col = scanner.nextInt();
+            int move = parseInt(input) -1 ;
+            int row = move / 3;  // top-to-bottom
+            int col = move % 3;
+            System.out.println("input: " + input);
+            System.out.println("col: " + col);
+            System.out.println("row: " + row);
+
             makeMove(row, col);
             printBoard();
-        }
+
 
         if (isGameOver()) {
-            if(currentPlayer == 'X') {
+            char winner = (currentPlayer == 'X') ? 'O' : 'X'; // the *previous* player made the winning move
+
+            if (winner == 'X') {
+                System.out.println("player 1 wins");
                 gameState = GameState.P1_WIN;
+                board[0][0] = '1';
             } else {
+                System.out.println("player 2 wins");
                 gameState = GameState.P2_WIN;
+                board[0][0] = '2';
             }
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+
             System.out.println("GameOver! Congratulations,");
-            System.out.println("game.Player " + currentPlayer + " Wins!");
-        } else {
+            System.out.println("Player " + winner + " Wins!");
+        } else if(isBoardFull()) {
+            gameState = GameState.DRAW;
+            board[0][0] = 'D'; // optional
             System.out.println("GameOver!");
             System.out.println("It's a Draw!");
         }
 
-        scanner.close();
     }
 
     /*
@@ -183,6 +203,6 @@ public class TicTacToe_Logic {
      */
     public static void main(String[] args) {
         TicTacToe_Logic game = new TicTacToe_Logic();
-        game.play();
+        //game.play();
     }
 }

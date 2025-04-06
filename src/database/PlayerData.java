@@ -14,14 +14,14 @@ public class PlayerData {
     }
 
     //Find any player in the database
-    public static Player findPlayer(String username) {
+    /*public static Player findPlayer(String username) {
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getAccount().getUsername().equals(username)) {
                 return players.get(i);
             }
         }
         return null;
-    }
+    }*/
 
     //Remove any player from the database
     public static void removePlayer(Player player) {

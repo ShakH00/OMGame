@@ -1,4 +1,6 @@
 import static org.junit.Assert.*;
+
+import networking.test.stubs;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;

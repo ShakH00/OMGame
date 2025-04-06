@@ -1,28 +1,26 @@
-package networking.test;
+package networkingObjectsSending;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
 
-public class PlayerT extends JFrame {
+
+public class PlayerClient extends JFrame {
+    private PracticeGameObj practiceGameObj;
 
     private int width, height;
     private Container contentPane;
     private JTextArea message;
     private JTextArea textGridMessage;
     private JTextArea testText;
-    private JButton b1,b2,b3,b4;
     private JTextArea chatArea;
     private JTextField chatInput;
     private JButton sendButton;
-
-    JButton b01;
+    private JButton b01;
     private JButton b02;
     private JButton b03;
     private JButton b04;
@@ -36,9 +34,6 @@ public class PlayerT extends JFrame {
     private int playerID;
     private int otherPlayerID;
 
-    private int[] values;
-    char[][] server2dChar;
-
     private int maxTurns;
     private int turnsMade;
     private int myPoints;
@@ -47,13 +42,11 @@ public class PlayerT extends JFrame {
     private String playerInputSender;
     private JButton startb00;
     private boolean gameIsActive;
-
     // this will impliment the turn based aspect forcing the player
     // to wait the other players turn
 
-
-
-    public PlayerT(int w, int h) {
+    public PlayerClient(int w, int h) {
+        practiceGameObj = new PracticeGameObj(false, new char[1][1], "test");
         width = w;
         height = h;
         contentPane = this.getContentPane();
@@ -61,7 +54,6 @@ public class PlayerT extends JFrame {
         textGridMessage = new JTextArea();
         gameIsActive = false;
         testText = new JTextArea();
-
         // Buttons
         startb00 = new JButton("Start Matchmaking");
 
@@ -74,17 +66,11 @@ public class PlayerT extends JFrame {
         b07 = new JButton("7");
         b08 = new JButton("8");
         b09 = new JButton("9");
-        String playerInputSender;
-
-        values = new int[4];
-        server2dChar = new char[3][3];
         turnsMade = 0;
         myPoints = 0;
         enemyPoints = 0;
-
-
-
     }
+
     public void playerMenu() {
 
         this.setSize(width, height);
@@ -127,18 +113,13 @@ public class PlayerT extends JFrame {
         // ASKIED CHATGTP TO CREATE A DIPLAY OF textGridMessage which was not working//
         // this is just for testing purposes and will be replaced by gui team
         contentPane.add(message, BorderLayout.NORTH);
-
-// Create a panel to hold both textGridMessage and the image grid
         JPanel centerPanel = new JPanel(new BorderLayout());
-
-// The text area for displaying game messages
         textGridMessage = new JTextArea();
         textGridMessage.setWrapStyleWord(true);
         textGridMessage.setLineWrap(true);
         textGridMessage.setEditable(false);
         centerPanel.add(textGridMessage, BorderLayout.NORTH); // Place it at the top of center panel
 
-// Create 3x3 grid for images
         ImageIcon icon = new ImageIcon("image.png");
         JPanel topPanel = new JPanel(new GridLayout(3, 3));
         for (int i = 1; i <= 9; i++) {
@@ -147,10 +128,7 @@ public class PlayerT extends JFrame {
         }
         centerPanel.add(topPanel, BorderLayout.CENTER); // Place the images below textGridMessage
 
-// Now add centerPanel instead of just topPanel
         contentPane.add(centerPanel, BorderLayout.CENTER);
-
-// Create 3x3 grid for buttons
         JPanel bottomPanel = new JPanel(new GridLayout(3, 3));
         bottomPanel.add(b01);
         bottomPanel.add(b02);
@@ -191,6 +169,7 @@ public class PlayerT extends JFrame {
         toggleButtons();
 
         this.setVisible(true); // set frame visibility true
+        //END OF CHATGTP
     }
 
     public void toggleButtons(){
@@ -228,29 +207,22 @@ public class PlayerT extends JFrame {
     }
     public void setUpGame1Buttons(){
 
-
-
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 JButton b = (JButton) ae.getSource();
                 String strBNum = (b.getText()); // this is a string lets parse it
 
                 message.setText(" You clicked button #" + strBNum + "now wait fo next player turn") ;
-
-
-                textGridMessage.setText(server2dCharToString());
-
+                textGridMessage.setText(String.valueOf(practiceGameObj.getBoard()[0][0]));
                 turnsMade++;
                 System.out.println("Turns made: " + turnsMade);
 
                 buttonsEnabled = false;
                 toggleButtons();
-                //myPoints = myPoints + values[bNum-1];
-                System.out.println("we sent bNum: " + strBNum);
-                // NOTE!: csc is our communication tool with the Server,
-                // like the mail drop off point
 
-                csc.sendButtonNum(strBNum);
+                System.out.println("we sent bNum: " + strBNum);
+                practiceGameObj.setTestString(strBNum);
+                csc.sendPracticeGameObj();
 
 
                 if (playerID == 2 && turnsMade == maxTurns){
@@ -278,41 +250,18 @@ public class PlayerT extends JFrame {
         b07.addActionListener(al);
         b08.addActionListener(al);
         b09.addActionListener(al);
-
-
-
     }
-    // ASKING CHATGTP FOR THIS TEDIOUS STRING FORMAT
-    public String server2dCharToString() {
-        StringBuilder sb = new StringBuilder();
-        for (char[] row : server2dChar) {
-            sb.append("["); // Start row
-            for (char cell : row) {
-                sb.append("['").append(cell).append("'], "); // Wrap each char in ['']
-            }
-            sb.setLength(sb.length() - 2); // Remove last comma & space
-            sb.append("]\n"); // End row and move to next line
-        }
-        return sb.toString();
-    }
-    // END OF CHATGTP
 
-    public void someMethod() {
-        String outputStr = server2dCharToString();
-        System.out.println(outputStr); // Print or use it as needed
-    }
+
+
 
 
     public void updateTurn(){
         String n = "N";
-        n = csc.receiveButtonNum();
-        message.setText("your opponent clicked #" + n + "now your Turn");
-        textGridMessage.setText(server2dCharToString());
+        csc.receivePracticeGameObj();
 
-        // prints the 2d ct from server
-        for (char[] row : server2dChar) {
-            System.out.println(Arrays.toString(row));
-        }
+        message.setText("your opponent clicked #" + practiceGameObj.getTestString() + "now your Turn");
+        textGridMessage.setText(String.valueOf(practiceGameObj.getBoard()[0][0]));
 
         if(playerID == 1 && turnsMade == maxTurns){ // win checker for player 1
             checkWinner();
@@ -342,33 +291,25 @@ public class PlayerT extends JFrame {
         private Socket socket;
         private DataInputStream dataIn;
         private DataOutputStream dataOut;
+        private ObjectOutputStream dataOutObj;
+        private ObjectInputStream dataInObj;
+
         private boolean connected;
         public ClientSideConnection(){   // I think this is waht is being send to the server
             System.out.println("Client side connection");
 
-
             try{
                 socket = new Socket("localhost", 30000);
-                dataIn = new DataInputStream(socket.getInputStream());
                 dataOut = new DataOutputStream(socket.getOutputStream());
+                dataIn = new DataInputStream(socket.getInputStream());
+                dataOutObj = new ObjectOutputStream(socket.getOutputStream());
+                dataInObj = new ObjectInputStream(socket.getInputStream());
+
                 playerID = dataIn.readInt();
-                System.out.println("webSocketNotes.Player ID: " + playerID);
+                System.out.println("Player ID: " + playerID);
                 this.connected = true;
 
-                //VALUES TO SEND OVER THE NETWORK!
-                maxTurns = dataIn.readInt() / 2; // pass
-                System.out.println(maxTurns);
 
-                char tempchar = 'E';
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-
-                        tempchar = dataIn.readChar();
-                        System.out.print("[" + tempchar + "]");
-                        server2dChar[i][j] = tempchar;
-                    }
-                    System.out.println();
-                }
 
                 // Start a thread to listen for incoming messages
                 new Thread(() -> {
@@ -425,34 +366,27 @@ public class PlayerT extends JFrame {
             handleDisconnection();
         }
     }
-
-        public void sendButtonNum(String strBNum){
-            try{
-                dataOut.writeChars(strBNum); // this is sending to server an int
-                dataOut.flush();
+        public void sendPracticeGameObj(){
+            try {
+                dataOutObj.writeObject(practiceGameObj);
+                dataOutObj.flush();
             } catch (IOException e) {
-                System.out.println("IO exception in ClientSideConnection sendButtonNum");
+                System.out.println("Error sending practice game obj: ");
             }
-
         }
-        public String receiveButtonNum(){ // this is gonna read th int sent by
-            // server about the other player num
-            String str = "N"; // placeholder n gets replaced with button ums 1-4
 
-            try{
-                str = String.valueOf(dataIn.readChar());
-                System.out.println("player #" + otherPlayerID + "clicked button #" + str );
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        server2dChar[i][j] = dataIn.readChar(); // Read and update each cell
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("IO exception in ClientSideConnection receiveButtonNum");
+        public void receivePracticeGameObj(){
+            try {
+                Object tempObj = dataInObj.readObject(); // vague object gets "catched first_
+                practiceGameObj = (PracticeGameObj) tempObj;
+            } catch (IOException e){
+                System.out.println("Error receiving practice game obj: ");
+            } catch (ClassNotFoundException e) {
+                System.out.println("object class not found");
             }
-            return str;
-
         }
+
+
 
         public void closeConnection(){
             try {
@@ -499,7 +433,7 @@ public class PlayerT extends JFrame {
 
 
     public static void main(String[] args) {
-        PlayerT p = new PlayerT(800, 400);
+        PlayerClient p = new PlayerClient(800, 400);
         p.playerMenu();
         //p.Menu { includes [p.connectToServer();, GHAME SPCFIC :p.setUpGUII()  p.setUpButtons();]
         /*p.connectToServer();
