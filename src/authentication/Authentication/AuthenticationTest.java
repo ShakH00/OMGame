@@ -78,7 +78,6 @@ public class AuthenticationTest {
         }
     }
 
-
     /**
      * IMAGE BASED CAPTCHA TEST CASES
      */
@@ -165,8 +164,5 @@ public class AuthenticationTest {
         );
         assertEquals("Code Entered is Invalid!", "Please enter digits only!");
     }
-
-
-
 }
 
