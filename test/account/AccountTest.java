@@ -63,18 +63,17 @@ public class AccountTest {
 
     @Test
     public void testAddAndRemoveFriend() {
-        userAccount1.addFriend(userAccount2);
         assertEquals(1, userAccount1.getFriends().size());
         assertTrue(userAccount1.getFriends().contains(userAccount2));
 
-        boolean removed = userAccount1.removeFriend(userAccount2);
+        boolean removed = userAccount1.removeFriend(userAccount2.getID());
         assertTrue(removed);
         assertFalse(userAccount1.getFriends().contains(userAccount2));
     }
 
     @Test
     public void testRemoveNonexistentFriend() {
-        boolean removed = userAccount1.removeFriend(userAccount2);
+        boolean removed = userAccount1.removeFriend(userAccount2.getID());
         assertFalse(removed);
     }
 
