@@ -58,7 +58,8 @@ public class StartController extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/tetrisCatIcon.png"))));
 
             SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
-                    "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml","screens/GameSelect.fxml");
+                    "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
+                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();

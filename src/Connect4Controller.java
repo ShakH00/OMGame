@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -28,6 +29,8 @@ public class Connect4Controller extends Application {
     private StackPane menuButton;
     @FXML
     private StackPane chatButton;
+    @FXML
+    private AnchorPane rootPane;
 
     @Override
     public void start(Stage primaryStage) {
@@ -164,8 +167,8 @@ public class Connect4Controller extends Application {
         }
 // TODO; get popup done
     @FXML
-    public void goToPopup() {
-        //UtilityManager.popupControl();
+    public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
     @FXML

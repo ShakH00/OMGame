@@ -27,10 +27,12 @@ public class UtilityManager {
             // set the helpRoot visible (it will be hidden initially)
             helpRoot.setVisible(true);
 
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-            });
+// TODO; make popup close in different ways
+
+//            // to close the popup, click anywhere
+//            helpRoot.setOnMouseClicked(event -> {
+//                helpRoot.setVisible(false);  // Hide the popup
+//            });
 
         } catch (IOException e) {
             e.printStackTrace();
