@@ -45,7 +45,7 @@ public class Admin {
      */
     private void updateUsername(DatabaseManager db, int id, String newUsername){
         Account account = db.queryAccountByID(id);
-        account.setPassword(newUsername);
+        account.setUsername(newUsername);
         db.saveAccount(account);
     }
 
