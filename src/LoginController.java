@@ -1,22 +1,11 @@
-import javafx.animation.FillTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class LoginController extends Application {
 
@@ -52,10 +41,10 @@ public class LoginController extends Application {
     }
 
     public void initialize() {
-        StartController.createScaleTransition(backButtonLogin);
-        StartController.createScaleTransition(toSignUp);
-        StartController.createScaleTransition(submitButton);
-        StartController.createScaleTransition(guestButton);
+        UtilityManager.createScaleTransition(backButtonLogin);
+        UtilityManager.createScaleTransition(toSignUp);
+        UtilityManager.createScaleTransition(submitButton);
+        UtilityManager.colourTransition(guestText);
     }
 
     @FXML
@@ -73,7 +62,7 @@ public class LoginController extends Application {
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/gameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
 
 

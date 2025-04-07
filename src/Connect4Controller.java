@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
@@ -23,6 +24,10 @@ public class Connect4Controller extends Application {
     @FXML
     private GridPane gameBoard;
     private Connect4 game = new Connect4();
+    @FXML
+    private StackPane menuButton;
+    @FXML
+    private StackPane chatButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -154,7 +159,19 @@ public class Connect4Controller extends Application {
             handImageView.setLayoutX(-217); // starting x position
             handImageView.setLayoutY(-23);  // fixed y position
             handImageView.setVisible(false); // set hand to invisible by default
+            UtilityManager.createScaleTransition(menuButton);
+            UtilityManager.createScaleTransition(chatButton);
         }
+// TODO; get popup done
+    @FXML
+    public void goToPopup() {
+        //UtilityManager.popupControl();
+    }
+
+    @FXML
+    public void goToChat() {
+        UtilityManager.chatControl();
+    }
 
 
 
