@@ -23,5 +23,19 @@ public class MFAAuthenticationV2 {
             }
         });
 
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject("OMGame: Your Verification Code");
+            message.setText("Your verification code is: " + code);
+
+            Transport.send(message);
+            System.out.println("Verification code sent to: " + toEmail);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.err.println("Failed to send email");
+        }
+
     }
 }
