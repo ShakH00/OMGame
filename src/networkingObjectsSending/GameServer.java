@@ -18,11 +18,16 @@ import java.util.regex.Matcher;
 
 
 public class GameServer {
-    private ServerSocket ss;
+    private ServerSocket gameServerSocket;
+    private ServerSocket chatServerSocket;
     private int numPlayers;
-    private ServerSideConnection player1;
-    // these a the server side equilivant to the package drop off pouints i think
-    private ServerSideConnection player2;
+    private ServerSideConnection player1Ssc;    // these a the server side equilivant to the package drop off pouints i think
+    private ServerSideConnection player2Ssc;
+
+    private ServerSideConnection player1Chat;
+    private ServerSideConnection player2Chat;
+
+
     private int turnsMade;
     private int maxTurns;
     private int[] values;
@@ -38,6 +43,7 @@ public class GameServer {
 
 
 
+
     public GameServer() {
         System.out.println("--game server--");
 
@@ -49,7 +55,9 @@ public class GameServer {
         practiceGameObj = new PracticeGameObj(false, new char[2][2], "test");
 
         try{
-            ss = new ServerSocket(30000);
+            gameServerSocket = new ServerSocket(30000);
+            chatServerSocket = new ServerSocket(30001);
+
         } catch(IOException e){
             System.out.println("IOException from game server constructor");
             e.printStackTrace();
@@ -63,14 +71,19 @@ public class GameServer {
         try {
             System.out.println("waiting for connections");
             while (numPlayers < 2) {
-                Socket s = ss.accept();
+                Socket gameSocket = gameServerSocket.accept();
+                Socket chatSocket = chatServerSocket.accept();
                 numPlayers++;
+
                 System.out.println("Player #" + numPlayers + " has joined the game");
-                ServerSideConnection ssc = new ServerSideConnection(s, numPlayers);
+                ServerSideConnection ssc = new ServerSideConnection(gameSocket, chatSocket, numPlayers);
+
                 if (numPlayers == 1) {
-                    player1 = ssc;
+                    player1Ssc = ssc;
+
                 } else {
-                    player2 = ssc;
+
+                    player2Ssc = ssc;
                 }
 
                 Thread t = new Thread(ssc); //what ever is the in the ssc run in the new "THREAD"
@@ -85,23 +98,31 @@ public class GameServer {
 
 
     private class ServerSideConnection implements Runnable{
-        private Socket socket;
+        private Socket gameSocket;
+        private Socket chatSocket;
+
         private DataOutputStream dataOut;
-        private DataInputStream dataIn;
-        private ObjectOutputStream objectOut;
-        private ObjectInputStream objectIn;
+        private ObjectOutputStream gameOutObj;
+        private ObjectInputStream gameInObj;
+
+        private ObjectOutputStream chatOutObj;
+        private ObjectInputStream chatInObj;
+
         private int playerID;
 
-
-        public ServerSideConnection(Socket s, int id){
-            socket = s;
+        public ServerSideConnection(Socket gameSocket1, Socket chatSocket1, int id){
+            gameSocket = gameSocket1;
+            chatSocket = chatSocket1;
             playerID = id;
 
             try {
-                dataIn = new DataInputStream(socket.getInputStream());
-                dataOut = new DataOutputStream(socket.getOutputStream());
-                objectOut = new ObjectOutputStream(socket.getOutputStream());
-                objectIn = new ObjectInputStream(socket.getInputStream());
+                dataOut = new DataOutputStream(gameSocket.getOutputStream());
+                gameOutObj = new ObjectOutputStream(gameSocket.getOutputStream());
+                gameInObj = new ObjectInputStream(gameSocket.getInputStream());
+
+
+                 chatOutObj = new ObjectOutputStream(chatSocket.getOutputStream());
+                 chatInObj = new ObjectInputStream(chatSocket.getInputStream());
             } catch (IOException e) {
                 System.out.println("IOException from game server constructor: ServerSideConnection");
             }
@@ -173,28 +194,29 @@ public class GameServer {
                 System.out.println("sent player ID: " + playerID);
                 dataOut.writeInt(playerID);
 
-                /*new Thread(() -> {
+                new Thread(() -> {
                     handleChatThread();
-                }).start();*/
+                }).start();
 
                 while (true) {
                     if(playerID == 1){
-                        practiceGameObj = (PracticeGameObj) objectIn.readObject();  // Reads one char and converts to String // read it from player 1
+                        practiceGameObj = (PracticeGameObj) gameInObj.readObject();  // Reads one char and converts to String // read it from player 1
                         player1ButtonNum = practiceGameObj.getTestString();
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
                         processGameLogic(1);
-                        player2.sendPracticeGameObj(); // sending server2dChar
+                        player2Ssc.sendPracticeGameObj(); // sending server2dChar
+
 
                     }
                     else{
-                        practiceGameObj = (PracticeGameObj) objectIn.readObject();
+                        practiceGameObj = (PracticeGameObj) gameInObj.readObject();
                         player2ButtonNum = practiceGameObj.getTestString();
                         System.out.println("PLayer 2 clicked button #" + player2ButtonNum);
 
                         processGameLogic(2);
 
-                        player1.sendPracticeGameObj();
+                        player1Ssc.sendPracticeGameObj();
                     }
                     turnsMade++;
 
@@ -211,52 +233,50 @@ public class GameServer {
         }
         public void sendPracticeGameObj(){
             try {
-                objectOut.writeObject(practiceGameObj);
-                objectOut.flush();
+                gameOutObj.writeObject(practiceGameObj);
+                gameOutObj.flush();
             } catch (IOException e){
                 System.out.println("IOException from game server sendPracticeGameObj");
             }
         }
 
-       /* public void handleChatThread(){
+       public void handleChatThread(){
             System.out.println(chatLogs.toString());
             receiveChats();
 
-        }*/
+        }
 
 
         public void receiveChats() {
             try {
                 while (true) {
-                    Message message = (Message) objectIn.readObject();
-                    String msg = message.getMessage();
-
-                    // Censor chat message before logging or sending
+                    Object obj = chatInObj.readObject(); // ✅
+                    String msg = (String) obj;
                     msg = censorChat(msg);  // Apply censorship here
 
-                    chatLogs.put(playerID, msg);  // Store censored message in chat logs
-
-                    System.out.println("Chat Player #" + playerID + ": " + msg);
+                    chatLogs.put(this.playerID, msg);  // Store censored message in chat logs
+                    System.out.println("PUT Chat Player #" + this.playerID + ": " + msg);
 
                     // Send the censored message to the other player
-                    if (playerID == 1 && player2 != null) {
-                        player2.sendChatMessage(msg);
-                    } else if (playerID == 2 && player1 != null) {
-                        player1.sendChatMessage(msg);
+                    if (this.playerID == 1 && player2Ssc != null) {
+                        player2Ssc.sendChatMessage(msg);
+                    } else if (this.playerID == 2 && player1Ssc != null) {
+                        player1Ssc.sendChatMessage(msg);
                     }
                 }
             } catch (IOException e) {
                 System.out.println("Chat thread crashed for Player " + playerID);
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.out.println("Object not found");
             }
         }
 
         public void sendChatMessage(String msg){
             try {
-                dataOut.writeUTF(msg);  // Send the censored message
-                dataOut.flush();
+                chatOutObj.writeObject(msg);  // Send the censored message
+                chatOutObj.flush();
+
             } catch (IOException e) {
                 System.out.println("Error sending message to player #" + playerID);
                 e.printStackTrace();
@@ -272,18 +292,6 @@ public class GameServer {
             //-----------------
 
         }
-
-
-        public void sendButtonNum(String buttonNum){
-            try{
-                dataOut.writeChars(buttonNum);
-                dataOut.flush();
-            } catch (IOException e) {
-                System.out.println("IOException from sendButtonNum() : ServerSideConnection");
-            }
-        }
-
-
 
         // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
         public void processGameLogicP1(String input) {

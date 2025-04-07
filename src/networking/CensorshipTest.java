@@ -38,7 +38,7 @@ public class CensorshipTest {
         List<String> badWords = new ArrayList<>();
         int censorCount = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader("networking/badwords.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/networking/badwords.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 badWords.add(line.trim());

@@ -1,6 +1,7 @@
 package networkingObjectsSending;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import networking.CensorshipTest;
 
 import java.io.*;
 
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
+
+import static networking.CensorshipTest.censorChat;
 
 
 public class PlayerClient extends Application {
@@ -45,6 +49,7 @@ public class PlayerClient extends Application {
     private int enemyPoints;
     private boolean buttonsEnabled;
     private boolean gameIsActive;
+    private TextArea chatArea;
 
     private PracticeGameObj practiceGameObj;
 
@@ -156,6 +161,7 @@ public class PlayerClient extends Application {
         buttonGrid.setVgap(10);
         buttonGrid.setAlignment(Pos.CENTER);
 
+
         b01 = new Button("1");
         b02 = new Button("2");
         b03 = new Button("3");
@@ -177,7 +183,7 @@ public class PlayerClient extends Application {
 
         // === Chat UI ===
         Label chatLabel = new Label("Chat with opponent:");
-        TextArea chatArea = new TextArea();
+        chatArea = new TextArea();
         chatArea.setEditable(false);
         chatArea.setWrapText(true);
         chatArea.setPrefHeight(150);
@@ -194,6 +200,8 @@ public class PlayerClient extends Application {
 
         sendchat.setOnAction(e -> {
             String msg = chatInput.getText().trim();
+            CensorshipTest.CensorResult temp = censorChat(msg);
+            msg = temp.getFilteredMessage();
             if (!msg.isEmpty()) {
                 String formatted = "player" + playerID + ": " + msg + "\n";
                 chatArea.appendText(formatted);
@@ -202,10 +210,12 @@ public class PlayerClient extends Application {
                 chatLogs.put(playerID, currentLog + formatted);
 
                 // (Later: send to server)
-                System.out.println("Log for player " + playerID + ":");
-                System.out.println(chatLogs.get(playerID));
+                System.out.println(formatted);
 
                 chatInput.clear();
+                if (csc != null) {
+                    csc.sendChat(msg);
+                }
             }
         });
 
@@ -251,9 +261,7 @@ public class PlayerClient extends Application {
     /**
      * Called when a button (1-9) is clicked
      */
-    private void hnadleB00Click(){
 
-    }
 
     private void handleButtonClick(String strBNum) {
         practiceGameObj.setTestString(strBNum);
@@ -307,7 +315,6 @@ public class PlayerClient extends Application {
      * Wait for the opponent's move
      */
     public void updateTurn() {
-
         csc.receivePracticeGameObj();
         message.setText("your opponent clicked #" + practiceGameObj.getTestString() + "now your Turn");
         textGridMessage.setText(String.valueOf(practiceGameObj.getBoard()[0][0]));
@@ -338,63 +345,94 @@ public class PlayerClient extends Application {
         csc.closeConnection();
     }
 
-    /**
-     * Converts server2dChar to a human-readable string
-     */
-    public String server2dCharToString() {
-        StringBuilder sb = new StringBuilder();
-        for (char[] row : server2dChar) {
-            sb.append("[");
-            for (char cell : row) {
-                sb.append("['").append(cell).append("'], ");
-            }
-            sb.setLength(sb.length() - 2); // remove trailing ", "
-            sb.append("]\n");
-        }
-        return sb.toString();
-    }
 
     /**
      * The networking client side
      */
     private class ClientSideConnection {
-        private Socket socket;
-        private DataInputStream dataIn;
-        private DataOutputStream dataOut;
+        private Socket gameSocket;
+        private Socket chatSocket;
 
-        private ObjectOutputStream objectDataOut;
-        private ObjectInputStream objectDataIn;
+        // Game stream: for game objects
+        private DataInputStream gameIn;
+        private DataOutputStream gameOut;
+        private ObjectOutputStream gameOutObj;
+        private ObjectInputStream gameInObj;
+
+        // Chat stream: for raw messages or chat objects
+        private ObjectOutputStream chatOutObj;
+        private ObjectInputStream chatInObj;
 
         public ClientSideConnection() {
             System.out.println("Client side connection");
             try {
-                socket = new Socket("localhost", 30000);
-                dataIn = new DataInputStream(socket.getInputStream());
-                dataOut = new DataOutputStream(socket.getOutputStream());
-                objectDataOut = new ObjectOutputStream(dataOut);
-                objectDataIn = new ObjectInputStream(dataIn);
+                gameSocket = new Socket("localhost", 30000);
+                chatSocket = new Socket("localhost", 30001);
+                gameIn = new DataInputStream(gameSocket.getInputStream());
 
-                playerID = dataIn.readInt();
+                gameOutObj = new ObjectOutputStream(gameSocket.getOutputStream());
+                gameInObj = new ObjectInputStream(gameSocket.getInputStream());
+
+                chatOutObj = new ObjectOutputStream(chatSocket.getOutputStream());
+                chatInObj = new ObjectInputStream(chatSocket.getInputStream());
+
+                playerID = gameIn.readInt();
                 System.out.println("Player ID: " + playerID);
 
+                startChatListener();
 
             } catch (IOException e) {
                 System.out.println("IO exception from CSC constructor");
             }
         }
 
+        private void startChatListener() {
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        String receivedMsg = (String) chatInObj.readObject();
+                        System.out.println("Received chat: " + receivedMsg);
+                        String formatted = "player" + playerID + ": " + receivedMsg + "\n";
+
+                        Platform.runLater(() -> {
+                            chatArea.appendText(formatted);
+                        });
+
+                        // If using JavaFX, update the UI with Platform.runLater(...)
+                    } catch (IOException e) {
+                        System.out.println("IO exception receiving chat message");
+                        e.printStackTrace();
+                        break;
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Class not found");
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+
+        private void sendChat(String msg) {
+            try {
+                chatOutObj.writeObject(msg);
+                chatOutObj.flush();
+            } catch (IOException e) {
+                System.out.println("IO exception sending chat message");
+            }
+        }
+
         public void sendPracticeGameObj(){
             try {
-                objectDataOut.writeObject(practiceGameObj);
-                objectDataOut.flush();
+                gameOutObj.writeObject(practiceGameObj);
+                gameOutObj.flush();
             } catch (IOException e) {
                 System.out.println("Error sending practice game obj: ");
             }
         }
 
+
         public void receivePracticeGameObj(){
             try {
-                Object tempObj = objectDataIn.readObject(); // vague object gets "catched first_
+                Object tempObj = gameInObj.readObject(); // vague object gets "catched first_
                 practiceGameObj = (PracticeGameObj) tempObj;
             } catch (IOException e){
                 System.out.println("Error receiving practice game obj: ");
@@ -408,7 +446,7 @@ public class PlayerClient extends Application {
 
         public void closeConnection() {
             try {
-                socket.close();
+                gameInObj.close();
                 System.out.println("Closing connection");
             } catch (IOException e) {
                 System.out.println("IO exception in ClientSideConnection closeConnection");
