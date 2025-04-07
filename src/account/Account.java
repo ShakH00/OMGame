@@ -373,9 +373,20 @@ public class Account {
      * Sets the username (display name) for the account.
      *
      * @param username the new username to set
+     * username must be 1-64 characters and may not contain any characters
+     * from the disallowed characters list
+     * @return boolean if the username change was successful or not
      */
-    public void setUsername(String username) {
+    public boolean setUsername(String username) {
+        String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
+        for(String character: disallowedChars){
+            if (username.contains(character)){
+                return false;
+            }
+        }
+        if(username.length() > 64 || username.length() < 1){return false;}
         this.username = username;
+        return true;
     }
 
     /**
