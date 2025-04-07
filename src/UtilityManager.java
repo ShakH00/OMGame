@@ -1,10 +1,10 @@
-import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -14,8 +14,18 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class UtilityManager {
+    /**
+     * Method to open up the resignation/offer draw popup
+     *
+     * @param mouseEvent
+     * @param path Path to page
+     * @param rootPane Pane that the popup is added to
+     *
+     * @author Emily M
+     */
+    // TODO: Implement separately from main screen help popup
     @FXML
-    public static void popupControl(javafx.scene.input.MouseEvent mouseEvent, String path, AnchorPane rootPane) {
+    public static void popupControl(MouseEvent mouseEvent, String path, AnchorPane rootPane) {
         // TODO; check if it works with other not help popups
         try {
             // load help.fxml
@@ -27,7 +37,7 @@ public class UtilityManager {
             // set the helpRoot visible (it will be hidden initially)
             helpRoot.setVisible(true);
 
-// TODO; make popup close in different ways
+            // TODO; make popup close in different ways
 
             // to close the popup, click anywhere
             helpRoot.setOnMouseClicked(event -> {
@@ -40,11 +50,26 @@ public class UtilityManager {
         System.out.println("Popup initialized");
     }
 
+    /**
+     * Method to open up the chat window
+     *
+     * @param
+     *
+     * @author
+     */
     @FXML
     public static void chatControl() {
         // TODO; Create logic for chat
         System.out.println("Chat initialized");
     }
+
+    /**
+     * Method to scale a button when hovered over
+     *
+     * @param button Button that is hovered on
+     *
+     * @author Shakil H
+     */
     public static void createScaleTransition(StackPane button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
         scaleTransition.setFromX(1);
@@ -64,7 +89,15 @@ public class UtilityManager {
             button.setCursor(Cursor.DEFAULT);
         });
     }
-    public static void createtranslationTransition(StackPane cartridge) {
+
+    /**
+     * Method to translate a game cartridge when hovered over
+     *
+     * @param cartridge Cartridge that is hovered on
+     *
+     * @author Emily M, edited by Shakil H
+     */
+    public static void createTranslationTransition(StackPane cartridge) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), cartridge);
         translateTransition.setToY(-10);
 
@@ -79,6 +112,14 @@ public class UtilityManager {
             cartridge.setCursor(Cursor.DEFAULT);
         });
     }
+
+    /**
+     * Method to change the color of text when hovered over
+     *
+     * @param text Text that is hovered on
+     *
+     * @author Emily M
+     */
     public static void colourTransition(Text text) {
         text.setOnMouseEntered(event -> {
             text.setFill(Color.BLUE);
