@@ -14,14 +14,14 @@ public abstract class AStatistics implements IStatistics {
      * Set of statistics that are updated through special methods, and cannot be added to like other statistics
      */
     final HashSet<StatisticType> complexStatistics = new HashSet<>(List.of(
-        StatisticType.ELO,
-        StatisticType.WIN_RATE
+            StatisticType.ELO,
+            StatisticType.WIN_RATE
     ));
 
     /**
      * Maps each StatisticType in includedStatistics to some value (Integer or Double)
      */
-    HashMap<StatisticType, Number> statistics = new HashMap<>();
+    protected HashMap<StatisticType, Number> statistics = new HashMap<>();
 
     /**
      * Initialize all values in the statistics hashmap to 0, except for Elo which starts at 1000
@@ -201,3 +201,4 @@ public abstract class AStatistics implements IStatistics {
         return false;
     }
 }
+

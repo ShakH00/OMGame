@@ -64,3 +64,4 @@ public enum StatisticType {
         return null;
     }
 }
+
