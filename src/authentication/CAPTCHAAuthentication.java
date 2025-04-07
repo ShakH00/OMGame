@@ -6,8 +6,7 @@ import java.io.File;
 import java.util.Random;
 
 /**
- * This class is for CAPTCHA Authentication
- * It is generating a random math based equation
+ *
  */
 public class CAPTCHAAuthentication {
 
@@ -31,7 +30,6 @@ public class CAPTCHAAuthentication {
 
     /**
      * Generating a random math equation either using addition, subtraction, multiplication, or division
-     *
      * @return - The correct answer for the CAPTCHA equation
      */
     public static captcha generateProblem () {
@@ -61,8 +59,7 @@ public class CAPTCHAAuthentication {
             problem = a + " / " + b;
         }
 
-        captcha mathCAPTCHA = new captcha("Solve this CAPTCHA to continue: " + problem, String.valueOf(answer));
-        return mathCAPTCHA;
+        return new captcha("Solve this CAPTCHA to continue: " + problem, String.valueOf(answer));
     }
 
     public static captcha generateTextProblem() {
@@ -85,8 +82,7 @@ public class CAPTCHAAuthentication {
             prompt = "CAPTCHA: Type this word in uppercase: " + word.toUpperCase();
             expectedAnswer = word.toUpperCase();
         }
-        captcha textCAPTCHA = new captcha(prompt, expectedAnswer);
-        return textCAPTCHA;
+        return new captcha(prompt, expectedAnswer);
     }
 
     /**
