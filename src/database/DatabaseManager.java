@@ -75,6 +75,16 @@ public class DatabaseManager {
                     account.setUsername(rs.getString("username"));
                     account.setPassword(rs.getString("password"));
                     account.setEmail(rs.getString("email"));
+
+                    String friendsString = rs.getString("friends");
+                    account.setFriends(AccountStorageUtility.friendIDsFromString(friendsString));
+
+                    String statisticsString = rs.getString("statistics");
+                    account.setStatistics(AccountStorageUtility.statisticsFromString(statisticsString));
+
+                    String matchHistoryString = rs.getString("match_history");
+                    account.setMatchHistory(AccountStorageUtility.matchHistoryFromString(matchHistoryString));
+
                 }
             } catch (SQLException e){
                 e.printStackTrace();
@@ -157,6 +167,7 @@ public class DatabaseManager {
 
         if (accountFromDB != null) {
             if (accountFromDB.getPassword().equals(password)) {
+                System.out.println("Account logged in successfully");
                 return accountFromDB;
             }
         }

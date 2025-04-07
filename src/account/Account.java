@@ -3,6 +3,7 @@ package account;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import database.DatabaseManager;
 import game.GameType;
@@ -44,9 +45,9 @@ public class Account {
      */
     private ArrayList<Integer> friends;
 
-    private final HashMap<GameType, AStatistics> statistics;
+    private HashMap<GameType, AStatistics> statistics;
 
-    private final String[][] matchHistory;
+    private String[][] matchHistory;
 
     /**
      * Initialize a guest Account
@@ -397,6 +398,15 @@ public class Account {
         this.password = password;
     }
 
+    public void setFriends(ArrayList<Integer> friends) {
+        this.friends = friends;
+    }
+    public void setStatistics(HashMap<GameType, AStatistics> statistics) {
+        this.statistics = statistics;
+    }
+    public void setMatchHistory(String[][] matchHistory) {
+        this.matchHistory = matchHistory;
+    }
 
     /**
      * Checks whether the given username is valid (not null or empty).
@@ -512,13 +522,14 @@ public class Account {
             this.email = accountFromDB.email;
             this.password = accountFromDB.password;
             this.friends = accountFromDB.friends;
-            this.statistics.putAll(accountFromDB.statistics);
+            this.statistics = accountFromDB.statistics;
+            this.matchHistory = accountFromDB.matchHistory;
             return true;
         }
         return false;
     }
-    public boolean createAccount(String username, String email, String password) {
-        // Try creating the account using the AccountCreate helper class
+    public boolean guestToPermanentAccount(String username, String email, String password) {
+        // Attempt to create the permanent account using the CreateAccount helper class
         boolean success = CreateAccount.createAccount(username, email, password);
 
         if (success) {
@@ -531,17 +542,10 @@ public class Account {
                 this.username = createdAccount.getUsername();
                 this.email = createdAccount.getEmail();
                 this.password = createdAccount.getPassword();
-                this.isGuest = false;
+                this.isGuest = false; // Mark this as a permanent account
                 this.friends = createdAccount.getFriendIDs();
-                this.queuedFor = createdAccount.getQueuedFor();
-
-                // Copy match history
-                String[][] createdHistory = createdAccount.getMatchHistory();
-                for (int i = 0; i < matchHistory.length; i++) {
-                    if (createdHistory[i] != null)
-                        this.matchHistory[i] = createdHistory[i].clone();
-                }
-                DatabaseManager.saveAccount(createdAccount);
+                this.matchHistory = createdAccount.getMatchHistory();
+                this.statistics = createdAccount.getStatisticsHashMap();
             }
         }
 
