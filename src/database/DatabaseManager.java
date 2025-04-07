@@ -56,6 +56,37 @@ public class DatabaseManager {
         return new Account();
     }
 
+    /**
+     * @return Returns an account from the database given a username
+     * get account returns an account from the database
+     */
+    public static Account queryAccountByUsername(String username) {
+        String sql = "SELECT * FROM account WHERE username = ?";
+        Connection conn = DatabaseConnection.getConnection();
+        Account account = null;
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    account = new Account();
+                    account.setUsername(rs.getString("username"));
+                    account.setPassword(rs.getString("password"));
+                    account.setEmail(rs.getString("email"));
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return account;
+    }
+
 
 
     /**
@@ -120,6 +151,19 @@ public class DatabaseManager {
 
         return true;
     }
+
+    public static Account loginAccount(String username, String password) {
+        Account accountFromDB = queryAccountByUsername(username);
+
+        if (accountFromDB != null) {
+            if (accountFromDB.getPassword().equals(password)) {
+                return accountFromDB;
+            }
+        }
+        return null;
+    }
+
+
 
 
     /**
