@@ -65,23 +65,28 @@ public class CAPTCHAAuthentication {
         return mathCAPTCHA;
     }
 
-    public static String generateTextProblem() {
+    public static captcha generateTextProblem() {
         String[] words = {"laptop", "cpsc", "software", "seng", "computer science", "math", "programming",
                 "hello world", "university of calgary", "uofc", "dinos", "science", "computer", "math", "artificial intelligence",
                 "terminal", "security", "linux", "git"};
+
         Random random = new Random();
         String word = words[random.nextInt(words.length)];
-
         boolean reverseText = random.nextBoolean();
+
+        String prompt;
+        String expectedAnswer;
 
         if (reverseText) {
             String reversed = new StringBuilder(word).reverse().toString();
-            System.out.println("CAPTCHA: Type this word reversed: " + reversed);
-            return word;
+            prompt = "CAPTCHA: Type this word reversed: " + reversed;
+            expectedAnswer = word;
         } else {
-            System.out.println("CAPTCHA: Type this word in uppercase: " + word.toUpperCase());
-            return word.toUpperCase();
+            prompt = "CAPTCHA: Type this word in uppercase: " + word.toUpperCase();
+            expectedAnswer = word.toUpperCase();
         }
+        captcha textCAPTCHA = new captcha(prompt, expectedAnswer);
+        return textCAPTCHA;
     }
 
     /**
