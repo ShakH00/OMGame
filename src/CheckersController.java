@@ -13,8 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -37,7 +40,12 @@ public class CheckersController extends Application {
     private Label p1Label;
     @FXML
     private Label p2Label;
-
+    @FXML
+    private StackPane menuButton;
+    @FXML
+    private StackPane chatButton;
+    @FXML
+    private AnchorPane rootPane;
 
 
     // i know this is crazy. but god it WONT WORK OTHERWISE AJHBDHBFUYHWEF
@@ -242,9 +250,9 @@ public class CheckersController extends Application {
             Scene scene = new Scene(loader.load(), 800, 570);
 
             // TODO: idk if these will work while this controller is in checkers and not with her friends
-//            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-//            Font pressStartFont = Font.loadFont(fontPath, 40);
-//            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
 
@@ -379,7 +387,18 @@ public class CheckersController extends Application {
         game.setBoard(board);
         game.start(); // push game out of setup mode
         updateBoard();
+        UtilityManager.createScaleTransition(menuButton);
+        UtilityManager.createScaleTransition(chatButton);
+    }
 
+    @FXML
+    public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    @FXML
+    public void goToChat() {
+        UtilityManager.chatControl();
     }
 
     private void handleOfferDraw() {
