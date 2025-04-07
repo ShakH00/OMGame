@@ -185,7 +185,14 @@ public class Chess extends Game {
     }
 
     public void surrender() {
-
+        if(gameState == GameState.P1_TURN)
+        {
+            gameState = GameState.P2_WIN;
+        }
+        else if(gameState == GameState.P2_TURN)
+        {
+            gameState = GameState.P1_WIN;
+        }
     }
 
     /**
