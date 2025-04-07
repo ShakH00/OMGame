@@ -170,32 +170,34 @@ public class King extends MovingPiece {
     protected boolean isValidMove(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
-        //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
-        //might be trying to castle
-        if(!doneFirstMove || board[newX][newY] == null){
-                if(newY-currentY == 2 && board[currentX][7] instanceof Rook){
-                    Rook rook = (Rook) board[currentX][7];
-                    if(!rook.isDoneFirstMove() && board[currentX][6] == null && board[currentX][5] == null){
-                        System.out.println("castle a");
-                        return true;
-                    }
-                }
-                if(currentY-newY == 2 && board[currentX][0] instanceof Rook){
-                    Rook rook = (Rook) board[currentX][0];
-                    if(!rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null){
-                        System.out.println("castle b");
-                        return true;
-                    }
-                }
 
-        } else{
-            if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
+        int dx = Math.abs(newX - currentX);
+        int dy = Math.abs(newY - currentY);
+
+        // Regular king move: one square in any direction
+        if ((dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0)) {
+            return isPieceOnTile == null || isPieceOnTile.getPieceType() != type;
+        }
+
+        // Castling: king-side
+        if (!doneFirstMove && newY - currentY == 2 && dx == 0 && board[currentX][7] instanceof Rook) {
+            Rook rook = (Rook) board[currentX][7];
+            if (!rook.isDoneFirstMove() && board[currentX][5] == null && board[currentX][6] == null) {
                 return true;
             }
         }
+
+        // Castling: queen-side
+        if (!doneFirstMove && currentY - newY == 2 && dx == 0 && board[currentX][0] instanceof Rook) {
+            Rook rook = (Rook) board[currentX][0];
+            if (!rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null) {
+                return true;
+            }
+        }
+
         return false;
     }
 

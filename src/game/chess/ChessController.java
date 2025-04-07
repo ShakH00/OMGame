@@ -40,8 +40,8 @@ public class ChessController extends Application {
     private Board board;
     private Chess chessGame;
     private int selectedX = -1, selectedY = -1;
-    private Player player1 = new Player();
-    private Player player2 = new Player();
+    //private final Player player1 = new Player();
+    //private final Player player2 = new Player();
 
     // Initial chessboard layout
 //    private final String[][] board = {
@@ -68,7 +68,7 @@ public class ChessController extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         board = new Board(GameType.CHESS);
-        chessGame = new Chess(player1, player2); // Initialize Checkers game logic
+        chessGame = new Chess(); // Initialize Checkers game logic
         chessGame.setBoard(board); // Set the board in the checkers class.
         chessGame.start();
 
@@ -192,16 +192,12 @@ public class ChessController extends Application {
 
             MovingPiece piece = (MovingPiece) chessBoard[selectedY][selectedX];
             PieceType type = piece.getPieceType();
-            if(!chessGame.isPiecePinned(piece) && (type.equals(PieceType.LIGHT) && chessGame.getState() == GameState.P1_TURN) || type.equals(PieceType.DARK) && chessGame.getState() == GameState.P2_TURN){
-                boolean result = piece.move(y, x, board);
-                if(result){
-                    chessGame.switchTurn();
-                }
-            }
+            chessGame.move(piece, y, x);
 
 
-            chessGame.checkWinCondition();
-            chessGame.matchOutcome();
+
+            //chessGame.checkWinCondition();
+            //chessGame.matchOutcome();
 
             selectedX = -1;
             selectedY = -1;
