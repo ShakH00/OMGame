@@ -69,7 +69,7 @@
          </children>
       </StackPane>
 
-        <StackPane fx:id="submitButton" layoutX="530.0" layoutY="428.0" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton">
+        <StackPane fx:id="submitButton" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton">
          <children>
               <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -99,9 +99,9 @@
                 <Font name="Press Start 2P Regular" size="11.0" />
             </font>
         </Text>
-      <StackPane fx:id="guestButton" layoutX="157.0" layoutY="479.1298828125">
+      <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect">
          <children>
-              <Text fx:id="guestText" fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="396.12422943115234">
+              <Text fx:id="guestText" fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="or, continue as a guest" underline="true" wrappingWidth="512.1242294311523">
                   <font>
                       <Font name="Press Start 2P Regular" size="11.0" />
                   </font>
