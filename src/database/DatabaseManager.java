@@ -78,10 +78,6 @@ public class DatabaseManager {
         return gameQueue;
     }
 
-    public static Account queryAccountByID(Integer id) {
-        return new Account();
-    }
-
 
     /**
      * @return Returns an account from the database given a phone number
