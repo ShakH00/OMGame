@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
+<AnchorPane prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
    <children>
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
          <children>
@@ -70,7 +62,7 @@
                                     </ImageView>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resign">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Press Start 2P Regular" size="14.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -85,7 +77,11 @@
                                           <Image url="@../images/green.png" />
                                        </image>
                                     </ImageView>
-                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Request Draw" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Request Draw">
+                                       <font>
+                                          <Font name="Press Start 2P Regular" size="10.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </StackPane>
                               <StackPane fx:id="closeButton" styleClass=".text">
@@ -100,7 +96,7 @@
                                     </ImageView>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Press Start 2P Regular" size="14.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -112,7 +108,7 @@
                               <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ff5454" height="32.0" rotate="-10.8" stroke="TRANSPARENT" strokeType="INSIDE" translateX="-100.0" translateY="-158.0" width="76.0" />
                               <Text fill="WHITE" rotate="-10.8" strokeType="OUTSIDE" strokeWidth="0.0" text="SOS" translateX="-100.0" translateY="-158.0">
                                  <font>
-                                    <Font size="13.0" />
+                                    <Font name="Press Start 2P Regular" size="13.0" />
                                  </font>
                               </Text>
                            </children>
