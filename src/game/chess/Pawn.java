@@ -44,31 +44,48 @@ public class Pawn extends MovingPiece {
     public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
-        if(isValidMove(newX, newY, gameBoard)){
-            boolean enpassant = isEnpassant(newX, newY, gameBoard);
+        boolean enpassant = isEnpassant(newX, newY, gameBoard);
 
+        //must be valid move
+        if (isValidMove(newX, newY, gameBoard)) {
             Piece[][] board = gameBoard.getBoardState();
+
+            //actually move
             board[currentX][currentY] = null;
             this.setX(newX);
             this.setY(newY);
             board[newX][newY] = this;
-            if(enpassant){
-                int enemyY = (this.getPieceType() == PieceType.LIGHT) ? newX + 1 : newX - 1; //adjust based on whether LIGHT or DARK
 
-                //enemy pawn is on  left or right of current position, diagonally
-                int enemyX = newY;  //enemy pawn x coordinates stay the same
+            //if its an en passant move then delete enemy pawn off the board (MURDER)
+            if (enpassant) {
+                //get enemy pawn position
+                int enemyX = currentX;
+                int enemyY = currentY;
 
-                board[enemyX][enemyY] = null; //kill enemy pawn!
+                //enemy pawn y coordinate depends on whether your pawn moved right or left
+                if (newY < currentY) {
+                    enemyY = currentY - 1;
+                } else if (newY > currentY) {
+                    enemyY = currentY + 1;
+                }
+
+                //murder the enemy pawn >:)
+                board[enemyX][enemyY] = null;
             }
-            if(!doneFirstMove){
+
+            //update accordingly as they are important for en passant checks
+            if (!doneFirstMove) {
                 doneFirstMove = true;
-            } else if(!doneSecondMove){
+            } else if (!doneSecondMove) {
                 doneSecondMove = true;
             }
+
             return true;
         }
-        return false;
+
+        return false;//if reached end of method then move did not occur
     }
+
 
     /**
      * A method to check if the move being made is en passant, used to eat enemy piece in such a special move
@@ -105,6 +122,8 @@ public class Pawn extends MovingPiece {
         }
         return false; //if reached end of method then this move is NOT en passant
     }
+
+
 
     /**
      * A method to check if the pawn has done its first move yet

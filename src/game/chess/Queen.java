@@ -72,12 +72,12 @@ public class Queen extends MovingPiece {
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
 
-        // Prevent illegal current position
+        //prevent illegal current position cause will cause errors
         if (currentX < 0 || currentX >= 8 || currentY < 0 || currentY >= 8) {
             return false;
         }
 
-        // Prevent illegal destination
+        //prevent illegal destination to prevent errors
         if (newX < 0 || newX >= 8 || newY < 0 || newY >= 8) {
             return false;
         }

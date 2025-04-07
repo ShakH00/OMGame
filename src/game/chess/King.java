@@ -48,27 +48,28 @@ public class King extends MovingPiece {
         if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
 
-
+            //if trying to castle then also move rook
             if(isTryingToCastle(currentX, currentY, newX, newY, gameBoard)){
-                Object[] rookInfo = getCastlingRook(currentX, currentY, newX, newY, gameBoard);
+                Object[] rookInfo = getCastlingRook(currentX, currentY, newX, newY, gameBoard); //get rook info to castle
                 if (rookInfo != null) {
                     Rook rook = (Rook) rookInfo[0];
                     int oldRookX = (int) rookInfo[1];
                     int oldRookY = (int) rookInfo[2];
                     int newRookX = (int) rookInfo[3];
                     int newRookY = (int) rookInfo[4];
-
+                    //perform castle move
                     board[oldRookX][oldRookY] = null;
                     board[newRookX][newRookY] = rook;
                     rook.setX(newRookX);
                     rook.setY(newRookY);
-                    rook.setDoneFirstMove(true); // if you track rook move state
+                    rook.setDoneFirstMove(true); //tracked for castle stuff
                     board[currentX][currentY] = null;
                     this.setX(newX);
                     this.setY(newY);
                     board[newX][newY] = this;
                 }
             } else{
+                //normal move, no rook castling stuff
                 board[currentX][currentY] = null;
                 this.setX(newX);
                 this.setY(newY);
@@ -79,7 +80,7 @@ public class King extends MovingPiece {
             }
             return true;
         }
-        return false;
+        return false; //move did not happen
     }
 
     /**
@@ -100,7 +101,7 @@ public class King extends MovingPiece {
             return false;
         }
 
-        // check for kingside castle (rook on the right)
+        //check for kingside castle (rook on the right)
         if (newY - currentY == 2) {
             Piece potentialRook = board[currentX][7];
             if (potentialRook instanceof Rook) {
@@ -177,12 +178,12 @@ public class King extends MovingPiece {
         int dx = Math.abs(newX - currentX);
         int dy = Math.abs(newY - currentY);
 
-        // Regular king move: one square in any direction
+        //regulr king move: one square in any direction
         if ((dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0)) {
             return isPieceOnTile == null || isPieceOnTile.getPieceType() != type;
         }
 
-        // Castling: king-side
+        //kingside castling check
         if (!doneFirstMove && newY - currentY == 2 && dx == 0 && board[currentX][7] instanceof Rook) {
             Rook rook = (Rook) board[currentX][7];
             if (!rook.isDoneFirstMove() && board[currentX][5] == null && board[currentX][6] == null) {
@@ -190,7 +191,7 @@ public class King extends MovingPiece {
             }
         }
 
-        // Castling: queen-side
+        //queenside castling check
         if (!doneFirstMove && currentY - newY == 2 && dx == 0 && board[currentX][0] instanceof Rook) {
             Rook rook = (Rook) board[currentX][0];
             if (!rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null) {
@@ -198,7 +199,7 @@ public class King extends MovingPiece {
             }
         }
 
-        return false;
+        return false; //if reach end of method then invalid move
     }
 
 

@@ -41,6 +41,7 @@ public class Bishop extends MovingPiece {
     public boolean move(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
+        //if valid move then move there
         if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
             board[currentX][currentY] = null;
@@ -49,7 +50,7 @@ public class Bishop extends MovingPiece {
             board[newX][newY] = this;
             return true;
         }
-        return false;
+        return false; //if reached end of code then invalid move, did not occur
     }
 
     /**
@@ -71,45 +72,44 @@ public class Bishop extends MovingPiece {
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
 
-        // Prevent illegal current position
+        //out of bound check, prevent illegal start position
         if (currentX < 0 || currentX >= 8 || currentY < 0 || currentY >= 8) {
-            return false; // Invalid current position
+            return false;
         }
 
-        // Prevent illegal destination
+        //out of bound check, prevent illegal move
         if (newX < 0 || newX >= 8 || newY < 0 || newY >= 8) {
-            return false; // Ensure destination is within bounds
+            return false;
         }
 
-        // If move is diagonal (like bishop)
+        //diagonal check (like bishop)
         if (Math.abs(newX - currentX) == Math.abs(newY - currentY)) {
-            // Ensure we move in the correct direction (either up-right, down-right, etc.)
-            int xDir = (newX > currentX) ? 1 : -1; // If newX > currentX then 1, else -1
-            int yDir = (newY > currentY) ? 1 : -1; // Same as above for Y direction
+            // Ensure we move in the correct direction
+            int xDir = (newX > currentX) ? 1 : -1; //if newX > currentX then 1, else -1
+            int yDir = (newY > currentY) ? 1 : -1; //same as x but for y direction
 
             int x = currentX + xDir;
             int y = currentY + yDir;
 
-            // Check if all tiles in between are empty
+            //check that every tile in between is empty
             while (x != newX) {
-                // Ensure no tile on the diagonal is occupied by another piece
                 if (x < 0 || x >= 8 || y < 0 || y >= 8) {
-                    return false; // Check bounds for each step
+                    return false; //check bounds for each step
                 }
                 if (board[x][y] != null) {
-                    return false; // Tile has piece, so invalid move
+                    return false; //tile has piece, so invalid move
                 }
 
-                // Move to next tile
+                //move onto next tile
                 x += xDir;
                 y += yDir;
             }
 
-            // Final destination check (either empty or an enemy piece)
+            //final destination check (either empty or an enemy piece)
             return isPieceOnTile == null || isPieceOnTile.getPieceType() != type;
         }
 
-        return false; // Any other move is invalid for the bishop
+        return false; //reach end of method meaning invalid move
     }
 
 
