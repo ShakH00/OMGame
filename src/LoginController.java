@@ -44,7 +44,7 @@ public class LoginController extends Application {
         UtilityManager.createScaleTransition(backButtonLogin);
         UtilityManager.createScaleTransition(toSignUp);
         UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.createScaleTransition(guestButton);
+        UtilityManager.colourTransition(guestText);
     }
 
     @FXML

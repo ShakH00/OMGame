@@ -132,7 +132,7 @@
                 <Image url="@../images/signup_text.png" />
             </image>
         </ImageView>
-         <Text fill="#9f988c" layoutX="153.0" layoutY="485.0" onMouseClicked="#switchToGameSelect" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="514.0000000000001">
+         <Text fx:id="guestText" fill="#9f988c" layoutX="153.0" layoutY="489.0" onMouseClicked="#switchToGameSelect" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="or, continue as a guest" underline="true" wrappingWidth="514.0000000000001">
              <font>
                  <Font name="Press Start 2P Regular" size="11.0" />
              </font>

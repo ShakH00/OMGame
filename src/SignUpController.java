@@ -23,7 +23,7 @@ public class SignUpController extends Application {
     @FXML
     private StackPane submitButton;
     @FXML
-    private StackPane guestButton;
+    private Text guestText;
 
     @Override
     public void start(Stage primaryStage) {
@@ -47,7 +47,7 @@ public class SignUpController extends Application {
         UtilityManager.createScaleTransition(backButtonSignUp);
         UtilityManager.createScaleTransition(toLogin);
         UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.createScaleTransition(guestButton);
+        UtilityManager.colourTransition(guestText);
     }
 
     @FXML

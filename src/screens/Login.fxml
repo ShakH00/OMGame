@@ -99,9 +99,9 @@
                 <Font name="Press Start 2P Regular" size="11.0" />
             </font>
         </Text>
-      <StackPane fx:id="guestButton" layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect">
+      <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect">
          <children>
-              <Text fx:id="guestText" fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" text="or, continue as a guest" underline="true" wrappingWidth="512.1242294311523">
+              <Text fx:id="guestText" fill="#9f988c" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="or, continue as a guest" underline="true" wrappingWidth="512.1242294311523">
                   <font>
                       <Font name="Press Start 2P Regular" size="11.0" />
                   </font>

@@ -1,3 +1,4 @@
+import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -6,6 +7,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -13,7 +16,7 @@ import java.io.IOException;
 public class UtilityManager {
     @FXML
     public static void popupControl(javafx.scene.input.MouseEvent mouseEvent, String path, AnchorPane rootPane) {
-        // TODO; check if it works with other no help popups
+        // TODO; check if it works with other not help popups
         try {
             // load help.fxml
             FXMLLoader loader = new FXMLLoader(UtilityManager.class.getResource(path));
@@ -72,6 +75,14 @@ public class UtilityManager {
             translateTransition.setToY(10);
             translateTransition.play();
             cartridge.setCursor(Cursor.DEFAULT);
+        });
+    }
+    public static void colourTransition(Text text) {
+        text.setOnMouseEntered(event -> {
+            text.setFill(Color.BLUE);
+        });
+        text.setOnMouseExited(event -> {
+            text.setFill(Color.color(0.6235, 0.5961, 0.549, 1.0));
         });
     }
 }
