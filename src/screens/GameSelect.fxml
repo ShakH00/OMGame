@@ -38,7 +38,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" prefHeight="35.0" prefWidth="134.0">
+      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" prefHeight="35.0" prefWidth="134.0" onMouseClicked="#switchToCheckers">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
@@ -64,7 +64,7 @@
                </font></Text>
          </children>
       </StackPane>
-      <StackPane fx:id="orangeCartridge" layoutX="282.0" layoutY="285.0">
+      <StackPane fx:id="orangeCartridge" layoutX="282.0" layoutY="285.0" onMouseClicked="#switchToChess">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -78,7 +78,7 @@
             </Text>
          </children>
       </StackPane>
-      <StackPane fx:id="greenCartridge" layoutX="158.0" layoutY="292.0">
+      <StackPane fx:id="greenCartridge" layoutX="158.0" layoutY="292.0" onMouseClicked="#switchToTicTacToe">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
