@@ -41,10 +41,10 @@ public class LoginController extends Application {
     }
 
     public void initialize() {
-        StartController.createScaleTransition(backButtonLogin);
-        StartController.createScaleTransition(toSignUp);
-        StartController.createScaleTransition(submitButton);
-        StartController.createScaleTransition(guestButton);
+        UtilityManager.createScaleTransition(backButtonLogin);
+        UtilityManager.createScaleTransition(toSignUp);
+        UtilityManager.createScaleTransition(submitButton);
+        UtilityManager.createScaleTransition(guestButton);
     }
 
     @FXML

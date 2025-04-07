@@ -159,8 +159,8 @@ public class Connect4Controller extends Application {
             handImageView.setLayoutX(-217); // starting x position
             handImageView.setLayoutY(-23);  // fixed y position
             handImageView.setVisible(false); // set hand to invisible by default
-            StartController.createScaleTransition(menuButton);
-            StartController.createScaleTransition(chatButton);
+            UtilityManager.createScaleTransition(menuButton);
+            UtilityManager.createScaleTransition(chatButton);
         }
 
     @FXML

@@ -66,30 +66,11 @@ public class StartController extends Application {
     }
 
     public void initialize() {
-        createScaleTransition(startButton);
-        createScaleTransition(rankingButton);
-        createScaleTransition(helpButton);
+        UtilityManager.createScaleTransition(startButton);
+        UtilityManager.createScaleTransition(rankingButton);
+        UtilityManager.createScaleTransition(helpButton);
     }
 
-    public static void createScaleTransition(StackPane button) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
-        scaleTransition.setFromX(1);
-        scaleTransition.setFromY(1);
-
-        button.setOnMouseEntered(event -> {
-            scaleTransition.setToX(1.1);
-            scaleTransition.setToY(1.1);
-            scaleTransition.play();
-            button.setCursor(Cursor.HAND);
-        });
-
-        button.setOnMouseExited(event -> {
-            scaleTransition.setToX(1);
-            scaleTransition.setToY(1);
-            scaleTransition.play();
-            button.setCursor(Cursor.DEFAULT);
-        });
-    }
 
     @FXML
     private AnchorPane helpPopup;

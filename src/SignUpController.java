@@ -44,10 +44,10 @@ public class SignUpController extends Application {
     }
 
     public void initialize() {
-        StartController.createScaleTransition(backButtonSignUp);
-        StartController.createScaleTransition(toLogin);
-        StartController.createScaleTransition(submitButton);
-        StartController.createScaleTransition(guestButton);
+        UtilityManager.createScaleTransition(backButtonSignUp);
+        UtilityManager.createScaleTransition(toLogin);
+        UtilityManager.createScaleTransition(submitButton);
+        UtilityManager.createScaleTransition(guestButton);
     }
 
     @FXML
@@ -60,6 +60,11 @@ public class SignUpController extends Application {
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
+    @FXML
+    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
 
 
