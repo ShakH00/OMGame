@@ -5,6 +5,10 @@ import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Chess extends Game {
     private final Player player1;
     private final Player player2;
@@ -156,6 +160,40 @@ public class Chess extends Game {
         }
         System.out.println("KING NULL!");
         return null;
+    }
+    public List<int[]> getLegalMoves(MovingPiece piece) {
+        List<int[]> legalMoves = new ArrayList<>();
+        if (piece == null) return legalMoves;
+
+        Player player = piece.getOwnedBy();
+        int originalX = piece.getX();
+        int originalY = piece.getY();
+        Piece[][] state = board.getBoardState();
+
+        for (int x = 0; x < board.getRows(); x++) {
+            for (int y = 0; y < board.getCols(); y++) {
+                if (!piece.canMoveTo(x, y, board)) continue;
+                // Save the state
+                Piece captured = state[x][y];
+                // Simulate the move
+                state[originalX][originalY] = null;
+                state[x][y] = piece;
+                piece.setX(x);
+                piece.setY(y);
+                // Check if it causes a check
+                boolean causesCheck = isKingInCheck(player);
+                // Undo the move
+                state[originalX][originalY] = piece;
+                state[x][y] = captured;
+                piece.setX(originalX);
+                piece.setY(originalY);
+                if (!causesCheck) {
+                    legalMoves.add(new int[]{x, y});
+                }
+            }
+        }
+
+        return legalMoves;
     }
 
     /**
