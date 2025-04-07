@@ -94,13 +94,13 @@ public class AuthenticationTest {
 
     @Test
     public void checkIfGeneratedTextIsNotEmpty() {
-        String CAPTCHA = CAPTCHAAuthentication.generateTextProblem();
+        String CAPTCHA = String.valueOf(CAPTCHAAuthentication.generateTextProblem());
         assertFalse(CAPTCHA.trim().isEmpty(), "The generated CAPTCHA text should not be empty!");
     }
 
     @Test
     public void checkIfGeneratedTextIsNotNull() {
-        String captcha = CAPTCHAAuthentication.generateTextProblem();
+        String captcha = String.valueOf(CAPTCHAAuthentication.generateTextProblem());
         assertNotNull(captcha, "The generated CAPTCHA text should not be null!");
     }
 
