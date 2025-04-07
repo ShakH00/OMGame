@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<?import javafx.scene.paint.Color?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Connect4Controller">
 
     <!-- Background -->
@@ -300,22 +295,33 @@
          <Font name="Press Start 2P Regular" size="15.0" />
       </font>
    </Label>
-   <ImageView fitHeight="57.0" fitWidth="141.0" layoutX="6.0" layoutY="15.0" pickOnBounds="true">
-      <image>
-         <Image url="@../images/pink_noborder.png" />
-      </image>
-   </ImageView>
-   <ImageView fitHeight="77.0" fitWidth="75.0" layoutX="711.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../images/chat_circlebutton.png" />
-      </image>
-      <effect>
-         <DropShadow>
-            <color>
-               <Color opacity="0.36259540915489197" />
-            </color>
-         </DropShadow>
-      </effect>
-   </ImageView>
+
+   <StackPane fx:id="menuButton" layoutX="14.0" layoutY="12.0" onMouseClicked="#goToPopup">
+      <children>
+         <ImageView fitHeight="49.0" fitWidth="114.0" layoutX="2.4000000953674316" layoutY="10.199999809265137" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/yellow.png" />
+            </image>
+         </ImageView>
+         <Label layoutX="30.0" layoutY="21.0" text="menu" textFill="WHITE">
+            <font>
+               <Font name="Press Start 2P Regular" size="16.0" />
+            </font>
+            <effect>
+               <DropShadow height="8.79" radius="2.4299999999999997" width="2.93" />
+            </effect>
+         </Label>
+      </children>
+   </StackPane>
+
+   <StackPane onMouseClicked="#goToChat" fx:id="chatButton" layoutX="721.0" layoutY="494.0">
+      <children>
+         <ImageView fitHeight="75.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/chat_circlebutton.png" />
+            </image>
+         </ImageView>
+      </children>
+   </StackPane>
 
 </AnchorPane>

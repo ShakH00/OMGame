@@ -1,8 +1,7 @@
-package game.tictactoe;
-
 import game.GameState;
 import game.pieces.Piece;
 import game.pieces.PieceType;
+import game.tictactoe.TicTacToe;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -29,6 +30,10 @@ public class TicTacToeController extends Application {
     private GridPane gameBoard;
     @FXML
     private TicTacToe game = new TicTacToe();
+    @FXML
+    private StackPane menuButton;
+    @FXML
+    private StackPane chatButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,9 +43,9 @@ public class TicTacToeController extends Application {
             Scene scene = new Scene(loader.load(), 800, 570);
 
               // TODO: idk if these will work while this controller is in tictactoe and not with her friends
-//            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-//            Font pressStartFont = Font.loadFont(fontPath, 40);
-//            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
 
@@ -199,6 +204,18 @@ public class TicTacToeController extends Application {
     public void initialize() {
         game.start(); // push game out of setup mode
         updateBoard(); // Ensure the board is updated once everything is initialized
+        StartController.createScaleTransition(menuButton);
+        StartController.createScaleTransition(chatButton);
+    }
+
+    @FXML
+    public void goToPopup() {
+        UtilityController.popupControl();
+    }
+
+    @FXML
+    public void goToChat() {
+        UtilityController.chatControl();
     }
 
     public static void main(String[] args) {
