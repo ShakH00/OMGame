@@ -14,6 +14,12 @@ public class AuthenticationTest {
 
     /** MATH BASED CAPTCHA TEST CASES */
 
+    
+    /**
+     * test case checking if user has entered correct answer to math equation
+     * catching if there is an exception thrown even if user has entered the correct answer
+     * then a fail will occur stating an Exception should not have occured
+     */
     @Test
     public void mathCAPTCHA_correctAnswer() {
         try {

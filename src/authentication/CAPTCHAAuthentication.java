@@ -11,10 +11,30 @@ import java.util.Random;
  */
 public class CAPTCHAAuthentication {
 
-    /** Generating a random math equation either using addition, subtraction, multiplication, or division
+    public static class captcha {
+        private final String prompt;
+        private final String answer;
+
+        public captcha(String prompt, String answer) {
+            this.prompt = prompt;
+            this.answer = answer;
+        }
+
+        public String getPrompt() {
+            return prompt;
+        }
+
+        public String getAnswer() {
+            return answer;
+        }
+    }
+
+    /**
+     * Generating a random math equation either using addition, subtraction, multiplication, or division
+     *
      * @return - The correct answer for the CAPTCHA equation
      */
-    public static int generateProblem () {
+    public static captcha generateProblem () {
         Random rand = new Random();
         int a = rand.nextInt(10) + 1;
         int b = rand.nextInt(10) + 1;
@@ -41,8 +61,8 @@ public class CAPTCHAAuthentication {
             problem = a + " / " + b;
         }
 
-        System.out.println("Solve this CAPTCHA to continue: " + problem);
-        return answer;
+        captcha mathCAPTCHA = new captcha("Solve this CAPTCHA to continue: " + problem, String.valueOf(answer));
+        return mathCAPTCHA;
     }
 
     public static String generateTextProblem() {
