@@ -29,10 +29,10 @@ public class UtilityManager {
 
 // TODO; make popup close in different ways
 
-//            // to close the popup, click anywhere
-//            helpRoot.setOnMouseClicked(event -> {
-//                helpRoot.setVisible(false);  // Hide the popup
-//            });
+            // to close the popup, click anywhere
+            helpRoot.setOnMouseClicked(event -> {
+                helpRoot.setVisible(false);  // Hide the popup
+            });
 
         } catch (IOException e) {
             e.printStackTrace();
