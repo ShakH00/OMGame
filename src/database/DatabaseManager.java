@@ -2,10 +2,14 @@ package database;
 
 import account.Account;
 import account.AccountStorageUtility;
+import account.statistics.AStatistics;
+import account.statistics.StatisticType;
+import account.statistics.StatisticsCheckers;
 import game.GameType;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DatabaseManager {
 
@@ -71,20 +75,20 @@ public class DatabaseManager {
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    account = new Account();
-                    account.setUsername(rs.getString("Username"));
-                    account.setPassword(rs.getString("Password"));
-                    account.setEmail(rs.getString("Email"));
-                    account.setID(rs.getInt("ID"));
+                    String password = rs.getString("Password");
+                    String email = rs.getString("Email");
+                    int id = rs.getInt("ID");
+
                     String friendsString = rs.getString("Friends");
-                    account.setFriends(AccountStorageUtility.friendIDsFromString(friendsString));
+                    ArrayList<Integer> friends = AccountStorageUtility.friendIDsFromString(friendsString);
 
                     String statisticsString = rs.getString("Statistics");
-                    account.setStatistics(AccountStorageUtility.statisticsFromString(statisticsString));
+                    HashMap<GameType, AStatistics> statistics = AccountStorageUtility.statisticsFromString(statisticsString);
 
                     String matchHistoryString = rs.getString("MatchHistory");
-                    account.setMatchHistory(AccountStorageUtility.matchHistoryFromString(matchHistoryString));
+                    String[][] matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
 
+                    account = new Account(id, username, email, password, friends, statistics, matchHistory);
                 }
             } catch (SQLException e){
                 e.printStackTrace();
