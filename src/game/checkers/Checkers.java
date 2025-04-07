@@ -306,4 +306,9 @@ public class Checkers extends Game {
             System.out.println("The game is ongoing");
         }
     }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
+    }
 }

@@ -199,4 +199,9 @@ public class Chess extends Game {
             System.out.println("Player 1 wins!");
         }
     }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
+    }
 }
