@@ -18,7 +18,7 @@ public class Checkers extends Game {
     private int score;
     private Piece[] capturedP1;
     private Piece[] capturedP2;
-    Piece selectedPiece;
+    public Piece selectedPiece;
     private Board board;
     private GameState gameState;
     private GameRules gameRules;

@@ -1,144 +1,400 @@
 import game.Board;
+import game.GameState;
+import game.GameType;
 import game.checkers.Checkers;
+import game.checkers.CheckersPiece;
+import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import game.Board;
-import game.GameType;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
-import java.util.Objects;
-
+/**
+ * Displays a checkers board and pieces on the board.
+ *
+ * @author Shakil Hussain and Arwa A, modified by Adam Chan
+ */
 public class CheckersController extends Application {
 
-    private static final int TILE_SIZE = 64;
-    private static final int BOARD_SIZE = 8;
-    private static final String ASSETS_PATH = "file:/diagrams/gui/assets/sprites/";
+    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
-    /*
-     * new board to replace old string set. Used in alot of logic
-     * */
-    private Board board;
-    private Checkers checkersGame;
+    @FXML
+    private GameState currentState;
+    @FXML
+    private GridPane gameBoard;
+    @FXML
+    private Checkers game = new Checkers();
+    @FXML
+    private Label p1Label;
+    @FXML
+    private Label p2Label;
 
-    private int selectedX = -1, selectedY = -1;
 
-    private final ImageView[][] cells = new ImageView[BOARD_SIZE][BOARD_SIZE];
 
-    // Load images for pieces
-    private final Image greenChecker = new Image(Objects.requireNonNull(getClass().getResource("/diagrams/gui/assets/sprites/greenChecker.png")).toString());
-    private final Image orangeChecker = new Image(Objects.requireNonNull(getClass().getResource("/diagrams/gui/assets/sprites/orangeChecker.png")).toString());
+    // i know this is crazy. but god it WONT WORK OTHERWISE AJHBDHBFUYHWEF
+    @FXML
+    private void handleCellClick00(javafx.scene.input.MouseEvent event) { handleMove(0, 0); }
+
+    @FXML
+    private void handleCellClick01(javafx.scene.input.MouseEvent event) { handleMove(0, 1); }
+
+    @FXML
+    private void handleCellClick02(javafx.scene.input.MouseEvent event) { handleMove(0, 2); }
+
+    @FXML
+    private void handleCellClick03(javafx.scene.input.MouseEvent event) { handleMove(0, 3); }
+
+    @FXML
+    private void handleCellClick04(javafx.scene.input.MouseEvent event) { handleMove(0, 4); }
+
+    @FXML
+    private void handleCellClick05(javafx.scene.input.MouseEvent event) { handleMove(0, 5); }
+
+    @FXML
+    private void handleCellClick06(javafx.scene.input.MouseEvent event) { handleMove(0, 6); }
+
+    @FXML
+    private void handleCellClick07(javafx.scene.input.MouseEvent event) { handleMove(0, 7); }
+
+    @FXML
+    private void handleCellClick10(javafx.scene.input.MouseEvent event) { handleMove(1, 0); }
+
+    @FXML
+    private void handleCellClick11(javafx.scene.input.MouseEvent event) { handleMove(1, 1); }
+
+    @FXML
+    private void handleCellClick12(javafx.scene.input.MouseEvent event) { handleMove(1, 2); }
+
+    @FXML
+    private void handleCellClick13(javafx.scene.input.MouseEvent event) { handleMove(1, 3); }
+
+    @FXML
+    private void handleCellClick14(javafx.scene.input.MouseEvent event) { handleMove(1, 4); }
+
+    @FXML
+    private void handleCellClick15(javafx.scene.input.MouseEvent event) { handleMove(1, 5); }
+
+    @FXML
+    private void handleCellClick16(javafx.scene.input.MouseEvent event) { handleMove(1, 6); }
+
+    @FXML
+    private void handleCellClick17(javafx.scene.input.MouseEvent event) { handleMove(1, 7); }
+
+    @FXML
+    private void handleCellClick20(javafx.scene.input.MouseEvent event) { handleMove(2, 0); }
+
+    @FXML
+    private void handleCellClick21(javafx.scene.input.MouseEvent event) { handleMove(2, 1); }
+
+    @FXML
+    private void handleCellClick22(javafx.scene.input.MouseEvent event) { handleMove(2, 2); }
+
+    @FXML
+    private void handleCellClick23(javafx.scene.input.MouseEvent event) { handleMove(2, 3); }
+
+    @FXML
+    private void handleCellClick24(javafx.scene.input.MouseEvent event) { handleMove(2, 4); }
+
+    @FXML
+    private void handleCellClick25(javafx.scene.input.MouseEvent event) { handleMove(2, 5); }
+
+    @FXML
+    private void handleCellClick26(javafx.scene.input.MouseEvent event) { handleMove(2, 6); }
+
+    @FXML
+    private void handleCellClick27(javafx.scene.input.MouseEvent event) { handleMove(2, 7); }
+
+    @FXML
+    private void handleCellClick30(javafx.scene.input.MouseEvent event) { handleMove(3, 0); }
+
+    @FXML
+    private void handleCellClick31(javafx.scene.input.MouseEvent event) { handleMove(3, 1); }
+
+    @FXML
+    private void handleCellClick32(javafx.scene.input.MouseEvent event) { handleMove(3, 2); }
+
+    @FXML
+    private void handleCellClick33(javafx.scene.input.MouseEvent event) { handleMove(3, 3); }
+
+    @FXML
+    private void handleCellClick34(javafx.scene.input.MouseEvent event) { handleMove(3, 4); }
+
+    @FXML
+    private void handleCellClick35(javafx.scene.input.MouseEvent event) { handleMove(3, 5); }
+
+    @FXML
+    private void handleCellClick36(javafx.scene.input.MouseEvent event) { handleMove(3, 6); }
+
+    @FXML
+    private void handleCellClick37(javafx.scene.input.MouseEvent event) { handleMove(3, 7); }
+
+    @FXML
+    private void handleCellClick40(javafx.scene.input.MouseEvent event) { handleMove(4, 0); }
+
+    @FXML
+    private void handleCellClick41(javafx.scene.input.MouseEvent event) { handleMove(4, 1); }
+
+    @FXML
+    private void handleCellClick42(javafx.scene.input.MouseEvent event) { handleMove(4, 2); }
+
+    @FXML
+    private void handleCellClick43(javafx.scene.input.MouseEvent event) { handleMove(4, 3); }
+
+    @FXML
+    private void handleCellClick44(javafx.scene.input.MouseEvent event) { handleMove(4, 4); }
+
+    @FXML
+    private void handleCellClick45(javafx.scene.input.MouseEvent event) { handleMove(4, 5); }
+
+    @FXML
+    private void handleCellClick46(javafx.scene.input.MouseEvent event) { handleMove(4, 6); }
+
+    @FXML
+    private void handleCellClick47(javafx.scene.input.MouseEvent event) { handleMove(4, 7); }
+
+    @FXML
+    private void handleCellClick50(javafx.scene.input.MouseEvent event) { handleMove(5, 0); }
+
+    @FXML
+    private void handleCellClick51(javafx.scene.input.MouseEvent event) { handleMove(5, 1); }
+
+    @FXML
+    private void handleCellClick52(javafx.scene.input.MouseEvent event) { handleMove(5, 2); }
+
+    @FXML
+    private void handleCellClick53(javafx.scene.input.MouseEvent event) { handleMove(5, 3); }
+
+    @FXML
+    private void handleCellClick54(javafx.scene.input.MouseEvent event) { handleMove(5, 4); }
+
+    @FXML
+    private void handleCellClick55(javafx.scene.input.MouseEvent event) { handleMove(5, 5); }
+
+    @FXML
+    private void handleCellClick56(javafx.scene.input.MouseEvent event) { handleMove(5, 6); }
+
+    @FXML
+    private void handleCellClick57(javafx.scene.input.MouseEvent event) { handleMove(5, 7); }
+
+    @FXML
+    private void handleCellClick60(javafx.scene.input.MouseEvent event) { handleMove(6, 0); }
+
+    @FXML
+    private void handleCellClick61(javafx.scene.input.MouseEvent event) { handleMove(6, 1); }
+
+    @FXML
+    private void handleCellClick62(javafx.scene.input.MouseEvent event) { handleMove(6, 2); }
+
+    @FXML
+    private void handleCellClick63(javafx.scene.input.MouseEvent event) { handleMove(6, 3); }
+
+    @FXML
+    private void handleCellClick64(javafx.scene.input.MouseEvent event) { handleMove(6, 4); }
+
+    @FXML
+    private void handleCellClick65(javafx.scene.input.MouseEvent event) { handleMove(6, 5); }
+
+    @FXML
+    private void handleCellClick66(javafx.scene.input.MouseEvent event) { handleMove(6, 6); }
+
+    @FXML
+    private void handleCellClick67(javafx.scene.input.MouseEvent event) { handleMove(6, 7); }
+
+    @FXML
+    private void handleCellClick70(javafx.scene.input.MouseEvent event) { handleMove(7, 0); }
+
+    @FXML
+    private void handleCellClick71(javafx.scene.input.MouseEvent event) { handleMove(7, 1); }
+
+    @FXML
+    private void handleCellClick72(javafx.scene.input.MouseEvent event) { handleMove(7, 2); }
+
+    @FXML
+    private void handleCellClick73(javafx.scene.input.MouseEvent event) { handleMove(7, 3); }
+
+    @FXML
+    private void handleCellClick74(javafx.scene.input.MouseEvent event) { handleMove(7, 4); }
+
+    @FXML
+    private void handleCellClick75(javafx.scene.input.MouseEvent event) { handleMove(7, 5); }
+
+    @FXML
+    private void handleCellClick76(javafx.scene.input.MouseEvent event) { handleMove(7, 6); }
+
+    @FXML
+    private void handleCellClick77(javafx.scene.input.MouseEvent event) { handleMove(7, 7); }
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Pane root = new Pane();
-        Canvas canvas = new Canvas(TILE_SIZE * BOARD_SIZE, TILE_SIZE * BOARD_SIZE);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Checkers.fxml"));
 
-        /*
-         * Initalizing new board
-         * */
-        board = new Board(GameType.CHECKERS);
-        checkersGame = new Checkers(); // Initialize Checkers game logic
+            Scene scene = new Scene(loader.load(), 800, 570);
 
+            // TODO: idk if these will work while this controller is in checkers and not with her friends
+//            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+//            Font pressStartFont = Font.loadFont(fontPath, 40);
+//            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
-        drawCheckersBoard(gc);
+            primaryStage.setResizable(false);
 
-//        canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
+            // set up the primary stage
+            primaryStage.setTitle("OMG!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
 
-        // Create buttons
-        Button offerDrawButton = new Button("Offer Draw");
-        offerDrawButton.setLayoutX(650);
-        offerDrawButton.setLayoutY(10);
-        offerDrawButton.setOnAction(e -> handleOfferDraw());
-
-        Button resignButton = new Button("Resign");
-        resignButton.setLayoutX(650);
-        resignButton.setLayoutY(50);
-        resignButton.setOnAction(e -> handleResign());
-
-        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
-
-        Scene scene = new Scene(root, 800, 600);
-
-        primaryStage.setTitle("Checkers Board");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-
-    }
-
-    /**
-     * Draws the checkers board on the canvas
-     *
-     * @param gc GraphicsContext used for drawing
-     *
-     * @author Shakil Hussain
-     */
-    private void drawCheckersBoard(GraphicsContext gc) {
-        GridPane grid = new GridPane();
-
-        for (int row = 0; row < BOARD_SIZE; row++) {
-            for (int col = 0; col < BOARD_SIZE; col++) {
-                StackPane cell = new StackPane();
-
-                // Alternate square color
-                Color color = (row + col) % 2 == 0 ? Color.BURLYWOOD : Color.WHITE;
-                Rectangle square = new Rectangle(TILE_SIZE, TILE_SIZE, color);
-
-                ImageView piece = new ImageView();
-                piece.setFitWidth(TILE_SIZE * 0.8);
-                piece.setFitHeight(TILE_SIZE * 0.8);
-                piece.setPreserveRatio(true);
-
-                cells[row][col] = piece;
-
-                // Add pieces only on dark squares
-                if ((row + col) % 2 != 0) {
-                    if (row < 3) {
-                        piece.setImage(greenChecker);
-                    } else if (row > 4) {
-                        piece.setImage(orangeChecker);
-                    }
-                }
-
-                cell.getChildren().addAll(square, piece);
-                grid.add(cell, col, row);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
+    private void handleMove(int row, int col) {
+        Piece[][] boardState = game.getBoard().getBoardState();
+
+        CheckersPiece clickedPiece = (CheckersPiece) boardState[row][col];
+
+        if (game.selectedPiece == null) {
+            // first click: select the piece if it belongs to the current player
+            if (clickedPiece != null && clickedPiece.getPieceType() == getCurrentPlayer()) {
+                game.selectedPiece = clickedPiece;
+            }
+        } else {
+            // second click: move piece to new (clicked) position
+            if (clickedPiece == null) {
+                CheckersPiece toMove = (CheckersPiece) game.selectedPiece;
+                game.move(toMove, row, col); // call move
+                game.selectedPiece = null;   // deselect the piece after move
+
+            } else {
+                // If the clicked spot is occupied by another piece, deselect the current piece
+                System.out.println("Invalid move! Cell is occupied.");
+                game.selectedPiece = null; // deselect the piece on invalid move
+            }
+            updateBoard();
+        }
+
+
+        // check game state
+        currentState = game.getGameState();
+
+        if (currentState == GameState.P1_WIN) {
+            System.out.println("Player 1 wins!");
+        } else if (currentState == GameState.P2_WIN) {
+            System.out.println("Player 2 wins!");
+        } else if (currentState == GameState.DRAW) {
+            System.out.println("It’s a draw!");
+        }
+    }
+
+    public PieceType getCurrentPlayer() {
+        return game.getGameState() == GameState.P1_TURN ? PieceType.DARK : PieceType.LIGHT;
+    }
+
+
+    // edits the null image in gameboard to reflect the piece the player has put down.
+    private void updateBoard() {
+
+        Piece[][] board = game.getBoard().getBoardState();
+
+        if (game.getGameState() == GameState.P1_TURN) {
+            System.out.println("Player 1 (Purple)'s turn!");
+            updatePlayerLabels();
+        } else if (game.getGameState() == GameState.P2_TURN){
+            System.out.println("Player 2 (Pink)'s turn!");
+            updatePlayerLabels();
+        }
+
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                ImageView imageView = getNodeByRowColumnIndex(row, col, gameBoard);
+                Piece currentPiece = board[row][col];
+
+                if (imageView == null) continue; // prevent null pointer just in case
+
+                if (currentPiece == null) {
+                    imageView.setImage(null); // empty cell
+                } else {
+                    if (currentPiece.getColor().equals(Color.WHITE)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "pinkChecker.png"));
+                    } else if (currentPiece.getColor().equals(Color.BLACK)) {
+                        imageView.setImage(new Image(ASSETS_PATH + "purpleChecker.png"));
+                    }
+
+                    // update king pieces to reflect their new role :P
+                    if (currentPiece.isKing()) {
+                        // Overlay or use a different image if you have one
+                        if (currentPiece.getPieceType() == PieceType.LIGHT) {
+                            imageView.setImage(new Image(ASSETS_PATH + "pinkKingChecker.png"));
+                        } else {
+                            imageView.setImage(new Image(ASSETS_PATH + "purpleKingChecker.png"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // used to find the appropriate node on the gameboard that we need to adjust
+    private ImageView getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            Integer c = GridPane.getColumnIndex(node);
+            int actualRow = (r == null) ? 0 : r;
+            int actualCol = (c == null) ? 0 : c;
+
+            if (actualRow == row && actualCol == column) {
+                return (ImageView) node;
+            }
+        }
+        return null;
+    }
+
+    private void updatePlayerLabels() {
+            if (game.getGameState() == GameState.P2_TURN) {
+                p1Label.setOpacity(.5);
+                p2Label.setOpacity(1);
+            } else if (game.getGameState() == GameState.P1_TURN) {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(.5);
+            } else {
+                p1Label.setOpacity(1);
+                p2Label.setOpacity(1);
+            }
+
+    }
+
+    public void initialize() {
+        Board board = new Board(GameType.CHECKERS);
+        game.setBoard(board);
+        game.start(); // push game out of setup mode
+        updateBoard();
+
+    }
+
     private void handleOfferDraw() {
-        // Handle draw offer logic here, e.g., show a message or ask for confirmation
         System.out.println("Draw offer sent!");
     }
 
     private void handleResign() {
-        // Handle resignation logic here, e.g., end the game or show a resignation message
-        System.out.println("You resigned!");
+        game.surrender();
+        game.matchOutcome();
     }
 
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }
+
