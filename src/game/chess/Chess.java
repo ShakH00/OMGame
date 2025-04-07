@@ -241,10 +241,9 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
-            matchOutcome();
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
-            matchOutcome();
+
         }
     }
 
