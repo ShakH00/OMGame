@@ -182,6 +182,7 @@ public class TicTacToeController extends Application {
     private void handleResign() {
         // Handle resignation logic here, e.g., end the game or show a resignation message
         System.out.println("You resigned!");
+        game.surrender();
     }
 
     public static void main(String[] args) {
