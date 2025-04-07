@@ -59,7 +59,7 @@ public class StartController extends Application {
 
             SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
                     "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
-                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml");
+                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/Checkers.fxml", "screens/TicTacToe.fxml"); // , "screens/<Screen>.fxml>"
 
         } catch (Exception e) {
             e.printStackTrace();
