@@ -21,7 +21,6 @@ public class Checkers extends Game {
     private Piece selectedPiece;
     private Board board;
     private GameState gameState;
-    private GameRules gameRules;
 
     public Checkers() { //Constructor to initialize player 1 and 2
         this.player1 = new Player();
@@ -297,12 +296,13 @@ public class Checkers extends Game {
      */
     public void matchOutcome(){
         if(gameState == GameState.P1_WIN){
-            System.out.println("game.Player 1 has won the game!");
+            System.out.println("Player 1 has won the game!");
         }
         else if(gameState == GameState.P2_WIN) {
-            System.out.println("game.Player 2 has won the game!");
-        }
-        else{
+            System.out.println("Player 2 has won the game!");
+        } else if (gameState == GameState.DRAW) {
+            System.out.println("Both players have agreed to a draw!");
+        } else{
             System.out.println("The game is ongoing");
         }
     }
@@ -310,5 +310,9 @@ public class Checkers extends Game {
     public void drawGame()
     {
         gameState = GameState.DRAW;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }
