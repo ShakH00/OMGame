@@ -378,15 +378,11 @@ public class Account {
      * @return boolean if the username change was successful or not
      */
     public boolean setUsername(String username) {
-        String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
-        for(String character: disallowedChars){
-            if (username.contains(character)){
-                return false;
-            }
+        if(isValidUsername(username)) {
+            this.username = username;
+            return true;
         }
-        if(username.length() > 64 || username.length() < 1){return false;}
-        this.username = username;
-        return true;
+        return false;
     }
 
     /**
@@ -402,10 +398,15 @@ public class Account {
      * Sets the password for the account.
      *
      * @param password the new password to set
+     * @return boolean, true if the password change was successful
      */
 
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean setPassword(String password) {
+        if(isValidPassword(password)){
+            this.password = password;
+            return true;
+        }
+        return false;
     }
 
     public void setFriends(ArrayList<Integer> friends) {
@@ -437,7 +438,14 @@ public class Account {
      */
 
     private boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".");
+        String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
+        for(String character: disallowedChars){
+            if (username.contains(character)){
+                return false;
+            }
+        }
+        if(username.length() > 64 || username.length() < 1){return false;}
+        return true;
     }
 
     /**
@@ -448,7 +456,10 @@ public class Account {
      */
 
     private boolean isValidPassword(String password) {
-        return password != null && password.length() >= 6;
+        if(password.contains(" ")){return false;}
+        if(password == null){return false;}
+        if(password.length() < 6 || password.length() > 64){return false;}
+        return true;
     }
 
 
@@ -585,7 +596,6 @@ public class Account {
     public String getEmail() {
         return  email;
     }
-    // Getter for id
 
     // Setter for id
     public void setID(Integer id) {
