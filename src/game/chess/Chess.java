@@ -172,7 +172,7 @@ public class Chess extends Game {
 
         for (int x = 0; x < board.getRows(); x++) {
             for (int y = 0; y < board.getCols(); y++) {
-                if (!piece.canMoveTo(x, y, board)) continue;
+                if (!piece.isValidMove(x, y, board)) continue;
                 // Save the state
                 Piece captured = state[x][y];
                 // Simulate the move
