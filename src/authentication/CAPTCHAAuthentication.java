@@ -90,7 +90,7 @@ public class CAPTCHAAuthentication {
      * Stimulating a CAPTCHA authentication
      *
      * @param userInput     - Takes in the user input for the answer to the math equation and text based CAPTCHA
-     * @param mode          - Takes in the user input for if they want to do a math or text based equation
+     * @param mode          - Takes in the user input for if they want to do a math, text, or image based CAPTCHA
      * @param correctAnswer - Checking if the correct answer is inputted for the math and text based CAPTCHA
      * @return
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
@@ -111,12 +111,25 @@ public class CAPTCHAAuthentication {
             } catch (NumberFormatException e) {
                 throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
             }
+
         } else if (mode.equalsIgnoreCase("text")) {
             if (userInput.equals(correctAnswer)) {
                 return "CAPTCHA verified";
             } else {
-                throw new CAPTCHAAuthenticationFailedException("Incorrect text CAPTCHA!");
+                throw new CAPTCHAAuthenticationFailedException("Incorrect Text CAPTCHA!");
             }
+
+        } else if(mode.equalsIgnoreCase("image")) {
+            String input = userInput.toLowerCase().trim();
+            String expectedOutput = correctAnswer.toLowerCase().trim();
+
+            if(input.equals(expectedOutput)) {
+                    return "CAPTCHA verified";
+
+            } else {
+                throw new CAPTCHAAuthenticationFailedException("Incorrect Image CAPTCHA!");
+            }
+
         } else {
             throw new CAPTCHAAuthenticationFailedException("Invalid CAPTCHA mode.");
         }
