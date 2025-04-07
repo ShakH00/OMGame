@@ -98,15 +98,15 @@ public class UtilityManager {
      * @author Emily M, edited by Shakil H
      */
     public static void createTranslationTransition(StackPane cartridge) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), cartridge);
-        translateTransition.setToY(-10);
-
         cartridge.setOnMouseEntered(event -> {
+            TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), cartridge);
+            translateTransition.setToY(-10);
             translateTransition.play();
             cartridge.setCursor(Cursor.HAND);
         });
 
         cartridge.setOnMouseExited(event -> {
+            TranslateTransition translateTransition = new TranslateTransition(Duration.millis(300), cartridge);
             translateTransition.setToY(10);
             translateTransition.play();
             cartridge.setCursor(Cursor.DEFAULT);
