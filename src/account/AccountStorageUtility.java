@@ -11,8 +11,8 @@ public class AccountStorageUtility {
 
     // MATCH HISTORY
 
-    private static final String matchHistoryEntryDivider = "&";
-    private static final String matchHistoryLineDivider = "#";
+    private static final String matchHistoryEntryDivider = ", ";
+    private static final String matchHistoryLineDivider = "\n";
 
     public static String matchHistoryToString(String[][] matchHistory){
         // Create an ArrayList containing entries in a MatchHistory row, joined by the match history entry divider.
