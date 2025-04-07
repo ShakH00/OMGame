@@ -5,9 +5,6 @@ import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedExcept
 import java.io.File;
 import java.util.Random;
 
-/**
- *
- */
 public class CAPTCHAAuthentication {
 
     public static class captcha {
@@ -62,6 +59,10 @@ public class CAPTCHAAuthentication {
         return new captcha("Solve this CAPTCHA to continue: " + problem, String.valueOf(answer));
     }
 
+    /**
+     * Generating a text-based CAPTCHA for user
+     * @return - If CAPTCHA is verified or not
+     */
     public static captcha generateTextProblem() {
         String[] words = {"laptop", "cpsc", "software", "seng", "computer science", "math", "programming",
                 "hello world", "university of calgary", "uofc", "dinos", "science", "computer", "math", "artificial intelligence",
