@@ -11,15 +11,28 @@ public class CAPTCHAAuthentication {
         private final String prompt;
         private final String answer;
 
+        /**
+         *
+         * @param prompt - The question present to the user
+         * @param answer - The correct answer in order to pass CAPTCHA
+         */
         public captcha(String prompt, String answer) {
             this.prompt = prompt;
             this.answer = answer;
         }
 
+        /**
+         * Returns the prompt which is displayed to the user
+         * @return - The CAPTCHA prompt string
+         */
         public String getPrompt() {
             return prompt;
         }
 
+        /**
+         * Returns the correct answer associated to the CAPTCHA
+         * @return - The expected answer as string
+         */
         public String getAnswer() {
             return answer;
         }
@@ -89,9 +102,9 @@ public class CAPTCHAAuthentication {
     /**
      * Stimulating a CAPTCHA authentication
      *
-     * @param userInput     - Takes in the user input for the answer to the math equation and text based CAPTCHA
+     * @param userInput     - Takes in the user input for the answer to the math, text, and image based CAPTCHA
      * @param mode          - Takes in the user input for if they want to do a math, text, or image based CAPTCHA
-     * @param correctAnswer - Checking if the correct answer is inputted for the math and text based CAPTCHA
+     * @param correctAnswer - Checking if the correct answer is inputted for the math, text, and image based CAPTCHA
      * @return
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
      */
@@ -138,6 +151,10 @@ public class CAPTCHAAuthentication {
         }
     }
 
+    /**
+     * The CAPTCHA will choose a random image from the files if user enters the mode as "image"
+     * @return - Image from one of the files
+     */
     public static File chooseImage(){
         Random rand = new Random();
         String[] files = {"4f8yp.png", "6t9bcds.png", "381057.png", "cdfen.png", "data.png", "dsjcbka.png" +
@@ -150,6 +167,12 @@ public class CAPTCHAAuthentication {
         return image;
     }
 
+    /**
+     * Verifying the users input with the expected answer from the image based CAPTCHA
+     * @param input - The users input for the image CAPTCHA
+     * @param file - The file which was chosen for CAPTCHA
+     * @return - True if the users input matches the CAPTCHA image verification, otherwise false
+     */
     public static boolean verifyCAPTCHA(String input, File file){
         input = input.toLowerCase().trim();
         String expected = file.getName();
