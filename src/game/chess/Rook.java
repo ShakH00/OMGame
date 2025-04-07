@@ -87,15 +87,21 @@ public class Rook extends MovingPiece {
      * @return true if this is a valid move to amke
      */
     @Override
-    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+    public boolean isValidMove(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
 
-        if (newX < 0 || newX >= board.length || newY < 0 || newY >= board[0].length) {
+        // Prevent illegal current position
+        if (currentX < 0 || currentX >= 8 || currentY < 0 || currentY >= 8) {
             return false;
-        } // Added to pre-check bounds. - Yousif
+        }
+
+        // Prevent illegal destination
+        if (newX < 0 || newX >= 8 || newY < 0 || newY >= 8) {
+            return false;
+        }
 
         Piece isPieceOnTile = board[newX][newY];
 

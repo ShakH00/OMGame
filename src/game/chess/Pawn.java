@@ -147,7 +147,7 @@ public class Pawn extends MovingPiece {
      * @return true if this is a valid move
      */
     @Override
-    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+    public boolean isValidMove(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();

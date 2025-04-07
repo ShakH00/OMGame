@@ -81,7 +81,7 @@ public class CheckersPiece extends MovingPiece {
      * @return true if move is valid, false if invalid
      */
     @Override
-    protected boolean isValidMove(int newX, int newY, Board gameBoard){
+    public boolean isValidMove(int newX, int newY, Board gameBoard){
         int currentX = this.getX();
         int currentY = this.getY();
         return false; //temporary

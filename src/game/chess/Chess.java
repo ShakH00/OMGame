@@ -57,7 +57,11 @@ public class Chess extends Game {
         }
 
         boolean result = piece.move(x, y, board);
-        if (result) switchTurn();
+        if(result){
+            switchTurn();
+            checkWinCondition();
+            matchOutcome();
+        }
     }
 
     private boolean isMoveSafeForKing(King king, int x, int y) {
@@ -89,21 +93,51 @@ public class Chess extends Game {
      * Removes the given piece and checks if its absence would result in a check
      * @return true or false
      */
-    public boolean isPiecePinned(MovingPiece piece){
-        //check if moving the piece off its current tile puts that piece's king in check
+    public boolean isPiecePinned(MovingPiece piece) {
         Player owner = piece.getOwnedBy();
-        int x = piece.getX();
-        int y = piece.getY();
-        board.place(null, x, y);
-        if (isKingInCheck(owner)){
-            board.place(piece, x, y);
-            return true;
+        int originalX = piece.getX();
+        int originalY = piece.getY();
+        Piece[][] state = board.getBoardState();
+
+        // Find the king's position
+        King king = wheresKing(owner);
+
+        // Loop through all the possible moves for this piece
+        for (int x = 0; x < board.getRows(); x++) {
+            for (int y = 0; y < board.getCols(); y++) {
+                // Skip the current position and check if the move is valid
+                if ((x == originalX && y == originalY) || !piece.isValidMove(x, y, board)) continue;
+
+                Piece captured = state[x][y];
+
+                // Simulate the move
+                state[originalX][originalY] = null;
+                state[x][y] = piece;
+                piece.setX(x);
+                piece.setY(y);
+
+                // Check if the king is in check after the move
+                boolean stillInCheck = isKingInCheck(owner);
+
+                // Undo the move
+                state[originalX][originalY] = piece;
+                state[x][y] = captured;
+                piece.setX(originalX);
+                piece.setY(originalY);
+
+                // If moving this piece would not expose the king to check, it's not pinned
+                if (!stillInCheck) {
+                    return false;
+                }
+            }
         }
-        else {
-            board.place(piece, x, y);
-            return false; //temporary
-        }
+
+        // If no valid move would prevent the king from being in check, the piece is pinned
+        return true;
     }
+
+
+
 
     /**
      * @author YOUSIF BEDAIR
@@ -116,8 +150,6 @@ public class Chess extends Game {
             for (int j = 0; j < state[0].length; j++) {
                 MovingPiece p = (MovingPiece) state[i][j];
                 if (p instanceof King && p.getOwnedBy().equals(player)) {
-                    System.out.println("Found king at " + i + "," + j + " owned by " + p.getOwnedBy());
-                    System.out.println("Equal to player? " + p.getOwnedBy().equals(player));
                     return (King) p;
                 }
             }
@@ -135,29 +167,32 @@ public class Chess extends Game {
     public boolean isKingInCheck(Player player) {
         Piece[][] state = board.getBoardState();
         King king = wheresKing(player);
-        if(king == null){
-            System.out.println("Issue");
-            return false;
+
+        if (king == null) {
+            return false;  // King not found, no check possible
         }
+
         int kingX = king.getX();
         int kingY = king.getY();
+
+        // Check all pieces of the opponent
         for (int row = 0; row < board.getRows(); row++) {
             for (int col = 0; col < board.getCols(); col++) {
                 Piece p = state[row][col];
 
-                if (p == null || p.getOwnedBy() == player) continue;
+                if (p == null || p.getOwnedBy() == player) continue;  // Skip own pieces
 
                 if (p instanceof MovingPiece) {
                     MovingPiece mp = (MovingPiece) p;
-                    if (mp.canMoveTo(kingX, kingY, board)) {
-                        return true; // enemy piece can attack the king
+                    if (mp.isValidMove(kingX, kingY, board)) {
+                        return true;  // Opponent can attack the king
                     }
                 }
-
             }
         }
-        return false;
+        return false;  // No opponent can attack the king
     }
+
 
     /**
      * author: YOUSIF BEDAIR
@@ -180,12 +215,12 @@ public class Chess extends Game {
      * @return true/false
      */
     public boolean isCheckmate(Player player) {
-        System.out.println(player == player1);
-        System.out.println(player == player2);
+        // If the king is not in check, it's not checkmate
         if (!isKingInCheck(player)) return false;
 
         Piece[][] state = board.getBoardState();
 
+        // Check all pieces for legal moves that get the king out of check
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getCols(); j++) {
                 Piece piece = state[i][j];
@@ -194,40 +229,44 @@ public class Chess extends Game {
 
                 MovingPiece mp = (MovingPiece) piece;
 
+                // Check all possible moves for this piece
                 for (int x = 0; x < board.getRows(); x++) {
                     for (int y = 0; y < board.getCols(); y++) {
-                        if (!mp.canMoveTo(x, y, board)) continue;
+                        if (!mp.isValidMove(x, y, board)) continue;
 
-                        // save board state
+                        // Save the current state of the board
                         Piece captured = state[x][y];
                         int originalX = mp.getX();
                         int originalY = mp.getY();
 
-                        // simulate move
+                        // Simulate the move
                         state[originalX][originalY] = null;
                         state[x][y] = mp;
                         mp.setX(x);
                         mp.setY(y);
 
-                        // check if king is still in check
+                        // Check if this move would get the king out of check
                         boolean stillInCheck = isKingInCheck(player);
 
-                        // undo move
+                        // Undo the move
                         state[originalX][originalY] = mp;
                         state[x][y] = captured;
                         mp.setX(originalX);
                         mp.setY(originalY);
 
+                        // If the king is not in check after the move, it's not checkmate
                         if (!stillInCheck) {
-                            return false; // player can get out of check
+                            return false;  // The player has a move that gets them out of check
                         }
                     }
                 }
             }
         }
 
-        return true; // no legal move to escape check
+        // If no move prevents check, it's checkmate
+        return true;
     }
+
 
     public void surrender() {
         if(gameState == GameState.P1_TURN)

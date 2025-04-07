@@ -65,12 +65,23 @@ public class Queen extends MovingPiece {
      * @return true if this is a valid move to perform
      */
     @Override
-    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+    public boolean isValidMove(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
+
+        // Prevent illegal current position
+        if (currentX < 0 || currentX >= 8 || currentY < 0 || currentY >= 8) {
+            return false;
+        }
+
+        // Prevent illegal destination
+        if (newX < 0 || newX >= 8 || newY < 0 || newY >= 8) {
+            return false;
+        }
+
         //if move diagonal like bishop
         if(Math.abs(newX-currentX) == Math.abs(newY-currentY)){
             //ensure we move in right direction
@@ -82,6 +93,9 @@ public class Queen extends MovingPiece {
 
             //check if all tiles are empty in between current and destination tiles
             while(x != newX){
+                if (x < 0 || x >= 8 || y < 0 || y >= 8) {
+                    return false; // Check bounds for each step
+                }
                 if(board[x][y] != null){
                     return false;
                 }
@@ -97,6 +111,7 @@ public class Queen extends MovingPiece {
         } else if(currentX == newX){ //move horizontal because x stays the same
             int yStep = (newY > currentY) ? 1 : -1; //if move right = +1, move left = -1
             for (int y = currentY + yStep; y != newY; y += yStep) {
+                if (y < 0 || y >= 8) return false;
                 if (board[newX][y] != null) {
                     return false; //tile has piece so invalid move
                 }
@@ -104,6 +119,7 @@ public class Queen extends MovingPiece {
         } else { //move vertical because y stays the same
             int xStep = (newX > currentX) ? 1 : -1; // move down = +1, move up = -1
             for (int x = currentX + xStep; x != newX; x += xStep) {
+                if (x < 0 || x >= 8) return false;
                 if (board[x][newY] != null) {
                     return false; //tile has piece so invalid move
                 }

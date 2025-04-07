@@ -63,7 +63,7 @@ public class Knight extends MovingPiece {
      * @return true if this is a valid move to make
      */
     @Override
-    protected boolean isValidMove(int newX, int newY, Board gameBoard) {
+    public boolean isValidMove(int newX, int newY, Board gameBoard) {
         int currentX = this.getX();
         int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
