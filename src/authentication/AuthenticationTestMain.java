@@ -1,5 +1,12 @@
 package authentication;
 
+import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+
+import java.util.Scanner;
+
+import static authentication.MFAAuthentication.generateRandomCode;
+import static authentication.MFAAuthentication.testMode;
+
 public class AuthenticationTestMain {
 //    public static void main(String[] args) {
 //        Scanner sc = new Scanner(System.in);
@@ -23,4 +30,15 @@ public class AuthenticationTestMain {
 //            System.out.println("CAPTCHA Authentication failed: " + e.getMessage());
 //        }
 //    }
+
+    public static void main(String[] args) {
+        try {
+            String result = MFAAuthenticationV2.emailAuthenticatorDriver("nebilawako@gmail.com");
+            System.out.println(result);
+        } catch (Exception e) {
+            System.err.println("Authentication failed: " + e.getMessage());
+        }
+    }
+
+
 }
