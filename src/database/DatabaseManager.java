@@ -61,7 +61,7 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByUsername(String username) {
-        String sql = "SELECT * FROM account WHERE username = ?";
+        String sql = "SELECT * FROM accounts WHERE username = ?";
         Connection conn = DatabaseConnection.getConnection();
         Account account = null;
 
@@ -72,17 +72,17 @@ public class DatabaseManager {
 
                 if (rs.next()) {
                     account = new Account();
-                    account.setUsername(rs.getString("username"));
-                    account.setPassword(rs.getString("password"));
-                    account.setEmail(rs.getString("email"));
-
-                    String friendsString = rs.getString("friends");
+                    account.setUsername(rs.getString("Username"));
+                    account.setPassword(rs.getString("Password"));
+                    account.setEmail(rs.getString("Email"));
+                    account.setID(rs.getInt("ID"));
+                    String friendsString = rs.getString("Friends");
                     account.setFriends(AccountStorageUtility.friendIDsFromString(friendsString));
 
-                    String statisticsString = rs.getString("statistics");
+                    String statisticsString = rs.getString("Statistics");
                     account.setStatistics(AccountStorageUtility.statisticsFromString(statisticsString));
 
-                    String matchHistoryString = rs.getString("match_history");
+                    String matchHistoryString = rs.getString("MatchHistory");
                     account.setMatchHistory(AccountStorageUtility.matchHistoryFromString(matchHistoryString));
 
                 }

@@ -3,7 +3,6 @@ package account;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import database.DatabaseManager;
 import game.GameType;
@@ -575,4 +574,11 @@ public class Account {
     public String getEmail() {
         return  email;
     }
-}
+    // Getter for id
+
+    // Setter for id
+    public void setID(Integer id) {
+        this.id = id;
+    }
+
+    }

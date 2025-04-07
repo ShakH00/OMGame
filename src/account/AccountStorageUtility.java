@@ -176,7 +176,14 @@ public class AccountStorageUtility {
         ArrayList<Integer> friendIDs = new ArrayList<>();
         String[] friendIDStrings = string.split(friendsDelimiter);
         for (String friendIDString : friendIDStrings){
-            friendIDs.add(Integer.valueOf(friendIDString));
+            friendIDString = friendIDString.trim();
+            if (!friendIDString.isEmpty()){
+                try {
+                    friendIDs.add(Integer.parseInt(friendIDString));
+                } catch (NumberFormatException e) {
+                    System.out.println("Error in parsing friendID: " + friendIDString);
+                }
+            }
         }
         return friendIDs;
     }
