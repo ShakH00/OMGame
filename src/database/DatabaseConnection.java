@@ -22,8 +22,13 @@ public class DatabaseConnection {
         return null;
     }
 
-    // TODO: Close connection code
-
-
-
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.err.println("Failed to close the connection: " + e.getMessage());
+            }
+        }
+    }
 }

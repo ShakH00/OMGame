@@ -25,6 +25,7 @@ public class StatisticsChess extends AStatistics implements IStatistics {
             StatisticType.CHECKMATES,
             StatisticType.PIECES_PROMOTED
     };
+
     public StatisticsChess(){
         this.statistics = new HashMap<>();
         initializeHashMap();
@@ -33,5 +34,4 @@ public class StatisticsChess extends AStatistics implements IStatistics {
     public StatisticsChess(HashMap<StatisticType, Number> statisticsHashMap){
         this.statistics = statisticsHashMap;
     }
-
 }

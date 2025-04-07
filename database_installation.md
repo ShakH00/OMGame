@@ -30,3 +30,24 @@
 - Apply & OK.
 
 ## I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
+
+
+# To create our DATABASE!!
+
+1. After opening phpMyAdmin http://localhost/phpmyadmin/ go to the SQL option should be in the top nav bar.
+2. Enter these SQL Statements separately
+   - Create Database OMGAMEDB;
+   - CREATE TABLE Accounts(
+     ID INT AUTO_INCREMENT PRIMARY KEY,
+     Username VARCHAR (255) NOT NULL UNIQUE,
+     Email VARCHAR (255) NOT NULL UNIQUE,
+     Password VARCHAR (255) NOT NULL,
+     Friends VARCHAR (1024) NOT NULL,
+     Statistics TEXT,
+     MatchHistory TEXT
+     )
+3. Then you should be able to see your database in the left side bar and your table inside!!
+
+# NOTE
+- We set ID to autoincrement so the database assigns an id to each account that gets saved to the database
+- Username and email are se to unique

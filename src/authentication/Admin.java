@@ -31,7 +31,7 @@ public class Admin {
      * @param newPassword the new password to set
      */
     private void updatePassword(DatabaseManager db, int id, String newPassword){
-        Account account = db.getAccount(id);
+        Account account = db.queryAccountByID(id);
         account.setPassword(newPassword);
         db.saveAccount(account);
     }
@@ -43,10 +43,13 @@ public class Admin {
      * @param id the id of the player being edited
      * @param newUsername the new username to set
      */
-    private void updateUsername(DatabaseManager db, int id, String newUsername){
-        Account account = db.getAccount(id);
-        account.setPassword(newUsername);
-        db.saveAccount(account);
+    private boolean updateUsername(DatabaseManager db, int id, String newUsername){
+        Account account = db.queryAccountByID(id);
+        boolean success = account.setUsername(newUsername);
+        if(success) {
+            db.saveAccount(account);
+        }
+        return success;
     }
 
 }

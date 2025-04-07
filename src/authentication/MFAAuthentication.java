@@ -1,10 +1,9 @@
 package authentication;
 
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-/** This class is for MFA Authentication for when a user log's into their account
+/** This class is for MFA Authentication for when a user logs into their account
  *  Email is being used as a secondary verification method
  */
 public class MFAAuthentication {
@@ -14,35 +13,35 @@ public class MFAAuthentication {
      */
     public static boolean testMode = false;
 
-    /** Sends authentication code via email and then asks user to input the code sent
-     *  Checking if the code is correct or not is done through conditional statements
+    /**
+     * Sends authentication code via email and then asks user to input the code sent
+     * Checking if the code is correct or not is done through a pop-up window
+     *
      * @param email - The verification authentication code will be sent to the email
+     * @return A string indicating whether the code was verified successfully
      * @throws MFAAuthenticationFailedException - Exception created for when verification is not successful
      */
-    public static void emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+    public static String emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+        String code;
 
-    Scanner sc = new Scanner(System.in);
-    String code;
-    if (testMode == false) {
-        code = generateRandomCode();
-    } else {
-        code = "123456";
-    }
+        // Generate the MFA code
+        if (!testMode) {
+            code = generateRandomCode();
+            // Simulate sending the code via email
+            System.out.println("Verification code sent to email: " + email);
+        } else {
+            code = "123456"; // Test mode uses a fixed code
+            System.out.println("Test mode. Your code is: " + code);
+        }
+        // Show the MFA input pop-up
+        MFAInputPopup popup = new MFAInputPopup();
+        String userInput = popup.showPopup(code);
 
-    /**
-     * Prompts for verification code to be inputted by user
-     */
-    System.out.printf("Verification code: %s", code, '\n');
-    System.out.println("Please enter verification code: ");
-    String userInput = sc.nextLine();
-
-    /**
-     * Conditional statements checking if the code is verified or not
-     */
-    if (userInput.equals(code)) {
-        System.out.println("Code verified");
-    } else {
-        throw new MFAAuthenticationFailedException("Code Entered is Invalid!");
+        // Verify the input
+        if (userInput.equals(code)) {
+            return "Code verified";
+        } else {
+            throw new MFAAuthenticationFailedException("Code Entered is Invalid!");
         }
     }
 
@@ -50,8 +49,8 @@ public class MFAAuthentication {
      * Method created to generate a random code for authentication
      * @return - String which is representing a 6-digit code
      */
-    public static String generateRandomCode () {
+    public static String generateRandomCode() {
         int randomCode = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        return String.valueOf(randomCode);  // Return as a string
+        return String.valueOf(randomCode); // Return as a string
     }
 }
