@@ -7,7 +7,7 @@ import java.util.Properties;
 public class EmailSender {
     public static void sendEmail(String toEmail, String code) {
         final String fromEmail = "";
-        final String password = "vfap nawk naxn bvnk"; // I used app password here for security purposes
+        final String password = ""; // I used app password here for security purposes
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
