@@ -71,11 +71,10 @@ public class UtilityManager {
      * @author Shakil H
      */
     public static void createScaleTransition(StackPane button) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
-        scaleTransition.setFromX(1);
-        scaleTransition.setFromY(1);
-
         button.setOnMouseEntered(event -> {
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
+            scaleTransition.setFromX(1);
+            scaleTransition.setFromY(1);
             scaleTransition.setToX(1.1);
             scaleTransition.setToY(1.1);
             scaleTransition.play();
@@ -83,6 +82,9 @@ public class UtilityManager {
         });
 
         button.setOnMouseExited(event -> {
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
+            scaleTransition.setFromX(1.1);
+            scaleTransition.setFromY(1.1);
             scaleTransition.setToX(1);
             scaleTransition.setToY(1);
             scaleTransition.play();
