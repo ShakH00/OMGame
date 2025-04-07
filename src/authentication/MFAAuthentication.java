@@ -14,12 +14,15 @@ public class MFAAuthentication {
      */
     public static boolean testMode = false;
 
-    /** Sends authentication code via email and then asks user to input the code sent
-     *  Checking if the code is correct or not is done through conditional statements
+    /**
+     * Sends authentication code via email and then asks user to input the code sent
+     * Checking if the code is correct or not is done through conditional statements
+     *
      * @param email - The verification authentication code will be sent to the email
+     * @return
      * @throws MFAAuthenticationFailedException - Exception created for when verification is not successful
      */
-    public static void emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+    public static String emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
 
     Scanner sc = new Scanner(System.in);
     String code;
@@ -32,6 +35,7 @@ public class MFAAuthentication {
     /**
      * Prompts for verification code to be inputted by user
      */
+
     System.out.printf("Verification code: %s", code, '\n');
     System.out.println("Please enter verification code: ");
     String userInput = sc.nextLine();
@@ -40,7 +44,7 @@ public class MFAAuthentication {
      * Conditional statements checking if the code is verified or not
      */
     if (userInput.equals(code)) {
-        System.out.println("Code verified");
+        return "Code verified";
     } else {
         throw new MFAAuthenticationFailedException("Code Entered is Invalid!");
         }
