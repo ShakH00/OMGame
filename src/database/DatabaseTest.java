@@ -1,6 +1,7 @@
 package database;
 
 import account.Account;
+import account.AccountStorageUtility;
 import account.statistics.MatchOutcomeHandler;
 import account.statistics.MatchOutcomeInvalidError;
 import account.statistics.StatisticType;
@@ -31,8 +32,6 @@ public class DatabaseTest {
         } catch (SQLException e) {
             System.err.println("Failed to reset table: " + e.getMessage());
         }
-
-
         int accountID=0;
         String username="test";
         String email="nebilawako@gmail.com";
@@ -69,6 +68,31 @@ public class DatabaseTest {
         MatchOutcomeHandler.RecordMatchOutcome(game, 123, testAccount, testAccountResults, testAccount1, testAccountResults1);
 
         DatabaseManager.saveAccount(testAccount);
+
+
+        // Test to retrieve from database
+        int testAccountId = 1;
+
+        Account account = DatabaseManager.queryAccountByID(testAccountId);
+
+        if (account != null) {
+            System.out.println("Account Retrieved:");
+            System.out.println("Username: " + account.getUsername());
+            System.out.println("Email: " + account.getEmail());
+            System.out.println("Password: " + account.getPassword());
+            System.out.println("Friend IDs: " + account.getFriendIDs());
+            System.out.println("Statistics: " + account.getStatisticsHashMap());
+            System.out.println("Match History:");
+            for (String[] match : account.getMatchHistory()) {
+                if (match != null) {
+                    System.out.println(String.join(", ", match));
+                }
+            }
+        } else {
+            System.out.println("No account found with ID: " + testAccountId);
+        }
+
+
 
     }
 }

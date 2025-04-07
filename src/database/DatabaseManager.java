@@ -87,7 +87,7 @@ public class DatabaseManager {
 
         if (conn != null) {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
-                stmt.setInt(0, id);
+                stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
