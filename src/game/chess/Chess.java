@@ -3,21 +3,22 @@ package game.chess;
 import game.*;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
+import game.pieces.PieceType;
 
 public class Chess extends Game {
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private GameState gameState;
+    private King whiteKing;
+    private King blackKing;
 
     /**
      * Constructor to initiate a chess game
-     * @param player1: The first player
-     * @param player2: The second player
      * @author Abdulrahman Negmeldin
      */
-    public Chess(Player player1, Player player2){
-        this.player1 = player1;
-        this.player2 = player2;
+    public Chess(){
+        this.player1 = new Player();
+        this.player2 = new Player();
     }
 
     public void setBoard(Board board){
@@ -42,8 +43,45 @@ public class Chess extends Game {
         }
     }
 
-    public void move(Piece piece) {
+    public void move(MovingPiece piece, int x, int y) {
+        PieceType type = piece.getPieceType();
+        boolean isCorrectTurn = (type.equals(PieceType.LIGHT) && getState() == GameState.P1_TURN) ||
+                (type.equals(PieceType.DARK) && getState() == GameState.P2_TURN);
 
+        if (!isCorrectTurn) return;
+
+        if (piece instanceof King) {
+            if (!isMoveSafeForKing((King) piece, x, y)) return;
+        } else {
+            if (isPiecePinned(piece)) return;
+        }
+
+        boolean result = piece.move(x, y, board);
+        if (result) switchTurn();
+    }
+
+    private boolean isMoveSafeForKing(King king, int x, int y) {
+        Piece[][] state = board.getBoardState();
+
+        int oldX = king.getX();
+        int oldY = king.getY();
+        Piece captured = state[x][y];
+
+        // simulate
+        state[oldX][oldY] = null;
+        state[x][y] = king;
+        king.setX(x);
+        king.setY(y);
+
+        boolean inCheck = isKingInCheck(king.getOwnedBy());
+
+        // undo
+        state[oldX][oldY] = king;
+        state[x][y] = captured;
+        king.setX(oldX);
+        king.setY(oldY);
+
+        return !inCheck;
     }
 
     /**
@@ -51,12 +89,11 @@ public class Chess extends Game {
      * Removes the given piece and checks if its absence would result in a check
      * @return true or false
      */
-    public boolean isPiecePinned(Piece piece){
+    public boolean isPiecePinned(MovingPiece piece){
         //check if moving the piece off its current tile puts that piece's king in check
         Player owner = piece.getOwnedBy();
-        piece = (MovingPiece) piece;
-        int x = ((MovingPiece) piece).getX();
-        int y = ((MovingPiece) piece).getY();
+        int x = piece.getX();
+        int y = piece.getY();
         board.place(null, x, y);
         if (isKingInCheck(owner)){
             board.place(piece, x, y);
@@ -77,12 +114,15 @@ public class Chess extends Game {
         Piece[][] state = board.getBoardState();
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[0].length; j++) {
-                Piece p = state[i][j];
-                if (p != null && p instanceof King && p.getOwnedBy().equals(player)) {
+                MovingPiece p = (MovingPiece) state[i][j];
+                if (p instanceof King && p.getOwnedBy().equals(player)) {
+                    System.out.println("Found king at " + i + "," + j + " owned by " + p.getOwnedBy());
+                    System.out.println("Equal to player? " + p.getOwnedBy().equals(player));
                     return (King) p;
                 }
             }
         }
+        System.out.println("KING NULL!");
         return null;
     }
 
@@ -95,7 +135,10 @@ public class Chess extends Game {
     public boolean isKingInCheck(Player player) {
         Piece[][] state = board.getBoardState();
         King king = wheresKing(player);
-
+        if(king == null){
+            System.out.println("Issue");
+            return false;
+        }
         int kingX = king.getX();
         int kingY = king.getY();
         for (int row = 0; row < board.getRows(); row++) {
@@ -137,6 +180,8 @@ public class Chess extends Game {
      * @return true/false
      */
     public boolean isCheckmate(Player player) {
+        System.out.println(player == player1);
+        System.out.println(player == player2);
         if (!isKingInCheck(player)) return false;
 
         Piece[][] state = board.getBoardState();
