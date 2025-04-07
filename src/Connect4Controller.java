@@ -162,10 +162,10 @@ public class Connect4Controller extends Application {
             UtilityManager.createScaleTransition(menuButton);
             UtilityManager.createScaleTransition(chatButton);
         }
-
+// TODO; get popup done
     @FXML
     public void goToPopup() {
-        UtilityManager.popupControl();
+        //UtilityManager.popupControl();
     }
 
     @FXML

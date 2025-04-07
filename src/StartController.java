@@ -78,27 +78,7 @@ public class StartController extends Application {
     // open the help popup overlay
     @FXML
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
-            // load help.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
-            Parent helpRoot = loader.load();
-
-            // get help controller
-            HelpController helpController = loader.getController();
-
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
-
-            // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
-
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        UtilityManager.popupControl(mouseEvent, "screens/Help.fxml", rootPane);
     }
 
     @FXML
