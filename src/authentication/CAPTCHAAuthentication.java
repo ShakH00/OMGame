@@ -91,12 +91,14 @@ public class CAPTCHAAuthentication {
 
     /**
      * Stimulating a CAPTCHA authentication
-     * @param userInput - Takes in the user input for the answer to the math equation and text based CAPTCHA
-     * @param mode - Takes in the user input for if they want to do a math or text based equation
+     *
+     * @param userInput     - Takes in the user input for the answer to the math equation and text based CAPTCHA
+     * @param mode          - Takes in the user input for if they want to do a math or text based equation
      * @param correctAnswer - Checking if the correct answer is inputted for the math and text based CAPTCHA
+     * @return
      * @throws CAPTCHAAuthenticationFailedException - Exception thrown if user's input for math equation was incorrect
      */
-    public static void captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
+    public static String captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
 
         if (mode.equalsIgnoreCase("math")) {
             try {
@@ -104,7 +106,8 @@ public class CAPTCHAAuthentication {
                 int expectedAnswer = Integer.parseInt(correctAnswer);
 
                 if (userAnswer == expectedAnswer) {
-                    System.out.println("CAPTCHA verified");
+                    return "CAPTCHA verified";
+
                 } else {
                     throw new CAPTCHAAuthenticationFailedException("Invalid answer entered for Math CAPTCHA Equation!");
                 }
@@ -113,7 +116,7 @@ public class CAPTCHAAuthentication {
             }
         } else if (mode.equalsIgnoreCase("text")) {
             if (userInput.equals(correctAnswer)) {
-                System.out.println("CAPTCHA verified");
+                return "CAPTCHA verified";
             } else {
                 throw new CAPTCHAAuthenticationFailedException("Incorrect text CAPTCHA!");
             }
