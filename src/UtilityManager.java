@@ -1,6 +1,6 @@
 import javafx.fxml.FXML;
 
-public class UtilityController {
+public class UtilityManager {
     @FXML
     public static void popupControl() {
         // TODO; Create logic for popup

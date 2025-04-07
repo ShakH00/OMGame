@@ -165,12 +165,12 @@ public class Connect4Controller extends Application {
 
     @FXML
     public void goToPopup() {
-        UtilityController.popupControl();
+        UtilityManager.popupControl();
     }
 
     @FXML
     public void goToChat() {
-        UtilityController.chatControl();
+        UtilityManager.chatControl();
     }
 
 

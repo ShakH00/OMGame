@@ -210,12 +210,12 @@ public class TicTacToeController extends Application {
 
     @FXML
     public void goToPopup() {
-        UtilityController.popupControl();
+        UtilityManager.popupControl();
     }
 
     @FXML
     public void goToChat() {
-        UtilityController.chatControl();
+        UtilityManager.chatControl();
     }
 
     public static void main(String[] args) {
