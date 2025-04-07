@@ -230,7 +230,14 @@ public class Chess extends Game {
     }
 
     public void surrender() {
-
+        if(gameState == GameState.P1_TURN)
+        {
+            gameState = GameState.P2_WIN;
+        }
+        else if(gameState == GameState.P2_TURN)
+        {
+            gameState = GameState.P1_WIN;
+        }
     }
 
     /**
@@ -243,5 +250,10 @@ public class Chess extends Game {
         } else if (gameState.equals(GameState.P1_WIN)){
             System.out.println("Player 1 wins!");
         }
+    }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
     }
 }

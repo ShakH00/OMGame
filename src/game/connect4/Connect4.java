@@ -257,6 +257,11 @@ public class Connect4 extends Game {
             gameState = GameState.P1_TURN;
         }
     }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
+    }
 }
 
 
