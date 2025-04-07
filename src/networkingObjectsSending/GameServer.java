@@ -9,6 +9,13 @@ import java.util.Arrays;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 public class GameServer {
     private ServerSocket ss;
@@ -81,9 +88,6 @@ public class GameServer {
         private Socket socket;
         private DataOutputStream dataOut;
         private DataInputStream dataIn;
-        //private DataInputStream dataInChat;
-        //private DataOutputStream dataOutChat;
-
         private ObjectOutputStream objectOut;
         private ObjectInputStream objectIn;
         private int playerID;
@@ -98,12 +102,72 @@ public class GameServer {
                 dataOut = new DataOutputStream(socket.getOutputStream());
                 objectOut = new ObjectOutputStream(socket.getOutputStream());
                 objectIn = new ObjectInputStream(socket.getInputStream());
-
-
             } catch (IOException e) {
                 System.out.println("IOException from game server constructor: ServerSideConnection");
             }
         }
+
+        // Censorship Logic
+        public String censorChat(String message) {
+            List<String> badWords = new ArrayList<>();
+            int censorCount = 0;
+
+            try (BufferedReader br = new BufferedReader(new FileReader("networking/badwords.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    badWords.add(line.trim());
+                }
+            } catch (IOException e) {
+                System.err.println("Error loading bad words: " + e.getMessage());
+            }
+
+            String filteredMessage = message;
+
+            for (String badWord : badWords) {
+                String censor = generateCensor(badWord);
+
+                // Censor normal word
+                Pattern exactPattern = Pattern.compile("(?i)\\b" + Pattern.quote(badWord) + "\\b");
+                Matcher exactMatcher = exactPattern.matcher(filteredMessage);
+                while (exactMatcher.find()) {
+                    filteredMessage = exactMatcher.replaceFirst(censor);
+                    censorCount++;
+                    exactMatcher = exactPattern.matcher(filteredMessage); // reset matcher
+                }
+
+                // Censor spaced/dotted/etc. bypass versions
+                Pattern bypassPattern = Pattern.compile(buildBypassRegex(badWord), Pattern.CASE_INSENSITIVE);
+                Matcher bypassMatcher = bypassPattern.matcher(filteredMessage);
+                while (bypassMatcher.find()) {
+                    filteredMessage = bypassMatcher.replaceFirst(censor);
+                    censorCount++;
+                    bypassMatcher = bypassPattern.matcher(filteredMessage); // reset matcher
+                }
+            }
+
+            return filteredMessage;
+        }
+
+        public String generateCensor(String word) {
+            if (word.length() <= 1) return "*";
+            StringBuilder censored = new StringBuilder();
+            censored.append(word.charAt(0));
+            for (int i = 1; i < word.length(); i++) {
+                censored.append("*");
+            }
+            return censored.toString();
+        }
+
+        public String buildBypassRegex(String word) {
+            StringBuilder regex = new StringBuilder();
+            for (char c : word.toCharArray()) {
+                regex.append(Pattern.quote(String.valueOf(c)));
+                regex.append("[^a-zA-Z0-9]{0,3}");
+            }
+            return regex.toString();
+        }
+        // End of censorship logic
+
         public void run(){ // insctruction we want to run on a NEW thread
             try {
                 System.out.println("sent player ID: " + playerID);
@@ -160,25 +224,26 @@ public class GameServer {
 
         }*/
 
-        public String censorChat(String message){
-            return message;
-        }
 
-        /*public void receiveChats() {
+        public void receiveChats() {
             try {
                 while (true) {
-                    Message mesage = (Message) objectIn.readObject();
-                    String msg = mesage.getMessage();
-                    PlayerNum =
-                    msg = censorChat(msg);
-                    chatLogs.put(playerNum, msg);
-                    System.out.println("chat Player #" + playerNum + ": " + msg);
-                        if (playerID == 1 && player2 != null) {
-                            player2.sendChatMessage();
-                        } else if (playerID == 2 && player1 != null) {
-                            player1.sendChatMessage();
-                        }
+                    Message message = (Message) objectIn.readObject();
+                    String msg = message.getMessage();
 
+                    // Censor chat message before logging or sending
+                    msg = censorChat(msg);  // Apply censorship here
+
+                    chatLogs.put(playerID, msg);  // Store censored message in chat logs
+
+                    System.out.println("Chat Player #" + playerID + ": " + msg);
+
+                    // Send the censored message to the other player
+                    if (playerID == 1 && player2 != null) {
+                        player2.sendChatMessage(msg);
+                    } else if (playerID == 2 && player1 != null) {
+                        player1.sendChatMessage(msg);
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Chat thread crashed for Player " + playerID);
@@ -188,12 +253,15 @@ public class GameServer {
             }
         }
 
-
-        public void sendChatMessage(){
+        public void sendChatMessage(String msg){
             try {
-                dataOut.
+                dataOut.writeUTF(msg);  // Send the censored message
+                dataOut.flush();
+            } catch (IOException e) {
+                System.out.println("Error sending message to player #" + playerID);
+                e.printStackTrace();
             }
-        }*/
+        }
 
 
         public void processGameLogic(int playerID){
