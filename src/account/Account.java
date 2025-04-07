@@ -503,7 +503,7 @@ public class Account {
      * @return                      true only if the username and password match an existing Account in the database
      */
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
-        /*Account accountFromDB = Database.getAccountByUsername(username);         // Waiting for database
+        Account accountFromDB = DatabaseManager.queryAccountByUsername(username);
         if (accountFromDB != null && accountFromDB.password.equals(password)) {
             // Update current account object with data from DB
             this.isGuest = false;
@@ -514,8 +514,38 @@ public class Account {
             this.friends = accountFromDB.friends;
             this.statistics.putAll(accountFromDB.statistics);
             return true;
-        }*/
-        return false; // TODO: add login functionality here
+        }
+        return false;
+    }
+    public boolean createAccount(String username, String email, String password) {
+        // Try creating the account using the AccountCreate helper class
+        boolean success = CreateAccount.createAccount(username, email, password);
+
+        if (success) {
+            // If creation succeeded, pull the new account data from the DB
+            Account createdAccount = DatabaseManager.queryAccountByUsername(username);
+
+            if (createdAccount != null) {
+                // Update the current Account object with the new permanent data
+                this.id = createdAccount.getID();
+                this.username = createdAccount.getUsername();
+                this.email = createdAccount.getEmail();
+                this.password = createdAccount.getPassword();
+                this.isGuest = false;
+                this.friends = createdAccount.getFriendIDs();
+                this.queuedFor = createdAccount.getQueuedFor();
+
+                // Copy match history
+                String[][] createdHistory = createdAccount.getMatchHistory();
+                for (int i = 0; i < matchHistory.length; i++) {
+                    if (createdHistory[i] != null)
+                        this.matchHistory[i] = createdHistory[i].clone();
+                }
+                DatabaseManager.saveAccount(createdAccount);
+            }
+        }
+
+        return success;
     }
 
     private long joinTimestamp;
