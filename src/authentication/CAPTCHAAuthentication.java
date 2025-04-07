@@ -97,6 +97,7 @@ public class CAPTCHAAuthentication {
      */
     public static String captchaAuthenticatorDriver(String userInput, String mode, String correctAnswer) throws CAPTCHAAuthenticationFailedException {
 
+        /** if user chooses "math" then this if condition will happen */
         if (mode.equalsIgnoreCase("math")) {
             try {
                 int userAnswer = Integer.parseInt(userInput);
@@ -112,6 +113,7 @@ public class CAPTCHAAuthentication {
                 throw new CAPTCHAAuthenticationFailedException("Invalid input format! Please enter a number.");
             }
 
+        /** if user chooses "text" then this else if condition will happen */
         } else if (mode.equalsIgnoreCase("text")) {
             if (userInput.equals(correctAnswer)) {
                 return "CAPTCHA verified";
@@ -119,17 +121,18 @@ public class CAPTCHAAuthentication {
                 throw new CAPTCHAAuthenticationFailedException("Incorrect Text CAPTCHA!");
             }
 
+        /** if user chooses "image" then this else if condition will happen */
         } else if(mode.equalsIgnoreCase("image")) {
             String input = userInput.toLowerCase().trim();
             String expectedOutput = correctAnswer.toLowerCase().trim();
 
             if(input.equals(expectedOutput)) {
                     return "CAPTCHA verified";
-
             } else {
                 throw new CAPTCHAAuthenticationFailedException("Incorrect Image CAPTCHA!");
             }
 
+        /** else statement will throw that user has entered the incorrect CAPTCHA mode if none is chosen between math, text, or image*/
         } else {
             throw new CAPTCHAAuthenticationFailedException("Invalid CAPTCHA mode.");
         }
