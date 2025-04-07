@@ -185,13 +185,15 @@ public class Chess extends Game {
                 if (p instanceof MovingPiece) {
                     MovingPiece mp = (MovingPiece) p;
                     if (mp.isValidMove(kingX, kingY, board)) {
-                        return true;  // Opponent can attack the king
+                        // Check if the piece can attack the king directly
+                        return true;
                     }
                 }
             }
         }
         return false;  // No opponent can attack the king
     }
+
 
 
     /**

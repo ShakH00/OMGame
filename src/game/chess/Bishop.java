@@ -92,10 +92,10 @@ public class Bishop extends MovingPiece {
 
             // Check if all tiles in between are empty
             while (x != newX) {
+                // Ensure no tile on the diagonal is occupied by another piece
                 if (x < 0 || x >= 8 || y < 0 || y >= 8) {
                     return false; // Check bounds for each step
                 }
-
                 if (board[x][y] != null) {
                     return false; // Tile has piece, so invalid move
                 }
@@ -104,31 +104,13 @@ public class Bishop extends MovingPiece {
                 x += xDir;
                 y += yDir;
             }
-            return isPieceOnTile == null || isPieceOnTile.getPieceType() != type; // Make sure destination is empty or enemy piece
+
+            // Final destination check (either empty or an enemy piece)
+            return isPieceOnTile == null || isPieceOnTile.getPieceType() != type;
         }
 
-        // Rook-like movement check (vertical or horizontal)
-        if (currentX != newX && currentY != newY) {
-            return false; // Not straight line
-        } else if (currentX == newX) { // Horizontal move
-            int yStep = (newY > currentY) ? 1 : -1; // If move right = +1, move left = -1
-            for (int y = currentY + yStep; y != newY; y += yStep) {
-                if (y < 0 || y >= 8) return false; // Check bounds for each step
-                if (board[newX][y] != null) {
-                    return false; // Tile has piece, invalid move
-                }
-            }
-        } else { // Vertical move
-            int xStep = (newX > currentX) ? 1 : -1; // Move down = +1, move up = -1
-            for (int x = currentX + xStep; x != newX; x += xStep) {
-                if (x < 0 || x >= 8) return false; // Check bounds for each step
-                if (board[x][newY] != null) {
-                    return false; // Tile has piece, invalid move
-                }
-            }
-        }
-
-        return isPieceOnTile == null || isPieceOnTile.getPieceType() != type; // Ensure destination tile is empty or contains an enemy piece
+        return false; // Any other move is invalid for the bishop
     }
+
 
 }
