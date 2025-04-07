@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-public class MFAInputPopup {
+public class MFAInputPopup extends MFAAuthentication {
 
     private String userInput;
 
