@@ -43,10 +43,13 @@ public class Admin {
      * @param id the id of the player being edited
      * @param newUsername the new username to set
      */
-    private void updateUsername(DatabaseManager db, int id, String newUsername){
+    private boolean updateUsername(DatabaseManager db, int id, String newUsername){
         Account account = db.queryAccountByID(id);
-        account.setUsername(newUsername);
-        db.saveAccount(account);
+        boolean success = account.setUsername(newUsername);
+        if(success) {
+            db.saveAccount(account);
+        }
+        return success;
     }
 
 }
