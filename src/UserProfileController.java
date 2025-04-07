@@ -32,8 +32,8 @@ public class UserProfileController extends Application {
             Font pressStartFont = Font.loadFont(fontPath, 40);
             Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
             Font pixeliteFont = Font.loadFont(pixelitePath, 40);
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             ImageView gifView = new ImageView(new Image(getClass().getResource("/images/twinklingstars.gif").toExternalForm()));
 

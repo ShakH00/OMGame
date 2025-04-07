@@ -42,12 +42,16 @@ public class TicTacToeController extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/TicTacToe.fxml"));
-
             Scene scene = new Scene(loader.load(), 800, 570);
 
-              // TODO: idk if these will work while this controller is in tictactoe and not with her friends
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
+
             Font pressStartFont = Font.loadFont(fontPath, 40);
+            Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
+            Font pixeliteFont = Font.loadFont(pixelitePath, 40);
+
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
