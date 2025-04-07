@@ -1,5 +1,3 @@
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,22 +5,30 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
+
 
 public class GameSelectController extends Application {
+
     @FXML
-    ImageView greenCartridge;
-    AnchorPane set;
-    ImageView orangeCartridge;
-    ImageView pinkCartridge;
-    ImageView purpleCartridge;
+    AnchorPane rootPane;
+    @FXML
+    StackPane greenCartridge;
+    @FXML
+    StackPane orangeCartridge;
+    @FXML
+    StackPane pinkCartridge;
+    @FXML
+    StackPane purpleCartridge;
+    @FXML
+    Text errorMessage;
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/gameSelect.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/GameSelect.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             ImageView gifView = new ImageView(new Image(getClass().getResource("/images/twinklingstars.gif").toExternalForm()));
@@ -42,32 +48,41 @@ public class GameSelectController extends Application {
         }
     }
 
-    public void animation(ImageView cartridge){
-        TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.setNode(cartridge);
-        translateTransition.setByX(175);
-        translateTransition.setByY(-136);
-        translateTransition.play();
-
-        ScaleTransition scaleTransition = new ScaleTransition();
-        scaleTransition.setDuration(Duration.millis(1000));
-        scaleTransition.setNode(cartridge);
-        scaleTransition.setByY(5.5);
-        scaleTransition.setByX(5.5);
-        scaleTransition.play();
-
-//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000));
-//        fadeTransition.setNode(cartridge);
-//        fadeTransition.setFromValue(1.0);
-//        fadeTransition.setToValue(0.3);
-//        fadeTransition.play();
-    }
-
     @FXML
-     void clicked(){
-        //animation(greenCartridge);
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Start.fxml");
     }
+    @FXML
+    private void switchToProfile(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/UserProfile.fxml");
+    }
+    @FXML
+    private void switchToConnect4(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Connect4.fxml");
+    }
+    // TODO; connect when screens done
+//    @FXML
+//    private void switchToTicTacToe(javafx.scene.input.MouseEvent mouseEvent) {
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/TicTacToe.fxml");
+//    }
+
+
+//    @FXML
+//    private void switchToChess(javafx.scene.input.MouseEvent mouseEvent) {
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/Chess.fxml");
+//    }
+
+//    @FXML
+//    private void switchToCheckers(javafx.scene.input.MouseEvent mouseEvent) {
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/Checkers.fxml");
+//    }
+
 
     public static void main(String[] args) {
         launch(args);
