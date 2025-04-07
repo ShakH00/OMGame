@@ -1,22 +1,22 @@
 
-/* Main style for the win screen */
+/* Main style for the lose screen */
 .root {
     -fx-font-family: "Press Start 2P";
 }
 
-/* Background style for the win screen */
-#winScreenRoot {
-    -fx-background-color: #55AAFF;
-    -fx-background-image: url("images/clouds.gif");
+/* Background style for the lose screen */
+#loseScreenRoot {
+    -fx-background-color: #FFFFFF;
+    -fx-background-image: url("/images/night_popup.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
 }
 
-/* Style for YOU WIN text */
-.win-text {
-    -fx-fill: #FFD700;
-    -fx-font-size: 48px;
+/* Style for YOU LOSE text */
+.lose-text {
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-font-family: 'Press Start 2P';
 }
@@ -25,12 +25,14 @@
 .game-button {
     -fx-background-color: transparent;
     -fx-text-fill: #A0B1C9;
-    -fx-font-size: 18px;
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-font-family: 'Press Start 2P';
     -fx-padding: 10px 20px;
 }
 
+
+
 .game-button:hover {
-    -fx-text-fill: #272100;
+    -fx-text-fill: #FFFFFF;
 }}

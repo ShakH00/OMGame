@@ -11,7 +11,7 @@ public class DatabaseTest {
         if (conn != null) {
             System.out.println("Connection successful!");
 
-            String sql = "INSERT INTO signup (name, email, phone, password) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO accounts (name, email, phone, password) VALUES (?, ?, ?, ?)";
 
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, "Elijah");

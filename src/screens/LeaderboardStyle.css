@@ -2,7 +2,7 @@
 
 /* Root/Background styling */
 .root {
-    -fx-background-image: url("images/leaderboardimg.png");
+    -fx-background-image: url("/images/leaderboardimg.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
@@ -54,7 +54,7 @@
 }
 
 /* Game-specific buttons */
-#tictactoeButton, #chessButton, #checkersButton {
+#tictactoeButton, #chessButton, #checkersButton, #connect4Button {
     -fx-background-color: #BA5AA9;
     -fx-text-fill: white;
     -fx-min-width: 120px;

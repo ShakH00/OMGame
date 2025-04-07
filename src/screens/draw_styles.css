@@ -7,7 +7,7 @@
 /* Background style for the win screen */
 #drawScreenRoot {
     -fx-background-color: #55AAFF;
-    -fx-background-image: url("images/desert.gif");
+    -fx-background-image: url("/images/desert_popup.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
@@ -16,8 +16,8 @@
 /* Style for YOU WIN text */
 .draw-text {
 
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 40px;
+    -fx-text-fill: #592d1e;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-font-family: 'Press Start 2P';
 }
@@ -25,8 +25,8 @@
 /* Style for buttons */
 .game-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 18px;
+    -fx-text-fill: #8f5440;
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-font-family: 'Press Start 2P';
     -fx-padding: 10px 20px;

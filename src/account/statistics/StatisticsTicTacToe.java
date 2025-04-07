@@ -1,5 +1,7 @@
 package account.statistics;
 
+import java.util.HashMap;
+
 public class StatisticsTicTacToe extends AStatistics implements IStatistics {
     /**
      * Set of statistics represented by this object
@@ -14,4 +16,13 @@ public class StatisticsTicTacToe extends AStatistics implements IStatistics {
             StatisticType.NUMBER_OF_TURNS,
             StatisticType.WINS_BLOCKED
     };
+
+    public StatisticsTicTacToe(){
+        this.statistics = new HashMap<>();
+        initializeHashMap();
+    }
+
+    public StatisticsTicTacToe(HashMap<StatisticType, Number> statisticsHashMap){
+        this.statistics = statisticsHashMap;
+    }
 }

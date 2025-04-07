@@ -1,7 +1,13 @@
 package database;
 
 import account.Account;
+import account.AccountStorageUtility;
 import game.GameType;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DatabaseManager {
@@ -12,8 +18,41 @@ public class DatabaseManager {
      * queryAllAccounts returns all account in the database
      * NOTE: the return value can be anything but for stubs I just made it return a list of account
      */
+
+
     public static ArrayList<Account> queryAllAccounts() {
-        return null;
+        ArrayList<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Accounts";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String statisticsString = rs.getString("statistics");
+                String friendsString = rs.getString("friends");
+                String matchHistoryString = rs.getString("matchhistory");
+
+                // Parse stats, friends, match history using your utility
+                var statistics = AccountStorageUtility.statisticsFromString(statisticsString);
+                var friends = AccountStorageUtility.friendIDsFromString(friendsString);
+                var matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
+
+                // Use the full constructor (you have one for this!)
+                Account account = new Account(id, username, email, password, friends, statistics, matchHistory);
+
+                accounts.add(account);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ queryAllAccounts failed: " + e.getMessage());
+        }
+
+        return accounts;
     }
 
     /**
@@ -35,6 +74,11 @@ public class DatabaseManager {
         }
         return gameQueue;
     }
+
+    public static Account queryAccountByID(Integer id) {
+        return new Account();
+    }
+
 
     /**
      * @return Returns an account from the database given a phone number

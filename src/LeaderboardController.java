@@ -1,4 +1,5 @@
-package com.example;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import leaderboard.Leaderboard;
 
 
@@ -74,6 +75,9 @@ public class LeaderboardController implements Initializable {
     @FXML
     private TableColumn<LeaderboardEntry, String> additionalStatColumn;
 
+    @FXML
+    private Button connect4Button;
+
 
 
     private Leaderboard leaderboard;
@@ -86,11 +90,11 @@ public class LeaderboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        System.out.println("works");
         leaderboard = new Leaderboard();
 
 
-        currentAccount = null;
+//        currentAccount = null;
 
 
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
@@ -107,19 +111,21 @@ public class LeaderboardController implements Initializable {
         // Set default values
         sortStatComboBox.setValue(currentSortStat);
         additionalStatComboBox.setValue(currentAdditionalStat);
+
+        System.out.println("works 2");
     }
 
     @FXML
     private void onGameButtonClicked(ActionEvent event) {
-
         if (event.getSource() == tictactoeButton) {
             currentGameType = GameType.TICTACTOE;
         } else if (event.getSource() == chessButton) {
             currentGameType = GameType.CHESS;
         } else if (event.getSource() == checkersButton) {
             currentGameType = GameType.CHECKERS;
+        } else if (event.getSource() == connect4Button) {
+            currentGameType = GameType.CONNECT4;
         }
-
 
         loadLeaderboard();
     }
@@ -129,6 +135,12 @@ public class LeaderboardController implements Initializable {
 
         System.out.println("Back button clicked");
         // SceneManager.goBack();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //
+        SceneManager.registerScenes("/screens/Start.fxml");
+
+        SceneManager.switchScene(stage, "/screens/Start.fxml");
     }
 
     @FXML
@@ -169,13 +181,63 @@ public class LeaderboardController implements Initializable {
 
     private void loadLeaderboard() {
         if (currentGameType == null) {
-
             return;
         }
 
+        String[][] leaderboardData;
 
-        loadLeaderboardPage(1);
+        try {
+            if (globalToggle.isSelected()) {
+                leaderboardData = leaderboard.getGlobalLeaderboard(
+                        currentGameType,
+                        currentSortStat,
+                        currentAdditionalStat,
+                        isAscending,
+                        Integer.MAX_VALUE,  // Show ALL entries
+                        1                   // Single page
+                );
+            } else {
+                if (currentAccount == null || currentAccount.getIsGuest()) {
+                    showAlert("You must be logged in to view friends leaderboard.");
+                    globalToggle.setSelected(true);
+                    return;
+                }
+
+                leaderboardData = leaderboard.getFriendsLeaderboard(
+                        currentAccount,
+                        currentGameType,
+                        currentSortStat,
+                        currentAdditionalStat,
+                        isAscending,
+                        Integer.MAX_VALUE,
+                        1
+                );
+            }
+
+            ObservableList<LeaderboardEntry> entries = FXCollections.observableArrayList();
+
+            for (int i = 1; i < leaderboardData.length; i++) {
+                String[] row = leaderboardData[i];
+
+                if (row[0].isEmpty()) continue;
+
+                entries.add(new LeaderboardEntry(
+                        row[0], row[1], row[2], row[3], row[4], row[5]
+                ));
+            }
+
+            leaderboardTable.setItems(entries);
+            additionalStatColumn.setText(currentAdditionalStat.toString());
+
+        } catch (NoAccountError e) {
+            showAlert("You must be logged in to view friends leaderboard.");
+            globalToggle.setSelected(true);
+        } catch (Exception e) {
+            showAlert("Error loading leaderboard: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     private void loadLeaderboardPage(int pageNumber) {
         if (currentGameType == null) {
@@ -192,8 +254,8 @@ public class LeaderboardController implements Initializable {
                         currentSortStat,
                         currentAdditionalStat,
                         isAscending,
-                        entriesPerPage,
-                        pageNumber
+                        -1,
+                        1
                 );
             } else {
 

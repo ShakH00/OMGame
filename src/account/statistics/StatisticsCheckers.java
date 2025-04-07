@@ -1,9 +1,7 @@
 package account.statistics;
+import java.util.HashMap;
 
 public class StatisticsCheckers extends AStatistics implements IStatistics {
-    /**
-     * Set of statistics represented by this object
-     */
     final StatisticType[] acceptedStatistics = new StatisticType[]{
             StatisticType.ELO,
             StatisticType.WIN_RATE,
@@ -15,4 +13,13 @@ public class StatisticsCheckers extends AStatistics implements IStatistics {
             StatisticType.PIECES_CAPTURED,
             StatisticType.MULTI_CAPTURES
     };
+
+    public StatisticsCheckers() {
+        initializeHashMap();
+    }
+
+    public StatisticsCheckers(HashMap<StatisticType, Number> statisticsHashMap) {
+        initializeHashMap(); // init first to set defaults like ELO = 1000
+        this.statistics.putAll(statisticsHashMap); // override with passed values
+    }
 }

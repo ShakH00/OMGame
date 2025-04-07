@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import database.DatabaseManager;
 import game.GameType;
 import account.statistics.*;
 
@@ -41,7 +42,7 @@ public class Account {
     /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
      */
-    private ArrayList<Account> friends;
+    private ArrayList<Integer> friends;
 
     private final HashMap<GameType, AStatistics> statistics;
 
@@ -95,6 +96,43 @@ public class Account {
         statistics.put(GameType.CONNECT4, new StatisticsConnect4());
         statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
+        this.queuedFor = null;
+    }
+
+    /**
+     * Initialize an Account with all parameters. Only use when loading from database.
+     * @param id            int ID of the player
+     * @param username      String unique username
+     * @param email         String unique email
+     * @param password      String unique password (decrypted!)
+     * @param friends       ArrayList of friend IDs
+     * @param statistics    HashSet of game types and their corresponding statistics
+     * @param matchHistory  String array with summaries of previous matches
+     */
+    public Account(
+            int id,
+            String username,
+            String email,
+            String password,
+            ArrayList<Integer> friends,
+            HashMap<GameType, AStatistics> statistics,
+            String[][] matchHistory)
+    {
+        this.isGuest = false;
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.friends = friends;
+        this.statistics = statistics;
+        this.matchHistory = matchHistory;
+        this.queuedFor = null;
+
+        this.statistics.put(GameType.CHESS, statistics.getOrDefault(GameType.CHESS, new StatisticsChess()));
+        this.statistics.put(GameType.CHECKERS, statistics.getOrDefault(GameType.CHECKERS, new StatisticsCheckers()));
+        this.statistics.put(GameType.CONNECT4, statistics.getOrDefault(GameType.CONNECT4, new StatisticsConnect4()));
+        this.statistics.put(GameType.TICTACTOE, statistics.getOrDefault(GameType.TICTACTOE, new StatisticsTicTacToe()));
+
     }
 
     /**
@@ -144,6 +182,7 @@ public class Account {
     public int getElo(GameType game) {
         return (int) getStatistic(game, StatisticType.ELO);
     }
+
 
     /**
      * Set the player's queuedFor variable, this is used to define what game a player is queueing for
@@ -201,7 +240,7 @@ public class Account {
      * Get the match history for this Account to display on the profile. Includes header row
      * @return String[][] for MatchHistory, including header row
      */
-    public String[][] getMatchHistory() {
+    public String[][] getMatchHistoryWithHeader() {
         String[][] matchHistoryOutput = new String[1 + matchHistory.length][6];
 
         // Add header to the output array
@@ -211,6 +250,14 @@ public class Account {
         System.arraycopy(matchHistory, 0, matchHistoryOutput, 1, matchHistory.length);
 
         return matchHistoryOutput;
+    }
+
+    /**
+     * Get the match history for this Account to display on the profile. Does not include header row.
+     * @return String[][] for MatchHistory, including header row
+     */
+    public String[][] getMatchHistory() {
+        return matchHistory;
     }
 
     /**
@@ -302,12 +349,30 @@ public class Account {
     }
 
     /**
+     * Return the password of the Account
+     *
+     * @return String password of the Account
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Return the ID of the Account, or "-1" if it is a guest account
      *
      * @return int ID of the Account
      */
     public int getID() {
         return isGuest ? -1 : id;
+    }
+
+    /**
+     * Return the statistics hashmap of the Account
+     *
+     * @return HashMap that relates GameType to a Statistics object in this Account
+     */
+    public HashMap<GameType, AStatistics> getStatisticsHashMap() {
+        return statistics;
     }
 
     /**
@@ -398,10 +463,10 @@ public class Account {
     }
 
     /**
-     * @param friend, adds the friend to the friends-list of the player.
+     * @param friendID, adds the friend to the friends-list of the player.
      */
-    public void addFriend(Account friend) {
-        this.friends.add(friend);
+    public void addFriend(int friendID) {
+        this.friends.add(friendID);
     }
 
     /**
@@ -409,7 +474,7 @@ public class Account {
      * @param friend    Account belonging to friend that is to be removed from friends list
      * @return          true if friend was in friends list; false otherwise
      */
-    public boolean removeFriend(Account friend) {
+    public boolean removeFriend(int friend) {
         if (this.friends.contains(friend)){
             this.friends.remove(friend);
             return true;
@@ -418,10 +483,23 @@ public class Account {
     }
 
     /**
-     * @return returns all the friends from the players list.
+     * Get references to the Accounts of all friends
+     * @return  ArrayList containing the Account of each friend
      */
     public ArrayList<Account> getFriends(){
-        return this.friends;
+        ArrayList<Account> friendsList = new ArrayList<>();
+        for (int friendID : friends){
+            friendsList.add(DatabaseManager.queryAccountByID(friendID));
+        }
+        return friendsList;
+    }
+
+    /**
+     * Get the IDs of all friends
+     * @return  ArrayList containing the ID of each friend
+     */
+    public ArrayList<Integer> getFriendIDs(){
+        return friends;
     }
 
     /**
@@ -431,6 +509,18 @@ public class Account {
      * @return                      true only if the username and password match an existing Account in the database
      */
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
+        /*Account accountFromDB = Database.getAccountByUsername(username);         // Waiting for database
+        if (accountFromDB != null && accountFromDB.password.equals(password)) {
+            // Update current account object with data from DB
+            this.isGuest = false;
+            this.id = accountFromDB.id;
+            this.username = accountFromDB.username;
+            this.email = accountFromDB.email;
+            this.password = accountFromDB.password;
+            this.friends = accountFromDB.friends;
+            this.statistics.putAll(accountFromDB.statistics);
+            return true;
+        }*/
         return false; // TODO: add login functionality here
     }
 
@@ -452,5 +542,9 @@ public class Account {
 
     public int getMatchmakingThreshold(){
         return matchmakingThreshold;
+    }
+
+    public String getEmail() {
+        return  email;
     }
 }
