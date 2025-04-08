@@ -10,7 +10,7 @@ public class AuthenticationTestMain {
 //        String email = scanner.nextLine();
 
 
-        String email = "student@gmail.com";
+        String email = "yomansup703@gmail.com";
 
         try {
             String result = MFAAuthentication.emailAuthenticatorDriver(email);
