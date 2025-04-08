@@ -11,6 +11,12 @@ public class Chess extends Game {
 
     public void move(Piece piece) {
 
+        // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
+// Send updated game state to opponent after player's move
+        networking.Networking networking = new networking.Networking();
+        networking.sendGame(this);
+        System.out.println("Game state sent to opponent. Entering listen mode...");
+
     }
 
     /**

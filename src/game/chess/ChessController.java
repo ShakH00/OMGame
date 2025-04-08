@@ -57,6 +57,15 @@ public class ChessController extends Application {
         drawChessBoard(gc);
         drawPieces(gc);
 
+        System.out.println("Waiting for opponent's move...");
+
+// Stack Overflow Reference: https://stackoverflow.com/questions/1760654/how-to-call-a-method-at-the-start-of-a-javafx-application
+        networking.Networking networking = new networking.Networking();
+        game.Game receivedGame = networking.recieveGame();
+        if (receivedGame instanceof game.chess.Chess) {
+            System.out.println("Received Chess game from opponent.");
+        }
+
         canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
         // Create buttons
