@@ -4,32 +4,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SignUpController extends Application {
-
-
+public class MenuPopupController extends Application {
     @FXML
-    AnchorPane rootPane;
+    private StackPane closeButton;
     @FXML
-    private StackPane backButtonSignUp;
+    private StackPane drawButton;
     @FXML
-    private StackPane toLogin;
-    @FXML
-    private StackPane submitButton;
-    @FXML
-    private Text guestText;
+    private StackPane resignButton;
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MenuPopup.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -53,33 +45,23 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
-
     public void initialize() {
-        UtilityManager.createScaleTransition(backButtonSignUp);
-        UtilityManager.createScaleTransition(toLogin);
-        UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.colourTransition(guestText);
+        UtilityManager.createScaleTransition(closeButton);
+        UtilityManager.createScaleTransition(drawButton);
+        UtilityManager.createScaleTransition(resignButton);
     }
 
     @FXML
-    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Login.fxml");
+    private void closeButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MenuPopup.fxml"));
+        Parent helpRoot = loader.load();
+        helpRoot.setOnMouseClicked(event -> {
+            helpRoot.setVisible(false);  // hide the popup
+        });
     }
-
-    @FXML
-    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Start.fxml");
-    }
-    @FXML
-    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
-    }
-
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+

@@ -356,6 +356,11 @@ public class Checkers extends Game {
         }
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+
     /**
      * getGameState getter method.
      * @return current gameState
