@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class ChessTesting {
@@ -32,26 +34,40 @@ public class ChessTesting {
     }
     @Test
     public void testIsPiecePinned_BishopBlockingDiagonalCheck() {
-        Player p1 = new Player();
-        Player p2 = new Player();
+        // Create a new Chess game
         Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
         Board board = new Board(GameType.CHESS);
         game.setBoard(board);
 
-        // Place p1 king at (0, 0)
-        King king1 = new King(0, 0, Color.WHITE, PieceType.LIGHT, p1);
-        board.place(king1, 0, 0);
+        // Clear the board
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                board.place(null, x, y);
+            }
+        }
 
-        // place p1 bishop at (1, 1) — directly between king and attacking queen
-        Bishop bishop = new Bishop(1, 1, Color.WHITE, PieceType.LIGHT, p1);
-        board.place(bishop, 1, 1);
+        // Set up: King at (0,0), Bishop at (1,1), Queen at (2,2)
+        King king = new King(7, 0, Color.WHITE, PieceType.LIGHT, p1);
+        Bishop bishop = new Bishop(6, 1, Color.WHITE, PieceType.LIGHT, p1);
+        Queen queen = new Queen(5, 2, Color.BLACK, PieceType.DARK, p2);
 
-        // place p2 queen at (2, 2) — diagonal threat
-        Queen queen = new Queen(2, 2, Color.BLACK, PieceType.DARK, p2);
-        board.place(queen, 2, 2);
+        board.place(king, 7, 0);
+        board.place(bishop, 6, 1);
+        board.place(queen, 5, 2);
 
-        assertTrue(game.isPiecePinned(bishop));
+        // Sanity check — with bishop removed, king is in check
+        board.place(null, 6, 1); // Remove bishop
+        boolean kingInCheck = game.isKingInCheck(p1);
+        board.place(bishop, 6, 1); // Restore bishop
+        System.out.println("King in check with bishop removed: " + kingInCheck);
+
+        // Actual test
+        assertTrue(kingInCheck, "King should be in check without bishop.");
+        assertTrue(game.isPiecePinned(bishop), "Bishop should be pinned blocking queen's diagonal attack.");
     }
+
     @Test
     public void testWheresKingFindsCorrectKing() {
         Player p1 = new Player();
@@ -71,32 +87,35 @@ public class ChessTesting {
     }
 
     @Test
-    public void testMatchOutcomePrintsWinner() {
-        Player p1 = new Player();
-        Player p2 = new Player();
+    public void testMatchOutcome_GameStatePlayer2Wins() {
         Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
         Board board = new Board(GameType.CHESS);
         game.setBoard(board);
 
-        // set up checkmate against player 1
-        King king1 = new King(0, 0, Color.WHITE, PieceType.LIGHT, p1);
-        board.place(king1, 0, 0);
-        Queen queen = new Queen(1, 1, Color.BLACK, PieceType.DARK, p2);
-        board.place(queen, 1, 1);
-        King king2 = new King(7, 7, Color.BLACK, PieceType.DARK, p2);
-        board.place(king2, 7, 7);
+        // Clear board
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                board.place(null, x, y);
+            }
+        }
 
-        // capture output
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
+        // Set up checkmate on player 1
+        King king1 = new King(7, 0, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king1, 7, 0);
+        Queen queen = new Queen(6, 1, Color.BLACK, PieceType.DARK, p2);
+        board.place(queen, 6, 1);
+        King king2 = new King(0, 0, Color.BLACK, PieceType.DARK, p2);
+        Bishop bishop = new Bishop(5, 2, Color.BLACK, PieceType.DARK, p2);
+        board.place(bishop, 5, 2);
+        board.place(king2, 0, 0);
+        System.out.print("checkmate: " + game.isCheckmate(p1));
         game.checkWinCondition();
 
-        // reset System.out
-        System.setOut(System.out);
-
-        assertTrue(outContent.toString().contains("Player 2 wins!"));
+        assertEquals(GameState.P2_WIN, game.getState(), "Game state should reflect Player 2 victory");
     }
+
     @Test
     public void testKingAttemptCastleKingside() {
         Player p1 = new Player();
@@ -213,4 +232,27 @@ public class ChessTesting {
         assertFalse(game.isCheckmate(p1), "Should NOT be checkmate since rook can block");
     }
 
+    @Test
+    public void getLegalMovesTest(){
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+        board.place(null, 7,0);
+        board.place(null, 6,2); // setBoard fills the board with pieces
+        Color white = Color.WHITE;
+        PieceType pieceType = PieceType.LIGHT;
+
+        Knight knight = new Knight(7,0, white, pieceType, p1);
+        board.place(knight, 7, 0);
+        List<int[]> expected = new ArrayList<>();
+        expected.add(new int[]{5,1});
+        expected.add(new int[]{6,2});
+        List<int[]> actual = game.getLegalMoves(knight);
+        assertEquals(expected.size(), actual.size(), "List sizes differ");
+        for (int i = 0; i < expected.size(); i++) {
+            assertArrayEquals(expected.get(i), actual.get(i), "Mismatch at index " + i);
+        }
+    }
 }

@@ -172,14 +172,14 @@ public class Chess extends Game {
                 piece.setY(originalY);
 
                 // If moving this piece would not expose the king to check, it's not pinned
-                if (!stillInCheck) {
-                    return false;
+                if (stillInCheck) {
+                    return true;
                 }
             }
         }
 
         // If no valid move would prevent the king from being in check, the piece is pinned
-        return true;
+        return false;
     }
 
 
@@ -218,31 +218,14 @@ public class Chess extends Game {
         List<int[]> legalMoves = new ArrayList<>();
         if (piece == null) return legalMoves;
 
-        Player player = piece.getOwnedBy();
         int originalX = piece.getX();
-        int originalY = piece.getY();
-        Piece[][] state = board.getBoardState();
-
+        int originalY= piece.getY();
         for (int x = 0; x < board.getRows(); x++) {
             for (int y = 0; y < board.getCols(); y++) {
-                if (!piece.isValidMove(x, y, board)) continue;
-                // Save the state
-                Piece captured = state[x][y];
-                // Simulate the move
-                state[originalX][originalY] = null;
-                state[x][y] = piece;
-                piece.setX(x);
-                piece.setY(y);
-                // Check if it causes a check
-                boolean causesCheck = isKingInCheck(player);
-                // Undo the move
-                state[originalX][originalY] = piece;
-                state[x][y] = captured;
-                piece.setX(originalX);
-                piece.setY(originalY);
-                if (!causesCheck) {
-                    legalMoves.add(new int[]{x, y});
-                }
+               if (piece.isValidMove(x,y,board) && !isPiecePinned(piece)){
+                   legalMoves.add(new int[]{x,y});
+                   piece.move(originalX,originalY,board);
+               }
             }
         }
 
@@ -391,5 +374,12 @@ public class Chess extends Game {
     public void drawGame()
     {
         gameState = GameState.DRAW;
+    }
+
+    public Player getPlayer1(){
+        return this.player1;
+    }
+    public Player getPlayer2(){
+        return this.player2;
     }
 }
