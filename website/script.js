@@ -73,3 +73,12 @@ chatInput.addEventListener("keypress", function (e) {
       sendMessage();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    const loginBtn = document.getElementById("login-btn");
+
+    if (loggedInUser) {
+        loginBtn.textContent = `User: ${loggedInUser}`;
+    }
+});
