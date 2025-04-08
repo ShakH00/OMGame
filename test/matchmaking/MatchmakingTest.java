@@ -16,13 +16,11 @@ public class MatchmakingTest {
     private Matchmaking matchMaking;
     private Account testAccount1;
     private Account testAccount2;
-    private ArrayList<Account> queue;
     private GameType testGame;
 
     @Before
     public void setUp() {
         matchMaking = new Matchmaking();
-        queue = new ArrayList<Account>();
         testAccount1 = new Account(1234, "Alice", "Alice.email@gmail.com", "Password");
         testAccount2 = new Account(2345, "Bob", "Bob.email@gmail.com", "12345");
         testGame = GameType.CHESS;
