@@ -59,7 +59,7 @@ public class StartController extends Application {
 
             SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
                     "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
-                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/Checkers.fxml", "screens/TicTacToe.fxml"); // , "screens/<Screen>.fxml>"
+                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/Checkers.fxml", "screens/TicTacToe.fxml", "screens/AdminScreen.fxml", "screens/LeaderboardScreen.fxml"); // , "screens/<Screen>.fxml>"
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,6 +86,14 @@ public class StartController extends Application {
     private void switchToSignUp(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Signup.fxml");
+    }
+
+    @FXML
+    private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
+        //TODO: uncomment when merged
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
+        System.out.println("LEADERBOARD");
     }
 
     public static void main(String[] args) {
