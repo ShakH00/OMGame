@@ -382,9 +382,30 @@ public class DatabaseManager {
      */
 
     public static Boolean deleteAccount(Integer userID) {
-
-
-        return true;
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
+        try {
+            String sql = "DELETE FROM Accounts WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userID);
+                int rowsDeleted = stmt.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("Account with ID " + userID + " deleted successfully.");
+                    return true;
+                } else {
+                    System.out.println("No account found with ID " + userID + ".");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
+        }
 
     }
 
