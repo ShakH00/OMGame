@@ -22,6 +22,14 @@ public class MFAAuthentication {
      * @throws MFAAuthenticationFailedException - Exception created for when verification is not successful
      */
     public static String emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+
+        /**
+         * checking if the email entered by user exists in the database or not
+         */
+        if(database.DatabaseManager.queryAccountByEmail(email) == null){
+            throw new MFAAuthenticationFailedException("Email not found in the database.");
+        }
+
         String code;
 
         // Generate the MFA code
