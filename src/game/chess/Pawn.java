@@ -123,7 +123,54 @@ public class Pawn extends MovingPiece {
         return false; //if reached end of method then this move is NOT en passant
     }
 
+    /**
+     * A basic method to check if the pawn is ready for promotion
+     * This method does this by checking if it reached the last tile based on PieceType checks
+     * @return true if the pawn is ready for promotion, false otherwise
+     */
+    public boolean checkPromotion(){
+        boolean promote = false; //auto assume no promotion
+        if(this.getPieceType() == PieceType.LIGHT){
+            if(this.getX() == 0) promote = true;
+        } else if(this.getPieceType() == PieceType.DARK){
+            if(this.getX() == 7) promote = true;
+        }
+        return promote;
+    }
 
+
+    /**
+     * A method to promote the pawn to 1 of 4 pieces (knight, bishop, rook, queen) based on an integer input
+     * @param choice: the integer that determines what the pawn is promoted to (1 = knight, 2 = bishop, 3 = rook, 4 = queen)
+     * @param gameBoard: The board being played on
+     */
+    public void promote(int choice, Board gameBoard){
+        Piece[][] board = gameBoard.getBoardState();
+        int x = this.getX();
+        int y = this.getY();
+        Color color = this.getColor();
+        PieceType type = this.getPieceType();
+        Player owner = this.getOwnedBy();
+        switch(choice){
+            case 1: //knight
+                Knight knight = new Knight(x, y, color, type, owner);
+                board[x][y] = knight;
+                break;
+            case 2: //bishop
+                Bishop bishop = new Bishop(x, y, color, type, owner);
+                board[x][y] = bishop;
+                break;
+            case 3: //rook
+                Rook rook = new Rook(x, y, color, type, owner);
+                rook.setDoneFirstMove(true); //make sure you can't castle with a rook that was a promoted pawn
+                board[x][y] = rook;
+                break;
+            case 4: //queen
+                Queen queen = new Queen(x, y, color, type, owner);
+                board[x][y] = queen;
+                break;
+        }
+    }
 
     /**
      * A method to check if the pawn has done its first move yet
