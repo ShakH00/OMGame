@@ -1,9 +1,16 @@
 package authentication.Authentication;
 
+import java.util.Scanner;
+
 public class AuthenticationTestMain {
 
     public static void main(String[] args) {
-        String email = "alia.s@gmail.com";
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Enter your email: ");
+//        String email = scanner.nextLine();
+
+
+        String email = "student@gmail.com";
 
         try {
             String result = MFAAuthentication.emailAuthenticatorDriver(email);
@@ -12,6 +19,4 @@ public class AuthenticationTestMain {
             System.err.println("Error: " + e.getMessage());
         }
     }
-
-
 }
