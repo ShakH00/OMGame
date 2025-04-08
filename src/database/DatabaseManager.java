@@ -5,6 +5,8 @@ import account.AccountStorageUtility;
 import account.statistics.AStatistics;
 import account.statistics.StatisticType;
 import account.statistics.StatisticsCheckers;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import game.GameType;
 
 import java.sql.*;
@@ -268,15 +270,22 @@ public class DatabaseManager {
         return true;
     }
 
-    public static Account loginAccount(String username, String password) {
+    public static Account loginAccount(String username, String password) throws DecryptionFailedException, EncryptionFailedException {
         Account accountFromDB = queryAccountByUsername(username);
+        //Decrypt the account before checking the password
+        accountFromDB = DecryptionAuthentication.decryptAccount(accountFromDB);
 
         if (accountFromDB != null) {
             if (accountFromDB.getPassword().equals(password)) {
+                //Encrypt the account again
+                accountFromDB = EncryptionAuthentication.encryptAccount(accountFromDB);
                 System.out.println("Account logged in successfully");
                 return accountFromDB;
             }
         }
+
+        //Encrypt the account even if not verified
+        accountFromDB = EncryptionAuthentication.encryptAccount(accountFromDB);
         return null;
     }
 

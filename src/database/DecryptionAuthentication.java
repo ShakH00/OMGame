@@ -32,7 +32,7 @@ public class DecryptionAuthentication {
         }
     }
 
-    public static Account encryptAccount(Account account) throws DecryptionFailedException {
+    public static Account decryptAccount(Account account) throws DecryptionFailedException {
         String originalEmail = decryptionDriver(account.getEmail());
         String originalPassword = decryptionDriver(account.getPassword());
 
