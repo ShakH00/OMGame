@@ -67,3 +67,44 @@ button:hover {
 .success {
 	color: #4BB543;
 }
+
+.bottom-links {
+	margin-top: 16px;
+	font-size: 0.9em;
+	text-align: center;
+}
+
+.bottom-links a {
+	color: #3a83f5;
+	text-decoration: none;
+}
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon {
+  width: 24px;
+  height: 24px;
+  stroke: #444;
+}
