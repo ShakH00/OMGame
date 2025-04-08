@@ -1,5 +1,6 @@
 package database;
 
+import account.Account;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 
 public class EncryptionAuthentication {
@@ -28,6 +29,16 @@ public class EncryptionAuthentication {
         } catch (Exception e) {
             throw new EncryptionFailedException("Encryption failed!");
         }
+    }
+
+    public static Account encryptAccount(Account account) throws EncryptionFailedException {
+        String encryptedEmail = encryptionDriver(account.getEmail());
+        String encryptedPassword = encryptionDriver(account.getPassword());
+
+        account.setEmail(encryptedEmail);
+        account.setPassword(encryptedPassword);
+
+        return account;
     }
 
 
