@@ -23,6 +23,7 @@ interface IStatistics {
      */
 //    HashMap<StatisticType, Number> statistics = new HashMap<>();
 
+
     /**
      * Check if the statistics HashMap can be added to the current statistics
      * @param statistics    HashMap that assigns a value to some set of StatisticsEnums

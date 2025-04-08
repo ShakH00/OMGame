@@ -329,6 +329,12 @@ public class Account {
         return output;
     }
 
+    /**
+     * Checks to see if user is either guest or not.
+     *
+     * @return Boolean if guest is valid or not.
+     */
+
     public boolean getIsGuest() {
         return isGuest;
     }
@@ -407,16 +413,6 @@ public class Account {
             return true;
         }
         return false;
-    }
-
-    public void setFriends(ArrayList<Integer> friends) {
-        this.friends = friends;
-    }
-    public void setStatistics(HashMap<GameType, AStatistics> statistics) {
-        this.statistics = statistics;
-    }
-    public void setMatchHistory(String[][] matchHistory) {
-        this.matchHistory = matchHistory;
     }
 
     /**

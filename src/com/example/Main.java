@@ -22,7 +22,10 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(getClass().getResource("LoseScreen.fxml"));
 //        primaryStage.setTitle("You Have Lost");
 
-        primaryStage.setScene(new Scene(root, 700, 500));
+//        Parent root = FXMLLoader.load(getClass().getResource("LeaderboardScreen.fxml"));
+//        primaryStage.setTitle("Leaderboard");
+
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 

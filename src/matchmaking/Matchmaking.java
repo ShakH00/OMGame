@@ -6,7 +6,7 @@ import game.GameType;
 
 import java.util.ArrayList;
 
-public abstract class Matchmaking {
+public class Matchmaking {
     /**
      * @author Logan Olszak
      * @param account     Account object to add to the queue

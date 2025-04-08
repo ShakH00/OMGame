@@ -19,6 +19,8 @@ public class DatabaseManager {
      * queryAllAccounts returns all account in the database
      * NOTE: the return value can be anything but for stubs I just made it return a list of account
      */
+
+
     public static ArrayList<Account> queryAllAccounts() {
         String sql = "SELECT * FROM accounts";
         Connection conn = DatabaseConnection.getConnection();
@@ -76,6 +78,7 @@ public class DatabaseManager {
         return gameQueue;
     }
 
+
     /**
      * @return Returns an account from the database given a phone number
      * get account returns an account from the database
@@ -87,7 +90,7 @@ public class DatabaseManager {
 
         if (conn != null) {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
-                stmt.setInt(0, id);
+                stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {

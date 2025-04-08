@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="WinScreenController"
+      fx:id="winScreenRoot"
+      alignment="CENTER"
+      spacing="15"
+      prefWidth="300"
+      prefHeight="150"
+      stylesheets="@styles.css">
+
+    <Label text="YOU WIN!!" styleClass="win-text" />
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Main Menu" onAction="#handleMainMenu" styleClass="game-button" />
+        <Button text="Start Over" onAction="#handleStartOver" styleClass="game-button"/>
+    </HBox>
+</VBox>
