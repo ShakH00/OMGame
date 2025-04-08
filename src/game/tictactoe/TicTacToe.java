@@ -163,7 +163,7 @@ public class TicTacToe extends Game {
 
     // game.Player surrenders and gives other player the win
     @Override
-    protected void surrender()
+    public void surrender()
     {
         if(gameState == GameState.P1_TURN)
         {
