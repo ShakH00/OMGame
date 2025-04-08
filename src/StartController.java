@@ -1,3 +1,6 @@
+import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+import authentication.MFAAuthentication;
+import authentication.MFAPopupController;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -124,6 +127,31 @@ public class StartController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Signup.fxml");
     }
+    @FXML
+    private void openMFAPopup() {
+        try {
+            // Generate and send the verification code via email
+            String email = ""; // Hardcoded user email
+            String verificationCode = MFAAuthentication.emailAuthenticatorDriver(email);
+
+            // Load the FXML file for the MFA pop-up
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MFAPopup.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and set the verification code
+            MFAPopupController controller = loader.getController();
+            controller.setVerificationCode(verificationCode); // Pass the generated code to the controller
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (MFAAuthenticationFailedException e) {
+            e.printStackTrace();
+            System.err.println("Failed to send the verification code: " + e.getMessage());
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);
