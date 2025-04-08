@@ -109,30 +109,16 @@ public class UserProfileController extends Application {
     @FXML
     public void initialize() {
         // Apply hover effect to each pane
-        addHoverEffect(rankPane);
-        addHoverEffect(chessPane);
-        addHoverEffect(tictactoePane);
-        addHoverEffect(checkersPane);
-        addHoverEffect(connect4Pane);
-        addHoverEffect(overallPane);
-        addHoverEffect(friendsPane);
+        UtilityManager.addHoverEffect(rankPane);
+        UtilityManager.addHoverEffect(chessPane);
+        UtilityManager.addHoverEffect(tictactoePane);
+        UtilityManager.addHoverEffect(checkersPane);
+        UtilityManager.addHoverEffect(connect4Pane);
+        UtilityManager.addHoverEffect(overallPane);
+        UtilityManager.addHoverEffect(friendsPane);
     }
-
-
-        public void addHoverEffect (Pane pane){
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
-            scaleIn.setToX(1.05);
-            scaleIn.setToY(1.05);
-
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
-            scaleOut.setToX(1.0);
-            scaleOut.setToY(1.0);
-
-            pane.setOnMouseEntered(e -> scaleIn.play());
-            pane.setOnMouseExited(e -> scaleOut.play());
-        }
 
     public static void main (String[]args){
-            launch(args);
-        }
+        launch(args);
     }
+}

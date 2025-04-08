@@ -6,6 +6,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -129,5 +130,26 @@ public class UtilityManager {
         text.setOnMouseExited(event -> {
             text.setFill(Color.color(0.6235, 0.5961, 0.549, 1.0));
         });
+    }
+
+
+    /**
+     * Method to add hover effects to user info panes
+     *
+     * @param pane Pane that is hovered on
+     *
+     * @author Arwa A
+     */
+    public static void addHoverEffect (Pane pane){
+        ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
+        scaleIn.setToX(1.05);
+        scaleIn.setToY(1.05);
+
+        ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
+        scaleOut.setToX(1.0);
+        scaleOut.setToY(1.0);
+
+        pane.setOnMouseEntered(e -> scaleIn.play());
+        pane.setOnMouseExited(e -> scaleOut.play());
     }
 }
