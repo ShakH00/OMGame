@@ -44,7 +44,7 @@ public class Account {
      */
     private ArrayList<Integer> friends;
 
-    private HashMap<GameType, AStatistics> statistics;
+    public HashMap<GameType, AStatistics> statistics;
 
     private String[][] matchHistory;
 
