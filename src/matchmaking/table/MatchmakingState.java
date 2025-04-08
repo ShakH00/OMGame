@@ -1,8 +1,7 @@
-package matchmaking;
-
-import game.GameType;
+package matchmaking.table;
 
 public enum MatchmakingState {
+    OFFLINE,
     ONLINE,
     MATCHMAKING,
     FOUND_MATCH,

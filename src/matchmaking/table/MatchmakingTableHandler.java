@@ -1,4 +1,4 @@
-package matchmaking;
+package matchmaking.table;
 
 import account.Account;
 import database.DatabaseConnection;
@@ -9,13 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MatchMakingHandler {
-    MatchmakingState state = MatchmakingState.ONLINE;
+public class MatchmakingTableHandler {
+    MatchmakingState state;
     final int selfID;
-    String networkingInfo;
+    final String networkingInfo;
 
-    public MatchMakingHandler(int id, String networkingInfo){
-        this.selfID = id;
+    public MatchmakingTableHandler(Account account, String networkingInfo){
+        this.selfID = account.getID();
+        this.state = MatchmakingState.ONLINE;
         this.networkingInfo = networkingInfo;
     }
 
@@ -43,20 +44,26 @@ public class MatchMakingHandler {
             setSelfEloRange(getNewMatchmakingRange(game, starting_time));
 
             // Search for other players who this can match with
-            for (int id : queryAllOtherIDs()){
-                double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(id));
-                if (msSinceLastCommunicated > 5000){
-                    removeFromMatchmakingTable(id);
-                }
-                else if (canMatchWith(id)) {
-                    // Notify the other that they are going to match with you
-                    setState(id, MatchmakingState.FOUND_MATCH);
-                    setOpponentID(id, selfID);
+            if (!queryAllOtherIDs().isEmpty()) {
+                System.out.println("ID: " + queryAllOtherIDs().getFirst());
+                for (int id : queryAllOtherIDs()) {
+                    double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(id));
+                    if (msSinceLastCommunicated > 5000) {
+                        System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds", id);
+                        removeFromMatchmakingTable(id);
+                    } else if (canMatchWith(id)) {
+                        // Notify the other that they are going to match with you
+                        System.out.printf("Found acceptable match with id %s. Updating their information...", id);
+                        setState(id, MatchmakingState.FOUND_MATCH);
+                        setOpponentID(id, selfID);
 
-                    // Start the match on your client
-                    startMatch(game, id);
-                    break;
+                        // Start the match on your client
+                        startMatch(game, id);
+                        break;
+                    }
                 }
+            } else {
+                System.out.println("No other players found in matchmaking query...");
             }
 
             // After each matchmaking query, wait 1 second before repeating
@@ -64,6 +71,13 @@ public class MatchMakingHandler {
         }
 
         removeFromMatchmakingTable(selfID);
+    }
+
+    /**
+     *
+     */
+    public void cancelMatchmaking(){
+        state = MatchmakingState.ONLINE;
     }
 
     /**
@@ -78,9 +92,10 @@ public class MatchMakingHandler {
 
         // Start match of <game> with opponent <opponentID>
         Account opponent = DatabaseManager.queryAccountByID(opponentID);
+        String opponentUsername = opponent.getUsername() != null ? opponent.getUsername() : "<Opponent not found in 'accounts' database!>";
+        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)", selfID, opponentUsername, opponentID);
 
         // ... (integration)
-
     }
 
     /**
@@ -105,7 +120,7 @@ public class MatchMakingHandler {
         // Calculate final threshold
         int new_range;
         if (timeWaitSec < 120) {
-            new_range = (timeWaitSec / 30) * thresholdIncreaseRate;
+            new_range = (1 + timeWaitSec / 30) * thresholdIncreaseRate;
         }
         // After 2 minutes, match anyone regardless of skill
         else {
@@ -130,7 +145,7 @@ public class MatchMakingHandler {
         String stateString = MatchmakingState.MATCHMAKING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
-        double recentTime = 0.0;
+        double recentTime = System.currentTimeMillis();
         int eloRange = getNewMatchmakingRange(gameType, startTime);
         int opponentID = -1;
 
@@ -342,7 +357,7 @@ public class MatchMakingHandler {
 
     // QUERY OTHERS
     private ArrayList<Integer> queryAllOtherIDs(){
-        String sql = "SELECT * FROM accounts";
+        String sql = "SELECT * FROM matchmaking";
         Connection conn = DatabaseConnection.getConnection();
         ArrayList<Integer> ids = new ArrayList<>();
 
@@ -427,6 +442,7 @@ public class MatchMakingHandler {
 
                 if (rs.next()) {
                     recentTime = rs.getDouble("RECENT_TIME");
+                    recentTime = recentTime != null ? recentTime : 0.00;
                 }
             } catch (SQLException e){
                 e.printStackTrace();
@@ -451,6 +467,7 @@ public class MatchMakingHandler {
 
                 if (rs.next()) {
                     elo = rs.getInt("Elo");
+                    elo = elo != null ? elo : 0;
                 }
             } catch (SQLException e){
                 e.printStackTrace();
