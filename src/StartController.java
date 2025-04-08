@@ -1,5 +1,5 @@
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import authentication.MFAAuthentication;
+import authentication.Authentication.MFAAuthentication;
 import authentication.MFAPopupController;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
