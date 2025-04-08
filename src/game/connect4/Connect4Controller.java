@@ -47,7 +47,16 @@ public class Connect4Controller extends Application {
         drawBackground(gc);
         drawBoard(gc);
         drawPlayerIndicators(gc);
-        
+
+        System.out.println("Waiting for opponent's move...");
+
+// Stack Overflow Reference: https://stackoverflow.com/questions/1760654/how-to-call-a-method-at-the-start-of-a-javafx-application
+        networking.Networking networking = new networking.Networking();
+        game.Game receivedGame = networking.recieveGame();
+        if (receivedGame instanceof game.connect4.Connect4) {
+            System.out.println("Received Connect4 game from opponent.");
+        }
+
         canvas.setOnMouseClicked(e -> {
             handleClick(e, gc);
             drawPlayerIndicators(gc); // Update indicators after move
