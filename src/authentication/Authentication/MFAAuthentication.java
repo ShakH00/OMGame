@@ -1,6 +1,7 @@
-package authentication;
+package authentication.Authentication;
 
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /** This class is for MFA Authentication for when a user logs into their account
@@ -22,6 +23,14 @@ public class MFAAuthentication {
      * @throws MFAAuthenticationFailedException - Exception created for when verification is not successful
      */
     public static String emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {
+
+        /**
+         * checking if the email entered by user exists in the database or not
+         */
+        if(database.DatabaseManager.queryAccountByEmail(email) == null){
+            throw new MFAAuthenticationFailedException("Email not found in the database.");
+        }
+
         String code;
 
         // Generate the MFA code
@@ -29,16 +38,25 @@ public class MFAAuthentication {
             code = generateRandomCode();
             // Simulate sending the code via email
             System.out.println("Verification code sent to email: " + email);
+            EmailSender.sendEmail(email, code); // Ensure this sends the email
         } else {
             code = "123456"; // Test mode uses a fixed code
             System.out.println("Test mode. Your code is: " + code);
         }
+
         // Show the MFA input pop-up
         MFAInputPopup popup = new MFAInputPopup();
         String userInput = popup.showPopup(code);
 
+        // Handle cancellation or invalid input
+        if (userInput == null) {
+            System.err.println("User canceled the verification process or entered invalid input.");
+            return "Verification canceled or invalid input.";
+        }
+
         // Verify the input
         if (userInput.equals(code)) {
+            System.out.println("Code verified successfully!");
             return "Code verified";
         } else {
             throw new MFAAuthenticationFailedException("Code Entered is Invalid!");

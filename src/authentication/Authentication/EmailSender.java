@@ -1,4 +1,4 @@
-package authentication;
+package authentication.Authentication;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
