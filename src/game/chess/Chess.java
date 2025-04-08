@@ -79,27 +79,42 @@ public class Chess extends Game {
      */
     public void move(MovingPiece piece, int x, int y) {
         PieceType type = piece.getPieceType();
-        //boolean to make sure the piece being moved belongs to the player whose turn it is
         boolean isCorrectTurn = (type.equals(PieceType.LIGHT) && getState() == GameState.P1_TURN) ||
                 (type.equals(PieceType.DARK) && getState() == GameState.P2_TURN);
 
-        if (!isCorrectTurn) return; //if not right turn then end here
+        if (!isCorrectTurn) return;
 
-        //checks based on whether piece is king or if piece is pinned due to possible check
-        //also returns aka ending code here if either of these are true
-        if (piece instanceof King) {
-            if (!isMoveSafeForKing((King) piece, x, y)) return;
-        } else {
-            if (isPiecePinned(piece)) return;
-        }
+        Player player = piece.getOwnedBy();
+        Piece[][] state = board.getBoardState();
+        int oldX = piece.getX();
+        int oldY = piece.getY();
 
-        boolean result = piece.move(x, y, board); //result of piece moving
-        //if success then switch turn, check if someone won
-        if(result){
+        Piece captured = state[x][y];
+
+        // Simulate the move
+        state[oldX][oldY] = null;
+        state[x][y] = piece;
+        piece.setX(x);
+        piece.setY(y);
+
+        boolean kingStillInCheck = isKingInCheck(player);
+
+        // Undo the move
+        state[oldX][oldY] = piece;
+        state[x][y] = captured;
+        piece.setX(oldX);
+        piece.setY(oldY);
+
+        // If the move doesn't help escape check, deny the move
+        if (kingStillInCheck) return;
+
+        // Actually perform the move
+        if (piece.move(x, y, board)) {
             switchTurn();
             checkWinCondition();
         }
     }
+
 
     /**
      * Method to check if the king moving to a spot is safe
