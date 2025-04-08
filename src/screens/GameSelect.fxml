@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSelectController">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSelectController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -18,7 +18,7 @@
             <Image url="@../images/twinklingstars.gif" />
          </image>
       </ImageView>
-      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1031.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
          <image>
             <Image url="@../images/chessboard.png" />
          </image>
@@ -38,7 +38,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" prefHeight="35.0" prefWidth="134.0" onMouseClicked="#switchToCheckers">
+      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" onMouseClicked="#switchToCheckers" prefHeight="35.0" prefWidth="134.0">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
