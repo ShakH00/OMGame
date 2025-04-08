@@ -198,9 +198,44 @@ public class CheckersTest {
 
     }
 
+    /**
+     * Test to ensure that a players must make multiple captures if presented with the opportunity.
+     */
     @Test
     public void testMultiCaptures(){
-        // when another capture is available the player should and must capture again.
+        // When another capture is available the player should and must capture again.
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece1 = new CheckersPiece(2,5, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece blackPiece2 = new CheckersPiece(1,2, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece blackPiece3 = new CheckersPiece(1,4, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece = new CheckersPiece(4,7, Color.WHITE, PieceType.LIGHT, player2, 0);
+
+        // Place Pieces
+        piece[1][4] = blackPiece1;
+        piece[1][2] = blackPiece2;
+        piece[2][5] = blackPiece3;
+        piece[4][7] = whitePiece;
+
+        // P1 to move blackPiece1 to 3,6 which forces a capture from P2
+        assertTrue(checkersGame.isValidMove(2,5,3,6,board));
+        checkersGame.move(blackPiece1, 3, 6);
+        // P2's turn, moving to do a forced capture.
+        assertTrue(checkersGame.isValidMove(4,7, 2,5, board));
+        checkersGame.move(whitePiece, 2,5);
+        // P2's turn remains as he can perform multi captures to blackPiece3
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+        // P2 to capture again
+        checkersGame.move(whitePiece, 0,3);
+        // P2 whitePiece promoted to king which allow another capture of blackPiece2
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+        assertTrue(checkersGame.isValidMove(0,3,2,1,board));
+        checkersGame.move(whitePiece, 2,1);
     }
 
     @Test
