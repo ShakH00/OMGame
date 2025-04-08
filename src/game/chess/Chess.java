@@ -382,4 +382,10 @@ public class Chess extends Game {
     public Player getPlayer2(){
         return this.player2;
     }
+
+
+    public Board getBoard() {
+        return board;
+    }
+
 }
