@@ -238,17 +238,63 @@ public class CheckersTest {
         checkersGame.move(whitePiece, 2,1);
     }
 
+
+    /**
+     * Test for Forced captures. If a piece is capturable then all other moves are locked.
+     */
     @Test
     public void testForcedCaptures(){
-        // p1 moves a piece that p2 can capture
-        // p2 has to capture, any other move is not made until this piece is captured.
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece = new CheckersPiece(1,4, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece = new CheckersPiece(3,6, Color.WHITE, PieceType.LIGHT, player2, 0);
+
+        // Place Pieces
+        piece[1][4] = blackPiece;
+        piece[3][6] = whitePiece;
+
+        // P1 to move from 4,7 to 3,6
+        assertTrue(checkersGame.isValidMove(1,4,2,5,board));
+        checkersGame.move(blackPiece, 2,5);
+
+        // Ensure it is P2's turn
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+
+        // P2 is forced to capture and any attempt otherwise the move is prevented and P2 is to make the capture before turn switch.
+        assertTrue(checkersGame.forcedCapture(player2));
+
+        // P2 captures
+        checkersGame.move(whitePiece, 1,4);
+
+        // Turn is switched
+        assertEquals(GameState.P1_TURN, checkersGame.getGameState());
+
+
     }
 
+    /**
+     * Test for illegal captures. Checks if a piece is in bounds, on a playable square, and if the adjacent diagonal is free.
+     */
     @Test
     public void testIllegalCaptures(){
         // out of bounds
         // out of turns
         // blocked capture
+        clearBoard();
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece = new CheckersPiece(6,7, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece1 = new CheckersPiece(1,4, Color.WHITE, PieceType.LIGHT, player2, 0);
+        CheckersPiece whitePiece2 = new CheckersPiece(2,5, Color.WHITE, PieceType.LIGHT, player2, 0);
+        CheckersPiece whitePiece3 = new CheckersPiece(2,7, Color.WHITE, PieceType.LIGHT, player2, 0);
     }
 
     @Test
