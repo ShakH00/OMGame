@@ -9,6 +9,7 @@
 package game.chess;
 
 import game.*;
+import game.checkers.Checkers;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
@@ -412,5 +413,13 @@ public class Chess extends Game {
 
     public void setGameState(int score2){
         this.score2 = score2;
+    }
+
+    private void netUpdateGame(){
+        Chess temp = (Chess) networking.recieveGame();
+        this.board = temp.board;
+        this.gameState = temp.gameState;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }
