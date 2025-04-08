@@ -19,8 +19,9 @@ import static account.AccountStorageUtility.*;
 
 public class DatabaseTest {
     public static void main(String[] args) throws MatchOutcomeInvalidError {
-//
-//        // To delete all entries from accounts table for testing purpsoes
+
+        //To store to the database
+        // To delete all entries from accounts table for testing purpsoes
 //        try (Connection conn = DatabaseConnection.getConnection()) {
 //            try (PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM Accounts");
 //                 PreparedStatement resetAIStmt = conn.prepareStatement("ALTER TABLE Accounts AUTO_INCREMENT = 1")) {
@@ -69,10 +70,9 @@ public class DatabaseTest {
 //
 //        DatabaseManager.saveAccount(testAccount);
 
-
         // Test to retrieve from database
-        int testAccountId = 1;
 
+        int testAccountId = 1;
         Account account = DatabaseManager.queryAccountByID(testAccountId);
 
         if (account != null) {
@@ -81,7 +81,16 @@ public class DatabaseTest {
             System.out.println("Email: " + account.getEmail());
             System.out.println("Password: " + account.getPassword());
             System.out.println("Friend IDs: " + account.getFriendIDs());
-            System.out.println("Statistics: " + account.getStatisticsHashMap());
+            System.out.println("Statistics:");
+            for (GameType gameType : GameType.values()) {
+                System.out.println("  " + gameType + ":");
+                for (StatisticType statisticType : StatisticType.values()) {
+                    Number statValue = account.getStatistic(gameType, statisticType);
+                    if (statValue != null) {
+                        System.out.println("    " + statisticType + ": " + statValue);
+                    }
+                }
+            }
             System.out.println("Match History:");
             for (String[] match : account.getMatchHistory()) {
                 if (match != null) {
@@ -91,7 +100,6 @@ public class DatabaseTest {
         } else {
             System.out.println("No account found with ID: " + testAccountId);
         }
-
 
 
     }
