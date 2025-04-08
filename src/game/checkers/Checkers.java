@@ -82,7 +82,7 @@ public class Checkers extends Game {
 // Send updated game state to opponent after the player's move
                 networking.Networking networking = new networking.Networking();
                 networking.sendGame(this); // 'this' refers to the current Checkers game
-
+                System.out.println("Game state sent to opponent. Entering listen mode...");
             }
 
       }
