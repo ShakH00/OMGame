@@ -21,6 +21,8 @@ public class Chess extends Game {
     private final Player player1;
     private final Player player2;
     private GameState gameState;
+    private int score1;
+    private int score2;
 
     /**
      * Constructor to initiate a chess game
@@ -29,6 +31,8 @@ public class Chess extends Game {
     public Chess(){
         this.player1 = new Player();
         this.player2 = new Player();
+        this.score1 = 0;
+        this.score2 = 0;
     }
 
     /**
@@ -387,4 +391,20 @@ public class Chess extends Game {
         return board;
     }
 
+
+    public int getScore1(){
+        return this.score1;
+    }
+
+    public int getScore2(){
+        return this.score2;
+    }
+
+    public void setScore1(int score1){
+        this.score1 = score1;
+    }
+
+    public void setGameState(int score2){
+        this.score2 = score2;
+    }
 }
