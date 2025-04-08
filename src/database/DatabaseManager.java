@@ -353,8 +353,17 @@ public class DatabaseManager {
                 System.out.println("Connection failed.");
                 return false;
             }
-            return true;
-
+        try {
+            String sql = "DELETE FROM Accounts WHERE email = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            // TODO: execute and check deletion result
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        // TODO: close connection and return result
+        return true;
 
     }
 
