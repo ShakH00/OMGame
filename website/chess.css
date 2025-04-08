@@ -45,9 +45,75 @@ p {
 	color: white;
 	cursor: pointer;
 	transition: background 0.3s ease, transform 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .button:hover {
 	transform: scale(1.05);
 	background-color: #f468b9;
 }
+
+.button.show {
+	opacity: 1;
+}
+
+.button.hide {
+	opacity: 0;
+}
+
+
+#board-container {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.8s ease, opacity 0.8s ease;
+    margin-top: 20px;
+}
+
+#board-container.show {
+    max-height: 100%;
+    opacity: 1;
+}
+
+.board {
+	width: 480px;
+	height: 480px;
+	margin: 20px auto;
+	display: grid;
+	grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+	border: 2px solid #333;
+}
+
+.square {
+	width: 60px;
+	height: 60px;
+	position: relative;
+}
+
+.light {
+	background-color: #f0d9b5;
+}
+
+.dark {
+	background-color: #b58863;
+}
+
+.piece {
+	width: 50px;
+	height: 50px;
+	margin: 5px auto;
+	cursor: pointer;
+}
+
+.highlight {
+	position: absolute;
+	background-color: grey;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+}
+

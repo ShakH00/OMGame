@@ -43,9 +43,13 @@
             </ul>
         </div>
 
-        <div class="overlay" id="CHoverlay" onclick="closePopup()"></div>
-        <div class="container" id="CHpopupBox">
-            <img class="popup-tetriscat" style="height: 150px; width: auto; left: 385px; top: -120px;" src="assets/tetrisCat1.GIF" alt=""/>
+        <div id="board-container">
+            <div id="board" class="board"></div>
+        </div>
+
+        <div class="overlay" id="Csoverlay" onclick="closePopup()"></div>
+        <div class="container" id="CspopupBox">
+            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 285px; top: -130px;" src="assets/tetrisCat4.GIF" alt=""/>
             <div class="contact-box">
                 <div class="sos-box">SOS!!</div>
                 <button class="close-btn" onclick="closePopup()">×</button>
@@ -53,164 +57,186 @@
             </div>
         </div>
 
-        <button class="button" onclick="startTutorial()">Start Tutorial</button>&nbsp;&nbsp;
-        <button class="button" onclick="resetGame()">Reset Game</button>
+        <button id="startButton" class="button" onclick="startTutorial()">Start Tutorial</button>&nbsp;&nbsp;
+        <button id="resetButton" class="button" onclick="resetBoard()" style="display: none;">Reset Game</button>
 
-    <script>
-        const board = document.getElementById('board');
-        let pawnPosition = 48;
-        let enemyPosition = 9;
-        let queenPosition = null;
-        let rookPosition = null;
-        let kingPosition = null;
-        let tutorialPhase = 1;
 
-        function createBoard() {
-            board.innerHTML = '';
-            for (let i = 0; i < 64; i++) {
-                const square = document.createElement('div');
-                square.classList.add('square', (Math.floor(i / 8) + i % 8) % 2 === 0 ? 'light' : 'dark');
-                board.appendChild(square);
+        <script>
+            const board = document.getElementById('board');
+            let pawnPosition = 48;
+            let enemyPosition = 9;
+            let queenPosition = null;
+            let rookPosition = null;
+            let kingPosition = null;
+            let tutorialPhase = 1;
+
+            function startTutorial() {
+                const boardContainer = document.getElementById('board-container');
+                boardContainer.classList.add('show');
+
+                setTimeout(() => {
+                    createBoard();
+                }, 700);
+
+                document.getElementById('startButton').style.display = 'none';
+                document.getElementById('resetButton').style.display = 'inline-block';
+
+                // showPopup("Let's begin the chess tutorial!");
             }
-            placePawn();
-            placeEnemy();
-            showPopup(`Hi! I'm Tetris Cat. Let's learn chess! Move your pawn to promote it to a queen, then capture the enemy piece.`);
-        }
 
-        function placePawn() {
-            placePiece(pawnPosition, 'assets/chessPawnWhite.png', 'pawn');
-        }
-
-        function placeEnemy() {
-            placePiece(enemyPosition, 'assets/chessRookBlack.png', 'enemy');
-        }
-
-        function highlightMoves() {
-            clearHighlights();
-            const squares = document.querySelectorAll('.square');
-
-            const movePos = pawnPosition - 8;
-            if (movePos >= 0 && squares[movePos].innerHTML === '')
-                highlightSquare(movePos, 'pawn');
-
-            [pawnPosition - 9, pawnPosition - 7].forEach(pos => {
-                if (pos === enemyPosition) highlightSquare(pos, 'pawn', true);
-            });
-        }
-
-        function movePawn(newPos) {
-            pawnPosition = newPos;
-            updateBoard();
-            if (pawnPosition < 8) promotePawn();
-        }
-
-        function capturePiece(newPos) {
-            pawnPosition = newPos;
-            enemyPosition = null;
-            updateBoard();
-            showPopup('Great job! You captured the enemy rook!');
-        }
-
-        function promotePawn() {
-            tutorialPhase = 2;
-            queenPosition = pawnPosition;
-            pawnPosition = null;
-            enemyPosition = null;
-
-            setupCheckmateTutorial();
-        }
-
-        function setupCheckmateTutorial() {
-            queenPosition = 59;
-            rookPosition = 56;
-            kingPosition = 5;
-            updateCheckmateBoard();
-            showPopup('Let’s checkmate the black king! Move your queen or rook to trap the black king.');
-        }
-
-        function placePiece(pos, imgSrc, id) {
-            const squares = document.querySelectorAll('.square');
-            const piece = document.createElement('img');
-            piece.classList.add('piece');
-            piece.src = imgSrc;
-            squares[pos].appendChild(piece);
-
-            if (id === 'pawn') piece.onclick = highlightMoves;
-            else if (id === 'whiteQueen') piece.onclick = () => highlightMovesQueen(pos);
-            else if (id === 'whiteRook') piece.onclick = () => highlightMovesRook(pos);
-        }
-
-        function highlightSquare(pos, pieceId, isCapture = false) {
-            const squares = document.querySelectorAll('.square');
-            const dot = document.createElement('div');
-            dot.classList.add('highlight');
-            squares[pos].appendChild(dot);
-            dot.onclick = () => {
-                if (pieceId === 'pawn') isCapture ? capturePiece(pos) : movePawn(pos);
-                else moveCheckmatePiece(pieceId, pos, isCapture);
-            };
-        }
-
-        function moveCheckmatePiece(pieceId, newPos, isCapture) {
-            if (pieceId === 'queen') queenPosition = newPos;
-            if (pieceId === 'rook') rookPosition = newPos;
-
-            if (isCapture && newPos === kingPosition) {
-                kingPosition = null;
-                showPopup('Checkmate! You captured the black king!');
-            }
-            updateCheckmateBoard();
-        }
-
-        function highlightMovesQueen(pos) {
-            highlightLinearMoves(pos, [-8, 8, -1, 1, -9, -7, 7, 9], 'queen');
-        }
-
-        function highlightMovesRook(pos) {
-            highlightLinearMoves(pos, [-8, 8, -1, 1], 'rook');
-        }
-
-        function highlightLinearMoves(pos, directions, pieceId) {
-            clearHighlights();
-            const squares = document.querySelectorAll('.square');
-            directions.forEach(dir => {
-                let newPos = pos;
-                while (true) {
-                    newPos += dir;
-                    if (newPos < 0 || newPos >= 64 || (dir === -1 && newPos % 8 === 7) || (dir === 1 && newPos % 8 === 0)) break;
-                    if (newPos === kingPosition) { highlightSquare(newPos, pieceId, true); break; }
-                    if (squares[newPos].innerHTML === '') highlightSquare(newPos, pieceId);
-                    else break;
+            function createBoard() {
+                board.innerHTML = '';
+                for (let i = 0; i < 64; i++) {
+                    const square = document.createElement('div');
+                    square.classList.add('square', (Math.floor(i / 8) + i % 8) % 2 === 0 ? 'light' : 'dark');
+                    board.appendChild(square);
                 }
-            });
-        }
+                placePawn();
+                placeEnemy();
+            }
 
-        function updateBoard() {
-            document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
-            if (pawnPosition !== null) placePawn();
-            if (enemyPosition !== null) placeEnemy();
-        }
+            function placePawn() {
+                placePiece(pawnPosition, 'assets/chessPawnWhite.png', 'pawn');
+            }
 
-        function updateCheckmateBoard() {
-            document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
-            if (queenPosition !== null) placePiece(queenPosition, 'assets/chessQueenWhite.png', 'whiteQueen');
-            if (rookPosition !== null) placePiece(rookPosition, 'assets/chessRookWhite.png', 'whiteRook');
-            if (kingPosition !== null) placePiece(kingPosition, 'assets/chessKingBlack.png', 'blackKing');
-        }
+            function placeEnemy() {
+                placePiece(enemyPosition, 'assets/chessRookBlack.png', 'enemy');
+            }
 
-        function clearHighlights() {
-            document.querySelectorAll('.highlight').forEach(dot => dot.remove());
-        }
+            function highlightMoves() {
+                clearHighlights();
+                const squares = document.querySelectorAll('.square');
 
-        function resetBoard() {
-            pawnPosition = 48; enemyPosition = 9; queenPosition = rookPosition = kingPosition = null; tutorialPhase = 1;
+                const movePos = pawnPosition - 8;
+                if (movePos >= 0 && squares[movePos].innerHTML === '')
+                    highlightSquare(movePos, 'pawn');
+
+                [pawnPosition - 9, pawnPosition - 7].forEach(pos => {
+                    if (pos === enemyPosition) highlightSquare(pos, 'pawn', true);
+                });
+            }
+
+            function movePawn(newPos) {
+                pawnPosition = newPos;
+                updateBoard();
+                if (pawnPosition < 8) promotePawn();
+            }
+
+            function capturePiece(newPos) {
+                pawnPosition = newPos;
+                enemyPosition = null;
+                updateBoard();
+                showPopup('Great job! You captured the enemy rook!');
+            }
+
+            function promotePawn() {
+                tutorialPhase = 2;
+                queenPosition = pawnPosition;
+                pawnPosition = null;
+                enemyPosition = null;
+
+                setupCheckmateTutorial();
+            }
+
+            function setupCheckmateTutorial() {
+                queenPosition = 59;
+                rookPosition = 56;
+                kingPosition = 5;
+                updateCheckmateBoard();
+                showPopup('Let’s checkmate the black king! Move your queen or rook to trap the black king.');
+            }
+
+            function placePiece(pos, imgSrc, id) {
+                const squares = document.querySelectorAll('.square');
+                const piece = document.createElement('img');
+                piece.classList.add('piece');
+                piece.src = imgSrc;
+                squares[pos].appendChild(piece);
+
+                if (id === 'pawn') piece.onclick = highlightMoves;
+                else if (id === 'whiteQueen') piece.onclick = () => highlightMovesQueen(pos);
+                else if (id === 'whiteRook') piece.onclick = () => highlightMovesRook(pos);
+            }
+
+            function highlightSquare(pos, pieceId, isCapture = false) {
+                const squares = document.querySelectorAll('.square');
+                const dot = document.createElement('div');
+                dot.classList.add('highlight');
+                squares[pos].appendChild(dot);
+                dot.onclick = () => {
+                    if (pieceId === 'pawn') isCapture ? capturePiece(pos) : movePawn(pos);
+                    else moveCheckmatePiece(pieceId, pos, isCapture);
+                };
+            }
+
+            function moveCheckmatePiece(pieceId, newPos, isCapture) {
+                if (pieceId === 'queen') queenPosition = newPos;
+                if (pieceId === 'rook') rookPosition = newPos;
+
+                if (isCapture && newPos === kingPosition) {
+                    kingPosition = null;
+                    showPopup('Checkmate! You captured the black king!');
+                }
+                updateCheckmateBoard();
+            }
+
+            function highlightMovesQueen(pos) {
+                highlightLinearMoves(pos, [-8, 8, -1, 1, -9, -7, 7, 9], 'queen');
+            }
+
+            function highlightMovesRook(pos) {
+                highlightLinearMoves(pos, [-8, 8, -1, 1], 'rook');
+            }
+
+            function highlightLinearMoves(pos, directions, pieceId) {
+                clearHighlights();
+                const squares = document.querySelectorAll('.square');
+                directions.forEach(dir => {
+                    let newPos = pos;
+                    while (true) {
+                        newPos += dir;
+                        if (newPos < 0 || newPos >= 64 || (dir === -1 && newPos % 8 === 7) || (dir === 1 && newPos % 8 === 0)) break;
+                        if (newPos === kingPosition) { highlightSquare(newPos, pieceId, true); break; }
+                        if (squares[newPos].innerHTML === '') highlightSquare(newPos, pieceId);
+                        else break;
+                    }
+                });
+            }
+
+            function updateBoard() {
+                document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+                if (pawnPosition !== null) placePawn();
+                if (enemyPosition !== null) placeEnemy();
+            }
+
+            function updateCheckmateBoard() {
+                document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+                if (queenPosition !== null) placePiece(queenPosition, 'assets/chessQueenWhite.png', 'whiteQueen');
+                if (rookPosition !== null) placePiece(rookPosition, 'assets/chessRookWhite.png', 'whiteRook');
+                if (kingPosition !== null) placePiece(kingPosition, 'assets/chessKingBlack.png', 'blackKing');
+            }
+
+            function clearHighlights() {
+                document.querySelectorAll('.highlight').forEach(dot => dot.remove());
+            }
+
+            function resetBoard() {
+                pawnPosition = 48; enemyPosition = 9; queenPosition = rookPosition = kingPosition = null; tutorialPhase = 1;
+                createBoard();
+            }
+
+            function showPopup(text) {
+                document.getElementById('popup-text').innerHTML = text;
+                document.getElementById('Csoverlay').classList.add("show");
+                document.getElementById('CspopupBox').classList.add("show");
+            }
+
+            function closePopup() {
+                document.getElementById('Csoverlay').classList.remove("show");
+                document.getElementById('CspopupBox').classList.remove("show");
+            }
+
             createBoard();
-        }
-
-        function showPopup(text) { document.getElementById('popup-text').innerHTML = text; document.getElementById('CHoverlay').classList.add("show"); document.getElementById('CHpopupBox').classList.add("show"); }
-        function closePopup() { document.getElementById('CHoverlay').classList.remove("show"); document.getElementById('CHpopupBox').classList.remove("show"); }
-
-        createBoard();
-    </script>
-</body>
+        </script>
+    </body>
 </html>
