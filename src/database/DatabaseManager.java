@@ -348,23 +348,30 @@ public class DatabaseManager {
      * @return true if an account was deleted, false otherwise
      */
     public static Boolean deleteAccount(String email) {
-            Connection conn = DatabaseConnection.getConnection();
-            if (conn == null) {
-                System.out.println("Connection failed.");
-                return false;
-            }
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
         try {
             String sql = "DELETE FROM Accounts WHERE email = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, email);
-                // TODO: execute update
+                int rowsDeleted = stmt.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("Account with email " + email + " deleted successfully.");
+                    return true;
+                } else {
+                    System.out.println("No account found with email " + email + ".");
+                    return false;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
         }
-        // TODO: close connection and return result
-        return true;
     }
 
     /**
