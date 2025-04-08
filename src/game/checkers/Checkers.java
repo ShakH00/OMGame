@@ -78,6 +78,11 @@ public class Checkers extends Game {
             }
             else {
                 switchTurn();
+                // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
+// Send updated game state to opponent after the player's move
+                networking.Networking networking = new networking.Networking();
+                networking.sendGame(this); // 'this' refers to the current Checkers game
+
             }
 
       }
