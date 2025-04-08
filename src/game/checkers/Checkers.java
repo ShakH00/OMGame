@@ -32,6 +32,8 @@ public class Checkers extends Game {
     private int p1MultiCaptures = 0;
     private int p2MultiCaptures = 0;
 
+    networking.Networking networking = new networking.Networking();
+
     // Set Board for checkers game and fill it
     public void setBoard(Board board){
         this.board = board;
@@ -118,11 +120,7 @@ public class Checkers extends Game {
             }
             else {
                 switchTurn();
-                // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
-// Send updated game state to opponent after the player's move
-                networking.Networking networking = new networking.Networking();
-                networking.sendGame(this); // 'this' refers to the current Checkers game
-                System.out.println("Game state sent to opponent. Entering listen mode...");
+
             }
 
       }
@@ -277,6 +275,7 @@ public class Checkers extends Game {
      */
     public void start(){
         gameState = GameState.P1_TURN;
+        networking.sendGame(this);
     }
 
     /**
@@ -285,9 +284,15 @@ public class Checkers extends Game {
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_TURN;
+            // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
+            // Send updated game state to opponent after the player's move
+            networking.sendGame(this); // 'this' refers to the current Checkers game
+            netUpdateGame();
         }
         else if (gameState == GameState.P2_TURN){
             gameState = GameState.P1_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
     }
 
@@ -424,4 +429,10 @@ public class Checkers extends Game {
         System.out.println("Player 1 Turns: " + getP1Turns() + ", Captures: " + getP1Captures() + ", Multi-Captures: " + getP1MultiCaptures());
         System.out.println("Player 2 Turns: " + getP2Turns() + ", Captures: " + getP2Captures() + ", Multi-Captures: " + getP2MultiCaptures());
     }
+    private void netUpdateGame(){
+        Checkers temp = (Checkers) networking.recieveGame();
+        this.board = temp.board;
+        this.gameState = temp.gameState;
+    }
+
 }

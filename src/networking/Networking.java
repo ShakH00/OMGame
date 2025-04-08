@@ -9,8 +9,11 @@ import java.text.SimpleDateFormat;
  */
 public class Networking {
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
-    private boolean isConnected = false; // Connection status, initialize without connection
     public static final String timeFormatting = "yy.MM.dd HH:mm:ss.SSS"; // Template used for time stamp formatting
+
+    private boolean isConnected = false; // Connection status, initialize without connection
+    private String IP = "0.0.0.0";
+    private int port = 9999;
 
     /**
      * Connects to the opponent player or server using a fixed IP address, returns boolean of connection status.
@@ -40,7 +43,7 @@ public class Networking {
      * @author Nova Driscoll
      */
     public Game recieveGame() {
-        System.out.printf("[Net: %s] Receiving Game from: [TO ADD PLAYER IP]\n", getTime());
+        System.out.printf("[Net: %s] Receiving Game from: %s:%d\n", getTime(),IP,port);
         return cachedGame;
     }
 
@@ -51,7 +54,7 @@ public class Networking {
      * @author Nova Driscoll
      */
     public void sendGame(Game game) {
-        System.out.printf("[Net: %s] Sending Game from: [TO ADD PLAYER IP]\n", getTime());
+        System.out.printf("[Net: %s] Sending Game to: %s:%d\n", getTime(),IP,port);
         cachedGame = game;
         listenMode();
     }
