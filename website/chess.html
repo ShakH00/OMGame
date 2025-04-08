@@ -60,7 +60,6 @@
         <button id="startButton" class="button" onclick="startTutorial()">Start Tutorial</button>&nbsp;&nbsp;
         <button id="resetButton" class="button" onclick="resetBoard()" style="display: none;">Reset Game</button>
 
-
         <script>
             const board = document.getElementById('board');
             let pawnPosition = 48;
@@ -81,6 +80,9 @@
                 setTimeout(() => {
                     createBoard();
                 }, 700);
+
+                // Scroll down to the board container
+                document.getElementById('board-container').scrollIntoView({ behavior: 'smooth' });
 
                 document.getElementById('startButton').style.display = 'none';
                 document.getElementById('resetButton').style.display = 'inline-block';
