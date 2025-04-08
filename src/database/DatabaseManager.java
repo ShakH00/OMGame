@@ -2,10 +2,14 @@ package database;
 
 import account.Account;
 import account.AccountStorageUtility;
+import account.statistics.AStatistics;
+import account.statistics.StatisticType;
+import account.statistics.StatisticsCheckers;
 import game.GameType;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DatabaseManager {
 
@@ -15,8 +19,43 @@ public class DatabaseManager {
      * queryAllAccounts returns all account in the database
      * NOTE: the return value can be anything but for stubs I just made it return a list of account
      */
+
+
     public static ArrayList<Account> queryAllAccounts() {
-        return null;
+        String sql = "SELECT * FROM accounts";
+        Connection conn = DatabaseConnection.getConnection();
+        ArrayList<Account> accounts = new ArrayList<>();
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String username = rs.getString("Username");
+                    String email = rs.getString("Email");
+                    String password = rs.getString("Password");
+
+                    String friendsString = rs.getString("Friends");
+                    ArrayList<Integer> friends = AccountStorageUtility.friendIDsFromString(friendsString);
+
+                    String statisticsString = rs.getString("Statistics");
+                    HashMap<GameType, AStatistics> statistics = AccountStorageUtility.statisticsFromString(statisticsString);
+
+                    String matchHistoryString = rs.getString("MatchHistory");
+                    String[][] matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
+
+                    accounts.add(new Account(id, username, email, password, friends, statistics, matchHistory));
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return accounts;
     }
 
     /**
@@ -39,12 +78,46 @@ public class DatabaseManager {
         return gameQueue;
     }
 
+
     /**
      * @return Returns an account from the database given a phone number
      * get account returns an account from the database
      */
     public static Account queryAccountByID(Integer id) {
-        return new Account();
+        String sql = "SELECT * FROM accounts WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+        Account account = null;
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    String username = rs.getString("Username");
+                    String email = rs.getString("Email");
+                    String password = rs.getString("Password");
+
+                    String friendsString = rs.getString("Friends");
+                    ArrayList<Integer> friends = AccountStorageUtility.friendIDsFromString(friendsString);
+
+                    String statisticsString = rs.getString("Statistics");
+                    HashMap<GameType, AStatistics> statistics = AccountStorageUtility.statisticsFromString(statisticsString);
+
+                    String matchHistoryString = rs.getString("MatchHistory");
+                    String[][] matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
+
+                    account = new Account(id, username, email, password, friends, statistics, matchHistory);
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return account;
     }
 
 
@@ -53,7 +126,40 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByEmail(String email) {
-        return new Account();
+        String sql = "SELECT * FROM accounts WHERE email = ?";
+        Connection conn = DatabaseConnection.getConnection();
+        Account account = null;
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setString(2, email);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    int id = rs.getInt("ID");
+
+                    String friendsString = rs.getString("Friends");
+                    ArrayList<Integer> friends = AccountStorageUtility.friendIDsFromString(friendsString);
+
+                    String statisticsString = rs.getString("Statistics");
+                    HashMap<GameType, AStatistics> statistics = AccountStorageUtility.statisticsFromString(statisticsString);
+
+                    String matchHistoryString = rs.getString("MatchHistory");
+                    String[][] matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
+
+                    account = new Account(id, username, email, password, friends, statistics, matchHistory);
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return account;
     }
 
     /**
@@ -61,7 +167,7 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByUsername(String username) {
-        String sql = "SELECT * FROM account WHERE username = ?";
+        String sql = "SELECT * FROM accounts WHERE username = ?";
         Connection conn = DatabaseConnection.getConnection();
         Account account = null;
 
@@ -71,10 +177,20 @@ public class DatabaseManager {
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
-                    account = new Account();
-                    account.setUsername(rs.getString("username"));
-                    account.setPassword(rs.getString("password"));
-                    account.setEmail(rs.getString("email"));
+                    String password = rs.getString("Password");
+                    String email = rs.getString("Email");
+                    int id = rs.getInt("ID");
+
+                    String friendsString = rs.getString("Friends");
+                    ArrayList<Integer> friends = AccountStorageUtility.friendIDsFromString(friendsString);
+
+                    String statisticsString = rs.getString("Statistics");
+                    HashMap<GameType, AStatistics> statistics = AccountStorageUtility.statisticsFromString(statisticsString);
+
+                    String matchHistoryString = rs.getString("MatchHistory");
+                    String[][] matchHistory = AccountStorageUtility.matchHistoryFromString(matchHistoryString);
+
+                    account = new Account(id, username, email, password, friends, statistics, matchHistory);
                 }
             } catch (SQLException e){
                 e.printStackTrace();
@@ -157,6 +273,7 @@ public class DatabaseManager {
 
         if (accountFromDB != null) {
             if (accountFromDB.getPassword().equals(password)) {
+                System.out.println("Account logged in successfully");
                 return accountFromDB;
             }
         }

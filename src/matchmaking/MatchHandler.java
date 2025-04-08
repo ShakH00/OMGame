@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class MatchHandler {
     private ArrayList<PrivateMatch> privateMatches;
 
+    public MatchHandler() {
+        this.privateMatches = new ArrayList<PrivateMatch>();
+    }
     /**
      * @author Logan Olszak
      * @param host      player who initialized the private match, match is disbanded if this player leaves

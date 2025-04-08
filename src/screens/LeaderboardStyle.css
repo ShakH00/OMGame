@@ -1,0 +1,206 @@
+/* Leaderboard Styling */
+
+/* Root/Background styling */
+.root {
+    -fx-background-image: url("/images/leaderboardimg.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Title label */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Game title header */
+.label:id("gameTypeLabel") {
+    -fx-font-size: 16px;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+}
+
+/* Main header */
+.label:id("headerLabel") {
+    -fx-font-size: 24px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);
+    -fx-text-fill: #333333;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 15px;
+}
+
+/* Game buttons */
+.button {
+    -fx-background-color: linear-gradient(#f2f2f2, #d6d6d6);
+    -fx-background-radius: 5px;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 3, 0.0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#e6e6e6, #c9c9c9);
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(#c9c9c9, #e6e6e6);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 1, 0.0, 0, 1);
+}
+
+/* Game-specific buttons */
+#tictactoeButton, #chessButton, #checkersButton, #connect4Button {
+    -fx-background-color: #BA5AA9;
+    -fx-text-fill: white;
+    -fx-min-width: 120px;
+}
+
+#tictactoeButton:hover, #chessButton:hover, #checkersButton:hover {
+    -fx-background-color: #D074BF; /* Lighter shade for hover */
+    -fx-cursor: hand;
+}
+
+#tictactoeButton:pressed, #chessButton:pressed, #checkersButton:pressed {
+    -fx-background-color: #9A4A8F; /* Darker shade for pressed */
+}
+
+/* Back button */
+#backButton {
+    -fx-background-color: linear-gradient(#ff9d6b, #ff7f40);
+    -fx-text-fill: white;
+}
+
+#backButton:hover {
+    -fx-background-color: linear-gradient(#ffad7b, #ff8f50);
+}
+
+#backButton:pressed {
+    -fx-background-color: linear-gradient(#ff7f40, #ff9d6b);
+}
+
+/* Toggle buttons (Global/Friends) */
+.toggle-button {
+    -fx-background-color: linear-gradient(#f2f2f2, #d6d6d6);
+    -fx-background-radius: 5px;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 3, 0.0, 0, 2);
+}
+
+.toggle-button:hover {
+    -fx-background-color: linear-gradient(#e6e6e6, #c9c9c9);
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(#4a6b9b, #6a8bbb);
+    -fx-text-fill: white;
+}
+
+/* Ascending toggle button */
+#ascendingToggle {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #4a6b9b;
+    -fx-border-radius: 3px;
+}
+
+#ascendingToggle:selected {
+    -fx-background-color: #4a6b9b;
+    -fx-text-fill: white;
+}
+
+/* Dropdown menus */
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 2px;
+}
+
+.combo-box:hover {
+    -fx-border-color: #999999;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #333333;
+    -fx-padding: 3px 8px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* Table styling */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 2);
+}
+
+.table-view .column-header {
+    -fx-background-color: linear-gradient(#6a8bbb, #4a6b9b);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-padding: 8px 5px;
+}
+
+.table-view .table-row-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 2px;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: rgba(240, 240, 240, 0.9);
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgba(210, 230, 255, 0.9);
+}
+
+/* Pagination styling */
+.pagination {
+    -fx-background-color: transparent;
+}
+
+.pagination .page {
+    -fx-background-color: transparent;
+}
+
+.pagination .pagination-control .button {
+    -fx-background-color: linear-gradient(#6a8bbb, #4a6b9b);
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-padding: 5px;
+}
+
+.pagination .pagination-control .page-information {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Content area */
+.border-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.0, 0, 5);
+    -fx-padding: 15px;
+}

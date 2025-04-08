@@ -11,8 +11,8 @@ public class AccountStorageUtility {
 
     // MATCH HISTORY
 
-    private static final String matchHistoryEntryDivider = "&";
-    private static final String matchHistoryLineDivider = "#";
+    private static final String matchHistoryEntryDivider = ", ";
+    private static final String matchHistoryLineDivider = "\n";
 
     public static String matchHistoryToString(String[][] matchHistory){
         // Create an ArrayList containing entries in a MatchHistory row, joined by the match history entry divider.
@@ -176,7 +176,14 @@ public class AccountStorageUtility {
         ArrayList<Integer> friendIDs = new ArrayList<>();
         String[] friendIDStrings = string.split(friendsDelimiter);
         for (String friendIDString : friendIDStrings){
-            friendIDs.add(Integer.valueOf(friendIDString));
+            friendIDString = friendIDString.trim();
+            if (!friendIDString.isEmpty()){
+                try {
+                    friendIDs.add(Integer.parseInt(friendIDString));
+                } catch (NumberFormatException e) {
+                    System.out.println("Error in parsing friendID: " + friendIDString);
+                }
+            }
         }
         return friendIDs;
     }

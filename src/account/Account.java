@@ -44,9 +44,9 @@ public class Account {
      */
     private ArrayList<Integer> friends;
 
-    private final HashMap<GameType, AStatistics> statistics;
+    private HashMap<GameType, AStatistics> statistics;
 
-    private final String[][] matchHistory;
+    private String[][] matchHistory;
 
     /**
      * Initialize a guest Account
@@ -329,6 +329,12 @@ public class Account {
         return output;
     }
 
+    /**
+     * Checks to see if user is either guest or not.
+     *
+     * @return Boolean if guest is valid or not.
+     */
+
     public boolean getIsGuest() {
         return isGuest;
     }
@@ -373,9 +379,16 @@ public class Account {
      * Sets the username (display name) for the account.
      *
      * @param username the new username to set
+     * username must be 1-64 characters and may not contain any characters
+     * from the disallowed characters list
+     * @return boolean if the username change was successful or not
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public boolean setUsername(String username) {
+        if(isValidUsername(username)) {
+            this.username = username;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -391,12 +404,16 @@ public class Account {
      * Sets the password for the account.
      *
      * @param password the new password to set
+     * @return boolean, true if the password change was successful
      */
 
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean setPassword(String password) {
+        if(isValidPassword(password)){
+            this.password = password;
+            return true;
+        }
+        return false;
     }
-
 
     /**
      * Checks whether the given username is valid (not null or empty).
@@ -417,7 +434,14 @@ public class Account {
      */
 
     private boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".");
+        String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
+        for(String character: disallowedChars){
+            if (username.contains(character)){
+                return false;
+            }
+        }
+        if(username.length() > 64 || username.length() < 1){return false;}
+        return true;
     }
 
     /**
@@ -428,7 +452,10 @@ public class Account {
      */
 
     private boolean isValidPassword(String password) {
-        return password != null && password.length() >= 6;
+        if(password.contains(" ")){return false;}
+        if(password == null){return false;}
+        if(password.length() < 6 || password.length() > 64){return false;}
+        return true;
     }
 
 
@@ -512,13 +539,14 @@ public class Account {
             this.email = accountFromDB.email;
             this.password = accountFromDB.password;
             this.friends = accountFromDB.friends;
-            this.statistics.putAll(accountFromDB.statistics);
+            this.statistics = accountFromDB.statistics;
+            this.matchHistory = accountFromDB.matchHistory;
             return true;
         }
         return false;
     }
-    public boolean createAccount(String username, String email, String password) {
-        // Try creating the account using the AccountCreate helper class
+    public boolean guestToPermanentAccount(String username, String email, String password) {
+        // Attempt to create the permanent account using the CreateAccount helper class
         boolean success = CreateAccount.createAccount(username, email, password);
 
         if (success) {
@@ -531,17 +559,10 @@ public class Account {
                 this.username = createdAccount.getUsername();
                 this.email = createdAccount.getEmail();
                 this.password = createdAccount.getPassword();
-                this.isGuest = false;
+                this.isGuest = false; // Mark this as a permanent account
                 this.friends = createdAccount.getFriendIDs();
-                this.queuedFor = createdAccount.getQueuedFor();
-
-                // Copy match history
-                String[][] createdHistory = createdAccount.getMatchHistory();
-                for (int i = 0; i < matchHistory.length; i++) {
-                    if (createdHistory[i] != null)
-                        this.matchHistory[i] = createdHistory[i].clone();
-                }
-                DatabaseManager.saveAccount(createdAccount);
+                this.matchHistory = createdAccount.getMatchHistory();
+                this.statistics = createdAccount.getStatisticsHashMap();
             }
         }
 
@@ -571,4 +592,10 @@ public class Account {
     public String getEmail() {
         return  email;
     }
-}
+
+    // Setter for id
+    public void setID(Integer id) {
+        this.id = id;
+    }
+
+    }

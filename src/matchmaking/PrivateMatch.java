@@ -3,6 +3,7 @@ package matchmaking;
 import game.GameType;
 import account.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -45,7 +46,7 @@ public class PrivateMatch {
      */
     public void hostStartGame() {
         if (accounts.size() >= 2) {
-            //start the match when this function is called
+            startMatch(gameType, getAccounts().get(0), getAccounts().get(1));
         }
     }
 
@@ -76,13 +77,21 @@ public class PrivateMatch {
     }
 
     /**
+     * Getter method for the private matches accounts arraylist
+     * @return roomID string
+     */
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    /**
      * @param account account object that initialized the connection to the PrivateMatch
      *
      * Method to add a player to the PrivateMatch
      */
     public void connectToPrivateMatch(Account account) {
         accounts.add(account);
-        //still need to work with GUI team to set up the private match GUI popping up
+        //need to integrate with GUI team to set up the private match GUI popping up
     }
 
     /**
@@ -105,11 +114,13 @@ public class PrivateMatch {
         while (loop) {
             potentialID = generateRandomID();
             //NEED TO CREATE a MatchHandler object to call getPrivateMatches() on in main program once that exists
-            ArrayList<PrivateMatch> matches = null; //Should eventualy be getPrivateMatches() instead of null
+            ArrayList<PrivateMatch> matches = null; //Should eventualy be matchHandler.getPrivateMatches() instead of null
             boolean matching = false;
-            for (PrivateMatch current : matches) {
-                if (current.roomID == potentialID) {
-                    matching = true;
+            if (matches != null) {
+                for (PrivateMatch current : matches) {
+                    if (current.roomID == potentialID) {
+                        matching = true;
+                    }
                 }
             }
             if (matching == false) {
@@ -133,5 +144,9 @@ public class PrivateMatch {
             idString.append(possibleIDCharacters.charAt(randIndex));
         }
         return idString.toString();
+    }
+
+    public void startMatch(GameType gameType, Account account1, Account account2) {
+        //Work with other teams to integrate the creation of a new match of type gameType, between account1 and account2
     }
 }
