@@ -193,6 +193,10 @@ public class ChessController extends Application {
             MovingPiece piece = (MovingPiece) chessBoard[selectedY][selectedX];
             PieceType type = piece.getPieceType();
             chessGame.move(piece, y, x);
+            if(piece instanceof Pawn){
+                boolean toPromote = ((Pawn) piece).checkPromotion();
+                if(toPromote) ((Pawn) piece).promote(4, board); //currently just promotes to queen
+            }
 
 
 
