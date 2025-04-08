@@ -1,4 +1,4 @@
-package networking;
+package networking.test;
 
 import java.io.*;
 import java.util.*;

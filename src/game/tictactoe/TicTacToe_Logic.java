@@ -197,7 +197,7 @@ public class TicTacToe_Logic {
 
         // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
         networking.Networking networking = new networking.Networking();
-        networking.sendGame(this);
+        //networking.sendGame(this);
         System.out.println("Game state sent to opponent. Entering listen mode...");
 
 

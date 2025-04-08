@@ -5,11 +5,25 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 /**
- *
+ * Main class for all the client-side networking. Initially used for Stubs.
  */
 public class Networking {
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
+    private boolean isConnected = false; // Connection status, initialize without connection
     public static final String timeFormatting = "yy.MM.dd HH:mm:ss.SSS"; // Template used for time stamp formatting
+
+    /**
+     * Connects to the opponent player or server using a fixed IP address, returns boolean of connection status.
+     *
+     * @param IP IP Address of opponent in the format: 192.168.0.1
+     * @param port Port of the server/client for connection
+     * @return Status of if the connection was successful
+     */
+    public boolean connectToPlayer(String IP, int port){
+        // Connection code
+        isConnected = false;
+        return false; // Return false on error
+    }
 
     /**
      * Receives the entire game state (using Game object) from opponent and returns it for use locally. Prints debug information to console.
@@ -18,7 +32,7 @@ public class Networking {
      * @author Nova Driscoll
      */
     public Game recieveGame() {
-        System.out.printf("[Net: %s] Receiving Game from: [TO ADD PLAYER IP]", getTime());
+        System.out.printf("[Net: %s] Receiving Game from: [TO ADD PLAYER IP]\n", getTime());
         return cachedGame;
     }
 
@@ -29,17 +43,29 @@ public class Networking {
      * @author Nova Driscoll
      */
     public void sendGame(Game game) {
-        System.out.printf("[Net: %s] Sending Game from: [TO ADD PLAYER IP]", getTime());
+        System.out.printf("[Net: %s] Sending Game from: [TO ADD PLAYER IP]\n", getTime());
         cachedGame = game;
         listenMode();
     }
 
     /**
      * Puts client into listening mode, where it waits for incoming signal from opponent a
+     *
      * @author Nova Driscoll
      */
     public void listenMode() {
-        System.out.printf("[Net: %s] Listening Mode, not accepting player input.", getTime());
+        System.out.printf("[Net: %s] Listening Mode, not accepting player input.\n", getTime());
+    }
+
+    /**
+     * Returns connection status
+     *
+     * @return Boolean of connection status
+     * @author Uzair Ansari
+     *
+     */
+    public boolean isConnected() {
+        return isConnected;
     }
 
     /**

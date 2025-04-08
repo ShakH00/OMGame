@@ -1,3 +1,5 @@
+package networking;
+
 import networking.test.PlayerT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
