@@ -30,10 +30,13 @@ public class Admin {
      * @param id the id of the player being edited
      * @param newPassword the new password to set
      */
-    private void updatePassword(DatabaseManager db, int id, String newPassword){
+    private boolean updatePassword(DatabaseManager db, int id, String newPassword){
         Account account = db.queryAccountByID(id);
-        account.setPassword(newPassword);
-        db.saveAccount(account);
+        boolean success = account.setPassword(newPassword);
+        if(success){
+            db.saveAccount(account);
+        }
+        return success;
     }
 
     /**
