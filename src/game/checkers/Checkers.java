@@ -15,7 +15,7 @@ import java.util.concurrent.LinkedTransferQueue;
 public class Checkers extends Game {
     private Player player1;
     private Player player2;
-    private Piece selectedPiece;
+    public Piece selectedPiece;
     private Board board;
     private GameState gameState;
 
@@ -355,6 +355,11 @@ public class Checkers extends Game {
             System.out.println("The game is ongoing");
         }
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
 
     /**
      * getGameState getter method.

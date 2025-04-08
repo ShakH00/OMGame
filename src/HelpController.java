@@ -36,7 +36,7 @@ public class HelpController extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
             Parent helpRoot = loader.load();
             helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
+                helpRoot.setVisible(false);  // hide the popup
             });
     }
 
