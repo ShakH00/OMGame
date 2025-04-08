@@ -26,6 +26,14 @@ public class Networking {
     }
 
     /**
+     *
+     * @param game
+     */
+    public void createGame(Game game){
+
+    }
+
+    /**
      * Receives the entire game state (using Game object) from opponent and returns it for use locally. Prints debug information to console.
      *
      * @return Game object from opponent containing their latest turn

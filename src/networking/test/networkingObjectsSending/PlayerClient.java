@@ -1,4 +1,4 @@
-package networkingObjectsSending;
+package networking.test.networkingObjectsSending;
 
 import javafx.application.Application;
 import javafx.application.Platform;

@@ -1,4 +1,4 @@
-package networkingObjectsSending;
+package networking.test.networkingObjectsSending;
 
 import java.io.Serializable;
 
