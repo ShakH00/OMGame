@@ -188,6 +188,7 @@
                     if (newPos === kingPosition) {
                         kingPosition = null;
                         showPopup('Checkmate! You captured the black king!');
+                        checkCaptureTutorialComplete();  // Check if we should move to the next tutorial phase
                     } else if (newPos === blackRookPos) {
                         blackRookPos = null;
                         showPopup('Nice! You captured the black rook!');
@@ -202,7 +203,6 @@
                 } else if (tutorialPhase === 3) {
                     updateCaptureBoard();
                     checkCaptureTutorialComplete();
-                    setupCaptureTutorial();
                 }
             }
 
@@ -243,11 +243,7 @@
 
             function checkCaptureTutorialComplete() {
                 if (blackRookPos === null && blackPawnPos === null) {
-                    showPopup("Awesome! You've completed the capture tutorial!");
-                    // Delay before starting next phase (if you have one)
-                    setTimeout(() => {
-                        setupFinalTutorial(); // You can replace this with your next phase function
-                    }, 2000);
+                    setupCaptureTutorial();
                 }
             }
 
@@ -266,7 +262,6 @@
 
             function setupCaptureTutorial() {
                 tutorialPhase = 3;
-                board.innerHTML = '';
 
                 bishopPosition = 35;
                 knightPosition = 18;
