@@ -139,3 +139,24 @@ button:hover {
   height: 24px;
   stroke: #444;
 }
+
+.back-button {
+	max-width: 100px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 18px;
+	padding: 8px 16px;
+	background-color: transparent;
+	color: #818080;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.back-button:hover {
+	color: #535353;
+	background-color: transparent;
+	transform: scale(1.07);
+}

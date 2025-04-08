@@ -9,6 +9,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     </head>
     <body>
+        <button class="back-button" onclick="window.location.href='index.html';">&lt; Back</button>
         <div class="login-card">
             <h2>Sign Up</h2>
 
@@ -24,6 +25,7 @@
                 </svg>
               </span>
             </div>
+            <div id="passwordStrength" class="strength"></div>
 
             <div class="password-wrapper">
               <input id="confirmPassword" type="password" placeholder="Confirm Password">
@@ -159,6 +161,20 @@
                 setTimeout(() => {
                     window.location.href = "index.html";
                 }, 1500);
+            }
+
+            const alreadyLoggedIn = localStorage.getItem("loggedInUser");
+            if (alreadyLoggedIn) {
+                document.querySelector(".login-card").innerHTML = `
+                  <h2>Welcome back, ${alreadyLoggedIn}!</h2>
+                  <p>You are already logged in.</p>
+                  <button onclick="logout()">Logout</button>
+                `;
+            }
+
+            function logout() {
+                localStorage.removeItem("loggedInUser");
+                location.reload();
             }
 
             ["newUsername", "email", "newPassword", "confirmPassword"].forEach(id => {
