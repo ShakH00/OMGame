@@ -134,7 +134,7 @@ public class DatabaseManager {
 
         if (conn != null) {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
-                stmt.setString(2, email);
+                stmt.setString(1, email);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
