@@ -245,8 +245,59 @@
             </div>
         </div>
 
+        <!-- Fake Stripe Payment Modal -->
+        <div id="stripe-modal" class="stripe-modal">
+            <div class="stripe-modal-content">
+                <span class="close-btn" onclick="closeStripeModal()">×</span>
+                <h2>Enter Payment Information</h2>
+                <form id="stripe-form">
+                    <div class="stripe-input-container">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="4242 4242 4242 4242" />
+                    </div>
+                    <div class="stripe-input-container">
+                        <label for="expiry-date">Expiry Date</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY" />
+                    </div>
+                    <div class="stripe-input-container">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" />
+                    </div>
+                    <button type="button" class="stripe-submit-btn" onclick="processPayment()">Pay Now</button>
+                </form>
+            </div>
+        </div>
+
         <script src="script.js"></script>
         <script>
+            const buyButtons = document.querySelectorAll('.buy-btn');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    openStripeModal();
+                });
+            });
+
+            function openStripeModal() {
+                document.getElementById("stripe-modal").style.display = "flex";
+            }
+
+            function closeStripeModal() {
+                document.getElementById("stripe-modal").style.display = "none";
+            }
+
+            function processPayment() {
+                const cardNumber = document.getElementById('card-number').value;
+                const expiryDate = document.getElementById('expiry-date').value;
+                const cvv = document.getElementById('cvv').value;
+
+                if (cardNumber && expiryDate && cvv) {
+                    alert("Payment Successful! Thank you for your purchase.");
+                    closeStripeModal();
+                } else {
+                    alert("Please complete the payment information.");
+                }
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("modal").addEventListener("click", (e) => {
                     if (e.target.classList.contains("modal")) {
