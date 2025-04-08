@@ -14,13 +14,15 @@ public class AdminController extends Application {
     @FXML
     AnchorPane rootPane;
     @FXML
-    private StackPane findUser;
+    private StackPane findUserButton;
     @FXML
-    private StackPane clearStats;
+    private StackPane clearStatsButton;
     @FXML
-    private StackPane deleteUser;
+    private StackPane deleteUserButton;
     @FXML
     private StackPane submitButton;
+    @FXML
+    private StackPane backButton;
     @FXML
     private TextField IDField;
     @FXML
@@ -49,7 +51,7 @@ public class AdminController extends Application {
             primaryStage.setResizable(false);
 
             // Set up the primary stage
-            primaryStage.setTitle("OMG!");
+            primaryStage.setTitle("OMG! - Admin");
             primaryStage.setScene(scene);
             primaryStage.show();
 
@@ -59,10 +61,7 @@ public class AdminController extends Application {
     }
 
     public void initialize() {
-        UtilityManager.createScaleTransition(backButtonSignUp);
-        UtilityManager.createScaleTransition(toLogin);
-        UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.colourTransition(guestText);
+        UtilityManager.createScaleTransition(backButton);
     }
 
     @FXML
