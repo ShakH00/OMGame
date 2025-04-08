@@ -63,11 +63,13 @@
             }
 
             function enableColumn(col) {
+                // Enable clicking the entire column
                 for (let row = 5; row >= 0; row--) {
                     const cell = board.children[row * 7 + col];
+
+                    // We want to check if the cell is empty, and if so, add the onclick event
                     if (!cell.classList.contains('red') && !cell.classList.contains('yellow')) {
                         cell.onclick = () => userMove(col);
-                        return;
                     }
                 }
             }
