@@ -299,16 +299,48 @@ public class CheckersTest {
         CheckersPiece whitePiece3 = new CheckersPiece(2,7, Color.WHITE, PieceType.LIGHT, player2, 0);
     }
 
+    /**
+     * Test if turns switch between players after a scucessful move. Test unsuccessful moves maintaining current turn.
+     */
     @Test
     public void testSwitchTurn(){
-        // test switching turn to the other player when a player performed a successful move.
-        // test when a player does not make a successful move (it should remain their turn)
+        // Game Initialize with P1_Turn, call switchTurn method
+        checkersGame.switchTurn();
+        Piece[][] piece = board.getBoardState();
+        Piece whitePiece = piece[5][0];
+        // P2 Should not be able to move P1's piece located at 2,1;
+        assertFalse(checkersGame.isValidMove(2,1,3,0, board));
+        // But can move his piece
+        assertTrue(checkersGame.isValidMove(5,0,4,1, board));
+        // Call move method, which call switch method.
+        checkersGame.move((CheckersPiece) whitePiece, 4, 1);
+        // Turn switched again, P1 should not be able to move P2's piece located at 4,1
+        assertFalse(checkersGame.isValidMove(4,1,3,2,board));
+        // P1 should be able to move his piece located at 2,1
+        assertTrue(checkersGame.isValidMove(2,1,3,0, board));
+
     }
 
+    /**
+     * Test surrender function changes game state after it surrender() is called.
+     */
     @Test
     public void testSurrender(){
         // test game state after surrender method is called.
         // test when either players call for surrender during their turn.
+        // P1 surrenders
+        checkersGame.surrender();
+        // P2 Wins
+        assertEquals(GameState.P2_WIN, checkersGame.getGameState());
+        // reset state to P1 turn
+        checkersGame.start();
+        // switch turn
+        checkersGame.switchTurn();
+        // P2 surrenders
+        checkersGame.surrender();
+        // P1 wins.
+        assertEquals(GameState.P1_WIN, checkersGame.getGameState());
+
     }
 
     @Test
