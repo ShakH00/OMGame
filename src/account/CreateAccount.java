@@ -1,6 +1,8 @@
 package account;
 
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
+import database.EncryptionAuthentication;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -18,7 +20,7 @@ public class CreateAccount {
      * @param password the desired password
      * @return true if account is created successfully; false otherwise
      */
-    public static boolean createAccount(String username, String email, String password) {
+    public static boolean createAccount(String username, String email, String password) throws EncryptionFailedException {
         // Validate fields
         if (!isValidUsername(username)) {
             showError("Invalid username. Must be 4-20 alphanumeric characters.");
@@ -34,6 +36,7 @@ public class CreateAccount {
         }
 
         Account newAccount = new Account(-1, username, email, password);
+        newAccount = EncryptionAuthentication.encryptAccount(newAccount);
         DatabaseManager.saveAccount(newAccount);
         return true;
     }
