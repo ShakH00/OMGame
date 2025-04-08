@@ -18,9 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Chess extends Game {
-    private final Player player1;
-    private final Player player2;
+    private Player player1;
+    private Player player2;
     private GameState gameState;
+    private Board board;
+    private int score1;
+    private int score2;
     private networking.Networking networking = new networking.Networking();
 
     /**
@@ -393,9 +396,27 @@ public class Chess extends Game {
         return board;
     }
 
+    public void setScore1(int score1){
+        this.score1 = score1;
+    }
+
+    public void setScore2(int score2){
+        this.score2 = score2;
+    }
+
+    public int getScore1(){
+        return this.score1;
+    }
+
+    public int getScore2(){
+        return this.score2;
+    }
+
     private void netUpdateGame(){
         Chess temp = (Chess) networking.recieveGame();
         this.board = temp.board;
         this.gameState = temp.gameState;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }

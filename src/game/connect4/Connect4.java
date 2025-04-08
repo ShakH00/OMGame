@@ -269,12 +269,22 @@ public class Connect4 extends Game {
         gameState = GameState.DRAW;
     }
 
+    public Player getPlayer1(){
+        return this.player1;
+    }
+
+    public Player getPlayer2(){
+        return this.player2;
+    }
+
     private void netUpdateGame(){
         Connect4 temp = (Connect4) networking.recieveGame();
         this.board = temp.board;
         this.gameState = temp.gameState;
         this.score1 = temp.score1;
         this.score2 = temp.score2;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }
 

@@ -212,6 +212,14 @@ public class TicTacToe extends Game {
         }
     }
 
+    public Player getPlayer1(){
+        return this.player1;
+    }
+
+    public Player getPlayer2(){
+        return this.player2;
+    }
+
     public void drawGame()
     {
         gameState = GameState.DRAW;
@@ -222,5 +230,7 @@ public class TicTacToe extends Game {
         this.score1 = temp.score1;
         this.score2 = temp.score2;
         this.gameState = temp.getGameState();
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }

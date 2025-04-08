@@ -407,6 +407,13 @@ public class Checkers extends Game {
         return p2Captures;
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2(){
+        return player2;
+    }
 
     /**
      * getter method to get multi captures made by P1
@@ -433,6 +440,8 @@ public class Checkers extends Game {
         Checkers temp = (Checkers) networking.recieveGame();
         this.board = temp.board;
         this.gameState = temp.gameState;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 
 }
