@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
     <head>
-        <meta charset=\"UTF-8\">
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="all.css">
         <link rel="stylesheet" href="chess.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +81,7 @@
                 document.getElementById('startButton').style.display = 'none';
                 document.getElementById('resetButton').style.display = 'inline-block';
 
-                // showPopup("Let's begin the chess tutorial!");
+                showPopup(`<strong>Hi! Welcome to Chess instructions!</strong><br><br>I'm Tetris Cat and I will be teaching you how to play!<br><br>Begin by moving the pawn forward!`);
             }
 
             function createBoard() {
@@ -194,11 +194,23 @@
                 directions.forEach(dir => {
                     let newPos = pos;
                     while (true) {
+                        let prevPos = newPos;
                         newPos += dir;
-                        if (newPos < 0 || newPos >= 64 || (dir === -1 && newPos % 8 === 7) || (dir === 1 && newPos % 8 === 0)) break;
-                        if (newPos === kingPosition) { highlightSquare(newPos, pieceId, true); break; }
-                        if (squares[newPos].innerHTML === '') highlightSquare(newPos, pieceId);
-                        else break;
+
+                        if (newPos < 0 || newPos >= 64) break;
+
+                        // Prevent wrap-around horizontally
+                        if (Math.abs((prevPos % 8) - (newPos % 8)) > 2) break;
+
+                        if (newPos === kingPosition) {
+                            highlightSquare(newPos, pieceId, true);
+                            break;
+                        }
+                        if (squares[newPos].innerHTML === '') {
+                            highlightSquare(newPos, pieceId);
+                        } else {
+                            break;
+                        }
                     }
                 });
             }
