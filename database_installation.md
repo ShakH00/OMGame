@@ -16,7 +16,6 @@
   - MySQL running = Your database is ready.
 
 # Step 3: Open phpMyadmin
-- Since mac is cool it makes you do less work
 - Open any browser.
 - Enter: http://localhost/phpmyadmin/
 - You should now see the phpMyAdmin dashboard!
