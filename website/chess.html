@@ -69,6 +69,10 @@
             let rookPosition = null;
             let kingPosition = null;
             let tutorialPhase = 1;
+            let bishopPosition = null;
+            let knightPosition = null;
+            let blackRookPos = null;
+            let blackPawnPos = null;
 
             function startTutorial() {
                 const boardContainer = document.getElementById('board-container');
@@ -156,6 +160,8 @@
                 if (id === 'pawn') piece.onclick = highlightMoves;
                 else if (id === 'whiteQueen') piece.onclick = () => highlightMovesQueen(pos);
                 else if (id === 'whiteRook') piece.onclick = () => highlightMovesRook(pos);
+                else if (id === 'whiteBishop') piece.onclick = () => highlightMovesBishop(pos);
+                else if (id === 'whiteKnight') piece.onclick = () => highlightMovesKnight(pos);
             }
 
             function highlightSquare(pos, pieceId, isCapture = false) {
@@ -171,13 +177,31 @@
 
             function moveCheckmatePiece(pieceId, newPos, isCapture) {
                 if (pieceId === 'queen') queenPosition = newPos;
-                if (pieceId === 'rook') rookPosition = newPos;
+                else if (pieceId === 'rook') rookPosition = newPos;
+                else if (pieceId === 'bishop') bishopPosition = newPos;
+                else if (pieceId === 'knight') knightPosition = newPos;
 
-                if (isCapture && newPos === kingPosition) {
-                    kingPosition = null;
-                    showPopup('Checkmate! You captured the black king!');
+                // Remove captured black pieces
+                if (isCapture) {
+                    if (newPos === kingPosition) {
+                        kingPosition = null;
+                        showPopup('Checkmate! You captured the black king!');
+                    } else if (newPos === blackRookPos) {
+                        blackRookPos = null;
+                        showPopup('Nice! You captured the black rook!');
+                    } else if (newPos === blackPawnPos) {
+                        blackPawnPos = null;
+                        showPopup('Good job! You captured the black pawn!');
+                    }
                 }
-                updateCheckmateBoard();
+
+                if (tutorialPhase === 2) {
+                    updateCheckmateBoard();
+                } else if (tutorialPhase === 3) {
+                    updateCaptureBoard();
+                    checkCaptureTutorialComplete();
+                    setupCaptureTutorial();
+                }
             }
 
             function highlightMovesQueen(pos) {
@@ -215,6 +239,16 @@
                 });
             }
 
+            function checkCaptureTutorialComplete() {
+                if (blackRookPos === null && blackPawnPos === null) {
+                    showPopup("Awesome! You've completed the capture tutorial!");
+                    // Delay before starting next phase (if you have one)
+                    setTimeout(() => {
+                        setupFinalTutorial(); // You can replace this with your next phase function
+                    }, 2000);
+                }
+            }
+
             function updateBoard() {
                 document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
                 if (pawnPosition !== null) placePawn();
@@ -226,6 +260,50 @@
                 if (queenPosition !== null) placePiece(queenPosition, 'assets/chessQueenWhite.png', 'whiteQueen');
                 if (rookPosition !== null) placePiece(rookPosition, 'assets/chessRookWhite.png', 'whiteRook');
                 if (kingPosition !== null) placePiece(kingPosition, 'assets/chessKingBlack.png', 'blackKing');
+            }
+
+            function setupCaptureTutorial() {
+                tutorialPhase = 3;
+                board.innerHTML = '';
+
+                bishopPosition = 35;
+                knightPosition = 18;
+                blackRookPos = 42;
+                blackPawnPos = 25;
+
+                updateCaptureBoard();
+
+                showPopup("Now let’s practice capturing with bishops and knights!<br><br>Click the bishop or knight to begin.");
+            }
+
+            function updateCaptureBoard() {
+                document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+                if (bishopPosition !== null) placePiece(bishopPosition, 'assets/chessBishopWhite.png', 'whiteBishop');
+                if (knightPosition !== null) placePiece(knightPosition, 'assets/chessKnightWhite.png', 'whiteKnight');
+                if (blackRookPos !== null) placePiece(blackRookPos, 'assets/chessRookBlack.png', 'blackRook');
+                if (blackPawnPos !== null) placePiece(blackPawnPos, 'assets/chessPawnBlack.png', 'blackPawn');
+            }
+
+            function highlightMovesBishop(pos) {
+                highlightLinearMoves(pos, [-9, -7, 7, 9], 'bishop');
+            }
+
+            function highlightMovesKnight(pos) {
+                clearHighlights();
+                const knightMoves = [-17, -15, -10, -6, 6, 10, 15, 17];
+                const squares = document.querySelectorAll('.square');
+
+                knightMoves.forEach(offset => {
+                    const newPos = pos + offset;
+                    if (newPos < 0 || newPos >= 64) return;
+                    if (Math.abs((pos % 8) - (newPos % 8)) > 2) return;
+
+                    if (newPos === blackRookPos || newPos === blackPawnPos) {
+                        highlightSquare(newPos, 'knight', true);
+                    } else if (squares[newPos].innerHTML === '') {
+                        highlightSquare(newPos, 'knight');
+                    }
+                });
             }
 
             function clearHighlights() {
