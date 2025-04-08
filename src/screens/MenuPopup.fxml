@@ -7,8 +7,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
+<AnchorPane prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
          <children>
             <HBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
