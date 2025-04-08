@@ -343,9 +343,44 @@ public class CheckersTest {
 
     }
 
+    /**
+     * Test to check win conditions are being fufilled
+     */
     @Test
     public void testCheckWinCondition(){
         // game state when P1 or P2 has won (either player no longer have any pieces)
+        // Clear Board
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Piece
+        CheckersPiece blackPiece = new CheckersPiece(2,3, Color.BLACK, PieceType.DARK, player1, 0);
+        // Place Piece
+        piece[2][3] = blackPiece;
+        // Check win condition
+        checkersGame.checkWinCondition();
+        // Check if Game State matches correct condition
+        assertEquals(GameState.P1_WIN, checkersGame.getGameState());
+
+        // Clear Board
+        clearBoard();
+        // Restart Game, P1's turn
+        checkersGame.start();
+        // switch P2's turn
+        checkersGame.switchTurn();
+        // Create Piece
+        CheckersPiece whitePiece = new CheckersPiece(2,3, Color.WHITE, PieceType.LIGHT, player2, 0);
+        // Place Piece
+        piece[2][3] = whitePiece;
+        // Check win condition
+        checkersGame.checkWinCondition();
+        // Check if Game State matches correct condition
+        assertEquals(GameState.P2_WIN, checkersGame.getGameState());
+
+
     }
 
 
