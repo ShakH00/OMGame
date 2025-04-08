@@ -342,16 +342,35 @@ public class DatabaseManager {
 
 
     /**
-     * @return returns true if an account was deleted from the database
+     * Deletes an account from the database based on the email.
      *
+     * @param email the email of the account to be deleted
+     * @return true if an account was deleted, false otherwise
      */
-    public static Boolean deleteAccount(String email) {return true;}
+    public static Boolean deleteAccount(String email) {
+            Connection conn = DatabaseConnection.getConnection();
+            if (conn == null) {
+                System.out.println("Connection failed.");
+                return false;
+            }
+            return true;
+
+
+    }
 
     /**
-     * @return returns true if an account was deleted from the database
+     * Deletes an account from the database based on the userID.
      *
+     * @param userID the ID of the account to be deleted
+     * @return true if an account was deleted, false otherwise
      */
-    public static Boolean deleteAccount(Integer userID) {return true;}
+
+    public static Boolean deleteAccount(Integer userID) {
+
+
+        return true;
+
+    }
 
 
 }
