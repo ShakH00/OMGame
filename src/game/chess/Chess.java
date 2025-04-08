@@ -332,7 +332,11 @@ public class Chess extends Game {
                         state[x][y] = captured;
                         mp.setX(originalX);
                         mp.setY(originalY);
-                        
+
+                        // If the king is not in check after the move, it's not checkmate
+                        if (!stillInCheck) {
+                            return false;  // The player has a move that gets them out of check
+                        }
                     }
                 }
             }
