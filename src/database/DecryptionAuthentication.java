@@ -1,6 +1,8 @@
 package database;
 
+import account.Account;
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 
 public class DecryptionAuthentication {
 
@@ -28,6 +30,16 @@ public class DecryptionAuthentication {
         } catch (Exception e) {
             throw new DecryptionFailedException("Decryption failed!");
         }
+    }
+
+    public static Account encryptAccount(Account account) throws DecryptionFailedException {
+        String originalEmail = decryptionDriver(account.getEmail());
+        String originalPassword = decryptionDriver(account.getPassword());
+
+        account.setEmail(originalEmail);
+        account.setPassword(originalPassword);
+
+        return account;
     }
 
 }
