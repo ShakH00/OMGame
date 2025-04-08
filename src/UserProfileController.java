@@ -107,6 +107,9 @@ public class UserProfileController extends Application {
     private Pane friendsPane;
 
     @FXML
+    private StackPane settingsButton;
+
+    @FXML
     public void initialize() {
         // Apply hover effect to each pane
         UtilityManager.addHoverEffect(rankPane);
@@ -116,6 +119,12 @@ public class UserProfileController extends Application {
         UtilityManager.addHoverEffect(connect4Pane);
         UtilityManager.addHoverEffect(overallPane);
         UtilityManager.addHoverEffect(friendsPane);
+        UtilityManager.createScaleTransition(settingsButton);
+    }
+
+    @FXML
+    private void goToSettings() {
+        System.out.println("To user settings");
     }
 
     public static void main (String[]args){
