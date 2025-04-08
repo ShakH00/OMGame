@@ -115,8 +115,6 @@ public class ChessController extends Application {
         if (selectedRow != -1) {
             MovingPiece selectedPiece = (MovingPiece) boardState[selectedRow][selectedCol];
 
-
-            System.out.println("Selected piece: " + selectedPiece.getPieceType() + "at " + row + col);
             game.move(selectedPiece, row, col);
 
             if (selectedPiece instanceof Pawn) {
