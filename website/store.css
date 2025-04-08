@@ -240,7 +240,7 @@
 }
 
 /* Buy Button */
-.buy-btn-modal {
+.modal .buy-btn {
     width: 100%;
     padding: 10px;
     background: #ffcc00;
@@ -248,10 +248,13 @@
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    color: #111;
+	margin-left: 0;
 }
 
-.buy-btn-modal:hover {
+.modal .buy-btn:hover {
+    transform: scale(1.07);
     background: #edbe00;
 }
 
@@ -259,7 +262,7 @@
 .stripe-modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 15;
     left: 0;
     top: 0;
     width: 100%;
