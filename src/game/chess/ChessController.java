@@ -40,20 +40,6 @@ public class ChessController extends Application {
     private Board board;
     private Chess chessGame;
     private int selectedX = -1, selectedY = -1;
-    //private final Player player1 = new Player();
-    //private final Player player2 = new Player();
-
-    // Initial chessboard layout
-//    private final String[][] board = {
-//            {"blackRookChess", "blackKnightChess", "blackBishopChess", "blackQueenChess", "blackKingChess", "blackBishopChess", "blackKnightChess", "blackRookChess"},
-//            {"blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess"},
-//            {null, null, null, null, null, null, null, null},
-//            {null, null, null, null, null, null, null, null},
-//            {null, null, null, null, null, null, null, null},
-//            {null, null, null, null, null, null, null, null},
-//            {"whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess"},
-//            {"whiteRookChess", "whiteKnightChess", "whiteBishopChess", "whiteQueenChess", "whiteKingChess", "whiteBishopChess", "whiteKnightChess", "whiteRookChess"}
-//    };
 
 
     /**
@@ -195,13 +181,14 @@ public class ChessController extends Application {
             chessGame.move(piece, y, x);
             if(piece instanceof Pawn){
                 boolean toPromote = ((Pawn) piece).checkPromotion();
+//                if(toPromote){
+//                    //prompt promotion choice
+//
+//                }
                 if(toPromote) ((Pawn) piece).promote(4, board); //currently just promotes to queen
             }
 
 
-
-            //chessGame.checkWinCondition();
-            //chessGame.matchOutcome();
 
             selectedX = -1;
             selectedY = -1;
