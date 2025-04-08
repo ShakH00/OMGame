@@ -300,7 +300,6 @@ public class Chess extends Game {
 
         Piece[][] state = board.getBoardState();
 
-        //check all pieces for legal moves that get the king out of check
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getCols(); j++) {
                 Piece piece = state[i][j];
@@ -333,18 +332,14 @@ public class Chess extends Game {
                         state[x][y] = captured;
                         mp.setX(originalX);
                         mp.setY(originalY);
-
-                        // If the king is not in check after the move, it's not checkmate
-                        if (stillInCheck) {
-                            return true;  // The player has a move that gets them out of check
-                        }
+                        
                     }
                 }
             }
         }
 
         // If no move prevents check, it's checkmate
-        return false;
+        return true;
     }
 
 
