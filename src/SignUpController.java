@@ -62,14 +62,6 @@ public class SignUpController extends Application {
         SceneManager.switchScene(stage, "screens/Start.fxml");
     }
 
-    @FXML
-    private void handleCloseButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
-        Parent helpRoot = loader.load();
-        helpRoot.setOnMouseClicked(event -> {
-            helpRoot.setVisible(false);  // Hide the popup
-        });
-    }
 
     public static void main(String[] args) {
         launch(args);

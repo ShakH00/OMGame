@@ -55,6 +55,7 @@ public class CheckersController extends Application {
 
         canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
 
+
         // Create buttons
         Button offerDrawButton = new Button("Offer Draw");
         offerDrawButton.setLayoutX(650);
@@ -108,15 +109,17 @@ public class CheckersController extends Application {
                 if (board.getBoardState()[y][x] != null) {
                     String pieceName = board.getBoardState()[y][x].getPieceType().toString().toLowerCase();
                     if(board.getBoardState()[y][x].getColor().equals(javafx.scene.paint.Color.BLACK)){
-                        pieceName = "greenChecker";
+                        pieceName = "green";
                     }
                     else if(board.getBoardState()[y][x].getColor().equals(javafx.scene.paint.Color.WHITE)){
-                        pieceName = "orangeChecker";
+                        pieceName = "orange";
                     }
 
                     if (board.getBoardState()[y][x].isKing()){
                         pieceName += "King";
                     }
+                    pieceName += "Checker";
+
                     Image pieceImage = new Image(ASSETS_PATH + pieceName + ".png", TILE_SIZE, TILE_SIZE, true, true);
                     gc.drawImage(pieceImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
