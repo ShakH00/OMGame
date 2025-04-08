@@ -1,127 +1,194 @@
 <!DOCTYPE html>
-<html lang=\"en\">
-    <head>
-        <meta charset=\"UTF-8\">
-        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-        <title>Chess</title>
-        <link rel=\"stylesheet\" href=\"https://chessboardjs.com/releases/v1.0.0/css/chessboard-1.0.0.min.css\">
-        <script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>
-        <script src=\"https://chessboardjs.com/releases/v1.0.0/js/chessboard-1.0.0.min.js\"></script>
-        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.0/chess.min.js\"></script>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                line-height: 1.6;
-                background-color: #f4f4f4;
-                color: #333;
-                max-width: 800px;
-                margin: auto;
-                padding: 20px;
-            }
-            h1, h2 {
-                color: #222;
-            }
-            .section {
-                background-color: #fff;
-                padding: 15px;
-                margin-bottom: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            ul {
-                margin-left: 20px;
-            }
-            #board {
-                width: 400px;
-                margin: auto;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Welcome to Chess Mastery</h1>
-        <div class=\"section\">
-            <h2>What is Chess?</h2>
-            <p>Chess is a strategic two-player game played on a checkered board. The goal is to checkmate your opponent's king, meaning the king cannot escape capture.</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="all.css">
+    <link rel="stylesheet" href="chess.css">
+    <title>Chess Promotion and Capture Tutorial</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
+        <div class="header-center">
+            <a href="index.html">Home</a>
+            <a href="help.html">Help</a>
+            <a href="store.html">Store</a>
         </div>
-        <div class=\"section\">
-            <h2>Chess Pieces and Movements</h2>
-            <ul>
-                <li><strong>King:</strong> Moves one square in any direction.</li>
-                <li><strong>Queen:</strong> Moves any number of squares in any direction.</li>
-                <li><strong>Rook:</strong> Moves any number of squares horizontally or vertically.</li>
-                <li><strong>Bishop:</strong> Moves any number of squares diagonally.</li>
-                <li><strong>Knight:</strong> Moves in an \"L\" shape: two squares vertically and one horizontally, or vice versa.</li>
-                <li><strong>Pawn:</strong> Moves forward one square (two on its first move), captures diagonally.</li>
-            </ul>
+        <div class="header-right">
+            <a href="#" class="signup-btn">Sign up</a>
+            <a href="#" class="login-btn">Login</a>
         </div>
+    </div>
 
-        <div class=\"section\">
-            <h2>Teach by Playing (Play as White)</h2>
-            <div id=\"board\"></div>
-            <p id=\"status\"></p>
+    <h1>Chess Promotion and Capture Tutorial</h1>
+    <div class="board" id="board"></div>
+    <button class="button" onclick="resetBoard()">Reset Board</button>
+
+    <div class="overlay" id="CHoverlay" onclick="closePopup()"></div>
+    <div class="container" id="CHpopupBox">
+        <img class="popup-tetriscat" style="height: 150px; width: auto; left: 385px; top: -120px;" src="assets/tetrisCat1.GIF" alt=""/>
+        <div class="contact-box">
+            <div class="sos-box">SOS!!</div>
+            <button class="close-btn" onclick="closePopup()">×</button>
+            <p id="popup-text"></p>
         </div>
+    </div>
 
-        <footer>
-            <p>A</p>
-        </footer>
+    <script>
+        const board = document.getElementById('board');
+        let pawnPosition = 48;
+        let enemyPosition = 9;
+        let queenPosition = null;
+        let rookPosition = null;
+        let kingPosition = null;
+        let tutorialPhase = 1;
 
-        <script>
-            var board,
-                game = new Chess();
-
-            function onDragStart (source, piece, position, orientation) {
-                if (game.game_over()) return false;
-                if (piece.search(/^b/) !== -1) return false;
+        function createBoard() {
+            board.innerHTML = '';
+            for (let i = 0; i < 64; i++) {
+                const square = document.createElement('div');
+                square.classList.add('square', (Math.floor(i / 8) + i % 8) % 2 === 0 ? 'light' : 'dark');
+                board.appendChild(square);
             }
+            placePawn();
+            placeEnemy();
+            showPopup(`Hi! I'm Tetris Cat. Let's learn chess! Move your pawn to promote it to a queen, then capture the enemy piece.`);
+        }
 
-            function onDrop (source, target) {
-                var move = game.move({
-                    from: source,
-                    to: target,
-                    promotion: 'q'
-                });
+        function placePawn() {
+            placePiece(pawnPosition, 'assets/chessPawnWhite.png', 'pawn');
+        }
 
-                if (move === null) return 'snapback';
+        function placeEnemy() {
+            placePiece(enemyPosition, 'assets/chessRookBlack.png', 'enemy');
+        }
 
-                updateStatus();
-                window.setTimeout(makeRandomMove, 500);
-            }
+        function highlightMoves() {
+            clearHighlights();
+            const squares = document.querySelectorAll('.square');
 
-            function makeRandomMove () {
-                var possibleMoves = game.moves();
+            const movePos = pawnPosition - 8;
+            if (movePos >= 0 && squares[movePos].innerHTML === '')
+                highlightSquare(movePos, 'pawn');
 
-                if (possibleMoves.length === 0) return;
-
-                var randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-                game.move(randomMove);
-                board.position(game.fen());
-                updateStatus();
-            }
-
-            function onSnapEnd () {
-                board.position(game.fen());
-            }
-
-            function updateStatus() {
-                var status = '';
-
-                if (game.in_checkmate()) status = 'Checkmate!';
-                else if (game.in_draw()) status = 'Draw!';
-                else status = 'Your move';
-
-                document.getElementById('status').innerHTML = status;
-            }
-
-            board = Chessboard('board', {
-                draggable: true,
-                position: 'start',
-                onDragStart: onDragStart,
-                onDrop: onDrop,
-                onSnapEnd: onSnapEnd,
-                orientation: 'white'
+            [pawnPosition - 9, pawnPosition - 7].forEach(pos => {
+                if (pos === enemyPosition) highlightSquare(pos, 'pawn', true);
             });
+        }
 
-            updateStatus();
-        </script>
-    </body>
+        function movePawn(newPos) {
+            pawnPosition = newPos;
+            updateBoard();
+            if (pawnPosition < 8) promotePawn();
+        }
+
+        function capturePiece(newPos) {
+            pawnPosition = newPos;
+            enemyPosition = null;
+            updateBoard();
+            showPopup('Great job! You captured the enemy rook!');
+        }
+
+        function promotePawn() {
+            tutorialPhase = 2;
+            queenPosition = pawnPosition;
+            pawnPosition = null;
+            enemyPosition = null;
+
+            setupCheckmateTutorial();
+        }
+
+        function setupCheckmateTutorial() {
+            queenPosition = 59;
+            rookPosition = 56;
+            kingPosition = 5;
+            updateCheckmateBoard();
+            showPopup('Let’s checkmate the black king! Move your queen or rook to trap the black king.');
+        }
+
+        function placePiece(pos, imgSrc, id) {
+            const squares = document.querySelectorAll('.square');
+            const piece = document.createElement('img');
+            piece.classList.add('piece');
+            piece.src = imgSrc;
+            squares[pos].appendChild(piece);
+
+            if (id === 'pawn') piece.onclick = highlightMoves;
+            else if (id === 'whiteQueen') piece.onclick = () => highlightMovesQueen(pos);
+            else if (id === 'whiteRook') piece.onclick = () => highlightMovesRook(pos);
+        }
+
+        function highlightSquare(pos, pieceId, isCapture = false) {
+            const squares = document.querySelectorAll('.square');
+            const dot = document.createElement('div');
+            dot.classList.add('highlight');
+            squares[pos].appendChild(dot);
+            dot.onclick = () => {
+                if (pieceId === 'pawn') isCapture ? capturePiece(pos) : movePawn(pos);
+                else moveCheckmatePiece(pieceId, pos, isCapture);
+            };
+        }
+
+        function moveCheckmatePiece(pieceId, newPos, isCapture) {
+            if (pieceId === 'queen') queenPosition = newPos;
+            if (pieceId === 'rook') rookPosition = newPos;
+
+            if (isCapture && newPos === kingPosition) {
+                kingPosition = null;
+                showPopup('Checkmate! You captured the black king!');
+            }
+            updateCheckmateBoard();
+        }
+
+        function highlightMovesQueen(pos) {
+            highlightLinearMoves(pos, [-8, 8, -1, 1, -9, -7, 7, 9], 'queen');
+        }
+
+        function highlightMovesRook(pos) {
+            highlightLinearMoves(pos, [-8, 8, -1, 1], 'rook');
+        }
+
+        function highlightLinearMoves(pos, directions, pieceId) {
+            clearHighlights();
+            const squares = document.querySelectorAll('.square');
+            directions.forEach(dir => {
+                let newPos = pos;
+                while (true) {
+                    newPos += dir;
+                    if (newPos < 0 || newPos >= 64 || (dir === -1 && newPos % 8 === 7) || (dir === 1 && newPos % 8 === 0)) break;
+                    if (newPos === kingPosition) { highlightSquare(newPos, pieceId, true); break; }
+                    if (squares[newPos].innerHTML === '') highlightSquare(newPos, pieceId);
+                    else break;
+                }
+            });
+        }
+
+        function updateBoard() {
+            document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+            if (pawnPosition !== null) placePawn();
+            if (enemyPosition !== null) placeEnemy();
+        }
+
+        function updateCheckmateBoard() {
+            document.querySelectorAll('.square').forEach(sq => sq.innerHTML = '');
+            if (queenPosition !== null) placePiece(queenPosition, 'assets/chessQueenWhite.png', 'whiteQueen');
+            if (rookPosition !== null) placePiece(rookPosition, 'assets/chessRookWhite.png', 'whiteRook');
+            if (kingPosition !== null) placePiece(kingPosition, 'assets/chessKingBlack.png', 'blackKing');
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.highlight').forEach(dot => dot.remove());
+        }
+
+        function resetBoard() {
+            pawnPosition = 48; enemyPosition = 9; queenPosition = rookPosition = kingPosition = null; tutorialPhase = 1;
+            createBoard();
+        }
+
+        function showPopup(text) { document.getElementById('popup-text').innerHTML = text; document.getElementById('CHoverlay').classList.add("show"); document.getElementById('CHpopupBox').classList.add("show"); }
+        function closePopup() { document.getElementById('CHoverlay').classList.remove("show"); document.getElementById('CHpopupBox').classList.remove("show"); }
+
+        createBoard();
+    </script>
+</body>
 </html>
