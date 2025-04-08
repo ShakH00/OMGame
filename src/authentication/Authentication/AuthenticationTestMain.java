@@ -1,35 +1,15 @@
 package authentication.Authentication;
 
 public class AuthenticationTestMain {
-//    public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("**** MFA Authentication Test ****");
-//        System.out.print("Enter your email: ");
-//        String email = sc.nextLine();
-//
-//        try {
-//            MFAAuthentication.emailAuthenticatorDriver(email);
-//        } catch (MFAAuthenticationFailedException e) {
-//            System.out.println("MFA Authentication failed: " + e.getMessage());
-//        }
-//        System.out.println("\n**** CAPTCHA Authentication Test ****");
-//        System.out.print("Enter your answer to the CAPTCHA equation: ");
-//        String captchaInput = sc.nextLine();
-//
-//        try {
-//            CAPTCHAAuthentication.captchaAuthenticatorDriver(captchaInput);
-//        } catch (CAPTCHAAuthenticationFailedException e) {
-//            System.out.println("CAPTCHA Authentication failed: " + e.getMessage());
-//        }
-//    }
 
     public static void main(String[] args) {
+        String email = "alia.s@gmail.com";
+
         try {
-            String result = MFAAuthenticationV2.emailAuthenticatorDriver("nebil7keb@gmail.com");
-            System.out.println(result);
+            String result = MFAAuthentication.emailAuthenticatorDriver(email);
+            System.out.println(result); // "Code verified"
         } catch (Exception e) {
-            System.err.println("Authentication failed: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
