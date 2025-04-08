@@ -1,11 +1,4 @@
-package authentication;
-
-import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-
-import java.util.Scanner;
-
-import static authentication.MFAAuthentication.generateRandomCode;
-import static authentication.MFAAuthentication.testMode;
+package authentication.Authentication;
 
 public class AuthenticationTestMain {
 //    public static void main(String[] args) {

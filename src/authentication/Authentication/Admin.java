@@ -1,4 +1,4 @@
-package authentication;
+package authentication.Authentication;
 import database.DatabaseManager;
 import account.Account;
 

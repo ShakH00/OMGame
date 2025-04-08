@@ -1,8 +1,6 @@
 package authentication.Authentication;
 import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import authentication.MFAAuthentication;
-import authentication.CAPTCHAAuthentication;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
