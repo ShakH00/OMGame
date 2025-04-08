@@ -21,6 +21,13 @@ public class Chess extends Game {
     private final Player player1;
     private final Player player2;
     private GameState gameState;
+    private int score1;
+    private int score2;
+    // Leaderboard Statistics
+    private int p1Turns = 0;
+    private int p2Turns = 0;
+    private int p1Captures = 0;
+    private int p2Captures = 0;
 
     /**
      * Constructor to initiate a chess game
@@ -29,6 +36,8 @@ public class Chess extends Game {
     public Chess(){
         this.player1 = new Player();
         this.player2 = new Player();
+        this.score1 = 0;
+        this.score2 = 0;
     }
 
     /**
@@ -79,27 +88,92 @@ public class Chess extends Game {
      */
     public void move(MovingPiece piece, int x, int y) {
         PieceType type = piece.getPieceType();
-        //boolean to make sure the piece being moved belongs to the player whose turn it is
         boolean isCorrectTurn = (type.equals(PieceType.LIGHT) && getState() == GameState.P1_TURN) ||
                 (type.equals(PieceType.DARK) && getState() == GameState.P2_TURN);
 
-        if (!isCorrectTurn) return; //if not right turn then end here
+        if (!isCorrectTurn) return;
 
-        //checks based on whether piece is king or if piece is pinned due to possible check
-        //also returns aka ending code here if either of these are true
-        if (piece instanceof King) {
-            if (!isMoveSafeForKing((King) piece, x, y)) return;
-        } else {
-            if (isPiecePinned(piece)) return;
-        }
+        Player player = piece.getOwnedBy();
+        Piece[][] state = board.getBoardState();
+        int oldX = piece.getX();
+        int oldY = piece.getY();
 
-        boolean result = piece.move(x, y, board); //result of piece moving
-        //if success then switch turn, check if someone won
-        if(result){
+        Piece captured = state[x][y];
+
+        // Simulate the move
+        state[oldX][oldY] = null;
+        state[x][y] = piece;
+        piece.setX(x);
+        piece.setY(y);
+
+        boolean kingStillInCheck = isKingInCheck(player);
+
+        // Undo the move
+        state[oldX][oldY] = piece;
+        state[x][y] = captured;
+        piece.setX(oldX);
+        piece.setY(oldY);
+
+        // If the move doesn't help escape check, deny the move
+        if (kingStillInCheck) return;
+
+        // Actually perform the move
+
+        Piece potentialEnemy = board.getBoardState()[x][y];
+        //need to account for en passant somehow
+        if (piece.move(x, y, board)) {
+            if(piece.getOwnedBy() == this.player1){
+                addp1Turn();
+                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece) addp1Score(potentialEnemy.getScore());
+            } else if(piece.getOwnedBy() == this.player2){
+                addp2Turn();
+                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece) addp1Score(potentialEnemy.getScore());
+            }
             switchTurn();
             checkWinCondition();
         }
     }
+
+    private void getStats(){
+        System.out.println("Game Statistics: ");
+        System.out.println("Player 1 Turns: " + getP1Turns() + ", Captures: " + getP1Captures() + ", Capture Score: " + getScore1());
+        System.out.println("Player 2 Turns: " + getP2Turns() + ", Captures: " + getP2Captures() + ", Capture Score: " + getScore2());
+    }
+
+    private int getP1Captures(){
+        return this.p1Captures;
+    }
+
+    private int getP2Captures(){
+        return this.p2Captures;
+    }
+
+    private int getP1Turns(){
+        return this.p1Turns;
+    }
+
+    private int getP2Turns(){
+        return this.p2Turns;
+    }
+
+    private void addp1Score(int score){
+        this.score1 += score;
+        this.p1Captures++;
+    }
+
+    private void addp2Score(int score){
+        this.score2 += score;
+        this.p2Captures++;
+    }
+
+    private void addp1Turn() {
+        this.p1Turns++;
+    }
+
+    private void addp2Turn() {
+        this.p2Turns++;
+    }
+
 
     /**
      * Method to check if the king moving to a spot is safe
@@ -365,8 +439,10 @@ public class Chess extends Game {
         // Incomplete, still needs to check for stalemate and surrender.
         if (gameState.equals(GameState.P2_WIN)){
             System.out.println("Player 2 wins!");
+            getStats();
         } else if (gameState.equals(GameState.P1_WIN)){
             System.out.println("Player 1 wins!");
+            getStats();
         }
     }
 
@@ -387,4 +463,20 @@ public class Chess extends Game {
         return board;
     }
 
+
+    public int getScore1(){
+        return this.score1;
+    }
+
+    public int getScore2(){
+        return this.score2;
+    }
+
+    public void setScore1(int score1){
+        this.score1 = score1;
+    }
+
+    public void setGameState(int score2){
+        this.score2 = score2;
+    }
 }
