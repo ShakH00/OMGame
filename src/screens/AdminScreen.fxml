@@ -77,7 +77,7 @@
                            <children>
                               <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/pink.png" />
+                                    <Image url="@../images/blue.png" />
                                  </image>
                                  <effect>
                                     <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
