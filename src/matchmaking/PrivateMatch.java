@@ -46,7 +46,7 @@ public class PrivateMatch {
      */
     public void hostStartGame() {
         if (accounts.size() >= 2) {
-            //start the match when this function is called
+            startMatch(gameType, getAccounts().get(0), getAccounts().get(1));
         }
     }
 
@@ -144,5 +144,9 @@ public class PrivateMatch {
             idString.append(possibleIDCharacters.charAt(randIndex));
         }
         return idString.toString();
+    }
+
+    public void startMatch(GameType gameType, Account account1, Account account2) {
+        //Work with other teams to integrate the creation of a new match of type gameType, between account1 and account2
     }
 }
