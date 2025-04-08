@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
@@ -23,19 +25,28 @@ public class Connect4Controller extends Application {
     @FXML
     private GridPane gameBoard;
     private Connect4 game = new Connect4();
+    @FXML
+    private StackPane menuButton;
+    @FXML
+    private StackPane chatButton;
+    @FXML
+    private AnchorPane rootPane;
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/game/connect4/Connect4.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Connect4.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
-            // TODO: these refuse to work..
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-            Font pressStartFont = Font.loadFont(fontPath, 40);
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
 
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
+            Font pixeliteFont = Font.loadFont(pixelitePath, 40);
+
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             primaryStage.setResizable(false);
 
             // set up the primary stage
@@ -154,7 +165,19 @@ public class Connect4Controller extends Application {
             handImageView.setLayoutX(-217); // starting x position
             handImageView.setLayoutY(-23);  // fixed y position
             handImageView.setVisible(false); // set hand to invisible by default
+            UtilityManager.createScaleTransition(menuButton);
+            UtilityManager.createScaleTransition(chatButton);
         }
+// TODO; get popup done
+    @FXML
+    public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    @FXML
+    public void goToChat() {
+        UtilityManager.chatControl();
+    }
 
 
 

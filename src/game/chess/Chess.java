@@ -33,6 +33,8 @@ public class Chess extends Game {
     public Chess(){
         this.player1 = new Player();
         this.player2 = new Player();
+        this.score1 = 0;
+        this.score2 = 0;
     }
 
     /**
@@ -308,7 +310,6 @@ public class Chess extends Game {
 
         Piece[][] state = board.getBoardState();
 
-        //check all pieces for legal moves that get the king out of check
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getCols(); j++) {
                 Piece piece = state[i][j];
@@ -396,13 +397,6 @@ public class Chess extends Game {
         return board;
     }
 
-    public void setScore1(int score1){
-        this.score1 = score1;
-    }
-
-    public void setScore2(int score2){
-        this.score2 = score2;
-    }
 
     public int getScore1(){
         return this.score1;
@@ -412,11 +406,11 @@ public class Chess extends Game {
         return this.score2;
     }
 
-    private void netUpdateGame(){
-        Chess temp = (Chess) networking.recieveGame();
-        this.board = temp.board;
-        this.gameState = temp.gameState;
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
+    public void setScore1(int score1){
+        this.score1 = score1;
+    }
+
+    public void setGameState(int score2){
+        this.score2 = score2;
     }
 }
