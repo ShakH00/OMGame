@@ -7,9 +7,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.chess.ChessController">
     <children>
@@ -45,322 +51,322 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick01" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick10" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick21" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick03" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick12" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick23" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick05" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick14" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick25" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick07" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick27" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick16" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick70" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick50" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick61" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick52" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick72" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick63" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick54" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick74" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick65" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick56" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick67" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick76" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick00" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick02" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick04" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick06" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick11" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick13" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick15" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick17" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick20" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick22" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick24" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick26" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick30" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick31" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick32" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick33" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick34" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick35" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick36" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick37" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick40" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick41" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick42" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick43" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick44" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick45" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick46" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick47" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick51" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick53" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick55" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick57" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick60" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick62" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick64" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick66" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick71" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick73" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick75" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="51.0" fitWidth="54.0" onMouseClicked="#handleCellClick77" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7">
                     <image>
                         <Image url="@../images/emptyChecker.png" />
                     </image>
@@ -406,6 +412,116 @@
                 <Font name="Press Start 2P Regular" size="18.0" />
             </font>
         </Label>
+      <Pane fx:id="pawnPromotion" layoutX="141.0" layoutY="42.0" prefHeight="533.0" prefWidth="528.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="603.0" layoutX="-144.0" layoutY="-52.0" stroke="BLACK" strokeType="INSIDE" width="819.0" />
+            <ImageView fitHeight="148.0" fitWidth="148.0" layoutX="74.0" layoutY="-55.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/sprites/tetrisCat1.GIF" />
+               </image>
+            </ImageView>
+                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbf8f3" height="382.0" layoutX="103.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="7.0" width="327.0">
+                        <stroke>
+                            <LinearGradient endX="1.0" endY="0.6113744075829384" startX="0.2037914691943128">
+                                <stops>
+                                    <Stop>
+                                        <color>
+                                            <Color red="1.0" green="0.5647059082984924" blue="0.7058823704719543" />
+                                        </color>
+                                    </Stop>
+                                    <Stop offset="0.265898674087412">
+                                        <color>
+                                            <Color red="0.9411764740943909" green="0.6745098233222961" blue="0.30980393290519714" />
+                                        </color>
+                                    </Stop>
+                                    <Stop offset="0.5275208708462923">
+                                        <color>
+                                            <Color red="0.43921568989753723" green="0.7019608020782471" blue="0.21960784494876862" />
+                                        </color>
+                                    </Stop>
+                                    <Stop offset="0.7601489605500081">
+                                        <color>
+                                            <Color red="0.15294118225574493" green="0.6549019813537598" blue="0.5764706134796143" />
+                                        </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                        <color>
+                                            <Color red="0.572549045085907" green="0.3607843220233917" blue="0.6980392336845398" />
+                                        </color>
+                                    </Stop>
+                                </stops>
+                            </LinearGradient>
+                        </stroke>
+                    </Rectangle>
+                      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#8c468b" height="30.0" layoutX="74.0" layoutY="68.0" rotate="-18.4" stroke="TRANSPARENT" strokeType="INSIDE" width="76.0" />
+                      <Text fill="WHITE" layoutX="87.0" layoutY="90.0" rotate="-18.4" strokeType="OUTSIDE" strokeWidth="0.0" text="YAY!">
+                          <font>
+                              <Font name="Press Start 2P Regular" size="13.0" />
+                          </font>
+                      </Text>
+                      <StackPane fx:id="knightButton" layoutX="157.0" layoutY="191.0" onMouseClicked="#handleKnight" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+                          <children>
+                              <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                                  <image>
+                                      <Image url="@../images/pink.png" />
+                                  </image>
+                              </ImageView>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Knight" textAlignment="CENTER" wrappingWidth="178.5">
+                                  <font>
+                                      <Font name="Press Start 2P Regular" size="14.0" />
+                                  </font>
+                              </Text>
+                          </children>
+                      </StackPane>
+            <Text fill="#4e5861" layoutX="127.0" layoutY="136.0" lineSpacing="3.5" stroke="#4e5861" strokeWidth="0.5" text="Congratulations! Your Pawn has been promoted. What would you like to promote it to?" textAlignment="CENTER" wrappingWidth="280.263671875">
+               <font>
+                  <Font name="Press Start 2P Regular" size="12.0" />
+               </font>
+            </Text>
+            <StackPane fx:id="bishopButton" layoutX="157.0" layoutY="250.0" onMouseClicked="#handleBishop" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/yellow.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Bishop" textAlignment="CENTER" wrappingWidth="178.5">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="rookButton" layoutX="157.0" layoutY="309.0" onMouseClicked="#handleRook" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/green.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Rook" textAlignment="CENTER" wrappingWidth="178.5">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="queenButton" layoutX="157.0" layoutY="366.0" onMouseClicked="#handleQueen" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/blue.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Queen" textAlignment="CENTER" wrappingWidth="167.5">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
 
     </children>
 </AnchorPane>
