@@ -1,15 +1,11 @@
-package authentication;
+package authentication.Authentication;
 
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 
-import java.util.Properties;
 import java.util.Scanner;
 
-import static authentication.MFAAuthentication.generateRandomCode;
-import static authentication.MFAAuthentication.testMode;
+import static authentication.Authentication.MFAAuthentication.generateRandomCode;
+import static authentication.Authentication.MFAAuthentication.testMode;
 
 public class MFAAuthenticationV2 {
     public static String emailAuthenticatorDriver(String email) throws MFAAuthenticationFailedException {

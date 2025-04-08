@@ -1,4 +1,4 @@
-package authentication;
+package database;
 
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
 

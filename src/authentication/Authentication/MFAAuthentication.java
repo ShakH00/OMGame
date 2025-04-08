@@ -1,6 +1,7 @@
-package authentication;
+package authentication.Authentication;
 
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /** This class is for MFA Authentication for when a user logs into their account

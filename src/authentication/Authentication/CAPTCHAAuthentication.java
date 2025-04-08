@@ -1,4 +1,4 @@
-package authentication;
+package authentication.Authentication;
 
 import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 

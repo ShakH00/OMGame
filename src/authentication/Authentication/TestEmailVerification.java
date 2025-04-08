@@ -1,9 +1,9 @@
-package authentication;
+package authentication.Authentication;
 
 public class TestEmailVerification {
     public static void main(String[] args) {
         // Replace with the recipient's email address
-        String toEmail = "hzlol999@gmail.com"; // Replace with your email or the recipient's email
+        String toEmail = "yomansup703@gmail.com"; // Replace with your email or the recipient's email
         String verificationCode = "53491"; // Example verification code
 
         // Step 1: Send the verification code via email
