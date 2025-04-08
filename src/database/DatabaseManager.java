@@ -207,10 +207,54 @@ public class DatabaseManager {
 
     /**
      * @return returns true if an account was saved to the database
-     * saves an account to the database
+     * saves an account to the database if user doesnt already exist
+     * updates current information if user exists.
      */
 
     public static Boolean saveAccount(Account account) {
+//        String username = account.getUsername();
+//        String email = account.getEmail();
+//        String password = account.getPassword();
+//        String friends = AccountStorageUtility.friendIDsToString(account.getFriendIDs());
+//        String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
+//        String matchHistory = AccountStorageUtility.matchHistoryToString(account.getMatchHistory());
+//
+//        String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?, ?, ?)";
+//        Connection conn = DatabaseConnection.getConnection();
+//
+//        if (conn != null) {
+//            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+//                stmt.setString(1, username);
+//                stmt.setString(2, email);
+//                stmt.setString(3, password);
+//                stmt.setString(4, friends);
+//                stmt.setString(5, statistics);
+//                stmt.setString(6, matchHistory);
+//
+//                int rowsInserted = stmt.executeUpdate();
+//                if (rowsInserted > 0) {
+//                    try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+//                        if (generatedKeys.next()) {
+//                            int generatedId = generatedKeys.getInt(1);
+//                            System.out.println("Account saved successfully. Your account ID is: " + generatedId);
+//                        }
+//                    }
+//                } else {
+//                    System.out.println("Insert failed");
+//                    return false;
+//                }
+//
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            } finally {
+//                DatabaseConnection.closeConnection(conn);
+//            }
+//        } else {
+//            System.out.println("Connection failed");
+//            return false;
+//        }
+//
+//        return true;
         String username = account.getUsername();
         String email = account.getEmail();
         String password = account.getPassword();
@@ -218,44 +262,51 @@ public class DatabaseManager {
         String statistics = AccountStorageUtility.statisticsToString(account.getStatisticsHashMap());
         String matchHistory = AccountStorageUtility.matchHistoryToString(account.getMatchHistory());
 
-        String sql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setString(1, username);
-                stmt.setString(2, email);
-                stmt.setString(3, password);
-                stmt.setString(4, friends);
-                stmt.setString(5, statistics);
-                stmt.setString(6, matchHistory);
+            try {
+                // Step 1: Check if account exists using username and email
+                String checkSql = "SELECT id FROM Accounts WHERE username = ? AND email = ?";
+                try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                    checkStmt.setString(1, username);
+                    checkStmt.setString(2, email);
+                    ResultSet rs = checkStmt.executeQuery();
 
-                int rowsInserted = stmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            int generatedId = generatedKeys.getInt(1);
-                            System.out.println("Account saved successfully. Your account ID is: " + generatedId);
+                    if (rs.next()) {
+                        // Account exists → Update
+                        int id = rs.getInt("id");
+                        String updateSql = "UPDATE Accounts SET password = ?, friends = ?, statistics = ?, matchhistory = ? WHERE id = ?";
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                            updateStmt.setString(1, password);
+                            updateStmt.setString(2, friends);
+                            updateStmt.setString(3, statistics);
+                            updateStmt.setString(4, matchHistory);
+                            updateStmt.setInt(5, id);
+
+                            int rowsUpdated = updateStmt.executeUpdate();
+                            System.out.println("Account updated successfully.");
+                            return rowsUpdated > 0;
+                        }
+                    } else {
+                        // Account doesn't exist → Insert
+                        String insertSql = "INSERT INTO Accounts (username, email, password, friends, statistics, matchhistory) VALUES (?, ?, ?, ?, ?, ?)";
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                            insertStmt.setString(1, username);
+                            insertStmt.setString(2, email);
+                            insertStmt.setString(3, password);
+                            insertStmt.setString(4, friends);
+                            insertStmt.setString(5, statistics);
+                            insertStmt.setString(6, matchHistory);
+
+                            int rowsInserted = insertStmt.executeUpdate();
+                            System.out.println("New account inserted successfully.");
+                            return rowsInserted > 0;
                         }
                     }
-                } else {
-                    System.out.println("Insert failed");
-                    return false;
                 }
 
             } catch (SQLException e) {
-//                String msg = e.getMessage().toLowerCase();
-//                if (msg.contains("duplicate entry")) {
-//                    if (msg.contains("username")) {
-//                        System.err.println("Error: The username '" + username + "' is already taken. Please choose a different one.");
-//                    } else if (msg.contains("email")) {
-//                        System.err.println("Error: The email '" + email + "' is already registered. Try logging in or use a different email.");
-//                    } else {
-//                        System.err.println("Error: A unique constraint was violated.");
-//                    }
-//                } else {
-//                    System.err.println("Database error: " + e.getMessage());
-//                }
                 throw new RuntimeException(e);
             } finally {
                 DatabaseConnection.closeConnection(conn);
@@ -264,8 +315,6 @@ public class DatabaseManager {
             System.out.println("Connection failed");
             return false;
         }
-
-        return true;
     }
 
     public static Account loginAccount(String username, String password) {
