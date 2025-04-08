@@ -59,6 +59,13 @@ public class CheckersController extends Application {
         board = new Board(GameType.CHECKERS);
         checkersGame = new Checkers(); // Initialize Checkers game logic
 
+// Stack Overflow Reference: https://stackoverflow.com/questions/1760654/how-to-call-a-method-at-the-start-of-a-javafx-application
+// Receiving game state from opponent before gameplay begins
+        networking.Networking networking = new networking.Networking();
+        game.Game receivedGame = networking.recieveGame();
+        if (receivedGame instanceof Checkers) {
+            checkersGame = (Checkers) receivedGame;
+        }
 
         drawCheckersBoard(gc);
 
