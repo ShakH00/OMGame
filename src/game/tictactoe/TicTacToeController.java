@@ -42,6 +42,16 @@ public class TicTacToeController extends Application {
 
         drawBoard(gc);
 
+        System.out.println("Waiting for opponent's move...");
+
+// Stack Overflow Reference: https://stackoverflow.com/questions/1760654/how-to-call-a-method-at-the-start-of-a-javafx-application
+        networking.Networking networking = new networking.Networking();
+        game.Game receivedGame = networking.recieveGame();
+        if (receivedGame instanceof game.tictactoe.TicTacToe_Logic) {
+            System.out.println("Received Tic Tac Toe game from opponent.");
+        }
+
+
         canvas.setOnMouseClicked(event -> {
             if (!gameOver) {
                 handleMouseClick(event, gc);
