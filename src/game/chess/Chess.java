@@ -21,6 +21,7 @@ public class Chess extends Game {
     private final Player player1;
     private final Player player2;
     private GameState gameState;
+    private networking.Networking networking = new networking.Networking();
 
     /**
      * Constructor to initiate a chess game
@@ -64,9 +65,13 @@ public class Chess extends Game {
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
         else if (gameState == GameState.P2_TURN){
             gameState = GameState.P1_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
     }
 
@@ -388,4 +393,9 @@ public class Chess extends Game {
         return board;
     }
 
+    private void netUpdateGame(){
+        Chess temp = (Chess) networking.recieveGame();
+        this.board = temp.board;
+        this.gameState = temp.gameState;
+    }
 }

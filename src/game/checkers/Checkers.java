@@ -32,7 +32,7 @@ public class Checkers extends Game {
     private int p1MultiCaptures = 0;
     private int p2MultiCaptures = 0;
 
-    networking.Networking networking = new networking.Networking();
+    private networking.Networking networking = new networking.Networking();
 
     // Set Board for checkers game and fill it
     public void setBoard(Board board){
