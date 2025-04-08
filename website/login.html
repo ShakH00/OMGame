@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Login | Online Multiplayer Games - OMG</title>
+        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="all.css">
+        <link rel="shortcut icon" type="image/png" href="assets/tetrisCatIcon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div class="login-card">
+            <h2>Login</h2>
+            <input id="username" placeholder="Username" type="text"/>
+            <input id="password" placeholder="Password" type="password"/>
+            <button onclick="login()">Login</button>
+            <div class="message" id="message"></div>
+        </div>
+
+        <script>
+            const users = [
+                {username: "tetriscat", password: "meow"},
+                {username: "admin", password: "admin123"}
+            ];
+
+            function login() {
+                const user = document.getElementById("username").value.trim();
+                const pass = document.getElementById("password").value.trim();
+                const message = document.getElementById("message");
+
+                const matchedUser = users.find(u => u.username === user && u.password === pass);
+
+                if (!user || !pass) {
+                    message.textContent = "Please enter both fields.";
+                    message.className = "message error";
+                    return;
+                }
+
+                if (matchedUser) {
+                    localStorage.setItem("loggedInUser", user);
+                    message.textContent = "Login successful!";
+                    message.className = "message success";
+
+                    setTimeout(() => {
+                        // Redirect or show something
+                        alert(`Welcome, ${user}! Redirecting...`);
+                        window.location.href = "index.html";
+                    }, 1000);
+                } else {
+                    message.textContent = "Invalid username or password.";
+                    message.className = "message error";
+                }
+            }
+
+            const alreadyLoggedIn = localStorage.getItem("loggedInUser");
+            if (alreadyLoggedIn) {
+                document.querySelector(".login-card").innerHTML = `
+                  <h2>Welcome back, ${alreadyLoggedIn}!</h2>
+                  <p>You are already logged in.</p>
+                  <button onclick="logout()">Logout</button>
+                `;
+            }
+
+            function logout() {
+                localStorage.removeItem("loggedInUser");
+                location.reload();
+            }
+        </script>
+    </body>
+</html>

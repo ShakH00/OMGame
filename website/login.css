@@ -1,0 +1,69 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(135deg, #e3f2fd, #fff);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
+
+.login-card {
+	background: white;
+	padding: 30px;
+	border-radius: 20px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	width: 320px;
+	text-align: center;
+}
+
+.login-card h2 {
+	margin-bottom: 25px;
+	font-size: 24px;
+	color: #333;
+}
+
+input[type="text"], input[type="password"] {
+	width: 100%;
+	padding: 12px;
+	margin: 8px 0;
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	font-size: 15px;
+}
+
+button {
+	width: 100%;
+	padding: 12px;
+	background: #ff66b2;
+	color: white;
+	border: none;
+	border-radius: 12px;
+	font-size: 16px;
+	margin-top: 10px;
+	cursor: pointer;
+	transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+	background: #df5399;
+}
+
+.message {
+	margin-top: 15px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.error {
+	color: #d8000c;
+}
+
+.success {
+	color: #4BB543;
+}
