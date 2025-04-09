@@ -14,14 +14,31 @@ public abstract class AStatistics implements IStatistics {
      * Set of statistics that are updated through special methods, and cannot be added to like other statistics
      */
     final HashSet<StatisticType> complexStatistics = new HashSet<>(List.of(
-        StatisticType.ELO,
-        StatisticType.WIN_RATE
+            StatisticType.ELO,
+            StatisticType.WIN_RATE
     ));
 
     /**
      * Maps each StatisticType in includedStatistics to some value (Integer or Double)
      */
-    final HashMap<StatisticType, Number> statistics = new HashMap<>();
+    protected HashMap<StatisticType, Number> statistics = new HashMap<>();
+
+    /**
+     * Initialize all values in the statistics hashmap to 0, except for Elo which starts at 1000
+     */
+    void initializeHashMap(){
+        for (StatisticType statisticType : acceptedStatistics){
+            if (statisticType == StatisticType.ELO){
+                statistics.put(statisticType, (Integer) 1000);
+            }
+            else if (isComplex(statisticType)){
+                statistics.put(statisticType, (Double) 0.0);
+            }
+            else {
+                statistics.put(statisticType, (Integer) 0);
+            }
+        }
+    }
 
     /**
      * Check if a set of statistics is well-formed. Automatically checked before adding a new set of statistics.
@@ -38,6 +55,11 @@ public abstract class AStatistics implements IStatistics {
 
             // Statistic must not be a complex statistic (these are updated through other methods)
             if (isComplex(statistic)){
+                return false;
+            }
+
+            // Statistic must not be null (i.e. uninitialized
+            else if (statistics.get(statistic) == null){
                 return false;
             }
 
@@ -83,7 +105,7 @@ public abstract class AStatistics implements IStatistics {
      * @param value     Integer value to increase statistic by
      */
     public void addStatistic(StatisticType statistic, Integer value){
-        Integer currentValue = (Integer) this.statistics.get(statistic);
+        Integer currentValue = (Integer) this.statistics.getOrDefault(statistic, 0);
         this.statistics.put(statistic, currentValue + value);
 
         // update win rate
@@ -151,9 +173,9 @@ public abstract class AStatistics implements IStatistics {
      * Recalculate the win rate statistic
      */
     void updateWinRate() {
-        Double wins = (Double) statistics.get(StatisticType.WINS);
-        Double losses = (Double) statistics.get(StatisticType.LOSSES);
-        statistics.put(StatisticType.WIN_RATE, wins/(wins + losses));
+        double wins = (int) statistics.getOrDefault(StatisticType.WINS, 0);
+        double losses = (int) statistics.getOrDefault(StatisticType.LOSSES, 0);
+        statistics.put(StatisticType.WIN_RATE, (Double) wins/(wins + losses));
     }
 
     /**
@@ -161,7 +183,7 @@ public abstract class AStatistics implements IStatistics {
      * @param statistic Statistic to query
      * @return          True if the statistic is complex; false otherwise
      */
-    boolean isComplex(StatisticType statistic){
+    public boolean isComplex(StatisticType statistic){
         return complexStatistics.contains(statistic);
     }
 
@@ -179,3 +201,4 @@ public abstract class AStatistics implements IStatistics {
         return false;
     }
 }
+

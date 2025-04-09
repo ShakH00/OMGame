@@ -1,26 +1,20 @@
 package matchoutcome;
-//
-//import game.GamesEnum;
-//import org.junit.Before;
-//import player.Account;
-//import player.Player;
 
-public class MatchOutcomeHandlerTest {
+import account.statistics.MatchOutcomeHandler;
+import account.statistics.MatchOutcomeInvalidError;
+import account.statistics.StatisticType;
+import game.GameType;
+import account.Account;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.HashMap;
 
-//    private Player player1;
-//    private Player player2;
-//
-//    @Before
-//    public void setUp() {
-//        Account account1 = new Account("Alice", 1);
-//        Account account2 = new Account("Bob", 2);
-//
-//        // Set default ELO
-//        account1.updateElo(GamesEnum.CHESS, 1200);
-//        account2.updateElo(GamesEnum.CHESS, 1200);
-//
-//        player1 = new Player(account1);
-//        player2 = new Player(account2);
-//    }
+import static org.junit.jupiter.api.Assertions.*;
+
+class MatchOutcomeHandlerTest {
+    private Account player1;
+    private Account player2;
+    private HashMap<StatisticType, Integer> player1Stats;
+    private HashMap<StatisticType, Integer> player2Stats;
 
 }

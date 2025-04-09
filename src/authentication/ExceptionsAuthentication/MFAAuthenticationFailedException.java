@@ -10,6 +10,7 @@ public class MFAAuthenticationFailedException extends Exception {
      * @param message - Message is displayed if an exception occurs
      */
     public MFAAuthenticationFailedException(String message) {
+
         super(message);
     }
 }
