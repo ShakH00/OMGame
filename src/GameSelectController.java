@@ -1,14 +1,19 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 
 public class GameSelectController extends Application {
@@ -31,6 +36,12 @@ public class GameSelectController extends Application {
     StackPane profile;
     @FXML
     StackPane leaderboard;
+    @FXML
+    Pane joinPopup;
+    @FXML
+    Label waitingLabel;
+    @FXML
+    Label gameSelectedLabel;
 
     @Override
     public void start(Stage primaryStage) {
@@ -75,6 +86,8 @@ public class GameSelectController extends Application {
         UtilityManager.createTranslationTransition(orangeCartridge);
         UtilityManager.createScaleTransition(leaderboard);
         UtilityManager.createScaleTransition(profile);
+
+        startDotAnimation();
     }
 
     @FXML
@@ -85,30 +98,44 @@ public class GameSelectController extends Application {
 
     @FXML
     private void switchToProfile(javafx.scene.input.MouseEvent mouseEvent) {
+
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/UserProfile.fxml");
     }
 
+    // TODO: all four of these games should open joinPopup when a game is clicked, wait for a match to be found, and then switch screens to the appropriate game
+    // right now, it opens the popup and then switches screens w/o waiting for a match to be found
+
     @FXML
     private void switchToConnect4(javafx.scene.input.MouseEvent mouseEvent) {
+        gameSelectedLabel.setText("You selected: Connect 4");
+        joinPopup.setVisible(true);
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Connect4.fxml");
     }
 
     @FXML
     private void switchToTicTacToe(javafx.scene.input.MouseEvent mouseEvent) {
+        gameSelectedLabel.setText("You selected: TicTacToe");
+        joinPopup.setVisible(true);
+
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/TicTacToe.fxml");
     }
 
     @FXML
     private void switchToChess(javafx.scene.input.MouseEvent mouseEvent) {
+        gameSelectedLabel.setText("You selected: Chess");
+        joinPopup.setVisible(true);
+
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Chess.fxml");
     }
 
     @FXML
     private void switchToCheckers(javafx.scene.input.MouseEvent mouseEvent) {
+        gameSelectedLabel.setText("You selected: Checkers");
+        joinPopup.setVisible(true);
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Checkers.fxml");
     }
@@ -121,6 +148,33 @@ public class GameSelectController extends Application {
         System.out.println("LEADERBOARD");
     }
 
+    @FXML
+    private void onCancelButtonClicked() {
+        joinPopup.setVisible(false);
+    }
+
+    // methods to add dots one by one to waitingLabel, which shows that player is waiting for a match
+    private String baseText = "Waiting for a match";
+    private int dotCount = 0;
+
+    private void startDotAnimation() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.5), event -> updateLabelText())
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    private void updateLabelText() {
+        // add dots one by one to the waitingLabel
+        if (dotCount < 3) {
+            waitingLabel.setText(baseText + ".".repeat(dotCount + 1));
+            dotCount++;
+        } else {
+            waitingLabel.setText(baseText);  // reset back to base
+            dotCount = 0;
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }
