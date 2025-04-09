@@ -15,12 +15,12 @@
   - Apache running = Your web server is active.
   - MySQL running = Your database is ready.
 
-# Step 3: Open phpMyadmin
+# Step 3: Open phpmyadmin
 - Open any browser.
 - Enter: http://localhost/phpmyadmin/
 - You should now see the phpMyAdmin dashboard!
 
-# Step 4: Making it work with java
+# Step 4: Download MySQL Connector
 - Download mysql connector from https://dev.mysql.com/downloads/connector/j/
 - Choose platform independent operating system.
 - Download the ZIP file, extract and you will see mysql-connector-j-<version>.jar, this is the file you'll use in your Java Project
@@ -28,11 +28,7 @@
 - Click “+” → Java, then select the JAR file. 
 - Apply & OK.
 
-## I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
-
-
-# To create our DATABASE!!
-
+# Step 5: Initialize Database
 1. After opening phpMyAdmin http://localhost/phpmyadmin/ go to the SQL option should be in the top nav bar.
 2. Enter these SQL Statements separately
    - Create Database OMGAMEDB;
@@ -45,8 +41,20 @@
      Statistics TEXT,
      MatchHistory TEXT
      )
-3. Then you should be able to see your database in the left side bar and your table inside!!
+   - CREATE TABLE Matchmaking(
+     ID INT PRIMARY KEY,
+     STATE VARCHAR(255),
+     GAME VARCHAR(255),
+     START_TIME FLOAT(32),
+     RECENT_TIME FLOAT(32),
+     ELO INT,
+     ELO_RANGE INT,
+     OPPONENT_ID INT,
+     NETWORKING_INFO VARCHAR(255),
+     ROOM_CODE VARCHAR(255)
+     )
+3. Then you should be able to see your database in the left side bar and your tables inside!
 
 # NOTE
 - We set ID to autoincrement so the database assigns an id to each account that gets saved to the database
-- Username and email are se to unique
+- Username and email are set to unique

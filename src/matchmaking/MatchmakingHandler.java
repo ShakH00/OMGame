@@ -68,6 +68,7 @@ public class MatchmakingHandler {
             TimeUnit.SECONDS.sleep(1);
         }
 
+        TimeUnit.SECONDS.sleep(1);  // Stay in database for an additional second to let opponent get details
         removeFromMatchmakingTable(selfID);
     }
 
@@ -110,6 +111,7 @@ public class MatchmakingHandler {
 
             // Tell opponent that you are ready to match
             setState(opponentID, MatchmakingState.FOUND_MATCH);
+            setOpponentID(opponentID, selfID);
 
             // Start match
             GameType game = queryGame(opponentID);
@@ -147,10 +149,10 @@ public class MatchmakingHandler {
 
         // Get info for game logic/GUI
         Account self = DatabaseManager.queryAccountByID(id);
-        String selfUsername = self != null ? self.getUsername() : "?";
+        String selfUsername = self != null ? self.getUsername() : "Guest";
 
         Account opponent = DatabaseManager.queryAccountByID(opponentID);
-        String opponentUsername = opponent != null ? opponent.getUsername() : "?";
+        String opponentUsername = opponent != null ? opponent.getUsername() : "Guest";
 
         System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", id, opponentUsername, opponentID);
 

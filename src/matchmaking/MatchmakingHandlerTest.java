@@ -74,22 +74,34 @@ public class MatchmakingHandlerTest {
         DatabaseManager.saveAccount(testAccount1);
         DatabaseManager.saveAccount(testAccount2);
         Account testAccount3 = new Account();   // Guest account
+        Account testAccount4 = new Account();   // Guest account
 
         // Test host, client
         MatchmakingHandler handler1 = new MatchmakingHandler(testAccount1, "");
-        MatchmakingHandler handler2 = new MatchmakingHandler(testAccount3, "");
+        MatchmakingHandler handler2 = new MatchmakingHandler(testAccount2, "");
+        MatchmakingHandler handler3 = new MatchmakingHandler(testAccount3, ""); // Guest account
+        MatchmakingHandler handler4 = new MatchmakingHandler(testAccount4, ""); // Guest account
 
         String code = handler1.getUniqueRoomCode();
+//
+//        HostThread host = new HostThread(handler4, code, "", testAccount1.getID());
+//        host.start();
+//
+//        TimeUnit.SECONDS.sleep(1);
 
-        HostThread host = new HostThread(handler1, code, "", testAccount1.getID());
+//        ClientThread client = new ClientThread(handler2, code, "", testAccount2.getID());
+//        client.start();
+//        int tempID0 = DatabaseManager.getTempID();
+        int tempID1 = DatabaseManager.getTempID();
+        HostThread host = new HostThread(handler4, code, "", tempID1);
         host.start();
 
         TimeUnit.SECONDS.sleep(1);
 
-        ClientThread client = new ClientThread(handler2, code, "", testAccount2.getID());
+        int tempID2 = DatabaseManager.getTempID();
+        ClientThread client = new ClientThread(handler3, code, "", tempID2);
         client.start();
     }
-
 }
 
 class HostThread extends Thread {
