@@ -32,7 +32,7 @@ public class DatabaseManagerTest {
     @Test
     void testStoreAccount() {
         resetDatabase();
-        Account account = new Account(1, "testuser", "test@example.com", "pass123");
+        Account account = new Account(1,"testuser", "test@example.com", "pass123");
         account.addFriend(1);
         account.addFriend(2);
 
@@ -46,6 +46,20 @@ public class DatabaseManagerTest {
         Account stored = DatabaseManager.queryAccountByID(1);
         assertNotNull(stored);
         assertEquals("testuser", stored.getUsername());
+    }
+
+    @Test
+    void testRetrieveAccount() {
+        Account retrieved = DatabaseManager.queryAccountByID(1);
+        assertNotNull(retrieved, "Account should exist in DB");
+        assertEquals("testuser", retrieved.getUsername());
+        assertEquals("test@example.com", retrieved.getEmail());
+        assertEquals("pass123", retrieved.getPassword());
+
+        assertEquals(2, retrieved.getFriendIDs().size());
+        assertTrue(retrieved.getFriendIDs().contains(1));
+        assertTrue(retrieved.getFriendIDs().contains(2));
+
     }
 
 }
