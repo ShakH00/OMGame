@@ -36,25 +36,123 @@ public class King extends MovingPiece {
 
     /**
      * Method to move the king
-     * @param currentX: current x coordinate that the king sits on
-     * @param currentY: current y coordinate that the king sits on
      * @param newX: new x coordinate that the king might move to
      * @param newY: new y coordinate that the king might move to
      * @param gameBoard: board being played on
+     * @return true if piece was moved
      */
     @Override
-    protected void move(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        if(isValidMove(currentX, currentY, newX, newY, gameBoard)){
+    public boolean move(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
+        if(isValidMove(newX, newY, gameBoard)){
             Piece[][] board = gameBoard.getBoardState();
-            board[currentX][currentY] = null;
-            this.setX(newX);
-            this.setY(newY);
-            board[newX][newY] = this;
+
+            //if trying to castle then also move rook
+            if(isTryingToCastle(currentX, currentY, newX, newY, gameBoard)){
+                Object[] rookInfo = getCastlingRook(currentX, currentY, newX, newY, gameBoard); //get rook info to castle
+                if (rookInfo != null) {
+                    Rook rook = (Rook) rookInfo[0];
+                    int oldRookX = (int) rookInfo[1];
+                    int oldRookY = (int) rookInfo[2];
+                    int newRookX = (int) rookInfo[3];
+                    int newRookY = (int) rookInfo[4];
+                    //perform castle move
+                    board[oldRookX][oldRookY] = null;
+                    board[newRookX][newRookY] = rook;
+                    rook.setX(newRookX);
+                    rook.setY(newRookY);
+                    rook.setDoneFirstMove(true); //tracked for castle stuff
+                    board[currentX][currentY] = null;
+                    this.setX(newX);
+                    this.setY(newY);
+                    board[newX][newY] = this;
+                }
+            } else{
+                //normal move, no rook castling stuff
+                board[currentX][currentY] = null;
+                this.setX(newX);
+                this.setY(newY);
+                board[newX][newY] = this;
+            }
             if(!doneFirstMove){
                 this.doneFirstMove = true;
             }
+            return true;
         }
+        return false; //move did not happen
     }
+
+    /**
+     * Checks if the King is attempting to castle, used to move the rook if true
+     * Assumes king has not moved, and castling logic is not blocked by check conditions here.
+     * @param currentX: x coordinate initially
+     * @param currentY: y coordinate initially
+     * @param newX: The x coordinate king is moving to
+     * @param newY: The y coordinate king is moving to
+     * @param gameBoard: board being played on
+     * @return true if the king is trying to castle
+     */
+    protected boolean isTryingToCastle(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+        Piece[][] board = gameBoard.getBoardState();
+
+        //king must not have done first move yet
+        if (doneFirstMove || currentX != newX) {
+            return false;
+        }
+
+        //check for kingside castle (rook on the right)
+        if (newY - currentY == 2) {
+            Piece potentialRook = board[currentX][7];
+            if (potentialRook instanceof Rook) {
+                Rook rook = (Rook) potentialRook;
+                if (!rook.isDoneFirstMove()
+                        && board[currentX][5] == null
+                        && board[currentX][6] == null) {
+                    return true;
+                }
+            }
+        }
+
+        //Queenside castle (rook on the left)
+        if (currentY - newY == 2) {
+            Piece potentialRook = board[currentX][0];
+            if (potentialRook instanceof Rook) {
+                Rook rook = (Rook) potentialRook;
+                if (!rook.isDoneFirstMove()
+                        && board[currentX][1] == null
+                        && board[currentX][2] == null
+                        && board[currentX][3] == null) {
+                    return true;
+                }
+            }
+        }
+
+        return false; //not trying to castle if reached end of method
+    }
+
+    /**
+     * Finds the rook involved in castling (either kingside or queenside)
+     * @param newX: The x coordinate the king moved to
+     * @param newY: The y coordinate the king moved to
+     * @param gameBoard: board being played on
+     * @return an array: [rook, oldX, oldY, newX, newY] for moving the rook
+     */
+    protected Object[] getCastlingRook(int currentX, int currentY, int newX, int newY, Board gameBoard) {
+        Piece[][] board = gameBoard.getBoardState();
+        // Kingside
+        if (newY - currentY == 2) {
+            Rook rook = (Rook) board[currentX][7];
+            return new Object[]{rook, currentX, 7, currentX, 5};
+        }
+        // Queenside
+        else if (currentY - newY == 2) {
+            Rook rook = (Rook) board[currentX][0];
+            return new Object[]{rook, currentX, 0, currentX, 3};
+        }
+        return null;
+    }
+
 
     /**
      * A method to check if the tile the game.chess.King is being moved to is a valid move
@@ -64,39 +162,44 @@ public class King extends MovingPiece {
      *      was one of the rooks, with absolutely no piece in between them to stop it, then the rook and king
      *      will effectively alternate positions ending up side by side, clearing the edge
      * A king cannot move into a tile if it would cause him to end up in check, or checkmate
-     * @param currentX: current x coordinate of king's location
-     * @param currentY: current y coordinate of king's location
      * @param newX: x coordinate of tile that the king might be moved to
      * @param newY: y coordinate of tile that the king might be moved to
      * @param gameBoard: board being played on
      * @return true if this is a valid move to perform for the king
      */
     @Override
-    protected boolean isValidMove(int currentX, int currentY, int newX, int newY, Board gameBoard) {
-        //checking if any piece's movement may cause the king to be put in check will be done within the Chess file instead
+    public boolean isValidMove(int newX, int newY, Board gameBoard) {
+        int currentX = this.getX();
+        int currentY = this.getY();
         Piece[][] board = gameBoard.getBoardState();
         PieceType type = this.getPieceType();
         Piece isPieceOnTile = board[newX][newY];
-        //might be trying to castle
-        if(!doneFirstMove || board[newX][newY] == null){
-                if(newY-currentY == 2 && board[currentX][7] instanceof Rook){
-                    Rook rook = (Rook) board[currentX][7];
-                    if(rook.isDoneFirstMove() && board[currentX][6] == null && board[currentX][5] == null){
-                        return true;
-                    }
-                } else if(currentY-newY == 2 && board[currentX][0] instanceof Rook){
-                    Rook rook = (Rook) board[currentX][0];
-                    if(rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null){
-                        return true;
-                    }
-                }
 
-        } else{
-            if(isPieceOnTile == null || isPieceOnTile.getPieceType() != type){
+        int dx = Math.abs(newX - currentX);
+        int dy = Math.abs(newY - currentY);
+
+        //regulr king move: one square in any direction
+        if ((dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0)) {
+            return isPieceOnTile == null || isPieceOnTile.getPieceType() != type;
+        }
+
+        //kingside castling check
+        if (!doneFirstMove && newY - currentY == 2 && dx == 0 && board[currentX][7] instanceof Rook) {
+            Rook rook = (Rook) board[currentX][7];
+            if (!rook.isDoneFirstMove() && board[currentX][5] == null && board[currentX][6] == null) {
                 return true;
             }
         }
-        return false;
+
+        //queenside castling check
+        if (!doneFirstMove && currentY - newY == 2 && dx == 0 && board[currentX][0] instanceof Rook) {
+            Rook rook = (Rook) board[currentX][0];
+            if (!rook.isDoneFirstMove() && board[currentX][1] == null && board[currentX][2] == null && board[currentX][3] == null) {
+                return true;
+            }
+        }
+
+        return false; //if reach end of method then invalid move
     }
 
 

@@ -1,8 +1,11 @@
+package networking;
+
 import static org.junit.Assert.*;
+
+import networking.test.stubs;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-import java.util.HashMap;
 
 public class StubsTest {
     private stubs.PlayerDatabaseStubs dbStubs;

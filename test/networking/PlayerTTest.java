@@ -1,3 +1,6 @@
+package networking;
+
+import networking.test.PlayerT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,16 +32,6 @@ class PlayerTTest {
     }
 
     // ASKED CHATGTP FOR THESE TEST
-    @Test
-    void toggleButtons() {
-        player.buttonsEnabled = false;
-        player.toggleButtons();
-        assertFalse(player.b01.isEnabled(), "Button b01 should be disabled when buttonsEnabled is false");
-
-        player.buttonsEnabled = true;
-        player.toggleButtons();
-        assertTrue(player.b01.isEnabled(), "Button b01 should be enabled when buttonsEnabled is true");
-    }
 
 
     @Test

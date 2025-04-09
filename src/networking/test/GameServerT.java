@@ -1,13 +1,20 @@
-import game.tictactoe.TicTacToe;
+/* package networking.test;
+
+import game.tictactoe.TicTacToe_Logic;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class GameServerT {
     private Map<Integer, ServerSideConnection> disconnectedPlayers;
@@ -21,6 +28,8 @@ public class GameServerT {
     private int maxTurns;
     private int[] values;
     private char[][] server2dChar;
+    private HashMap<Integer, String> chatlogs;
+
 
     // store  the button num that the player clicked on, befroe being sent to the other player
     // don in the run method while loop, for each turns
@@ -29,7 +38,7 @@ public class GameServerT {
 
 
     //GAME LOGIC UHHH
-    private TicTacToe ticTacToeGame = new TicTacToe();
+    private TicTacToe_Logic ticTacToeGame = new TicTacToe_Logic();
 
     public GameServerT() {
         System.out.println("--game server--");
@@ -40,6 +49,8 @@ public class GameServerT {
         server2dChar = new char[3][3];
         disconnectedPlayers = new HashMap<>();
         gameInProgress = false;
+
+
 
         for (int i = 0; i < 4; i++) { //Ading the values fromt he server not
             values[i] = i;
@@ -68,10 +79,8 @@ public class GameServerT {
     }
 
     public void acceptConnections(){
-
         try {
             System.out.println("waiting for connections");
-
             while (numPlayers < 2) {
                 Socket s = ss.accept();
                 numPlayers++;
@@ -113,7 +122,6 @@ public class GameServerT {
             }
             disconnectedPlayers.remove(playerID);
             new Thread(newConnection).start();
-            sendGameState(playerID);
             return true;
         } catch (Exception e) {
             System.err.println("Reconnection failed: " + e.getMessage());
@@ -134,36 +142,9 @@ public class GameServerT {
         }
     }
 
-    public void sendGameState(int playerID) {
-        ServerSideConnection player = (playerID == 1) ? player1 : player2;
-        if (player != null) {
-            player.send2dCharArray();
-        }
-    }
 
     private boolean isValidMove(String move, int playerID) {
-        try {
-            String[] coords = move.split(",");
-            int row = Integer.parseInt(coords[0]);
-            int col = Integer.parseInt(coords[1]);
-            
-            // Check if within bounds
-            if (row < 0 || row >= 3 || col < 0 || col >= 3) {
-                return false;
-            }
-            
-            // Check if space is empty
-            if (server2dChar[row][col] != ' ') {
-                return false;
-            }
-            
-            // Check if it's player's turn
-            boolean isPlayer1Turn = turnsMade % 2 == 0;
-            return (playerID == 1 && isPlayer1Turn) || (playerID == 2 && !isPlayer1Turn);
-            
-        } catch (Exception e) {
-            return false;
-        }
+        return true;
     }
 
     private class ServerSideConnection implements Runnable{
@@ -180,6 +161,7 @@ public class GameServerT {
             try {
                 dataIn = new DataInputStream(socket.getInputStream());
                 dataOut = new DataOutputStream(socket.getOutputStream());
+
             } catch (IOException e) {
                 System.out.println("IOException from game server constructor: ServerSideConnection");
             }
@@ -195,14 +177,13 @@ public class GameServerT {
                     }
                 }
                 dataOut.flush();
-                TicTacToe game = new TicTacToe();
+                TicTacToe_Logic game = new TicTacToe_Logic();
 
                 while (true) {
                     if(playerID == 1){
                         player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
-
                         //processGameLogicP1(player1ButtonNum);
                         processGameLogic(1,player1ButtonNum);
                         for (char[] row : server2dChar) {
@@ -344,3 +325,4 @@ public class GameServerT {
 
     }
 }
+*/

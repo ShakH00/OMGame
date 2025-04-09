@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -23,13 +24,23 @@ public class SignUpController extends Application {
     @FXML
     private StackPane submitButton;
     @FXML
-    private StackPane guestButton;
+    private Text guestText;
 
     @Override
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
+
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
+
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
+            Font pixeliteFont = Font.loadFont(pixelitePath, 40);
+
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
 
@@ -44,10 +55,10 @@ public class SignUpController extends Application {
     }
 
     public void initialize() {
-        StartController.createScaleTransition(backButtonSignUp);
-        StartController.createScaleTransition(toLogin);
-        StartController.createScaleTransition(submitButton);
-        StartController.createScaleTransition(guestButton);
+        UtilityManager.createScaleTransition(backButtonSignUp);
+        UtilityManager.createScaleTransition(toLogin);
+        UtilityManager.createScaleTransition(submitButton);
+        UtilityManager.colourTransition(guestText);
     }
 
     @FXML
@@ -61,15 +72,12 @@ public class SignUpController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Start.fxml");
     }
-
     @FXML
-    private void handleCloseButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
-        Parent helpRoot = loader.load();
-        helpRoot.setOnMouseClicked(event -> {
-            helpRoot.setVisible(false);  // Hide the popup
-        });
+    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
+
 
     public static void main(String[] args) {
         launch(args);

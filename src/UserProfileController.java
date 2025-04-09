@@ -32,8 +32,8 @@ public class UserProfileController extends Application {
             Font pressStartFont = Font.loadFont(fontPath, 40);
             Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
             Font pixeliteFont = Font.loadFont(pixelitePath, 40);
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             ImageView gifView = new ImageView(new Image(getClass().getResource("/images/twinklingstars.gif").toExternalForm()));
 
@@ -107,32 +107,27 @@ public class UserProfileController extends Application {
     private Pane friendsPane;
 
     @FXML
+    private StackPane settingsButton;
+
+    @FXML
     public void initialize() {
         // Apply hover effect to each pane
-        addHoverEffect(rankPane);
-        addHoverEffect(chessPane);
-        addHoverEffect(tictactoePane);
-        addHoverEffect(checkersPane);
-        addHoverEffect(connect4Pane);
-        addHoverEffect(overallPane);
-        addHoverEffect(friendsPane);
+        UtilityManager.addHoverEffect(rankPane);
+        UtilityManager.addHoverEffect(chessPane);
+        UtilityManager.addHoverEffect(tictactoePane);
+        UtilityManager.addHoverEffect(checkersPane);
+        UtilityManager.addHoverEffect(connect4Pane);
+        UtilityManager.addHoverEffect(overallPane);
+        UtilityManager.addHoverEffect(friendsPane);
+        UtilityManager.createScaleTransition(settingsButton);
     }
 
-
-        public void addHoverEffect (Pane pane){
-            ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
-            scaleIn.setToX(1.05);
-            scaleIn.setToY(1.05);
-
-            ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
-            scaleOut.setToX(1.0);
-            scaleOut.setToY(1.0);
-
-            pane.setOnMouseEntered(e -> scaleIn.play());
-            pane.setOnMouseExited(e -> scaleOut.play());
-        }
+    @FXML
+    private void goToSettings() {
+        System.out.println("To user settings");
+    }
 
     public static void main (String[]args){
-            launch(args);
-        }
+        launch(args);
     }
+}

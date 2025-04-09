@@ -1,3 +1,5 @@
+package networking.test;
+
 import java.net.ServerSocket;
 import java.util.*;
 

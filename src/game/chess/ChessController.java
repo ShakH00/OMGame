@@ -1,162 +1,292 @@
-package game.chess; /**
- *
- * This is the SHITTIEST code ive ever written in my life. It works and IDK why.
- * It's SO inefficient.
- * Nothing works how it should work but have fun game logic
- *
- * - Shakil :) (im dying its 1am)
- */
+package game.chess;
 
+import game.Board;
+import game.GameState;
+import game.GameType;
+import game.chess.Chess;
+import game.pieces.MovingPiece;
+import game.pieces.Piece;
+import game.pieces.PieceType;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+
 /**
- * Displays a chessboard and pieces on the board.
+ * Displays a chess board and pieces on the board.
  *
- * @author Shakil Hussain
+ * @author Shakil Hussain and Arwa A, modified by Adam Chan
  */
 public class ChessController extends Application {
 
-    private static final int TILE_SIZE = 64; // Size of each tile on the chessboard
-    private static final int BOARD_SIZE = 8; // Number of rows and columns on the board
-    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/"; // Path to chess piece images
+    private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
-    // Initial chessboard layout
-    private final String[][] board = {
-            {"blackRookChess", "blackKnightChess", "blackBishopChess", "blackQueenChess", "blackKingChess", "blackBishopChess", "blackKnightChess", "blackRookChess"},
-            {"blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess", "blackPawnChess"},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {"whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess", "whitePawnChess"},
-            {"whiteRookChess", "whiteKnightChess", "whiteBishopChess", "whiteQueenChess", "whiteKingChess", "whiteBishopChess", "whiteKnightChess", "whiteRookChess"}
-    };
+    @FXML
+    private GameState currentState;
+    @FXML
+    private GridPane gameBoard;
+    @FXML
+    private Chess game = new Chess();
+    @FXML
+    private Label p1Label;
+    @FXML
+    private Label p2Label;
+    @FXML
+    private StackPane menuButton;
+    @FXML
+    private StackPane chatButton;
+    @FXML
+    private AnchorPane rootPane;
 
-    private int selectedX = -1, selectedY = -1;
+    @FXML
+    private Pane pawnPromotion;
 
-    /**
-     * Setting up the chessboard UI
-     *
-     * @author Shakil Hussain
-     */
+    @FXML
+    private StackPane knightButton;
+    @FXML
+    private StackPane bishopButton;
+    @FXML
+    private StackPane rookButton;
+    @FXML
+    private StackPane queenButton;
+
+
+    private int selectedRow = -1;
+    private int selectedCol = -1;
+    private MovingPiece promotionPawn; // temporarily store the pawn
+
+
     @Override
     public void start(Stage primaryStage) {
-        Pane root = new Pane();
-        Canvas canvas = new Canvas(TILE_SIZE * BOARD_SIZE, TILE_SIZE * BOARD_SIZE);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Chess.fxml"));
+            Scene scene = new Scene(loader.load(), 800, 570);
+////
+////            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+////            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+////            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
+////
+////            Font pressStartFont = Font.loadFont(fontPath, 40);
+////            Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
+////            Font pixeliteFont = Font.loadFont(pixelitePath, 40);
+//
+//            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            primaryStage.setResizable(false);
 
-        drawChessBoard(gc);
-        drawPieces(gc);
+            // set up the primary stage
+            primaryStage.setTitle("OMG!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
 
-        canvas.setOnMouseClicked(event -> handleMouseClick(event, gc));
-
-        // Create buttons
-        Button offerDrawButton = new Button("Offer Draw");
-        offerDrawButton.setLayoutX(650);
-        offerDrawButton.setLayoutY(10);
-        offerDrawButton.setOnAction(e -> handleOfferDraw());
-
-        Button resignButton = new Button("Resign");
-        resignButton.setLayoutX(650);
-        resignButton.setLayoutY(50);
-        resignButton.setOnAction(e -> handleResign());
-
-        root.getChildren().addAll(canvas, offerDrawButton, resignButton);
-        Scene scene = new Scene(root, 800, 600);
-
-        primaryStage.setTitle("Chess Board");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
-    /**
-     * Draws the chessboard on the canvas
-     *
-     * @param gc GraphicsContext used for drawing
-     *
-     * @author Shakil Hussain
-     */
-    private void drawChessBoard(GraphicsContext gc) {
-        boolean white = true;
-        for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                gc.setFill(white ? Color.rgb(235, 235, 208) : Color.rgb(119, 148, 85));
-                gc.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                white = !white;
-            }
-            white = !white;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Draws the chess pieces
-     *
-     * @param gc GraphicsContext used for drawing images
-     *
-     * @author Shakil Hussain
-     */
-    private void drawPieces(GraphicsContext gc) {
-        for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                String pieceName = board[y][x];
-                if (pieceName != null) {
-                    Image pieceImage = new Image(ASSETS_PATH + pieceName + ".png", TILE_SIZE, TILE_SIZE, true, true);
-                    gc.drawImage(pieceImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
+    private void handleMove(int row, int col) {
+        Piece[][] boardState = game.getBoard().getBoardState();
+        Piece clicked = boardState[row][col];
+
+        // no selection yet
+        if (selectedRow == -1 && clicked instanceof MovingPiece moving) {
+            // check if it's the current player's turn
+            PieceType currentTurn = (game.getState() == GameState.P1_TURN) ? PieceType.LIGHT : PieceType.DARK;
+            if (moving.getPieceType() == currentTurn) {
+                selectedRow = row;
+                selectedCol = col;
+            }
+            return;
+        }
+
+        // there is a piece already selected
+        if (selectedRow != -1) {
+            MovingPiece selectedPiece = (MovingPiece) boardState[selectedRow][selectedCol];
+
+            game.move(selectedPiece, row, col);
+
+            if (selectedPiece instanceof Pawn) {
+                boolean toPromote = ((Pawn) selectedPiece).checkPromotion();
+
+
+                if (toPromote) {
+                    promotionPawn = selectedPiece; // store the pawn to promote
+                    pawnPromotion.setVisible(true); // make promotion popup visible
+                    return; // pause until promotion gets chosen
+                }
+            }
+
+
+            // clear selection only after a valid move or promotion
+                selectedRow = -1;
+                selectedCol = -1;
+            updateBoard();
+        }
+    }
+
+    // edits the null image in gameboard to reflect the piece the player has put down.
+    private void updateBoard() {
+
+        Piece[][] board = game.getBoard().getBoardState();
+
+        if (game.getState() == GameState.P1_TURN) {
+            System.out.println("Player 1 (Pink)'s turn!");
+            updatePlayerLabels();
+        } else if (game.getState() == GameState.P2_TURN){
+            System.out.println("Player 2 (Blue)'s turn!");
+            updatePlayerLabels();
+        }
+
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                ImageView imageView = getNodeByRowColumnIndex(row, col, gameBoard);
+                Piece currentPiece = board[row][col];
+
+                if (imageView == null) continue; // prevent null pointer just in case
+
+                if (currentPiece == null) {
+                    imageView.setImage(null); // empty cell
+                } else {
+                    String colorPrefix = currentPiece.getColor().equals(Color.WHITE) ? "pink" : "blue";
+                    String pieceName = "";
+
+                    if (currentPiece instanceof Pawn) {
+                        pieceName = "Pawn";
+                    } else if (currentPiece instanceof Rook) {
+                        pieceName = "Rook";
+                    } else if (currentPiece instanceof Knight) {
+                        pieceName = "Knight";
+                    } else if (currentPiece instanceof Bishop) {
+                        pieceName = "Bishop";
+                    } else if (currentPiece instanceof Queen) {
+                        pieceName = "Queen";
+                    } else if (currentPiece instanceof King) {
+                        pieceName = "King";
+                    }
+
+                    String imagePath = ASSETS_PATH + colorPrefix + pieceName + "Chess.png";
+                    imageView.setImage(new Image(imagePath));
                 }
             }
         }
     }
 
-    /**
-     * Handles mouse clicks for selecting and moving pieces
-     *
-     * @param event MouseEvent containing click coordinates
-     * @param gc GraphicsContext used to redraw the board
-     *
-     * @author Shakil Hussain
-     */
-    private void handleMouseClick(MouseEvent event, GraphicsContext gc) {
-        int x = (int) (event.getX() / TILE_SIZE);
-        int y = (int) (event.getY() / TILE_SIZE);
+    // used to find the appropriate node on the gameboard that we need to adjust
+    private ImageView getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            Integer c = GridPane.getColumnIndex(node);
+            int actualRow = (r == null) ? 0 : r;
+            int actualCol = (c == null) ? 0 : c;
 
-        if (selectedX == -1 && selectedY == -1) {
-            // Selecting a piece
-            if (board[y][x] != null) {
-                selectedX = x;
-                selectedY = y;
+            if (actualRow == row && actualCol == column) {
+                return (ImageView) node;
             }
-        } else {
-            // Moving the selected piece
-            board[y][x] = board[selectedY][selectedX];
-            board[selectedY][selectedX] = null;
-            selectedX = -1;
-            selectedY = -1;
         }
-        drawChessBoard(gc);
-        drawPieces(gc);
+        return null;
+    }
+
+    private void updatePlayerLabels() {
+        if (game.getState() == GameState.P2_TURN) {
+            p1Label.setOpacity(.5);
+            p2Label.setOpacity(1);
+        } else if (game.getState() == GameState.P1_TURN) {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(.5);
+        } else {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(1);
+        }
+
+    }
+
+    public void initialize() {
+        Board board = new Board(GameType.CHECKERS);
+        game.setBoard(board);
+        for (Node node : gameBoard.getChildren()) {
+            Integer row = GridPane.getRowIndex(node);
+            Integer col = GridPane.getColumnIndex(node);
+            int r = row == null ? 0 : row;
+            int c = col == null ? 0 : col;
+
+            node.setOnMouseClicked(e -> handleMove(r, c));
+            }
+        game.start(); // push game out of setup mode
+        updateBoard();
+        //UtilityManager.createScaleTransition(menuButton);
+        //UtilityManager.createScaleTransition(chatButton);
+    }
+
+    @FXML
+    public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        //UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    @FXML
+    public void goToChat() {
+        //UtilityManager.chatControl();
     }
 
     private void handleOfferDraw() {
-        // Handle draw offer logic here, e.g., show a message or ask for confirmation
         System.out.println("Draw offer sent!");
     }
 
     private void handleResign() {
-        // Handle resignation logic here, e.g., end the game or show a resignation message
-        System.out.println("You resigned!");
+        game.surrender();
+        game.matchOutcome();
+    }
+
+    @FXML
+    private void handleKnight() {
+        ((Pawn) promotionPawn).promote(1, game.getBoard());
+        pawnPromotion.setVisible(false);
+        selectedRow = -1;
+        selectedCol = -1;
+        updateBoard();
+    }
+
+    @FXML
+    private void handleBishop() {
+        ((Pawn) promotionPawn).promote(2, game.getBoard());
+        pawnPromotion.setVisible(false);
+        selectedRow = -1;
+        selectedCol = -1;
+        updateBoard();
+    }
+
+    @FXML
+    private void handleRook() {
+        ((Pawn) promotionPawn).promote(3, game.getBoard());
+        pawnPromotion.setVisible(false);
+        selectedRow = -1;
+        selectedCol = -1;
+        updateBoard();
+    }
+
+    @FXML
+    private void handleQueen() {
+        ((Pawn) promotionPawn).promote(4, game.getBoard());
+        pawnPromotion.setVisible(false);
+        selectedRow = -1;
+        selectedCol = -1;
+        updateBoard();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }
+
