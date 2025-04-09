@@ -32,8 +32,9 @@ public class MatchmakingHandler {
         while (state == MatchmakingState.MATCHMAKING){
             // Check own information to see if another account is already requesting a match
             if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                int opponent_ID = querySelfOpponentID();
-                startMatch(game, true, opponent_ID);
+                int opponentID = querySelfOpponentID();
+                String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
+                startMatch(game, true, opponentID, opponentNetworkingInformation);
                 break;
             }
 
@@ -44,19 +45,20 @@ public class MatchmakingHandler {
             // Search for other players who this can match with
             if (!queryAllOtherIDs().isEmpty()) {
                 System.out.println("ID: " + queryAllOtherIDs().getFirst());
-                for (int id : queryAllOtherIDs()) {
-                    double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(id));
+                for (int opponentID : queryAllOtherIDs()) {
+                    double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(opponentID));
                     if (msSinceLastCommunicated > 5000) {
-                        System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds\n", id);
-                        removeFromMatchmakingTable(id);
-                    } else if (canMatchWith(id)) {
+                        System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds\n", opponentID);
+                        removeFromMatchmakingTable(opponentID);
+                    } else if (canMatchWith(opponentID)) {
                         // Notify the other that they are going to match with you
-                        System.out.printf("Found acceptable match with id %s. Updating their information...\n", id);
-                        setState(id, MatchmakingState.FOUND_MATCH);
-                        setOpponentID(id, selfID);
+                        System.out.printf("Found acceptable match with id %s. Updating their information...\n", opponentID);
+                        setState(opponentID, MatchmakingState.FOUND_MATCH);
+                        setOpponentID(opponentID, selfID);
 
                         // Start the match on your client
-                        startMatch(game, true, id);
+                        String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
+                        startMatch(game, true, opponentID, opponentNetworkingInformation);
                         break;
                     }
                 }
@@ -86,37 +88,9 @@ public class MatchmakingHandler {
         while (state == MatchmakingState.HOSTING){
             // Check own information to see if another account is already requesting a match
             if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                int opponent_ID = querySelfOpponentID();
-                startMatch(game, false, opponent_ID);
-                break;
-            }
-
-            // Update own information
-            setSelfRecentTime(System.currentTimeMillis());
-
-            // Wait 1 second before checking again if someone has joined
-            TimeUnit.SECONDS.sleep(1);
-        }
-
-        removeFromMatchmakingTable(selfID);
-    }
-
-    public void startHosting(GameType game, String roomCode, int opponentIDRestriction) throws InterruptedException {
-        state = MatchmakingState.HOSTING;
-
-        // If the given room code is not unique, generate a new one.
-        if (queryRoomCodeInTable(roomCode)){
-            roomCode = getUniqueRoomCode();
-        }
-
-        // Add info to matchmaking table
-        addToMatchmakingTable(game, roomCode, opponentIDRestriction);
-
-        // Matchmaking loop
-        while (state == MatchmakingState.HOSTING){
-            // Check own information to see if another account is already requesting a match
-            if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                startMatch(game, false, opponentIDRestriction);
+                int opponentID = querySelfOpponentID();
+                String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
+                startMatch(game, false, opponentID, opponentNetworkingInformation);
                 break;
             }
 
@@ -132,15 +106,16 @@ public class MatchmakingHandler {
 
     public boolean tryJoinHost(String roomCode) {
         if (queryRoomCodeInTable(roomCode)) {
-            // Get opponent ID
+            // Get opponent details
             int opponentID = queryHostIDByRoomCode(roomCode);
+            String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
 
             // Tell opponent that you are ready to match
             setState(opponentID, MatchmakingState.FOUND_MATCH);
 
             // Start match
             GameType game = queryGame(opponentID);
-            startMatch(game, false, opponentID);
+            startMatch(game, false, opponentID, opponentNetworkingInformation);
             return true;
         }
         return false;
@@ -160,12 +135,14 @@ public class MatchmakingHandler {
         state = MatchmakingState.ONLINE;
     }
 
+
     /**
      *
      * @param game
+     * @param affectsElo
      * @param opponentID
      */
-    public void startMatch(GameType game, boolean affectElo, int opponentID){
+    public void startMatch(GameType game, boolean affectsElo, int opponentID, String opponentNetworkingInformation){
         // Update self state (both locally and in matchmaking table)
         state = MatchmakingState.PLAYING;
         setSelfState(MatchmakingState.PLAYING); // update state in database, preventing others from matching with this
@@ -179,7 +156,8 @@ public class MatchmakingHandler {
 
         System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", selfID, opponentUsername, opponentID);
 
-        // ... (integration)
+        // Load game, handle networking
+
     }
 
     /**
