@@ -20,6 +20,7 @@ Go to the official [JavaFX website](https://openjfx.io/) and download the latest
 - **Windows**: Choose the `.zip` file.
 - **Mac OS**: Choose the `.tar.gz` file.
 - **Linux**: Choose the `.tar.gz` file.
+---
 
 #### 2. Extract JavaFX SDK
 
@@ -28,9 +29,13 @@ Once the download is complete:
 - **Windows**: Extract the `.zip` file to a desired location on your system.
 - **Mac/Linux**: Extract the `.tar.gz` file to a desired location on your system.
 
+---
+
 #### 3. Configure Your IDE
 
 If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, Eclipse, or Visual Studio Code, configure it to include JavaFX libraries.
+
+---
 
 #### IntelliJ IDEA:
 
@@ -78,9 +83,86 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
     }
     ```
 
-
+---
 
 ## _Database Installation_
 
+### Prerequisites
+- Update based on Nova's server or XAMPP
+
+## Installation Steps
+
+### 1. Download and Install XAMPP
+
+1. Go to the official [XAMPP website](https://www.apachefriends.org/download.html).
+2. Download the version for your operating system (Windows, macOS, or Linux).
+3. Run the installer.
+4. Follow the installation wizard:
+    - Click **Next** on all prompts (you may leave all default components selected).
+5. Once installed, open the **XAMPP Control Panel**.
+    - On macOS, launch the `manager-osx` app.
+
+---
+
+### 2. Start Apache and MySQL Servers
+
+1. In the XAMPP Control Panel, click **Start** next to:
+    - **Apache** – This launches your local web server.
+    - **MySQL** – This starts your local MySQL database.
+2. Ensure both services are running. A green status indicator should appear for each.
+
+---
+
+### 3. Open phpMyAdmin
+
+1. Open your web browser.
+2. Navigate to: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+3. You should see the phpMyAdmin dashboard interface.
+
+---
+
+### 4. Download and Add MySQL Connector
+
+1. Download the MySQL Connector J from the [official website](https://dev.mysql.com/downloads/connector/j/).
+2. Choose **Platform Independent** and download the `.zip` file.
+3. Extract the archive and locate the `mysql-connector-j-<version>.jar` file.
+4. In your Java project:
+    - Go to **File > Project Structure > Libraries**
+    - Click **+** → **Java**, then select the JAR file.
+    - Click **Apply** and then **OK**.
+
+---
+
+### 5. Initialize the Database
+
+1. In phpMyAdmin, go to the **SQL** tab.
+2. Execute the following SQL statements **one at a time**:
+
+```sql
+CREATE DATABASE OMGAMEDB;
+
+CREATE TABLE Accounts (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  Username VARCHAR(255) NOT NULL UNIQUE,
+  Email VARCHAR(255) NOT NULL UNIQUE,
+  Password VARCHAR(255) NOT NULL,
+  Friends VARCHAR(1024) NOT NULL,
+  Statistics TEXT,
+  MatchHistory TEXT
+);
+
+CREATE TABLE Matchmaking (
+  ID INT PRIMARY KEY,
+  STATE VARCHAR(255),
+  GAME VARCHAR(255),
+  START_TIME FLOAT(32),
+  RECENT_TIME FLOAT(32),
+  ELO INT,
+  ELO_RANGE INT,
+  OPPONENT_ID INT,
+  NETWORKING_INFO VARCHAR(255),
+  ROOM_CODE VARCHAR(255)
+);
+```
 
 ## _Jakarta Installation_
