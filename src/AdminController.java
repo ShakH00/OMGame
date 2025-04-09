@@ -2,6 +2,8 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -9,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class AdminController extends Application {
     @FXML
@@ -26,16 +29,17 @@ public class AdminController extends Application {
     @FXML
     private TextField IDField;
     @FXML
-    private TextField usernameField;
+    private TextField userNameField;
     @FXML
     private TextField emailField;
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
+
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/AdminScreen.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -62,15 +66,41 @@ public class AdminController extends Application {
 
     public void initialize() {
         UtilityManager.createScaleTransition(backButton);
+        UtilityManager.createScaleTransition(findUserButton);
+        UtilityManager.createScaleTransition(clearStatsButton);
+        UtilityManager.createScaleTransition(deleteUserButton);
+        UtilityManager.createScaleTransition(submitButton);
     }
 
     @FXML
-    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Login.fxml");
+        SceneManager.switchScene(stage, "screens/Start.fxml");
     }
 
+    @FXML
+    private void findUserButton() {
+        //TODO: call up methods from profile
+        System.out.println("Find user button pressed");
+    }
 
+    @FXML
+    private void clearStatsButton() {
+        //TODO: call up methods from profile
+        System.out.println("Clear stats button pressed");
+    }
+
+    @FXML
+    private void deleteUserButton() {
+        //TODO: call up methods from profile
+        System.out.println("Delete user button pressed");
+    }
+
+    @FXML
+    private void submitButton() {
+        //TODO: call up methods from profile
+        System.out.println("Submit button pressed");
+    }
 
 
     public static void main(String[] args) {
