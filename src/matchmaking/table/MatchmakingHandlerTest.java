@@ -35,7 +35,7 @@ public class MatchmakingHandlerTest {
         account2Results.put(StatisticType.LOSSES, 1);
 
         try {
-            MatchOutcomeHandler.RecordMatchOutcome(game, matchID, testAccount1, account1Results,testAccount2, account2Results);
+            MatchOutcomeHandler.RecordMatchOutcome(game, true, testAccount1, account1Results,testAccount2, account2Results);
         } catch (MatchOutcomeInvalidError e){
             System.out.println(e);
         }
@@ -45,25 +45,25 @@ public class MatchmakingHandlerTest {
         // the test to work. This is because the current thread will not halt on the call to .startMatchmaking until
         // the matchmaking process is complete or cancelled. Please ask me (Elijah) if you have any questions.
 
-        // Add matchmaking table handlers for account 1
-        MatchmakingTableHandler account1MM = new MatchmakingTableHandler(testAccount1, "");
-
-        try {
-            account1MM.startMatchmaking(game, testAccount1.getElo(game));
-            System.out.println("Finished matchmaking for account 1");
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
-//        // Add matchmaking table handlers for account 2
-//        MatchmakingTableHandler account2MM = new MatchmakingTableHandler(testAccount2, "");
+//        // Add matchmaking table handlers for account 1
+//        MatchmakingTableHandler account1MM = new MatchmakingTableHandler(testAccount1, "");
 //
 //        try {
-//            account2MM.startMatchmaking(game, testAccount2.getElo(game));
-//            System.out.println("Finished matchmaking for account 2");
+//            account1MM.startMatchmaking(game, testAccount1.getElo(game));
+//            System.out.println("Finished matchmaking for account 1");
 //        } catch (Exception e){
 //            System.out.println(e);
 //        }
+
+        // Add matchmaking table handlers for account 2
+        MatchmakingTableHandler account2MM = new MatchmakingTableHandler(testAccount2, "");
+
+        try {
+            account2MM.startMatchmaking(game, testAccount2.getElo(game));
+            System.out.println("Finished matchmaking for account 2");
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
 }

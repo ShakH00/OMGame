@@ -5,7 +5,9 @@ public enum MatchmakingState {
     ONLINE,
     MATCHMAKING,
     FOUND_MATCH,
-    PLAYING;
+    PLAYING,
+    HOSTING;
+
 
 
     /**
