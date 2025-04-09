@@ -1,3 +1,5 @@
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,7 +65,13 @@ public class SignUpController extends Application {
         }
 
         // Call the create account method
-        boolean success = createAccount(username, email, password);
+        boolean success;
+        try {
+            success = createAccount(username, email, password);
+        }catch(EncryptionFailedException e){
+            success = false;
+        }
+
         if (success){
             // Switch to game menu?
         } else {

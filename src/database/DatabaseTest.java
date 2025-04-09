@@ -100,7 +100,7 @@ public class DatabaseTest {
         } else {
             System.out.println("No account found with ID: " + testAccountId);
         }
-
+        DatabaseManager.saveAccount(DatabaseManager.queryAccountByID(1));
 
     }
 }

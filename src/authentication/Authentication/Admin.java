@@ -55,4 +55,31 @@ public class Admin {
         return success;
     }
 
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being edited
+     * @param newEmail the new email to set
+     */
+    private void updateEmail(DatabaseManager db, int id, String newEmail){
+        Account account = db.queryAccountByID(id);
+        account.setEmail(newEmail);
+    }
+
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being deleted
+     */
+    private boolean deleteUser(DatabaseManager db, int id){
+        Account account = db.queryAccountByID(id);
+        boolean success = db.deleteAccount(id);
+        if(success) {
+            db.saveAccount(account);
+        }
+        return success;
+    }
+
 }
