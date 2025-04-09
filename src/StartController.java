@@ -1,6 +1,3 @@
-import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import authentication.Authentication.MFAAuthentication;
-import authentication.MFAPopupController;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -60,7 +57,9 @@ public class StartController extends Application {
             primaryStage.show();
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/tetrisCatIcon.png"))));
 
-            SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml", "screens/Help.fxml", "screens/DrawScreen.fxml");
+            SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
+                    "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
+                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/Checkers.fxml", "screens/TicTacToe.fxml"); // , "screens/<Screen>.fxml>"
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,30 +67,11 @@ public class StartController extends Application {
     }
 
     public void initialize() {
-        createScaleTransition(startButton);
-        createScaleTransition(rankingButton);
-        createScaleTransition(helpButton);
+        UtilityManager.createScaleTransition(startButton);
+        UtilityManager.createScaleTransition(rankingButton);
+        UtilityManager.createScaleTransition(helpButton);
     }
 
-    public static void createScaleTransition(StackPane button) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(300), button);
-        scaleTransition.setFromX(1);
-        scaleTransition.setFromY(1);
-
-        button.setOnMouseEntered(event -> {
-            scaleTransition.setToX(1.1);
-            scaleTransition.setToY(1.1);
-            scaleTransition.play();
-            button.setCursor(Cursor.HAND);
-        });
-
-        button.setOnMouseExited(event -> {
-            scaleTransition.setToX(1);
-            scaleTransition.setToY(1);
-            scaleTransition.play();
-            button.setCursor(Cursor.DEFAULT);
-        });
-    }
 
     @FXML
     private AnchorPane helpPopup;
@@ -99,27 +79,7 @@ public class StartController extends Application {
     // open the help popup overlay
     @FXML
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
-            // load help.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
-            Parent helpRoot = loader.load();
-
-            // get help controller
-            HelpController helpController = loader.getController();
-
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
-
-            // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
-
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        UtilityManager.popupControl(mouseEvent, "screens/Help.fxml", rootPane);
     }
 
     @FXML
@@ -127,31 +87,6 @@ public class StartController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Signup.fxml");
     }
-    @FXML
-    private void openMFAPopup() {
-        try {
-            // Generate and send the verification code via email
-            String email = ""; // Hardcoded user email
-            String verificationCode = MFAAuthentication.emailAuthenticatorDriver(email);
-
-            // Load the FXML file for the MFA pop-up
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MFAPopup.fxml"));
-            Parent root = loader.load();
-
-            // Get the controller and set the verification code
-            MFAPopupController controller = loader.getController();
-            controller.setVerificationCode(verificationCode); // Pass the generated code to the controller
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (MFAAuthenticationFailedException e) {
-            e.printStackTrace();
-            System.err.println("Failed to send the verification code: " + e.getMessage());
-        }
-    }
-
 
     public static void main(String[] args) {
         launch(args);

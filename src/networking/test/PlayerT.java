@@ -1,3 +1,5 @@
+package networking.test;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,23 +16,37 @@ public class PlayerT extends JFrame {
     private Container contentPane;
     private JTextArea message;
     private JTextArea textGridMessage;
+    private JTextArea testText;
     private JButton b1,b2,b3,b4;
+    private JTextArea chatArea;
+    private JTextField chatInput;
+    private JButton sendButton;
 
-    private JButton b01,b02,b03,b04,b05,b06,b07,b08,b09;
+    JButton b01;
+    private JButton b02;
+    private JButton b03;
+    private JButton b04;
+    private JButton b05;
+    private JButton b06;
+    private JButton b07;
+    private JButton b08;
+    private JButton b09;
 
     private ClientSideConnection csc;
     private int playerID;
     private int otherPlayerID;
 
     private int[] values;
-    private char[][] server2dChar;
+    char[][] server2dChar;
 
     private int maxTurns;
     private int turnsMade;
     private int myPoints;
     private int enemyPoints;
-    private boolean buttonsEnabled;
+    boolean buttonsEnabled;
     private String playerInputSender;
+    private JButton startb00;
+    private boolean gameIsActive;
 
     // this will impliment the turn based aspect forcing the player
     // to wait the other players turn
@@ -43,6 +59,11 @@ public class PlayerT extends JFrame {
         contentPane = this.getContentPane();
         message = new JTextArea();
         textGridMessage = new JTextArea();
+        gameIsActive = false;
+        testText = new JTextArea();
+
+        // Buttons
+        startb00 = new JButton("Start Matchmaking");
 
         b01 = new JButton("1");
         b02 = new JButton("2");
@@ -62,9 +83,35 @@ public class PlayerT extends JFrame {
         enemyPoints = 0;
 
 
+
+    }
+    public void playerMenu() {
+
+        this.setSize(width, height);
+        this.setTitle("The GameMenu");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        contentPane = this.getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        testText = new JTextArea("lol");
+
+        JPanel panel = new JPanel();
+
+        startb00 = new JButton("Start Game");
+        panel.add(startb00);
+        panel.add(testText);
+        contentPane.add(panel, BorderLayout.CENTER);
+
+        setUpMenuButtons();
+        this.setVisible(true);
+
     }
 
     public void setUpGUII(){
+        contentPane.removeAll();
+        contentPane.revalidate();
+        contentPane.repaint();
+
+        gameIsActive = true;
         this.setSize(width, height);
         this.setTitle("The Game for Player #" + playerID);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,7 +212,24 @@ public class PlayerT extends JFrame {
         csc = new ClientSideConnection();
     }
 
-    public void setUpButtons(){
+
+    public void setUpMenuButtons(){
+        ActionListener alStart = new ActionListener() {
+            public void actionPerformed(ActionEvent StartAe) {
+                System.out.println(" YOU PRESSED THE BUTTON");
+                gameIsActive = true;
+                connectToServer();
+                setUpGame1Buttons();
+                setUpGUII();
+
+            }
+        };
+        startb00.addActionListener(alStart);
+    }
+    public void setUpGame1Buttons(){
+
+
+
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 JButton b = (JButton) ae.getSource();
@@ -204,12 +268,8 @@ public class PlayerT extends JFrame {
                 }
             }
         };
-    /*    b1.addActionListener(al); // ADDING ALL THE BUTTONS
-        b2.addActionListener(al);
-        b3.addActionListener(al);
-        b4.addActionListener(al);
 
-*/      b01.addActionListener(al);
+        b01.addActionListener(al);
         b02.addActionListener(al);
         b03.addActionListener(al);
         b04.addActionListener(al);
@@ -218,6 +278,8 @@ public class PlayerT extends JFrame {
         b07.addActionListener(al);
         b08.addActionListener(al);
         b09.addActionListener(al);
+
+
 
     }
     // ASKING CHATGTP FOR THIS TEDIOUS STRING FORMAT
@@ -280,6 +342,7 @@ public class PlayerT extends JFrame {
         private Socket socket;
         private DataInputStream dataIn;
         private DataOutputStream dataOut;
+        private boolean connected;
         public ClientSideConnection(){   // I think this is waht is being send to the server
             System.out.println("Client side connection");
 
@@ -290,6 +353,7 @@ public class PlayerT extends JFrame {
                 dataOut = new DataOutputStream(socket.getOutputStream());
                 playerID = dataIn.readInt();
                 System.out.println("webSocketNotes.Player ID: " + playerID);
+                this.connected = true;
 
                 //VALUES TO SEND OVER THE NETWORK!
                 maxTurns = dataIn.readInt() / 2; // pass
@@ -306,11 +370,61 @@ public class PlayerT extends JFrame {
                     System.out.println();
                 }
 
+                // Start a thread to listen for incoming messages
+                new Thread(() -> {
+                    try {
+                        while (true) {
+                            String message = dataIn.readUTF();
+                            if (message.startsWith("CHAT:")) {
+                                receiveChatMessage(message.substring(5)); // Remove "CHAT:" prefix
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error receiving chat message: " + e.getMessage());
+                    }
+                }).start();
+
             }catch (Exception e){
                 System.out.println("IO exception from CSC contructor");
 
             }
         }
+
+        private void handleDisconnection() {
+        connected = false;
+        // Attempt reconnection
+        new Thread(() -> {
+            while (!connected) {
+                try {
+                    Thread.sleep(5000); // Wait 5 seconds between attempts
+                    reconnect();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
+    }
+    
+        private void reconnect() {
+            try {
+                socket = new Socket("localhost", 30000);
+                dataIn = new DataInputStream(socket.getInputStream());
+                dataOut = new DataOutputStream(socket.getOutputStream());
+                dataOut.writeInt(playerID); // Send player ID for reconnection
+                connected = true;
+            } catch (IOException e) {
+                System.err.println("Reconnection failed: " + e.getMessage());
+            }
+        }
+
+        public void sendChatMessage(String message) {
+        try {
+            dataOut.writeUTF("CHAT:" + message);
+        } catch (IOException e) {
+            handleDisconnection();
+        }
+    }
 
         public void sendButtonNum(String strBNum){
             try{
@@ -350,14 +464,46 @@ public class PlayerT extends JFrame {
             }
         }
 
-
+        private void initializeChatComponents() {
+        chatArea = new JTextArea(10, 30);
+        chatArea.setEditable(false);
+        JScrollPane chatScroll = new JScrollPane(chatArea);
+        
+        chatInput = new JTextField(20);
+        sendButton = new JButton("Send");
+        
+        JPanel chatPanel = new JPanel();
+        chatPanel.add(chatInput);
+        chatPanel.add(sendButton);
+        
+        contentPane.add(chatScroll, BorderLayout.EAST);
+        contentPane.add(chatPanel, BorderLayout.SOUTH);
+        
+        sendButton.addActionListener(e -> sendChatMessage());
+        chatInput.addActionListener(e -> sendChatMessage());
     }
+    
+    private void sendChatMessage() {
+        String message = chatInput.getText().trim();
+        if (!message.isEmpty()) {
+            csc.sendChatMessage(playerID + ": " + message + "\n");
+            chatInput.setText("");
+        }
+    }
+    
+    public void receiveChatMessage(String message) {
+        chatArea.append(playerID + ": " + message + "\n");
+        chatArea.setCaretPosition(chatArea.getDocument().getLength());
+    }
+}
 
 
     public static void main(String[] args) {
         PlayerT p = new PlayerT(800, 400);
-        p.connectToServer();
+        p.playerMenu();
+        //p.Menu { includes [p.connectToServer();, GHAME SPCFIC :p.setUpGUII()  p.setUpButtons();]
+        /*p.connectToServer();
         p.setUpGUII(); //has startReceivingButtonNums in it
-        p.setUpButtons();
+        p.setUpButtons();*/
     }
 }

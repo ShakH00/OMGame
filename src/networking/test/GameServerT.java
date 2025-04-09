@@ -1,11 +1,24 @@
+/* package networking.test;
+
+import game.tictactoe.TicTacToe_Logic;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class GameServerT {
+    private Map<Integer, ServerSideConnection> disconnectedPlayers;
+    private boolean gameInProgress;
     private ServerSocket ss;
     private int numPlayers;
     private ServerSideConnection player1;
@@ -15,13 +28,17 @@ public class GameServerT {
     private int maxTurns;
     private int[] values;
     private char[][] server2dChar;
+    private HashMap<Integer, String> chatlogs;
 
-    // store the button num that the player clicked on, befroe being sent to the other player
+
+    // store  the button num that the player clicked on, befroe being sent to the other player
     // don in the run method while loop, for each turns
     private String player1ButtonNum;
     private String player2ButtonNum;
 
-    private char[] gameBoard;
+
+    //GAME LOGIC UHHH
+    private TicTacToe_Logic ticTacToeGame = new TicTacToe_Logic();
 
     public GameServerT() {
         System.out.println("--game server--");
@@ -30,6 +47,10 @@ public class GameServerT {
         maxTurns = 90;
         values = new int[4];
         server2dChar = new char[3][3];
+        disconnectedPlayers = new HashMap<>();
+        gameInProgress = false;
+
+
 
         for (int i = 0; i < 4; i++) { //Ading the values fromt he server not
             values[i] = i;
@@ -49,9 +70,6 @@ public class GameServerT {
             System.out.println();
         }
 
-
-
-
         try{
             ss = new ServerSocket(30000);
         } catch(IOException e){
@@ -61,10 +79,8 @@ public class GameServerT {
     }
 
     public void acceptConnections(){
-
         try {
             System.out.println("waiting for connections");
-
             while (numPlayers < 2) {
                 Socket s = ss.accept();
                 numPlayers++;
@@ -85,6 +101,52 @@ public class GameServerT {
         }
     }
 
+    public void handleDisconnection(int playerID) {
+        if (playerID == 1) {
+            disconnectedPlayers.put(playerID, player1);
+            player1 = null;
+        } else if (playerID == 2) {
+            disconnectedPlayers.put(playerID, player2);
+            player2 = null;
+        }
+        broadcastMessage("Player " + playerID + " disconnected");
+    }
+
+    public boolean handleReconnection(Socket socket, int playerID) {
+        try {
+            ServerSideConnection newConnection = new ServerSideConnection(socket, playerID);
+            if (playerID == 1) {
+                player1 = newConnection;
+            } else if (playerID == 2) {
+                player2 = newConnection;
+            }
+            disconnectedPlayers.remove(playerID);
+            new Thread(newConnection).start();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Reconnection failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void broadcastMessage(String message) {
+        try {
+            if (player1 != null) {
+                player1.sendChatMessage(message);
+            }
+            if (player2 != null) {
+                player2.sendChatMessage(message);
+            }
+        } catch (IOException e) {
+            System.out.println("IOException in broadcastMessage: " + e.getMessage());
+        }
+    }
+
+
+    private boolean isValidMove(String move, int playerID) {
+        return true;
+    }
+
     private class ServerSideConnection implements Runnable{
         private Socket socket;
         private DataInputStream dataIn;
@@ -99,6 +161,7 @@ public class GameServerT {
             try {
                 dataIn = new DataInputStream(socket.getInputStream());
                 dataOut = new DataOutputStream(socket.getOutputStream());
+
             } catch (IOException e) {
                 System.out.println("IOException from game server constructor: ServerSideConnection");
             }
@@ -114,14 +177,15 @@ public class GameServerT {
                     }
                 }
                 dataOut.flush();
-
+                TicTacToe_Logic game = new TicTacToe_Logic();
 
                 while (true) {
                     if(playerID == 1){
                         player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
                         System.out.println("Payer 1 clicked button #" + player1ButtonNum);
                         // Update array
-                        processGameLogicP1(player1ButtonNum);
+                        //processGameLogicP1(player1ButtonNum);
+                        processGameLogic(1,player1ButtonNum);
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
                         }
@@ -133,7 +197,9 @@ public class GameServerT {
                         player2ButtonNum = String.valueOf(dataIn.readChar());
                         System.out.println("Payer 2 clicked button #" + player2ButtonNum);
                         System.out.println("input before p2" + player2ButtonNum);
-                        processGameLogicP2(player2ButtonNum);
+                        //processGameLogicP2(player2ButtonNum);
+                        processGameLogic(2,player2ButtonNum);
+
 
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
@@ -180,16 +246,51 @@ public class GameServerT {
             return turnsMade >= maxTurns;
         }
 
-            // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
-        public void processGameLogicP1(String input) {
-            placeMove(input, 'X');  // P1 uses 'X'
+        public void processMove(String input, int playerID) {
+            try {
+                int move = Integer.parseInt(input) - 1;
+                int row = move / 3;
+                int col = move % 3;
+
+                char expectedSymbol = (playerID == 1) ? 'X' : 'O';
+
+                char[][] boardBefore = ticTacToeGame.getBoard();
+                if (boardBefore[row][col] == '-') {
+                    // Apply move
+                    ticTacToeGame.getBoard()[row][col] = expectedSymbol;
+
+                    // Print move info
+                    System.out.println("Player " + playerID + " placed '" + expectedSymbol + "' at [" + row + "][" + col + "]");
+                } else {
+                    System.out.println("Invalid move by Player " + playerID + " at [" + row + "][" + col + "]");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error processing move for player " + playerID + ": " + e.getMessage());
+            }
         }
 
+        public void processGameLogic(int playerNum, String input){
+
+            if(playerNum == 1 ){
+                ticTacToeGame.play(playerNum, input);
+                server2dChar = ticTacToeGame.getBoard();
+            }else {
+                ticTacToeGame.play(playerNum, input);
+                server2dChar = ticTacToeGame.getBoard();
+            }
+
+        }
+            // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
+        public void processGameLogicP1(String input) {
+            placeMove(input, 'X');
+        }
         public void processGameLogicP2(String input2) {
-            placeMove(input2, 'O');  // P2 uses 'O'
+                placeMove(input2, 'O');  // P2 uses 'O'
         }
 
         private void placeMove(String input, char symbol) {
+            //  networking -> Server game logic -> networking
             if (symbol == 'O'){
                 System.out.println("processGameLogic for player 2, input: " + input);
             }
@@ -209,8 +310,10 @@ public class GameServerT {
         }
         // END of chatgtp tentious work
 
-
-
+        public void sendChatMessage(String message) throws IOException {
+            dataOut.writeUTF("CHAT:" + message);
+            dataOut.flush();
+        }
     }
 
 
@@ -222,3 +325,4 @@ public class GameServerT {
 
     }
 }
+*/
