@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
+import database.EncryptionAuthentication;
 import game.GameType;
 import account.statistics.*;
 
@@ -547,7 +549,13 @@ public class Account {
     }
     public boolean guestToPermanentAccount(String username, String email, String password) {
         // Attempt to create the permanent account using the CreateAccount helper class
-        boolean success = CreateAccount.createAccount(username, email, password);
+        boolean success;
+        try {
+            success = CreateAccount.createAccount(username, email, password);
+        }catch(EncryptionFailedException e){
+            success = false;
+        }
+
 
         if (success) {
             // If creation succeeded, pull the new account data from the DB
