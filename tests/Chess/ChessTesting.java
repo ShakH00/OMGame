@@ -255,4 +255,112 @@ public class ChessTesting {
             assertArrayEquals(expected.get(i), actual.get(i), "Mismatch at index " + i);
         }
     }
+    @Test
+    public void testCheckButNotCheckmate_BishopCanBlock() {
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+
+        // Clear board
+        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) board.place(null, x, y);
+
+        // King under diagonal check
+        King king = new King(0, 0, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king, 0, 0);
+
+        // Queen threatening king
+        Queen queen = new Queen(3, 3, Color.BLACK, PieceType.DARK, p2);
+        board.place(queen, 3, 3);
+
+        // Bishop can block at (2, 2)
+        Bishop bishop = new Bishop(4, 1, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(bishop, 4, 1);
+
+        assertFalse(game.isCheckmate(p1));
+    }
+    @Test
+    public void testCheckButNotCheckmate_KnightCanCaptureAttacker() {
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+
+        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) board.place(null, x, y);
+
+        King king = new King(0, 0, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king, 0, 0);
+
+        Queen queen = new Queen(2, 1, Color.BLACK, PieceType.DARK, p2);
+        board.place(queen, 2, 1);
+
+        Knight knight = new Knight(1, 3, Color.WHITE, PieceType.LIGHT, p1); // Can move to (2,1)
+        board.place(knight, 1, 3);
+
+        assertFalse(game.isCheckmate(p1));
+    }
+    @Test
+    public void testCheckButNotCheckmate_PawnCanBlock() {
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+
+        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) board.place(null, x, y);
+
+        King king = new King(7, 4, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king, 7, 4);
+
+        Queen queen = new Queen(4, 4, Color.BLACK, PieceType.DARK, p2); // vertical check
+        board.place(queen, 4, 4);
+
+        Pawn pawn = new Pawn(6, 3, Color.WHITE, PieceType.LIGHT, p1); // Can move to 5,4 to block
+        board.place(pawn, 6, 3);
+
+        assertFalse(game.isCheckmate(p1));
+    }
+    @Test
+    public void testCheckButNotCheckmate_RookCapturesAttacker() {
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+
+        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) board.place(null, x, y);
+
+        King king = new King(7, 0, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king, 7, 0);
+
+        Rook enemyRook = new Rook(7, 3, Color.BLACK, PieceType.DARK, p2); // horizontal check
+        board.place(enemyRook, 7, 3);
+
+        Rook myRook = new Rook(7, 5, Color.WHITE, PieceType.LIGHT, p1); // Can capture at (7,3)
+        board.place(myRook, 7, 5);
+
+        assertFalse(game.isCheckmate(p1));
+    }
+    @Test
+    public void testCheckButNotCheckmate_KingCanEscape() {
+        Chess game = new Chess();
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+        Board board = new Board(GameType.CHESS);
+        game.setBoard(board);
+
+        for (int x = 0; x < 8; x++) for (int y = 0; y < 8; y++) board.place(null, x, y);
+
+        King king = new King(7, 0, Color.WHITE, PieceType.LIGHT, p1);
+        board.place(king, 7, 0);
+
+        Rook rook = new Rook(7, 2, Color.BLACK, PieceType.DARK, p2);
+        board.place(rook, 7, 2);
+
+        // Ensure escape square (6,0) is free
+        assertFalse(game.isCheckmate(p1));
+    }
+
 }
