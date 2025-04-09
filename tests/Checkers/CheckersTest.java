@@ -1,5 +1,7 @@
-package game.checkers;
+package Checkers;
 import game.*;
+import game.checkers.Checkers;
+import game.checkers.CheckersPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
@@ -198,39 +200,187 @@ public class CheckersTest {
 
     }
 
+    /**
+     * Test to ensure that a players must make multiple captures if presented with the opportunity.
+     */
     @Test
     public void testMultiCaptures(){
-        // when another capture is available the player should and must capture again.
+        // When another capture is available the player should and must capture again.
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece1 = new CheckersPiece(2,5, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece blackPiece2 = new CheckersPiece(1,2, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece blackPiece3 = new CheckersPiece(1,4, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece = new CheckersPiece(4,7, Color.WHITE, PieceType.LIGHT, player2, 0);
+
+        // Place Pieces
+        piece[1][4] = blackPiece1;
+        piece[1][2] = blackPiece2;
+        piece[2][5] = blackPiece3;
+        piece[4][7] = whitePiece;
+
+        // P1 to move blackPiece1 to 3,6 which forces a capture from P2
+        assertTrue(checkersGame.isValidMove(2,5,3,6,board));
+        checkersGame.move(blackPiece1, 3, 6);
+        // P2's turn, moving to do a forced capture.
+        assertTrue(checkersGame.isValidMove(4,7, 2,5, board));
+        checkersGame.move(whitePiece, 2,5);
+        // P2's turn remains as he can perform multi captures to blackPiece3
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+        // P2 to capture again
+        checkersGame.move(whitePiece, 0,3);
+        // P2 whitePiece promoted to king which allow another capture of blackPiece2
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+        assertTrue(checkersGame.isValidMove(0,3,2,1,board));
+        checkersGame.move(whitePiece, 2,1);
     }
 
+
+    /**
+     * Test for Forced captures. If a piece is capturable then all other moves are locked.
+     */
     @Test
     public void testForcedCaptures(){
-        // p1 moves a piece that p2 can capture
-        // p2 has to capture, any other move is not made until this piece is captured.
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece = new CheckersPiece(1,4, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece = new CheckersPiece(3,6, Color.WHITE, PieceType.LIGHT, player2, 0);
+
+        // Place Pieces
+        piece[1][4] = blackPiece;
+        piece[3][6] = whitePiece;
+
+        // P1 to move from 4,7 to 3,6
+        assertTrue(checkersGame.isValidMove(1,4,2,5,board));
+        checkersGame.move(blackPiece, 2,5);
+
+        // Ensure it is P2's turn
+        assertEquals(GameState.P2_TURN, checkersGame.getGameState());
+
+        // P2 is forced to capture and any attempt otherwise the move is prevented and P2 is to make the capture before turn switch.
+        assertTrue(checkersGame.forcedCapture(player2));
+
+        // P2 captures
+        checkersGame.move(whitePiece, 1,4);
+
+        // Turn is switched
+        assertEquals(GameState.P1_TURN, checkersGame.getGameState());
+
+
     }
 
+    /**
+     * Test for illegal captures. Checks if a piece is in bounds, on a playable square, and if the adjacent diagonal is free.
+     */
     @Test
     public void testIllegalCaptures(){
         // out of bounds
         // out of turns
         // blocked capture
+        clearBoard();
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Pieces
+        CheckersPiece blackPiece = new CheckersPiece(6,7, Color.BLACK, PieceType.DARK, player1, 0);
+        CheckersPiece whitePiece1 = new CheckersPiece(1,4, Color.WHITE, PieceType.LIGHT, player2, 0);
+        CheckersPiece whitePiece2 = new CheckersPiece(2,5, Color.WHITE, PieceType.LIGHT, player2, 0);
+        CheckersPiece whitePiece3 = new CheckersPiece(2,7, Color.WHITE, PieceType.LIGHT, player2, 0);
     }
 
+    /**
+     * Test if turns switch between players after a scucessful move. Test unsuccessful moves maintaining current turn.
+     */
     @Test
     public void testSwitchTurn(){
-        // test switching turn to the other player when a player performed a successful move.
-        // test when a player does not make a successful move (it should remain their turn)
+        // Game Initialize with P1_Turn, call switchTurn method
+        checkersGame.switchTurn();
+        Piece[][] piece = board.getBoardState();
+        Piece whitePiece = piece[5][0];
+        // P2 Should not be able to move P1's piece located at 2,1;
+        assertFalse(checkersGame.isValidMove(2,1,3,0, board));
+        // But can move his piece
+        assertTrue(checkersGame.isValidMove(5,0,4,1, board));
+        // Call move method, which call switch method.
+        checkersGame.move((CheckersPiece) whitePiece, 4, 1);
+        // Turn switched again, P1 should not be able to move P2's piece located at 4,1
+        assertFalse(checkersGame.isValidMove(4,1,3,2,board));
+        // P1 should be able to move his piece located at 2,1
+        assertTrue(checkersGame.isValidMove(2,1,3,0, board));
+
     }
 
+    /**
+     * Test surrender function changes game state after it surrender() is called.
+     */
     @Test
     public void testSurrender(){
         // test game state after surrender method is called.
         // test when either players call for surrender during their turn.
+        // P1 surrenders
+        checkersGame.surrender();
+        // P2 Wins
+        assertEquals(GameState.P2_WIN, checkersGame.getGameState());
+        // reset state to P1 turn
+        checkersGame.start();
+        // switch turn
+        checkersGame.switchTurn();
+        // P2 surrenders
+        checkersGame.surrender();
+        // P1 wins.
+        assertEquals(GameState.P1_WIN, checkersGame.getGameState());
+
     }
 
+    /**
+     * Test to check win conditions are being fufilled
+     */
     @Test
     public void testCheckWinCondition(){
         // game state when P1 or P2 has won (either player no longer have any pieces)
+        // Clear Board
+        clearBoard();
+
+        Piece[][] piece = board.getBoardState();
+        // Create the players
+        Player player1 = new Player();
+        Player player2 = new Player();
+        // Create Piece
+        CheckersPiece blackPiece = new CheckersPiece(2,3, Color.BLACK, PieceType.DARK, player1, 0);
+        // Place Piece
+        piece[2][3] = blackPiece;
+        // Check win condition
+        checkersGame.checkWinCondition();
+        // Check if Game State matches correct condition
+        assertEquals(GameState.P1_WIN, checkersGame.getGameState());
+
+        // Clear Board
+        clearBoard();
+        // Restart Game, P1's turn
+        checkersGame.start();
+        // switch P2's turn
+        checkersGame.switchTurn();
+        // Create Piece
+        CheckersPiece whitePiece = new CheckersPiece(2,3, Color.WHITE, PieceType.LIGHT, player2, 0);
+        // Place Piece
+        piece[2][3] = whitePiece;
+        // Check win condition
+        checkersGame.checkWinCondition();
+        // Check if Game State matches correct condition
+        assertEquals(GameState.P2_WIN, checkersGame.getGameState());
+
+
     }
 
 
