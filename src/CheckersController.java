@@ -48,200 +48,6 @@ public class CheckersController extends Application {
     private AnchorPane rootPane;
 
 
-    // i know this is crazy. but god it WONT WORK OTHERWISE AJHBDHBFUYHWEF
-    @FXML
-    private void handleCellClick00(javafx.scene.input.MouseEvent event) { handleMove(0, 0); }
-
-    @FXML
-    private void handleCellClick01(javafx.scene.input.MouseEvent event) { handleMove(0, 1); }
-
-    @FXML
-    private void handleCellClick02(javafx.scene.input.MouseEvent event) { handleMove(0, 2); }
-
-    @FXML
-    private void handleCellClick03(javafx.scene.input.MouseEvent event) { handleMove(0, 3); }
-
-    @FXML
-    private void handleCellClick04(javafx.scene.input.MouseEvent event) { handleMove(0, 4); }
-
-    @FXML
-    private void handleCellClick05(javafx.scene.input.MouseEvent event) { handleMove(0, 5); }
-
-    @FXML
-    private void handleCellClick06(javafx.scene.input.MouseEvent event) { handleMove(0, 6); }
-
-    @FXML
-    private void handleCellClick07(javafx.scene.input.MouseEvent event) { handleMove(0, 7); }
-
-    @FXML
-    private void handleCellClick10(javafx.scene.input.MouseEvent event) { handleMove(1, 0); }
-
-    @FXML
-    private void handleCellClick11(javafx.scene.input.MouseEvent event) { handleMove(1, 1); }
-
-    @FXML
-    private void handleCellClick12(javafx.scene.input.MouseEvent event) { handleMove(1, 2); }
-
-    @FXML
-    private void handleCellClick13(javafx.scene.input.MouseEvent event) { handleMove(1, 3); }
-
-    @FXML
-    private void handleCellClick14(javafx.scene.input.MouseEvent event) { handleMove(1, 4); }
-
-    @FXML
-    private void handleCellClick15(javafx.scene.input.MouseEvent event) { handleMove(1, 5); }
-
-    @FXML
-    private void handleCellClick16(javafx.scene.input.MouseEvent event) { handleMove(1, 6); }
-
-    @FXML
-    private void handleCellClick17(javafx.scene.input.MouseEvent event) { handleMove(1, 7); }
-
-    @FXML
-    private void handleCellClick20(javafx.scene.input.MouseEvent event) { handleMove(2, 0); }
-
-    @FXML
-    private void handleCellClick21(javafx.scene.input.MouseEvent event) { handleMove(2, 1); }
-
-    @FXML
-    private void handleCellClick22(javafx.scene.input.MouseEvent event) { handleMove(2, 2); }
-
-    @FXML
-    private void handleCellClick23(javafx.scene.input.MouseEvent event) { handleMove(2, 3); }
-
-    @FXML
-    private void handleCellClick24(javafx.scene.input.MouseEvent event) { handleMove(2, 4); }
-
-    @FXML
-    private void handleCellClick25(javafx.scene.input.MouseEvent event) { handleMove(2, 5); }
-
-    @FXML
-    private void handleCellClick26(javafx.scene.input.MouseEvent event) { handleMove(2, 6); }
-
-    @FXML
-    private void handleCellClick27(javafx.scene.input.MouseEvent event) { handleMove(2, 7); }
-
-    @FXML
-    private void handleCellClick30(javafx.scene.input.MouseEvent event) { handleMove(3, 0); }
-
-    @FXML
-    private void handleCellClick31(javafx.scene.input.MouseEvent event) { handleMove(3, 1); }
-
-    @FXML
-    private void handleCellClick32(javafx.scene.input.MouseEvent event) { handleMove(3, 2); }
-
-    @FXML
-    private void handleCellClick33(javafx.scene.input.MouseEvent event) { handleMove(3, 3); }
-
-    @FXML
-    private void handleCellClick34(javafx.scene.input.MouseEvent event) { handleMove(3, 4); }
-
-    @FXML
-    private void handleCellClick35(javafx.scene.input.MouseEvent event) { handleMove(3, 5); }
-
-    @FXML
-    private void handleCellClick36(javafx.scene.input.MouseEvent event) { handleMove(3, 6); }
-
-    @FXML
-    private void handleCellClick37(javafx.scene.input.MouseEvent event) { handleMove(3, 7); }
-
-    @FXML
-    private void handleCellClick40(javafx.scene.input.MouseEvent event) { handleMove(4, 0); }
-
-    @FXML
-    private void handleCellClick41(javafx.scene.input.MouseEvent event) { handleMove(4, 1); }
-
-    @FXML
-    private void handleCellClick42(javafx.scene.input.MouseEvent event) { handleMove(4, 2); }
-
-    @FXML
-    private void handleCellClick43(javafx.scene.input.MouseEvent event) { handleMove(4, 3); }
-
-    @FXML
-    private void handleCellClick44(javafx.scene.input.MouseEvent event) { handleMove(4, 4); }
-
-    @FXML
-    private void handleCellClick45(javafx.scene.input.MouseEvent event) { handleMove(4, 5); }
-
-    @FXML
-    private void handleCellClick46(javafx.scene.input.MouseEvent event) { handleMove(4, 6); }
-
-    @FXML
-    private void handleCellClick47(javafx.scene.input.MouseEvent event) { handleMove(4, 7); }
-
-    @FXML
-    private void handleCellClick50(javafx.scene.input.MouseEvent event) { handleMove(5, 0); }
-
-    @FXML
-    private void handleCellClick51(javafx.scene.input.MouseEvent event) { handleMove(5, 1); }
-
-    @FXML
-    private void handleCellClick52(javafx.scene.input.MouseEvent event) { handleMove(5, 2); }
-
-    @FXML
-    private void handleCellClick53(javafx.scene.input.MouseEvent event) { handleMove(5, 3); }
-
-    @FXML
-    private void handleCellClick54(javafx.scene.input.MouseEvent event) { handleMove(5, 4); }
-
-    @FXML
-    private void handleCellClick55(javafx.scene.input.MouseEvent event) { handleMove(5, 5); }
-
-    @FXML
-    private void handleCellClick56(javafx.scene.input.MouseEvent event) { handleMove(5, 6); }
-
-    @FXML
-    private void handleCellClick57(javafx.scene.input.MouseEvent event) { handleMove(5, 7); }
-
-    @FXML
-    private void handleCellClick60(javafx.scene.input.MouseEvent event) { handleMove(6, 0); }
-
-    @FXML
-    private void handleCellClick61(javafx.scene.input.MouseEvent event) { handleMove(6, 1); }
-
-    @FXML
-    private void handleCellClick62(javafx.scene.input.MouseEvent event) { handleMove(6, 2); }
-
-    @FXML
-    private void handleCellClick63(javafx.scene.input.MouseEvent event) { handleMove(6, 3); }
-
-    @FXML
-    private void handleCellClick64(javafx.scene.input.MouseEvent event) { handleMove(6, 4); }
-
-    @FXML
-    private void handleCellClick65(javafx.scene.input.MouseEvent event) { handleMove(6, 5); }
-
-    @FXML
-    private void handleCellClick66(javafx.scene.input.MouseEvent event) { handleMove(6, 6); }
-
-    @FXML
-    private void handleCellClick67(javafx.scene.input.MouseEvent event) { handleMove(6, 7); }
-
-    @FXML
-    private void handleCellClick70(javafx.scene.input.MouseEvent event) { handleMove(7, 0); }
-
-    @FXML
-    private void handleCellClick71(javafx.scene.input.MouseEvent event) { handleMove(7, 1); }
-
-    @FXML
-    private void handleCellClick72(javafx.scene.input.MouseEvent event) { handleMove(7, 2); }
-
-    @FXML
-    private void handleCellClick73(javafx.scene.input.MouseEvent event) { handleMove(7, 3); }
-
-    @FXML
-    private void handleCellClick74(javafx.scene.input.MouseEvent event) { handleMove(7, 4); }
-
-    @FXML
-    private void handleCellClick75(javafx.scene.input.MouseEvent event) { handleMove(7, 5); }
-
-    @FXML
-    private void handleCellClick76(javafx.scene.input.MouseEvent event) { handleMove(7, 6); }
-
-    @FXML
-    private void handleCellClick77(javafx.scene.input.MouseEvent event) { handleMove(7, 7); }
-
-
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -388,6 +194,15 @@ public class CheckersController extends Application {
     public void initialize() {
         Board board = new Board(GameType.CHECKERS);
         game.setBoard(board);
+        for (Node node : gameBoard.getChildren()) {
+            Integer row = GridPane.getRowIndex(node);
+            Integer col = GridPane.getColumnIndex(node);
+            int r = row == null ? 0 : row;
+            int c = col == null ? 0 : col;
+
+            node.setOnMouseClicked(e -> handleMove(r, c));
+        }
+
         game.start(); // push game out of setup mode
         updateBoard();
         UtilityManager.createScaleTransition(menuButton);

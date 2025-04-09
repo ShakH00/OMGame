@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -151,5 +152,36 @@ public class UtilityManager {
 
         pane.setOnMouseEntered(e -> scaleIn.play());
         pane.setOnMouseExited(e -> scaleOut.play());
+    }
+
+    /**
+     * Method to add hover effects to match panes (which changes rectangle opacity too!)
+     *
+     * @param pane Pane that is hovered on
+     *
+     * @author Arwa A
+     */
+    public static void addHoverEffectRectangle(Pane pane) {
+        Rectangle rect = (Rectangle) pane.getChildren().get(0);
+        rect.setOpacity(0.86);
+
+        ScaleTransition scaleIn = new ScaleTransition(Duration.millis(200), pane);
+        scaleIn.setToX(1.05);
+        scaleIn.setToY(1.05);
+
+        ScaleTransition scaleOut = new ScaleTransition(Duration.millis(200), pane);
+        scaleOut.setToX(1.0);
+        scaleOut.setToY(1.0);
+
+        // add hover effect to adjust the rectangle opacity and play scale transition
+        pane.setOnMouseEntered(e -> {
+            rect.setOpacity(1.0);
+            scaleIn.play();
+        });
+
+        pane.setOnMouseExited(e -> {
+            rect.setOpacity(0.86);
+            scaleOut.play();
+        });
     }
 }
