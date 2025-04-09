@@ -39,7 +39,7 @@ public class Account {
     /**
      * String for the password associated with this Account
      */
-    private String password;    // TODO: Handle encryption/decryption in Account class
+    private String password;
 
     /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
@@ -240,7 +240,7 @@ public class Account {
         String[][] matchHistoryOutput = new String[1 + matchHistory.length][6];
 
         // Add header to the output array
-        matchHistoryOutput[0] = new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
+        matchHistoryOutput[0] = new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Date"};
 
         // Add rows to the output array
         System.arraycopy(matchHistory, 0, matchHistoryOutput, 1, matchHistory.length);
