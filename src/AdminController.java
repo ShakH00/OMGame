@@ -1,0 +1,137 @@
+//import authentication.Authentication.Admin;
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class AdminController extends Application {
+    @FXML
+    AnchorPane rootPane;
+    @FXML
+    private StackPane findUserButton;
+    @FXML
+    private StackPane clearStatsButton;
+    @FXML
+    private StackPane deleteUserButton;
+    @FXML
+    private StackPane submitButton;
+    @FXML
+    private StackPane backButton;
+    @FXML
+    private TextField IDField;
+    @FXML
+    private TextField userNameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
+
+    //private Admin adminUser = new Admin();
+
+
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/AdminScreen.fxml"));
+            Scene scene = new Scene(loader.load(), 800, 570);
+
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
+
+            Font pressStartFont = Font.loadFont(fontPath, 40);
+            Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
+            Font pixeliteFont = Font.loadFont(pixelitePath, 40);
+
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+            primaryStage.setResizable(false);
+
+            // Set up the primary stage
+            primaryStage.setTitle("OMG! - Admin");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initialize() {
+        UtilityManager.createScaleTransition(backButton);
+        UtilityManager.createScaleTransition(findUserButton);
+        UtilityManager.createScaleTransition(clearStatsButton);
+        UtilityManager.createScaleTransition(deleteUserButton);
+        UtilityManager.createScaleTransition(submitButton);
+    }
+
+    @FXML
+    private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
+    // all commented out code should work after merging wtih leaderboard
+    @FXML
+    private void findUserButton() {
+        String userIDStr = IDField.getText();
+        Integer userID = Integer.parseInt(userIDStr);
+        //Account player = database.queryAccountByID(userID);
+
+        //userNameField.setText(player.getUsername);
+        //passwordField.setText(player.getPassword);
+        //emailField.setText(player.getEmail);
+        //TODO: call up methods from profile
+        System.out.println("Find user button pressed");
+    }
+
+    @FXML
+    private void clearStatsButton() {
+        //TODO: call up methods from profile
+        String userIDStr = IDField.getText();
+        Integer userID = Integer.parseInt(userIDStr);
+        //Account player = database.queryAccountByID(userID);
+        //idk if this one is possible rn with the way stars work
+
+        System.out.println("Clear stats button pressed");
+    }
+
+    @FXML
+    private void deleteUserButton() {
+        //TODO: call up methods from profile
+        String userIDStr = IDField.getText();
+        Integer userID = Integer.parseInt(userIDStr);
+        //adminUser.deleteUser(database, userIDstr);
+        //how do we get database?
+        System.out.println("Delete user button pressed");
+    }
+
+    @FXML
+    private void submitButton() {
+        //TODO: call up methods from profile
+        String userIDStr = IDField.getText();
+        Integer userID = Integer.parseInt(userIDStr);
+        String username = userNameField.getText();
+        String userEmail = emailField.getText();
+        String userPassword = passwordField.getText();
+        //adminUser.updateUsername(database, username);
+        //adminUser.updateEmail(database, userEmail);
+        //adminUser.updatePassword(database, userPassword);
+        //how do we get database?
+        System.out.println("Submit button pressed");
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

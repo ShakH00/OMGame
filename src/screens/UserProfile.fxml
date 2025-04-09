@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -21,8 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.layout.StackPane?>
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserProfileController">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserProfileController">
    <children>
       <ImageView fitHeight="593.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -52,7 +52,7 @@
       <Line endX="598.0" layoutX="205.0" layoutY="50.0" startX="-205.0" stroke="WHITE" strokeWidth="4.0" />
       <StackPane fx:id="settingsButton" layoutX="607.0" layoutY="26.0" onMouseClicked="#goToSettings">
          <children>
-            <ImageView fitHeight="45.0" fitWidth="167.0"  pickOnBounds="true">
+            <ImageView fitHeight="45.0" fitWidth="167.0" pickOnBounds="true">
                <image>
                   <Image url="@../images/yellow_whiteborder.png" />
                </image>
@@ -349,7 +349,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </TabPane>
-      <Circle fill="WHITE" layoutX="94.0" layoutY="70.0" radius="41.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" />
-      <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
+      <Circle fill="WHITE" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" />
+      <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
    </children>
 </AnchorPane>
