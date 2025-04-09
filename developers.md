@@ -90,9 +90,9 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 ### Prerequisites
 - Update based on Nova's server or XAMPP
 
-## Installation Steps
+### Installation Steps
 
-### 1. Download and Install XAMPP
+#### 1. Download and Install XAMPP
 
 1. Go to the official [XAMPP website](https://www.apachefriends.org/download.html).
 2. Download the version for your operating system (Windows, macOS, or Linux).
@@ -104,7 +104,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 ---
 
-### 2. Start Apache and MySQL Servers
+#### 2. Start Apache and MySQL Servers
 
 1. In the XAMPP Control Panel, click **Start** next to:
     - **Apache** – This launches your local web server.
@@ -113,7 +113,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 ---
 
-### 3. Open phpMyAdmin
+#### 3. Open phpMyAdmin
 
 1. Open your web browser.
 2. Navigate to: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
@@ -121,7 +121,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 ---
 
-### 4. Download and Add MySQL Connector
+#### 4. Download and Add MySQL Connector
 
 1. Download the MySQL Connector J from the [official website](https://dev.mysql.com/downloads/connector/j/).
 2. Choose **Platform Independent** and download the `.zip` file.
@@ -133,7 +133,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 ---
 
-### 5. Initialize the Database
+#### 5. Initialize the Database
 
 1. In phpMyAdmin, go to the **SQL** tab.
 2. Execute the following SQL statements **one at a time**:
