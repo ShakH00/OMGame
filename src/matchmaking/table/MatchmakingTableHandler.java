@@ -33,7 +33,7 @@ public class MatchmakingTableHandler {
             // Check own information to see if another account is already requesting a match
             if (querySelfState() == MatchmakingState.FOUND_MATCH){
                 int opponent_ID = querySelfOpponentID();
-                startMatch(game, opponent_ID);
+                startMatch(game, true, opponent_ID);
                 break;
             }
 
@@ -56,7 +56,7 @@ public class MatchmakingTableHandler {
                         setOpponentID(id, selfID);
 
                         // Start the match on your client
-                        startMatch(game, id);
+                        startMatch(game, true, id);
                         break;
                     }
                 }
@@ -83,7 +83,7 @@ public class MatchmakingTableHandler {
             // Check own information to see if another account is already requesting a match
             if (querySelfState() == MatchmakingState.FOUND_MATCH){
                 int opponent_ID = querySelfOpponentID();
-                startMatch(game, opponent_ID);
+                startMatch(game, false, opponent_ID);
                 break;
             }
 
@@ -110,7 +110,7 @@ public class MatchmakingTableHandler {
         while (state == MatchmakingState.HOSTING){
             // Check own information to see if another account is already requesting a match
             if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                startMatch(game, opponentIDRestriction);
+                startMatch(game, false, opponentIDRestriction);
                 break;
             }
 
@@ -136,7 +136,7 @@ public class MatchmakingTableHandler {
 
             // Start match
             GameType game = queryGame(opponentID);
-            startMatch(game, opponentID);
+            startMatch(game, false, opponentID);
             return true;
         }
         return false;
@@ -154,14 +154,18 @@ public class MatchmakingTableHandler {
      * @param game
      * @param opponentID
      */
-    public void startMatch(GameType game, int opponentID){
+    public void startMatch(GameType game, boolean affectElo, int opponentID){
         // Update self state (both locally and in matchmaking table)
         state = MatchmakingState.PLAYING;
         setSelfState(MatchmakingState.PLAYING); // update state in database, preventing others from matching with this
 
-        // Start match of <game> with opponent <opponentID>
+        // Get info for game logic/GUI
+        Account self = DatabaseManager.queryAccountByID(selfID);
+        String selfUsername = self != null ? self.getUsername() : "?";
+
         Account opponent = DatabaseManager.queryAccountByID(opponentID);
-        String opponentUsername = opponent != null ? opponent.getUsername() : "<Opponent not found in 'accounts' database!>";
+        String opponentUsername = opponent != null ? opponent.getUsername() : "?";
+
         System.out.printf("Match found: You (ID %s) vs. %s (ID %s)", selfID, opponentUsername, opponentID);
 
         // ... (integration)

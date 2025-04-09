@@ -26,7 +26,6 @@ public class MatchmakingHandlerTest {
 
         // Add match outcome for both accounts
         GameType game = GameType.CHESS;
-        int matchID = 100;
 
         HashMap<StatisticType, Integer> account1Results = new HashMap<>();
         account1Results.put(StatisticType.WINS, 1);
