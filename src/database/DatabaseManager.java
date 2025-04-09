@@ -32,7 +32,7 @@ public class DatabaseManager {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
                 ResultSet rs = stmt.executeQuery();
 
-                if (rs.next()) {
+                while (rs.next()) {
                     int id = rs.getInt("ID");
                     String username = rs.getString("Username");
                     String email = rs.getString("Email");
@@ -305,4 +305,30 @@ public class DatabaseManager {
     public static Boolean deleteAccount(Integer userID) {return true;}
 
 
+    /**
+     * Get a temporary ID for storing a guest Account in the matchmaking table
+     * @return  int unique ID which should be overwritten if the guest is converted to an Account
+     */
+    public static int getTempID(){
+        String sql = "SELECT GREATEST((SELECT MAX(id) FROM accounts), (SELECT MAX(id) FROM matchmaking)) + 100 AS temp_id";
+        Connection conn = DatabaseConnection.getConnection();
+        int tempID = -1;
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    tempID = rs.getInt("temp_id");
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return tempID;
+    }
 }

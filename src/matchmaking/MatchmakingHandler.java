@@ -12,45 +12,43 @@ import java.util.concurrent.TimeUnit;
 
 public class MatchmakingHandler {
     MatchmakingState state;
-    final int selfID;
     final String networkingInfo;
 
     public MatchmakingHandler(Account account, String networkingInfo){
-        this.selfID = account.getID();
         this.state = MatchmakingState.ONLINE;
         this.networkingInfo = networkingInfo;
     }
 
-    public void startMatchmaking(GameType game, int elo) throws InterruptedException {
+    public void startMatchmaking(int selfID, GameType game, int elo) throws InterruptedException {
         double starting_time = System.currentTimeMillis();
         state = MatchmakingState.MATCHMAKING;
 
         // Add info to matchmaking table
-        addToMatchmakingTable(game, elo);
+        addToMatchmakingTable(selfID, game, elo);
 
         // Matchmaking loop
         while (state == MatchmakingState.MATCHMAKING){
             // Check own information to see if another account is already requesting a match
-            if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                int opponentID = querySelfOpponentID();
+            if (queryState(selfID) == MatchmakingState.FOUND_MATCH){
+                int opponentID = queryOpponentID(selfID);
                 String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
-                startMatch(game, true, opponentID, opponentNetworkingInformation);
+                startMatch(selfID, game, true, opponentID, opponentNetworkingInformation);
                 break;
             }
 
             // Update own information
-            setSelfRecentTime(System.currentTimeMillis());
-            setSelfEloRange(getNewMatchmakingRange(game, starting_time));
+            setRecentTime(selfID, System.currentTimeMillis());
+            setEloRange(selfID, getNewMatchmakingRange(game, starting_time));
 
             // Search for other players who this can match with
-            if (!queryAllOtherIDs().isEmpty()) {
-                System.out.println("ID: " + queryAllOtherIDs().getFirst());
-                for (int opponentID : queryAllOtherIDs()) {
+            if (!queryAllOtherIDs(selfID).isEmpty()) {
+                System.out.println("ID: " + queryAllOtherIDs(selfID).getFirst());
+                for (int opponentID : queryAllOtherIDs(selfID)) {
                     double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(opponentID));
                     if (msSinceLastCommunicated > 5000) {
                         System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds\n", opponentID);
                         removeFromMatchmakingTable(opponentID);
-                    } else if (canMatchWith(opponentID)) {
+                    } else if (canMatch(selfID, opponentID)) {
                         // Notify the other that they are going to match with you
                         System.out.printf("Found acceptable match with id %s. Updating their information...\n", opponentID);
                         setState(opponentID, MatchmakingState.FOUND_MATCH);
@@ -58,7 +56,7 @@ public class MatchmakingHandler {
 
                         // Start the match on your client
                         String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
-                        startMatch(game, true, opponentID, opponentNetworkingInformation);
+                        startMatch(selfID, game, true, opponentID, opponentNetworkingInformation);
                         break;
                     }
                 }
@@ -73,7 +71,7 @@ public class MatchmakingHandler {
         removeFromMatchmakingTable(selfID);
     }
 
-    public void startHosting(GameType game, String roomCode) throws InterruptedException {
+    public void startHosting(int selfID, GameType game, String roomCode) throws InterruptedException {
         state = MatchmakingState.HOSTING;
 
         // If the given room code is not unique, generate a new one.
@@ -82,20 +80,20 @@ public class MatchmakingHandler {
         }
 
         // Add info to matchmaking table
-        addToMatchmakingTable(game, roomCode);
+        addToMatchmakingTable(selfID, game, roomCode);
 
         // Matchmaking loop
         while (state == MatchmakingState.HOSTING){
             // Check own information to see if another account is already requesting a match
-            if (querySelfState() == MatchmakingState.FOUND_MATCH){
-                int opponentID = querySelfOpponentID();
+            if (queryState(selfID) == MatchmakingState.FOUND_MATCH){
+                int opponentID = queryOpponentID(selfID);
                 String opponentNetworkingInformation = queryNetworkingInfo(opponentID);
-                startMatch(game, false, opponentID, opponentNetworkingInformation);
+                startMatch(selfID, game, false, opponentID, opponentNetworkingInformation);
                 break;
             }
 
             // Update own information
-            setSelfRecentTime(System.currentTimeMillis());
+            setRecentTime(selfID, System.currentTimeMillis());
 
             // Wait 1 second before checking again if someone has joined
             TimeUnit.SECONDS.sleep(1);
@@ -104,7 +102,7 @@ public class MatchmakingHandler {
         removeFromMatchmakingTable(selfID);
     }
 
-    public boolean tryJoinHost(String roomCode) {
+    public boolean tryJoinHost(int selfID, String roomCode) {
         if (queryRoomCodeInTable(roomCode)) {
             // Get opponent details
             int opponentID = queryHostIDByRoomCode(roomCode);
@@ -115,7 +113,7 @@ public class MatchmakingHandler {
 
             // Start match
             GameType game = queryGame(opponentID);
-            startMatch(game, false, opponentID, opponentNetworkingInformation);
+            startMatch(selfID, game, false, opponentID, opponentNetworkingInformation);
             return true;
         }
         return false;
@@ -142,19 +140,19 @@ public class MatchmakingHandler {
      * @param affectsElo
      * @param opponentID
      */
-    public void startMatch(GameType game, boolean affectsElo, int opponentID, String opponentNetworkingInformation){
+    public void startMatch(int id, GameType game, boolean affectsElo, int opponentID, String opponentNetworkingInformation){
         // Update self state (both locally and in matchmaking table)
         state = MatchmakingState.PLAYING;
-        setSelfState(MatchmakingState.PLAYING); // update state in database, preventing others from matching with this
+        setState(id, MatchmakingState.PLAYING); // update state in database, preventing others from matching with this
 
         // Get info for game logic/GUI
-        Account self = DatabaseManager.queryAccountByID(selfID);
+        Account self = DatabaseManager.queryAccountByID(id);
         String selfUsername = self != null ? self.getUsername() : "?";
 
         Account opponent = DatabaseManager.queryAccountByID(opponentID);
         String opponentUsername = opponent != null ? opponent.getUsername() : "?";
 
-        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", selfID, opponentUsername, opponentID);
+        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", id, opponentUsername, opponentID);
 
         // Load game, handle networking
 
@@ -192,13 +190,13 @@ public class MatchmakingHandler {
         return new_range;
     }
 
-    private boolean canMatchWith(int id){
+    private boolean canMatch(int id1, int id2){
         return  (
-                querySelfState() == MatchmakingState.MATCHMAKING                 // Self is matchmaking
-                && queryState(id) == MatchmakingState.MATCHMAKING                // Other is matchmaking
-                && querySelfGame() == queryGame(id)                              // Both are matchmaking for same game
-                && Math.abs(querySelfElo() - queryElo(id)) < querySelfEloRange() // Elo difference acceptable for self
-                && Math.abs(querySelfElo() - queryElo(id)) < queryEloRange(id)   // Elo difference acceptable for other
+                queryState(id1) == MatchmakingState.MATCHMAKING                  // Self is matchmaking
+                && queryState(id2) == MatchmakingState.MATCHMAKING               // Other is matchmaking
+                && queryGame(id1) == queryGame(id2)                              // Both are matchmaking for same game
+                && Math.abs(queryElo(id1) - queryElo(id2)) < queryEloRange(id1)  // Elo difference acceptable for self
+                && Math.abs(queryElo(id1) - queryElo(id2)) < queryEloRange(id2)  // Elo difference acceptable for other
         );
     }
 
@@ -218,7 +216,7 @@ public class MatchmakingHandler {
      * @author Logan Olszak
      * @return String random string of length 6
      */
-     private String generateRandomRoomCode() {
+    private String generateRandomRoomCode() {
         StringBuilder roomCodeString = new StringBuilder ();
         Random rand = new Random();
         for (int i = 0; i < 6; i++) {
@@ -229,8 +227,7 @@ public class MatchmakingHandler {
         return roomCodeString.toString();
     }
 
-    // MODIFY SELF
-    private void addToMatchmakingTable(GameType gameType, int elo){
+    private void addToMatchmakingTable(int id, GameType gameType, int elo){
         String stateString = MatchmakingState.MATCHMAKING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
@@ -246,7 +243,7 @@ public class MatchmakingHandler {
 
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, selfID);
+                stmt.setInt(1, id);
                 stmt.setString(2, stateString);
                 stmt.setString(3, gameTypeString);
                 stmt.setDouble(4, startTime);
@@ -268,7 +265,7 @@ public class MatchmakingHandler {
         }
     }
 
-    private void addToMatchmakingTable(GameType gameType, String roomCode){
+    private void addToMatchmakingTable(int id, GameType gameType, String roomCode){
         String stateString = MatchmakingState.HOSTING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
@@ -284,7 +281,7 @@ public class MatchmakingHandler {
 
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, selfID);
+                stmt.setInt(1, id);
                 stmt.setString(2, stateString);
                 stmt.setString(3, gameTypeString);
                 stmt.setDouble(4, startTime);
@@ -306,146 +303,14 @@ public class MatchmakingHandler {
         }
     }
 
-    private void addToMatchmakingTable(GameType gameType, String roomCode, int allowedOpponentID){
-        String stateString = MatchmakingState.HOSTING.toString();
-        String gameTypeString = gameType.toString();
-        double startTime = System.currentTimeMillis();
-        double recentTime = System.currentTimeMillis();
-        int elo = -1;
-        int eloRange = -1;
-
-        String sql = "INSERT INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection conn = DatabaseConnection.getConnection();
-
-        if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, selfID);
-                stmt.setString(2, stateString);
-                stmt.setString(3, gameTypeString);
-                stmt.setDouble(4, startTime);
-                stmt.setDouble(5, recentTime);
-                stmt.setInt(6, elo);
-                stmt.setInt(7, eloRange);
-                stmt.setInt(8, allowedOpponentID);
-                stmt.setString(9, networkingInfo);
-                stmt.setString(10, roomCode);
-
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DatabaseConnection.closeConnection(conn);
-            }
-        } else {
-            System.out.println("Connection failed");
-        }
-    }
-
-    private void setSelfState(MatchmakingState newState){
-        String sql = "UPDATE matchmaking SET state = ? WHERE id = ?";
-        Connection conn = DatabaseConnection.getConnection();
-        String newStateString = newState.toString();
-
-        if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, newStateString);
-                stmt.setInt(2, selfID);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DatabaseConnection.closeConnection(conn);
-            }
-        } else {
-            System.out.println("Connection failed");
-        }
-    }
-
-    private void setSelfRecentTime(double newRecentTime){
-        String sql = "UPDATE matchmaking SET recent_time = ? WHERE id = ?";
-        Connection conn = DatabaseConnection.getConnection();
-
-        if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setDouble(1, newRecentTime);
-                stmt.setInt(2, selfID);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DatabaseConnection.closeConnection(conn);
-            }
-        } else {
-            System.out.println("Connection failed");
-        }
-    }
-
-    private void setSelfEloRange(int newRange){
-        String sql = "UPDATE matchmaking SET elo_range = ? WHERE id = ?";
-        Connection conn = DatabaseConnection.getConnection();
-
-        if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, newRange);
-                stmt.setInt(2, selfID);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DatabaseConnection.closeConnection(conn);
-            }
-        } else {
-            System.out.println("Connection failed");
-        }
-    }
-
-    private void setSelfOpponentID(int newOpponentID){
-        String sql = "UPDATE matchmaking SET opponent_ID = ? WHERE id = ?";
-        Connection conn = DatabaseConnection.getConnection();
-
-        if (conn != null) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, newOpponentID);
-                stmt.setInt(2, selfID);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                DatabaseConnection.closeConnection(conn);
-            }
-        } else {
-            System.out.println("Connection failed");
-        }
-    }
-
-
-    // QUERY SELF
-    private MatchmakingState querySelfState(){
-        return queryState(selfID);
-    }
-
-    private GameType querySelfGame(){
-        return queryGame(selfID);
-    }
-
-    private int querySelfElo(){
-        return queryElo(selfID);
-    }
-
-    private int querySelfEloRange(){
-        return queryEloRange(selfID);
-    }
-
-    private Integer querySelfOpponentID(){
+    private Integer queryOpponentID(int id){
         String sql = "SELECT * FROM matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Integer opponentID = null;
 
         if (conn != null) {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
-                stmt.setInt(1, selfID);
+                stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
@@ -462,8 +327,6 @@ public class MatchmakingHandler {
         return opponentID;
     }
 
-
-    // MODIFY OTHERS
     private void setState(int id, MatchmakingState newState){
         String sql = "UPDATE matchmaking SET state = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -472,6 +335,44 @@ public class MatchmakingHandler {
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, newStateString);
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("Connection failed");
+        }
+    }
+
+    private void setRecentTime(int id, double newRecentTime){
+        String sql = "UPDATE matchmaking SET recent_time = ? WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn != null) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setDouble(1, newRecentTime);
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("Connection failed");
+        }
+    }
+
+    private void setEloRange(int id, int newRange){
+        String sql = "UPDATE matchmaking SET elo_range = ? WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn != null) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, newRange);
                 stmt.setInt(2, id);
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -522,7 +423,7 @@ public class MatchmakingHandler {
     }
 
     // QUERY OTHERS
-    private ArrayList<Integer> queryAllOtherIDs(){
+    private ArrayList<Integer> queryAllOtherIDs(int id){
         String sql = "SELECT * FROM matchmaking";
         Connection conn = DatabaseConnection.getConnection();
         ArrayList<Integer> ids = new ArrayList<>();
@@ -531,10 +432,10 @@ public class MatchmakingHandler {
             try(PreparedStatement stmt = conn.prepareStatement(sql)){
                 ResultSet rs = stmt.executeQuery();
 
-                if (rs.next()) {
-                    int id = rs.getInt("ID");
-                    if (id != selfID){
-                        ids.add(id);
+                while (rs.next()) {
+                    int foundID = rs.getInt("ID");
+                    if (foundID != id){
+                        ids.add(foundID);
                     }
                 }
             } catch (SQLException e){
