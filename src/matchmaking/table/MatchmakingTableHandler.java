@@ -47,11 +47,11 @@ public class MatchmakingTableHandler {
                 for (int id : queryAllOtherIDs()) {
                     double msSinceLastCommunicated = (System.currentTimeMillis() - queryRecentTime(id));
                     if (msSinceLastCommunicated > 5000) {
-                        System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds", id);
+                        System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds\n", id);
                         removeFromMatchmakingTable(id);
                     } else if (canMatchWith(id)) {
                         // Notify the other that they are going to match with you
-                        System.out.printf("Found acceptable match with id %s. Updating their information...", id);
+                        System.out.printf("Found acceptable match with id %s. Updating their information...\n", id);
                         setState(id, MatchmakingState.FOUND_MATCH);
                         setOpponentID(id, selfID);
 
@@ -71,11 +71,15 @@ public class MatchmakingTableHandler {
         removeFromMatchmakingTable(selfID);
     }
 
-    public String startHosting(GameType game) throws InterruptedException {
+    public void startHosting(GameType game, String roomCode) throws InterruptedException {
         state = MatchmakingState.HOSTING;
 
+        // If the given room code is not unique, generate a new one.
+        if (queryRoomCodeInTable(roomCode)){
+            roomCode = getUniqueRoomCode();
+        }
+
         // Add info to matchmaking table
-        String roomCode = getUniqueRoomCode();
         addToMatchmakingTable(game, roomCode);
 
         // Matchmaking loop
@@ -95,15 +99,17 @@ public class MatchmakingTableHandler {
         }
 
         removeFromMatchmakingTable(selfID);
-
-        return roomCode;
     }
 
-    public String startHosting(GameType game, int opponentIDRestriction) throws InterruptedException {
+    public void startHosting(GameType game, String roomCode, int opponentIDRestriction) throws InterruptedException {
         state = MatchmakingState.HOSTING;
 
+        // If the given room code is not unique, generate a new one.
+        if (queryRoomCodeInTable(roomCode)){
+            roomCode = getUniqueRoomCode();
+        }
+
         // Add info to matchmaking table
-        String roomCode = getUniqueRoomCode();
         addToMatchmakingTable(game, roomCode, opponentIDRestriction);
 
         // Matchmaking loop
@@ -122,8 +128,6 @@ public class MatchmakingTableHandler {
         }
 
         removeFromMatchmakingTable(selfID);
-
-        return roomCode;
     }
 
     public boolean tryJoinHost(String roomCode) {
@@ -145,7 +149,14 @@ public class MatchmakingTableHandler {
     /**
      *
      */
-    public void cancelMatchmaking(){
+    public void stopMatchmaking(){
+        state = MatchmakingState.ONLINE;
+    }
+
+    /**
+     *
+     */
+    public void stopHosting(){
         state = MatchmakingState.ONLINE;
     }
 
@@ -166,7 +177,7 @@ public class MatchmakingTableHandler {
         Account opponent = DatabaseManager.queryAccountByID(opponentID);
         String opponentUsername = opponent != null ? opponent.getUsername() : "?";
 
-        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)", selfID, opponentUsername, opponentID);
+        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", selfID, opponentUsername, opponentID);
 
         // ... (integration)
     }
@@ -219,7 +230,7 @@ public class MatchmakingTableHandler {
      * @return Unique ID string of length 6
      * getUniqueRoomCode is a function that generates random 6 character room IDs until a unique ID is found
      */
-    private String getUniqueRoomCode() {
+    public String getUniqueRoomCode() {
         String potentialCode = generateRandomRoomCode();
         return !queryRoomCodeInTable(potentialCode) ? potentialCode : getUniqueRoomCode();  // Recursive call if there is a collision.
     }
@@ -229,7 +240,7 @@ public class MatchmakingTableHandler {
      * @author Logan Olszak
      * @return String random string of length 6
      */
-    private String generateRandomRoomCode() {
+     private String generateRandomRoomCode() {
         StringBuilder roomCodeString = new StringBuilder ();
         Random rand = new Random();
         for (int i = 0; i < 6; i++) {
@@ -280,7 +291,7 @@ public class MatchmakingTableHandler {
     }
 
     private void addToMatchmakingTable(GameType gameType, String roomCode){
-        String stateString = MatchmakingState.MATCHMAKING.toString();
+        String stateString = MatchmakingState.HOSTING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
         double recentTime = System.currentTimeMillis();
@@ -318,7 +329,7 @@ public class MatchmakingTableHandler {
     }
 
     private void addToMatchmakingTable(GameType gameType, String roomCode, int allowedOpponentID){
-        String stateString = MatchmakingState.MATCHMAKING.toString();
+        String stateString = MatchmakingState.HOSTING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
         double recentTime = System.currentTimeMillis();

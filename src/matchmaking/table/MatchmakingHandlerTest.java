@@ -7,9 +7,10 @@ import account.statistics.StatisticType;
 import game.GameType;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class MatchmakingHandlerTest {
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         // Initialize test account 1
         int id1 = 123;
         String username1 = "Alice";
@@ -54,15 +55,67 @@ public class MatchmakingHandlerTest {
 //            System.out.println(e);
 //        }
 
-        // Add matchmaking table handlers for account 2
-        MatchmakingTableHandler account2MM = new MatchmakingTableHandler(testAccount2, "");
+//        // Add matchmaking table handlers for account 2
+//        MatchmakingTableHandler account2MM = new MatchmakingTableHandler(testAccount2, "");
+//
+//        try {
+//            account2MM.startMatchmaking(game, testAccount2.getElo(game));
+//            System.out.println("Finished matchmaking for account 2");
+//        } catch (Exception e){
+//            System.out.println(e);
+//        }
+        MatchmakingTableHandler handler1 = new MatchmakingTableHandler(testAccount1, "");
+        MatchmakingTableHandler handler2 = new MatchmakingTableHandler(testAccount2, "");
+        String code = handler1.getUniqueRoomCode();
+        HostThread host = new HostThread(handler1, code, "");
+        host.start();
+        TimeUnit.SECONDS.sleep(1);
+        ClientThread client = new ClientThread(handler2, code, "");
+        client.start();
+    }
 
+}
+
+class HostThread extends Thread {
+    private final MatchmakingTableHandler host;
+    private final String roomCode;
+    private final String networkingInfo;
+
+    public HostThread(MatchmakingTableHandler host, String roomCode, String networkingInfo){
+        this.host = host;
+        this.roomCode = roomCode;
+        this.networkingInfo = networkingInfo;
+    }
+    public void run(){
         try {
-            account2MM.startMatchmaking(game, testAccount2.getElo(game));
-            System.out.println("Finished matchmaking for account 2");
+            host.startHosting(GameType.CHESS, roomCode);
+            System.out.println("[Host] Client has joined!");
         } catch (Exception e){
             System.out.println(e);
         }
     }
+}
 
+class ClientThread extends Thread {
+    private final MatchmakingTableHandler client;
+    private final String roomCode;
+    private final String networkingInfo;
+
+    public ClientThread(MatchmakingTableHandler client, String roomCode, String networkingInfo){
+        this.client = client;
+        this.roomCode = roomCode;
+        this.networkingInfo = networkingInfo;
+    }
+    public void run(){
+        try {
+            if(client.tryJoinHost(roomCode)){
+                System.out.println("[Client] Client has joined!");
+            }
+            else {
+                System.out.println("Client failed to connect to host");
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }
