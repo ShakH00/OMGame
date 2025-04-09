@@ -28,7 +28,9 @@ public class GameSelectController extends Application {
     @FXML
     Text errorMessage;
     @FXML
-    ImageView profile;
+    StackPane profile;
+    @FXML
+    StackPane leaderboard;
 
     @Override
     public void start(Stage primaryStage) {
@@ -71,6 +73,8 @@ public class GameSelectController extends Application {
         UtilityManager.createTranslationTransition(pinkCartridge);
         UtilityManager.createTranslationTransition(purpleCartridge);
         UtilityManager.createTranslationTransition(orangeCartridge);
+        UtilityManager.createScaleTransition(leaderboard);
+        UtilityManager.createScaleTransition(profile);
     }
 
     @FXML
@@ -109,6 +113,13 @@ public class GameSelectController extends Application {
         SceneManager.switchScene(stage, "screens/Checkers.fxml");
     }
 
+    @FXML
+    private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
+        //TODO: uncomment when merged
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
+        System.out.println("LEADERBOARD");
+    }
 
     public static void main(String[] args) {
         launch(args);

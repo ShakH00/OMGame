@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.control.PasswordField?>
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminController">
+    <children>
+        <ImageView fitHeight="593.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/adjustedstars.png" />
+            </image>
+        </ImageView>
+        <Line endX="598.0" layoutX="206.0" layoutY="120.0" startX="-205.0" stroke="#0f243a" strokeWidth="2.0" />
+        <TabPane layoutX="-7.0" layoutY="90.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="478.0" prefWidth="807.0" stylesheets="@../styles.css" tabClosingPolicy="UNAVAILABLE" tabMinWidth="110.0">
+            <tabs>
+                <Tab fx:id="overview" style="-fx-tab-min-width: 200px; -fx-background-color: #16304b; -fx-font-size: 15px;" text="Edit User">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="801.0">
+                            <children>
+                                <Text fill="WHITE" layoutX="294.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID:" wrappingWidth="139.52422332763672">
+<!--                                    <font>-->
+<!--                                        <Font size="20.0" />-->
+<!--                                    </font>-->
+                                </Text>
+                                <TextField fx:id="IDField" layoutX="296.0" layoutY="43.0" prefHeight="38.0" prefWidth="216.0" promptText="ID" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+<!--                                    <font>-->
+<!--                                        <Font name="Press Start 2P Regular" size="10.0" />-->
+<!--                                    </font>-->
+                                </TextField>
+                                <TextField fx:id="userNameField" layoutX="296.0" layoutY="140.0" prefHeight="38.0" prefWidth="216.0" promptText="Username" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+<!--                                    <font>-->
+<!--                                        <Font name="Press Start 2P Regular" size="10.0" />-->
+<!--                                    </font>-->
+                                </TextField>
+                                <PasswordField fx:id="passwordField" layoutX="294.0" layoutY="343.0" prefHeight="38.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+<!--                                    <font>-->
+<!--                                        <Font size="10.0" />-->
+<!--                                    </font>-->
+                                </PasswordField>
+                                <TextField fx:id="emailField" layoutX="294.0" layoutY="243.0" prefHeight="38.0" prefWidth="216.0" promptText="Email" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+<!--                                    <font>-->
+<!--                                        <Font name="Press Start 2P Regular" size="10.0" />-->
+<!--                                    </font>-->
+                                </TextField>
+                                <Text fill="WHITE" layoutX="294.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="139.52422332763672">
+<!--                                    <font>-->
+<!--                                        <Font size="20.0" />-->
+<!--                                    </font>-->
+                                </Text>
+                                <Text fill="WHITE" layoutX="294.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="139.52422332763672">
+<!--                                    <font>-->
+<!--                                        <Font size="20.0" />-->
+<!--                                    </font>-->
+                                </Text>
+                                <Text fill="WHITE" layoutX="294.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="139.52422332763672">
+<!--                                    <font>-->
+<!--                                        <Font size="20.0" />-->
+<!--                                    </font>-->
+                                </Text>
+                                <StackPane fx:id="findUserButton" layoutX="576.0" layoutY="37.0" onMouseClicked="#findUserButton" prefHeight="51.0" prefWidth="84.0">
+                                    <children>
+                                        <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/yellow.png" />
+                                            </image>
+                                            <effect>
+                                                <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                                                    <color>
+                                                        <Color opacity="0.5813069939613342" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </ImageView>
+                                        <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="FIND USER" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+<!--                                            <font>-->
+<!--                                                <Font name="Press Start 2P Regular" size="14.0" />-->
+<!--                                            </font>-->
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <StackPane fx:id="clearStatsButton" layoutX="576.0" layoutY="134.0" onMouseClicked="#clearStatsButton" prefHeight="51.0" prefWidth="84.0">
+                                    <children>
+                                        <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/blue.png" />
+                                            </image>
+                                            <effect>
+                                                <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                                                    <color>
+                                                        <Color opacity="0.5813069939613342" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </ImageView>
+                                        <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="CLEAR STATS" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+<!--                                            <font>-->
+<!--                                                <Font name="Press Start 2P Regular" size="14.0" />-->
+<!--                                            </font>-->
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <StackPane fx:id="deleteUserButton" layoutX="576.0" layoutY="237.0" onMouseClicked="#deleteUserButton" prefHeight="51.0" prefWidth="84.0">
+                                    <children>
+                                        <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/pink.png" />
+                                            </image>
+                                            <effect>
+                                                <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                                                    <color>
+                                                        <Color opacity="0.5813069939613342" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </ImageView>
+                                        <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="DELETE USER" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+<!--                                            <font>-->
+<!--                                                <Font name="Press Start 2P Regular" size="14.0" />-->
+<!--                                            </font>-->
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <StackPane fx:id="submitButton" layoutX="576.0" layoutY="337.0" onMouseClicked="#submitButton" prefHeight="51.0" prefWidth="84.0">
+                                    <children>
+                                        <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/green.png" />
+                                            </image>
+                                            <effect>
+                                                <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                                                    <color>
+                                                        <Color opacity="0.5813069939613342" />
+                                                    </color>
+                                                </DropShadow>
+                                            </effect>
+                                        </ImageView>
+                                        <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="SAVE CHANGES" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+<!--                                            <font>-->
+<!--                                                <Font name="Press Start 2P Regular" size="14.0" />-->
+<!--                                            </font>-->
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <ImageView fitHeight="131.0" fitWidth="175.0" layoutX="83.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/sprites/tetrisCat1.GIF" />
+                                    </image>
+                                </ImageView>
+                                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#159ed3" height="218.0" layoutX="49.0" layoutY="160.0" strokeType="INSIDE" strokeWidth="4.0" width="199.0">
+                                    <stroke>
+                                        <LinearGradient endX="1.0" endY="1.0">
+                                            <stops>
+                                                <Stop>
+                                                    <color>
+                                                        <Color />
+                                                    </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                    <color>
+                                                        <Color red="0.563040018081665" green="0.3587999939918518" blue="0.6899999976158142" />
+                                                    </color>
+                                                </Stop>
+                                            </stops>
+                                        </LinearGradient>
+                                    </stroke>
+                                </Rectangle>
+                                <Text fill="WHITE" layoutX="76.0" layoutY="217.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="Tetris cat says always verify a users identity before making any changes to their account :)" textAlignment="CENTER" wrappingWidth="144.7403564453125">
+<!--                                    <font>-->
+<!--                                        <Font size="25.0" />-->
+<!--                                    </font>-->
+                                </Text>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <styleClass>
+                <String fx:value="tab-header-area" />
+                <String fx:value="tab-pane" />
+            </styleClass>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </TabPane>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#16304b" height="89.0" layoutX="2.0" layoutY="1.0" strokeType="INSIDE" width="800.0" />
+        <ImageView fitHeight="83.0" fitWidth="410.0" layoutX="620.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/omg_title.png" />
+            </image>
+        </ImageView>
+        <StackPane fx:id="backButton" layoutX="21.0" layoutY="24.0" onMouseClicked="#switchToHome">
+            <children>
+                <ImageView fitHeight="49.0" fitWidth="114.0" layoutX="2.4000000953674316" layoutY="10.199999809265137" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/yellow.png" />
+                    </image>
+                    <effect>
+                        <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
+                            <color>
+                                <Color opacity="0.6208207011222839" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </ImageView>
+                <Text fill="WHITE" layoutX="19.0" layoutY="36.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="13.0" />
+                    </font>
+                </Text>
+            </children>
+        </StackPane>
+        <Text fill="WHITE" layoutX="148.0" layoutY="74.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="ADMIN CONSOLE" textAlignment="CENTER" wrappingWidth="497.7403564453125">
+            <font>
+                <Font size="32.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>

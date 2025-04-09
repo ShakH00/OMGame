@@ -67,7 +67,7 @@
          </children>
       </StackPane>
 
-      <StackPane fx:id="rankingButton" layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
+      <StackPane fx:id="rankingButton" onMouseClicked="#switchToLB" layoutX="328.0" layoutY="305.0" prefHeight="51.0" prefWidth="84.0" styleClass="hoverButton">
          <children>
             <ImageView fitHeight="111.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                <image>

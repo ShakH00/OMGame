@@ -29,7 +29,7 @@
             </image>
         </ImageView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="32.0" layoutX="328.0" layoutY="161.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
-        <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#fbf8f3" height="230.0" layoutX="226.0" layoutY="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="370.0">
+        <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#fbf8f3" height="250.0" layoutX="226.0" layoutY="175.0" stroke="TRANSPARENT" strokeType="INSIDE" width="370.0">
             <effect>
                 <DropShadow>
                     <color>
@@ -41,17 +41,17 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />
 
         <!--    Text inputs    -->
-        <TextField layoutX="237.0" layoutY="238.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter email!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+        <TextField layoutX="237.0" layoutY="213.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter email!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
             <font>
                 <Font name="Press Start 2P Regular" size="10.0" />
             </font>
         </TextField>
-        <PasswordField layoutX="237.0" layoutY="371.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter password!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+        <PasswordField layoutX="237.0" layoutY="346.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter password!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
             <font>
                 <Font name="Press Start 2P Regular" size="10.0" />
             </font>
         </PasswordField>
-        <TextField layoutX="236.0" layoutY="306.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter username!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+        <TextField layoutX="236.0" layoutY="281.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter username!" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
             <font>
                 <Font name="Press Start 2P Regular" size="10.0" />
             </font>
@@ -101,7 +101,7 @@
             </children>
         </StackPane>
 
-        <StackPane fx:id="toLogin" layoutX="291.0" layoutY="429.0">
+        <StackPane fx:id="toLogin" layoutX="291.0" layoutY="425.0">
             <Button alignment="CENTER" graphicTextGap="6.0" mnemonicParsing="false" onMouseClicked="#switchToLogin" prefHeight="20.0" prefWidth="238.0" style="-fx-background-color: #fbbd3d;" text="have an account? login here!" textAlignment="CENTER" textFill="#1b3851">
                 <font>
                     <Font name="Press Start 2P Regular" size="8.0" />
@@ -110,24 +110,24 @@
         </StackPane>
         <StackPane fx:id="guestButton" layoutX="276.0" layoutY="494.0" onMouseClicked="#switchToGameSelect" />
 
-        <Text fill="#254663" layoutX="243.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="139.52422332763672">
+        <Text fill="#254663" layoutX="243.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="139.52422332763672">
             <font>
                 <Font name="Press Start 2P Regular" size="11.0" />
             </font>
         </Text>
-        <Text fill="#254663" layoutX="242.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="139.52422332763672">
+        <Text fill="#254663" layoutX="242.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="139.52422332763672">
             <font>
                 <Font name="Press Start 2P Regular" size="11.0" />
             </font>
         </Text>
-        <Text fill="#254663" layoutX="243.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="139.52422332763672">
+        <Text fill="#254663" layoutX="243.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="139.52422332763672">
             <font>
                 <Font name="Press Start 2P Regular" size="11.0" />
             </font>
         </Text>
 
         <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
-        <ImageView fitHeight="83.0" fitWidth="410.0" layoutX="240.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="83.0" fitWidth="410.0" layoutX="240.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/signup_text.png" />
             </image>
