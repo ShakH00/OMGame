@@ -77,30 +77,30 @@ public class MatchmakingHandlerTest {
         Account testAccount4 = new Account();   // Guest account
 
         // Test host, client
-        MatchmakingHandler handler1 = new MatchmakingHandler(testAccount1, "");
-        MatchmakingHandler handler2 = new MatchmakingHandler(testAccount2, "");
-        MatchmakingHandler handler3 = new MatchmakingHandler(testAccount3, ""); // Guest account
-        MatchmakingHandler handler4 = new MatchmakingHandler(testAccount4, ""); // Guest account
+//        MatchmakingHandler handler1 = new MatchmakingHandler();
+//        MatchmakingHandler handler2 = new MatchmakingHandler();
+//        MatchmakingHandler handler3 = new MatchmakingHandler(); // Guest account
+//        MatchmakingHandler handler4 = new MatchmakingHandler(); // Guest account
 
-        String code = handler1.getUniqueRoomCode();
-//
-//        HostThread host = new HostThread(handler4, code, "", testAccount1.getID());
-//        host.start();
-//
-//        TimeUnit.SECONDS.sleep(1);
+        String code = testAccount1.getMatchmakingHandler().getUniqueRoomCode();
 
-//        ClientThread client = new ClientThread(handler2, code, "", testAccount2.getID());
-//        client.start();
-//        int tempID0 = DatabaseManager.getTempID();
-        int tempID1 = DatabaseManager.getTempID();
-        HostThread host = new HostThread(handler4, code, "", tempID1);
+        HostThread host = new HostThread(testAccount1.getMatchmakingHandler(), code, "", testAccount1.getID());
         host.start();
 
         TimeUnit.SECONDS.sleep(1);
 
-        int tempID2 = DatabaseManager.getTempID();
-        ClientThread client = new ClientThread(handler3, code, "", tempID2);
+        ClientThread client = new ClientThread(testAccount2.getMatchmakingHandler(), code, "", testAccount2.getID());
         client.start();
+
+//        int tempID1 = DatabaseManager.getTempID();
+//        HostThread host = new HostThread(handler4, code, "", tempID1);
+//        host.start();
+//
+//        TimeUnit.SECONDS.sleep(1);
+//
+//        int tempID2 = DatabaseManager.getTempID();
+//        ClientThread client = new ClientThread(handler3, code, "", tempID2);
+//        client.start();
     }
 }
 
@@ -118,7 +118,7 @@ class HostThread extends Thread {
     }
     public void run(){
         try {
-            host.startHosting(id, GameType.CHESS, roomCode);
+            host.startHosting(id, GameType.CHESS, roomCode, networkingInfo);
             System.out.println("[Host] Client has joined!");
         } catch (Exception e){
             System.out.println(e);
@@ -140,7 +140,7 @@ class ClientThread extends Thread {
     }
     public void run(){
         try {
-            if(client.tryJoinHost(id, roomCode)){
+            if(client.tryJoinHost(id, roomCode, networkingInfo)){
                 System.out.println("[Client] Client has joined!");
             }
             else {

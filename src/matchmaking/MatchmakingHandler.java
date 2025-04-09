@@ -12,19 +12,17 @@ import java.util.concurrent.TimeUnit;
 
 public class MatchmakingHandler {
     MatchmakingState state;
-    final String networkingInfo;
 
-    public MatchmakingHandler(Account account, String networkingInfo){
+    public MatchmakingHandler(){
         this.state = MatchmakingState.ONLINE;
-        this.networkingInfo = networkingInfo;
     }
 
-    public void startMatchmaking(int selfID, GameType game, int elo) throws InterruptedException {
+    public void startMatchmaking(int selfID, GameType game, int elo, String networkingInfo) throws InterruptedException {
         double starting_time = System.currentTimeMillis();
         state = MatchmakingState.MATCHMAKING;
 
         // Add info to matchmaking table
-        addToMatchmakingTable(selfID, game, elo);
+        addToMatchmakingTable(selfID, game, elo, networkingInfo);
 
         // Matchmaking loop
         while (state == MatchmakingState.MATCHMAKING){
@@ -39,6 +37,7 @@ public class MatchmakingHandler {
             // Update own information
             setRecentTime(selfID, System.currentTimeMillis());
             setEloRange(selfID, getNewMatchmakingRange(game, starting_time));
+            setNetworkingInfo(selfID, networkingInfo);
 
             // Search for other players who this can match with
             if (!queryAllOtherIDs(selfID).isEmpty()) {
@@ -72,7 +71,7 @@ public class MatchmakingHandler {
         removeFromMatchmakingTable(selfID);
     }
 
-    public void startHosting(int selfID, GameType game, String roomCode) throws InterruptedException {
+    public void startHosting(int selfID, GameType game, String roomCode, String networkingInfo) throws InterruptedException {
         state = MatchmakingState.HOSTING;
 
         // If the given room code is not unique, generate a new one.
@@ -81,7 +80,7 @@ public class MatchmakingHandler {
         }
 
         // Add info to matchmaking table
-        addToMatchmakingTable(selfID, game, roomCode);
+        addToMatchmakingTable(selfID, game, roomCode, networkingInfo);
 
         // Matchmaking loop
         while (state == MatchmakingState.HOSTING){
@@ -103,7 +102,7 @@ public class MatchmakingHandler {
         removeFromMatchmakingTable(selfID);
     }
 
-    public boolean tryJoinHost(int selfID, String roomCode) {
+    public boolean tryJoinHost(int selfID, String roomCode, String networkingInfo) {
         if (queryRoomCodeInTable(roomCode)) {
             // Get opponent details
             int opponentID = queryHostIDByRoomCode(roomCode);
@@ -229,7 +228,7 @@ public class MatchmakingHandler {
         return roomCodeString.toString();
     }
 
-    private void addToMatchmakingTable(int id, GameType gameType, int elo){
+    private void addToMatchmakingTable(int id, GameType gameType, int elo, String networkingInfo){
         String stateString = MatchmakingState.MATCHMAKING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
@@ -267,7 +266,7 @@ public class MatchmakingHandler {
         }
     }
 
-    private void addToMatchmakingTable(int id, GameType gameType, String roomCode){
+    private void addToMatchmakingTable(int id, GameType gameType, String roomCode, String networkingInfo){
         String stateString = MatchmakingState.HOSTING.toString();
         String gameTypeString = gameType.toString();
         double startTime = System.currentTimeMillis();
@@ -337,6 +336,25 @@ public class MatchmakingHandler {
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, newStateString);
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("Connection failed");
+        }
+    }
+
+    private void setNetworkingInfo(int id, String newNetworkingInfo){
+        String sql = "UPDATE matchmaking SET networking_info = ? WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn != null) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, newNetworkingInfo);
                 stmt.setInt(2, id);
                 stmt.executeUpdate();
             } catch (SQLException e) {

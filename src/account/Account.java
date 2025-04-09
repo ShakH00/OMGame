@@ -9,6 +9,7 @@ import database.DatabaseManager;
 import database.EncryptionAuthentication;
 import game.GameType;
 import account.statistics.*;
+import matchmaking.MatchmakingHandler;
 
 public class Account {
     /**
@@ -50,6 +51,8 @@ public class Account {
 
     private String[][] matchHistory;
 
+    private final MatchmakingHandler matchmakingHandler = new MatchmakingHandler();
+
     /**
      * Initialize a guest Account
      */
@@ -82,7 +85,6 @@ public class Account {
      * @param password String password for the account
      */
     public Account(int id, String username, String email, String password) {
-
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
         this.id = id;
@@ -577,26 +579,6 @@ public class Account {
         return success;
     }
 
-    private long joinTimestamp;
-
-    public void setJoinTimestamp(long timestamp) {
-        this.joinTimestamp = timestamp;
-    }
-
-    public long getJoinTimestamp() {
-        return this.joinTimestamp;
-    }
-
-    private int matchmakingThreshold;
-
-    public void setMatchmakingThreshold(int matchmakingThreshold){
-        this.matchmakingThreshold = matchmakingThreshold;
-    }
-
-    public int getMatchmakingThreshold(){
-        return matchmakingThreshold;
-    }
-
     public String getEmail() {
         return  email;
     }
@@ -606,4 +588,11 @@ public class Account {
         this.id = id;
     }
 
+    /**
+     * Get the object that is in charge of matchmaking for this Account.
+     * @return
+     */
+    public MatchmakingHandler getMatchmakingHandler(){
+        return matchmakingHandler;
     }
+}
