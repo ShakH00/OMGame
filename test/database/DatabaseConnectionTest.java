@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseConnectionTest {
 
-
         // Test case to check if a valid connection is established.
         @Test
         void testGetConnectionSuccess() {

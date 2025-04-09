@@ -4,19 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 /**
  * This is a class for managing MySQL database connections.
  * Provides methods to establish and close connections.
  */
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/omgamedb";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
-//    private static final String URL = "jdbc:mysql://database.omgame.club:3307/Games";
-//    private static final String USER = "tetriscat";
-//    private static final String PASSWORD = "ellendusk";
+
+    // Connection through XAMMPP
+//    private static final String URL = "jdbc:mysql://localhost:3306/OMGAMEDB";
+//    private static final String USER = "root";
+//    private static final String PASSWORD = "";
+
+    //Connection through Nova's server
+    private static final String URL = "jdbc:mysql://database.omgame.club:3307/OMGAMEDB";
+    private static final String USER = "tetriscat";
+    private static final String PASSWORD = "ellendusk";
 
 
     /**
