@@ -29,14 +29,6 @@ public class Networking {
     }
 
     /**
-     *
-     * @param game
-     */
-    public void createGame(Game game){
-
-    }
-
-    /**
      * Receives the entire game state (using Game object) from opponent and returns it for use locally. Prints debug information to console.
      *
      * @return Game object from opponent containing their latest turn
@@ -50,7 +42,7 @@ public class Networking {
     /**
      * Sends the entire game state (using Game object) to opponent and caches it locally. Then puts the player into listening mode, thus preventing further input.  Prints debug information to console.
      *
-     * @param game
+     * @param game Game object to be sent to the opponent player, including just completed turn
      * @author Nova Driscoll
      */
     public void sendGame(Game game) {
@@ -81,6 +73,7 @@ public class Networking {
 
     /**
      * Internal class to create debug time string
+     * Used as reference: https://stackoverflow.com/questions/2942857/how-to-convert-current-date-into-string-in-java
      *
      * @return Returns current time in the format: yy.mm.dd hh:mm:ss.ms
      * @author Nova Driscoll
