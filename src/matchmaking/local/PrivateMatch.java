@@ -1,9 +1,8 @@
-package matchmaking;
+package matchmaking.local;
 
 import game.GameType;
 import account.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -113,7 +112,7 @@ public class PrivateMatch {
         boolean loop = true;
         while (loop) {
             potentialID = generateRandomID();
-            //NEED TO CREATE a MatchHandler object to call getPrivateMatches() on in main program once that exists
+            //NEED TO CREATE a LocalMatchHandler object to call getPrivateMatches() on in main program once that exists
             ArrayList<PrivateMatch> matches = null; //Should eventualy be matchHandler.getPrivateMatches() instead of null
             boolean matching = false;
             if (matches != null) {

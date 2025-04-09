@@ -2,13 +2,10 @@ package matchmaking;
 
 import account.Account;
 import game.GameType;
-import matchmaking.Matchmaking;
+import matchmaking.local.Matchmaking;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-
 
 
 public class MatchmakingTest {

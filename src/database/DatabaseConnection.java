@@ -11,15 +11,15 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    // Connection through XAMMPP
-//    private static final String URL = "jdbc:mysql://localhost:3306/OMGAMEDB";
-//    private static final String USER = "root";
-//    private static final String PASSWORD = "";
+    // Connection through XAMPP
+    private static final String URL = "jdbc:mysql://localhost:3306/OMGAMEDB";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
-    //Connection through Nova's server
-    private static final String URL = "jdbc:mysql://database.omgame.club:3307/OMGAMEDB";
-    private static final String USER = "tetriscat";
-    private static final String PASSWORD = "ellendusk";
+    // Connection through Nova's server
+//    private static final String URL = "jdbc:mysql://database.omgame.club:3307/OMGAMEDB";
+//    private static final String USER = "tetriscat";
+//    private static final String PASSWORD = "ellendusk";
 
 
     /**

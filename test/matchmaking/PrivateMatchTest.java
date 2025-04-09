@@ -2,7 +2,8 @@ package matchmaking;
 
 import account.Account;
 import game.GameType;
-import matchmaking.Matchmaking;
+import matchmaking.local.LocalMatchHandler;
+import matchmaking.local.PrivateMatch;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -12,14 +13,14 @@ import java.util.ArrayList;
 
 
 public class PrivateMatchTest {
-    private MatchHandler handler;
+    private LocalMatchHandler handler;
     private Account testAccount1;
     private Account testAccount2;
     private GameType testGame;
 
     @Before
     public void setUp() {
-        handler = new MatchHandler();
+        handler = new LocalMatchHandler();
         testAccount1 = new Account(1234, "Alice", "Alice.email@gmail.com", "Password");
         testAccount2 = new Account(2345, "Bob", "Bob.email@gmail.com", "12345");
         testGame = GameType.CHESS;

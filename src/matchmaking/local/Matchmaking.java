@@ -1,4 +1,4 @@
-package matchmaking;
+package matchmaking.local;
 
 import account.Account;
 import database.DatabaseManager;
