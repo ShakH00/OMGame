@@ -1,13 +1,13 @@
-package matchmaking;
+package matchmaking.local;
 
 import account.Account;
 
 import java.util.ArrayList;
 
-public class MatchHandler {
+public class LocalMatchHandler {
     private ArrayList<PrivateMatch> privateMatches;
 
-    public MatchHandler() {
+    public LocalMatchHandler() {
         this.privateMatches = new ArrayList<PrivateMatch>();
     }
     /**

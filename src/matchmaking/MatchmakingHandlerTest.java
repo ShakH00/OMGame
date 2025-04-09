@@ -1,4 +1,4 @@
-package matchmaking.table;
+package matchmaking;
 
 import account.*;
 import account.statistics.MatchOutcomeHandler;
@@ -46,7 +46,7 @@ public class MatchmakingHandlerTest {
         // the matchmaking process is complete or cancelled. Please ask me (Elijah) if you have any questions.
 
 //        // Add matchmaking table handlers for account 1
-//        MatchmakingTableHandler account1MM = new MatchmakingTableHandler(testAccount1, "");
+//        MatchmakingHandler account1MM = new MatchmakingHandler(testAccount1, "");
 //
 //        try {
 //            account1MM.startMatchmaking(game, testAccount1.getElo(game));
@@ -56,7 +56,7 @@ public class MatchmakingHandlerTest {
 //        }
 
 //        // Add matchmaking table handlers for account 2
-//        MatchmakingTableHandler account2MM = new MatchmakingTableHandler(testAccount2, "");
+//        MatchmakingHandler account2MM = new MatchmakingHandler(testAccount2, "");
 //
 //        try {
 //            account2MM.startMatchmaking(game, testAccount2.getElo(game));
@@ -64,8 +64,8 @@ public class MatchmakingHandlerTest {
 //        } catch (Exception e){
 //            System.out.println(e);
 //        }
-        MatchmakingTableHandler handler1 = new MatchmakingTableHandler(testAccount1, "");
-        MatchmakingTableHandler handler2 = new MatchmakingTableHandler(testAccount2, "");
+        MatchmakingHandler handler1 = new MatchmakingHandler(testAccount1, "");
+        MatchmakingHandler handler2 = new MatchmakingHandler(testAccount2, "");
         String code = handler1.getUniqueRoomCode();
         HostThread host = new HostThread(handler1, code, "");
         host.start();
@@ -77,11 +77,11 @@ public class MatchmakingHandlerTest {
 }
 
 class HostThread extends Thread {
-    private final MatchmakingTableHandler host;
+    private final MatchmakingHandler host;
     private final String roomCode;
     private final String networkingInfo;
 
-    public HostThread(MatchmakingTableHandler host, String roomCode, String networkingInfo){
+    public HostThread(MatchmakingHandler host, String roomCode, String networkingInfo){
         this.host = host;
         this.roomCode = roomCode;
         this.networkingInfo = networkingInfo;
@@ -97,11 +97,11 @@ class HostThread extends Thread {
 }
 
 class ClientThread extends Thread {
-    private final MatchmakingTableHandler client;
+    private final MatchmakingHandler client;
     private final String roomCode;
     private final String networkingInfo;
 
-    public ClientThread(MatchmakingTableHandler client, String roomCode, String networkingInfo){
+    public ClientThread(MatchmakingHandler client, String roomCode, String networkingInfo){
         this.client = client;
         this.roomCode = roomCode;
         this.networkingInfo = networkingInfo;

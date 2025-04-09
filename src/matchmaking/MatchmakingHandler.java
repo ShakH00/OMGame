@@ -1,4 +1,4 @@
-package matchmaking.table;
+package matchmaking;
 
 import account.Account;
 import database.DatabaseConnection;
@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class MatchmakingTableHandler {
+public class MatchmakingHandler {
     MatchmakingState state;
     final int selfID;
     final String networkingInfo;
 
-    public MatchmakingTableHandler(Account account, String networkingInfo){
+    public MatchmakingHandler(Account account, String networkingInfo){
         this.selfID = account.getID();
         this.state = MatchmakingState.ONLINE;
         this.networkingInfo = networkingInfo;

@@ -1,4 +1,4 @@
-package matchmaking.table;
+package matchmaking;
 
 public enum MatchmakingState {
     OFFLINE,
