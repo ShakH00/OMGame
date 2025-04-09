@@ -82,9 +82,9 @@
                               </Text>
                            </children>
                         </StackPane>
-                        <Text fill="#a19c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="I may be a cat, but around these parts, they call me the GOAT" translateY="40.0" wrappingWidth="158.44970703125">
+                        <Text fill="#a19c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="I may be a cat, but around these parts, they call me the GOAT" translateY="40.0" wrappingWidth="218.44970703125">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="14.0" />
                            </font>
                         </Text>
                      </children>

@@ -46,9 +46,9 @@ public class MenuPopupController extends Application {
         }
     }
     public void initialize() {
-        UtilityManager.createScaleTransition(closeButton);
-        UtilityManager.createScaleTransition(drawButton);
-        UtilityManager.createScaleTransition(resignButton);
+//        UtilityManager.createScaleTransition(closeButton);
+//        UtilityManager.createScaleTransition(drawButton);
+//        UtilityManager.createScaleTransition(resignButton);
     }
 
     @FXML
