@@ -1,13 +1,19 @@
+import account.Account;
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 public class LoginController extends Application {
 
@@ -23,6 +29,11 @@ public class LoginController extends Application {
     private StackPane guestButton;
     @FXML
     private Text guestText;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -69,6 +80,31 @@ public class LoginController extends Application {
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Start.fxml");
+    }
+
+    @FXML
+    private void login(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        Account user = DatabaseManager.queryAccountByEmail(username);
+        if(user == null){
+            // If the account wasn't found via email, try via username
+            user = DatabaseManager.queryAccountByUsername(username);
+        }
+        boolean accountExists = false;
+        if(user != null) {
+            accountExists = true;
+        }
+        if(accountExists){
+            if(user.getPassword().equals(password)){
+                // If the password matches the username/email, log them in
+                SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+                return;
+            }
+        }
+        // TODO: Print system error message
+        System.out.println("Incorrect username or password");
     }
 
     @FXML
