@@ -28,7 +28,6 @@ public class DatabaseManagerTest {
             fail("Failed to reset database: " + e.getMessage());
         }
     }
-
     @Test
     void testStoreAccount() {
         resetDatabase();
@@ -61,5 +60,4 @@ public class DatabaseManagerTest {
         assertTrue(retrieved.getFriendIDs().contains(2));
 
     }
-
 }

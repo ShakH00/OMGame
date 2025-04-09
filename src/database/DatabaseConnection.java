@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
 
+/**
+ * This is a class for managing MySQL database connections.
+ * Provides methods to establish and close connections.
+ */
+
+public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/omgamedb";
     private static final String USER = "root";
     private static final String PASSWORD = "";
@@ -13,6 +18,12 @@ public class DatabaseConnection {
 //    private static final String USER = "tetriscat";
 //    private static final String PASSWORD = "ellendusk";
 
+
+    /**
+     * Establishes a connection to the database.
+     *
+     * @return A Connection object if the connection is successful, null otherwise.
+     */
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -25,6 +36,11 @@ public class DatabaseConnection {
         return null;
     }
 
+    /**
+     * Closes the provided database connection.
+     *
+     * @param conn The connection to be closed.
+     */
     public static void closeConnection(Connection conn) {
         if (conn != null) {
             try {
