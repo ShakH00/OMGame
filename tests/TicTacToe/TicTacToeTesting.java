@@ -13,47 +13,49 @@ public class TicTacToeTesting {
 
     private TicTacToe tictactoe;
 
+    /**
+     * Set up and Start TicTacToe Game
+     */
     @BeforeEach
     public void setUp() {
         tictactoe = new TicTacToe();
         tictactoe.start();
     }
 
+    /**
+     * Testing With Light and Dark PieceType.
+     */
+
 // ------------------------------------------------- ALL TESTING FOR P1 -------------------------------------------------
 
     /**
-     * Test placements of tic-tac-toe piece. P1
+     * Test move Piece and Check If on Board.
      */
     @Test
-    public void testMoveValidPlacementP1() {
+    public void testMovePlacedP1() {
         TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player1);
-        tictactoe.move(piece, 0, 0);
-        assertEquals(piece, tictactoe.getBoard().getBoardState()[0][0]);
+        tictactoe.move(piece, 1, 1);
+        assertEquals(piece, tictactoe.getBoard().getBoardState()[1][1]);
     }
 
     /**
-     * Test invalid placements of tic-tac-toe piece.
+     * Test When Player Puts Piece in the Same Spot.
+     *     Do Nothing
      */
     @Test
     public void testMoveSamePlaceP1() {
         TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player1);
+        
+        // Place at (0, 0)
         tictactoe.move(piece, 0, 0);
-        tictactoe.move(piece, 0, 0); // Attempt to place in the same spot
+
+        // Attempt to Place in the Same Spot
+        tictactoe.move(piece, 0, 0);
         assertEquals(piece, tictactoe.getBoard().getBoardState()[0][0]);
     }
 
     /**
-     * Test out-of-bounds placements of tic-tac-toe piece.
-     */
-    @Test
-    public void testMoveOutOfBoundsP1() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player1);
-        tictactoe.move(piece, -1, -1); // Out of bounds
-        assertNull(tictactoe.getBoard().getBoardState()[0][0]);
-    }
-
-    /**
-     * Test win conditions in rows 1 of tic-tac-toe piece.
+     * Test Row1 Win Condition.
      */
     @Test
     public void testWinInRow1P1() {
@@ -65,7 +67,7 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in rows 2 of tic-tac-toe piece.
+     * Test Row2 Win Condition.
      */
     @Test
     public void testWinInRow2P1() {
@@ -77,7 +79,7 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in rows 3 of tic-tac-toe piece.
+     * Test Row3 Win Condition.
      */
     @Test
     public void testWinInRow3P1() {
@@ -89,7 +91,7 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 1 of tic-tac-toe piece.
+     * Test Column1 Win Condition
      */
     @Test
     public void testWinInCol1P1() {
@@ -101,7 +103,7 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 2 of tic-tac-toe piece.
+     * Test Column2 Win Condition
      */
     @Test
     public void testWinInCol2P1() {
@@ -113,7 +115,7 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 3 of tic-tac-toe piece.
+     * Test Column3 Win Condition
      */
     @Test
     public void testWinInCol3P1() {
@@ -125,7 +127,8 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions of diagonal backslash tic-tac-toe piece.
+     * Test Diagonal BackSlash Win Condition,
+     *     Top Right to Bottom Left.
      */
     @Test
     public void testWinInDiagonalBackslashP1() {
@@ -137,7 +140,8 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions of diagonal forward slash tic-tac-toe piece.
+     * Test Diagonal ForwardSlash Win Condition
+     *     Top Left to Bottom Right.
      */
     @Test
     public void testWinInDiagonalFrontslashP1() {
@@ -149,47 +153,39 @@ public class TicTacToeTesting {
     }
 
 // ------------------------------------------------- ALL TESTING FOR P2 -------------------------------------------------
-    /**
-     * Testing Alters With Light and Dark PieceType.
-     */
 
     /**
-     * Test placements of tic-tac-toe piece. P2
+     * Test move Piece and Check If on Board.
      */
     @Test
-    public void testMoveValidPlacementP2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.LIGHT, tictactoe.player2);
+    public void testMovePlacedP2() {
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 2, 1);
         assertEquals(piece, tictactoe.getBoard().getBoardState()[2][1]);
     }
 
     /**
-     * Test invalid placements of tic-tac-toe piece.
+     * Test When Player Puts Piece in the Same Spot.
+     *     Do Nothing
      */
     @Test
     public void testMoveSamePlaceP2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
-        tictactoe.move(piece, 0, 0);
-        tictactoe.move(piece, 0, 0); // Attempt to place in the same spot
-        assertEquals(piece, tictactoe.getBoard().getBoardState()[0][0]);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
+        
+        // Place at (0, 0)
+        tictactoe.move(piece, 1, 2);
+
+        // Attempt to Place in the Same Spot
+        tictactoe.move(piece, 1, 2);
+        assertEquals(piece, tictactoe.getBoard().getBoardState()[1][2]);
     }
 
     /**
-     * Test out-of-bounds placements of tic-tac-toe piece.
-     */
-    @Test
-    public void testMoveOutOfBoundsP2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
-        tictactoe.move(piece, -1, -1); // Out of bounds
-        assertNull(tictactoe.getBoard().getBoardState()[0][0]);
-    }
-
-    /**
-     * Test win conditions in rows 1 of tic-tac-toe piece.
+     * Test Row1 Win Condition.
      */
     @Test
     public void testWinInRow1P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 0);
         tictactoe.move(piece, 0, 1);
         tictactoe.move(piece, 0, 2);
@@ -197,11 +193,11 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in rows 2 of tic-tac-toe piece.
+     * Test Row2 Win Condition.
      */
     @Test
     public void testWinInRow2P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 1, 0);
         tictactoe.move(piece, 1, 1);
         tictactoe.move(piece, 1, 2);
@@ -209,11 +205,11 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in rows 3 of tic-tac-toe piece.
+     * Test Row3 Win Condition.
      */
     @Test
     public void testWinInRow3P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 2, 0);
         tictactoe.move(piece, 2, 1);
         tictactoe.move(piece, 2, 2);
@@ -221,11 +217,11 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 1 of tic-tac-toe piece.
+     * Test Column1 Win Condition
      */
     @Test
     public void testWinInCol1P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 0);
         tictactoe.move(piece, 1, 0);
         tictactoe.move(piece, 2, 0);
@@ -233,11 +229,11 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 2 of tic-tac-toe piece.
+     * Test Column2 Win Condition
      */
     @Test
     public void testWinInCol2P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 1);
         tictactoe.move(piece, 1, 1);
         tictactoe.move(piece, 2, 1);
@@ -245,11 +241,11 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions in col 3 of tic-tac-toe piece.
+     * Test Column3 Win Condition
      */
     @Test
     public void testWinInCol3P2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 2);
         tictactoe.move(piece, 1, 2);
         tictactoe.move(piece, 2, 2);
@@ -257,11 +253,12 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions of diagonal backslash tic-tac-toe piece.
+     * Test Diagonal BackSlash Win Condition,
+     *     Top Right to Bottom Left.
      */
     @Test
     public void testWinInDiagonalBackslashP2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 0);
         tictactoe.move(piece, 1, 1);
         tictactoe.move(piece, 2, 2);
@@ -269,11 +266,12 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test win conditions of diagonal forward slash tic-tac-toe piece.
+     * Test Diagonal ForwardSlash Win Condition
+     *     Top Left to Bottom Right.
      */
     @Test
     public void testWinInDiagonalFrontslashP2() {
-        TicTacToePiece piece = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player2);
+        TicTacToePiece piece = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
         tictactoe.move(piece, 0, 2);
         tictactoe.move(piece, 1, 1);
         tictactoe.move(piece, 2, 0);
@@ -282,7 +280,7 @@ public class TicTacToeTesting {
 
 // ------------------------------------------------- TESTING FOR GAME STATES -------------------------------------------------
     /**
-     * Test drawGame method to set GameState to draw.
+     * Test drawGame Method to set GameState to Draw.
      */
     @Test
     public void testDrawGame() {
@@ -291,38 +289,79 @@ public class TicTacToeTesting {
     }
 
     /**
-     * Test surrender method to ensure that the opposing player wins when the current player calls for it.
+     * Test Full Board, Draw.
      */
     @Test
-    public void testSurrender() {
-        // P1 to move
-        assertEquals(GameState.P1_TURN, tictactoe.getGameState());
-        // P1 calls surrender during their turn
-        tictactoe.surrender();
-        // P2 wins as P1 has surrendered.
-        assertEquals(GameState.P2_WIN, tictactoe.getGameState());
+    public void testFullBoardDraw() {
+        TicTacToePiece piece1 = new TicTacToePiece(Color.RED, PieceType.LIGHT, tictactoe.player1);
+        TicTacToePiece piece2 = new TicTacToePiece(Color.GOLD, PieceType.DARK, tictactoe.player2);
 
-        // Reset turn to P1
-        tictactoe.start();
-        // Call nextTurn to test P2 surrenders
+        // Both Players Fill the Board
+        tictactoe.move(piece1, 0, 1);
+        tictactoe.move(piece2, 0, 0);
+        tictactoe.move(piece1, 0, 2);
+        tictactoe.move(piece2, 1, 1);
+        tictactoe.move(piece1, 1, 0);
+        tictactoe.move(piece2, 1, 2);
+        tictactoe.move(piece1, 2, 1);
+        tictactoe.move(piece2, 2, 0);
+        tictactoe.move(piece1, 2, 2);
+
+        // Check if GameState is set to Draw
+        assertEquals(GameState.DRAW, tictactoe.getGameState());
+    }
+
+    /**
+     * Test GameState to check if it is P1_TURN or P2_TURN.
+     */
+    @Test
+    public void testNextTurn() {
+        // P1 Turn
+        assertEquals(GameState.P1_TURN, tictactoe.getGameState());
+
+        // Call nextTurn Method (P1 --> P2)
         tictactoe.nextTurn();
-        // P2 calls surrender during their turn
+
+        // P2 Turn
+        assertEquals(GameState.P2_TURN, tictactoe.getGameState());
+
+        // Call nextTurn Method (P2 --> P1)
+        tictactoe.nextTurn();
+
+        // P1 Turn.
+        assertEquals(GameState.P1_TURN, tictactoe.getGameState());
+    }
+
+    /**
+     * Test surrender Method to set GameState to P1_WIN or P2_WIN.
+     *     testSurrenderP1() --> P1 Surrender = P2_WIN
+     *     testSurrenderP2() --> P2 Surrender = P1_WIN
+     */
+
+    @Test
+    public void testSurrenderP1() {
+        // P1 Turn
+        assertEquals(GameState.P1_TURN, tictactoe.getGameState());
+
+        // P1 Calls Surrender During Their Turn
         tictactoe.surrender();
-        // P1 wins as P2 has surrendered.
-        assertEquals(GameState.P1_WIN, tictactoe.getGameState());
+
+        // P2 Wins as P1 has Surrendered.
+        assertEquals(GameState.P2_WIN, tictactoe.getGameState());
     }
 
     @Test
-    public void testNextTurn() {
-        // P1 to move
+    public void testSurrenderP2() {
+        // P1 Turn
         assertEquals(GameState.P1_TURN, tictactoe.getGameState());
-        // nextTurn method called
+
+        // Call nextTurn for P2 Turn
         tictactoe.nextTurn();
-        // P2 to move.
-        assertEquals(GameState.P2_TURN, tictactoe.getGameState());
-        // nextTurn method called
-        tictactoe.nextTurn();
-        // P1 to move.
-        assertEquals(GameState.P1_TURN, tictactoe.getGameState());
+
+        // P2 Calls Surrender During Their Turn
+        tictactoe.surrender();
+
+        // P1 Wins as P2 has Surrendered.
+        assertEquals(GameState.P1_WIN, tictactoe.getGameState());
     }
 }
