@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
@@ -110,6 +111,9 @@ public class UserProfileController extends Application {
     private StackPane settingsButton;
 
     @FXML
+    private AnchorPane rootPane;
+
+    @FXML
     public void initialize() {
         // Apply hover effect to each pane
         UtilityManager.addHoverEffect(rankPane);
@@ -125,6 +129,12 @@ public class UserProfileController extends Application {
     @FXML
     private void goToSettings() {
         System.out.println("To user settings");
+    }
+
+    @FXML
+    public void openPopup(javafx.scene.input.MouseEvent event) {
+        UtilityManager.popupControl(event,"screens/UserPopup.fxml", rootPane);
+
     }
 
     public static void main (String[]args){
