@@ -186,11 +186,17 @@
                   <Font name="Press Start 2P Regular" size="17.0" />
                </font>
             </Label>
-            <ImageView fx:id="backButton1" fitHeight="66.0" fitWidth="54.0" layoutX="202.0" layoutY="160.0" onMouseClicked="#onCancelButtonClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/cancel_circlebutton.png" />
-               </image>
-            </ImageView>
+
+            <StackPane fx:id="backButton1" layoutX="202.0" layoutY="160.0">
+               <children>
+                  <ImageView fitHeight="66.0" fitWidth="54.0" onMouseClicked="#onCancelButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/cancel_circlebutton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="335.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/sprites/tetrisCat2.GIF" />

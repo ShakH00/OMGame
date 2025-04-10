@@ -39,6 +39,8 @@ public class GameSelectController extends Application {
     Label waitingLabel;
     @FXML
     Label gameSelectedLabel;
+    @FXML
+    private StackPane backButton1;
 
     @Override
     public void start(Stage primaryStage) {
@@ -81,6 +83,7 @@ public class GameSelectController extends Application {
         UtilityManager.createTranslationTransition(pinkCartridge);
         UtilityManager.createTranslationTransition(purpleCartridge);
         UtilityManager.createTranslationTransition(orangeCartridge);
+        UtilityManager.createScaleTransition(backButton1);
 
         startDotAnimation();
     }
