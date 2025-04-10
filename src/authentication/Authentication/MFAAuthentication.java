@@ -49,7 +49,7 @@ public class MFAAuthentication {
 
         // Handle cancellation or invalid input
         if (userInput == null) {
-            return "Verification canceled or invalid input.";
+            return "Verification was canceled or invalid input.";
         }
 
         // Verify the input
