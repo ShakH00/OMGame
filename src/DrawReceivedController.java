@@ -36,12 +36,10 @@ public class DrawReceivedController extends Application  {
     @FXML
     private void closeButton(){
         UtilityManager.popupClose(rootPane);
-        System.out.println("Popup closed");
     }
     // TODO; need to communicate with network when accepted
     @FXML
     private void okayButton(){
         UtilityManager.popupClose(rootPane);
-        System.out.println("Popup closed");
     }
 }
