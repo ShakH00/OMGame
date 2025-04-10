@@ -23,6 +23,11 @@ import java.io.IOException;
 
 public class LoginController extends Application {
 
+    public static Account user;
+    public static Account getAccount(){
+        return user;
+    }
+
     @FXML
     AnchorPane rootPane;
     @FXML
@@ -96,7 +101,7 @@ public class LoginController extends Application {
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user = DatabaseManager.queryAccountByEmail(username);
+        user = DatabaseManager.queryAccountByEmail(username);
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
