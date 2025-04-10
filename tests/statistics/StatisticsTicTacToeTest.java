@@ -1,4 +1,4 @@
-package account.statistics;
+package statistics;
 
 import account.statistics.*;
 import org.junit.Before;
