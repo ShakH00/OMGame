@@ -83,14 +83,18 @@ public class MatchmakingHandlerTest {
 //        MatchmakingHandler handler4 = new MatchmakingHandler(); // Guest account
 
         String code = testAccount1.getMatchmakingHandler().getUniqueRoomCode();
-
-        HostThread host = new HostThread(testAccount1.getMatchmakingHandler(), code, "", testAccount1.getID());
-        host.start();
-
+        testAccount1.getMatchmakingHandler().startHosting(testAccount1.getID(), GameType.CHESS, code, "");
         TimeUnit.SECONDS.sleep(1);
+        testAccount2.getMatchmakingHandler().tryJoinHost(testAccount2.getID(), code, "");
 
-        ClientThread client = new ClientThread(testAccount2.getMatchmakingHandler(), code, "", testAccount2.getID());
-        client.start();
+
+//        HostThread host = new HostThread(testAccount1.getMatchmakingHandler(), code, "", testAccount1.getID());
+//        host.start();
+//
+//        TimeUnit.SECONDS.sleep(1);
+//
+//        ClientThread client = new ClientThread(testAccount2.getMatchmakingHandler(), code, "", testAccount2.getID());
+//        client.start();
 
 //        int tempID1 = DatabaseManager.getTempID();
 //        HostThread host = new HostThread(handler4, code, "", tempID1);

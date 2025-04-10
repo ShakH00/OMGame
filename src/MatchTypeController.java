@@ -1,4 +1,5 @@
 import account.Account;
+import database.DatabaseManager;
 import game.GameType;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -10,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -19,16 +21,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import matchmaking.PrivateMatch;
+import matchmaking.MatchmakingHandler;
 
 
 
 import javax.swing.text.html.ImageView;
+import java.util.concurrent.TimeUnit;
 
 public class MatchTypeController extends Application {
 
     @FXML
-    AnchorPane rootPane;
+    static AnchorPane rootPane;
     @FXML
     private Pane hostGamePane;
     @FXML
@@ -37,22 +40,17 @@ public class MatchTypeController extends Application {
     private Pane joinGamePane;
     @FXML
     private Pane joinCodePopup;
-
-    private PrivateMatch privateMatch;
     @FXML
     private Label matchIDLabel;
     @FXML
     private Label gameSelectedLabel;
+    @FXML
+    private TextField roomCodeInput;
 
     @FXML
     private Label waitingLabel;
 
-    private GameType[] gameTypes = {
-            GameType.CHESS,
-            GameType.CHECKERS,
-            GameType.TICTACTOE,
-            GameType.CONNECT4,
-    };
+    Account activeAccount;
 
     @Override
     public void start(Stage primaryStage) {
@@ -73,7 +71,9 @@ public class MatchTypeController extends Application {
             primaryStage.setResizable(false);
 
             MatchTypeController controller = loader.getController();
-            controller.setPrivateMatch(privateMatch);
+            Account testAccount = DatabaseManager.queryAccountByID(4);
+            controller.setAccount(testAccount);
+
             // Set up the primary stage
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
@@ -187,25 +187,34 @@ public class MatchTypeController extends Application {
         currentFrameIndex = (currentFrameIndex - 1 + gameFrames.length) % gameFrames.length; // Move to the previous frame
     }
 
-    public void setPrivateMatch(PrivateMatch privateMatch) {
-        this.privateMatch = privateMatch;
+    public void setAccount(Account account) {
+        this.activeAccount = account;
     }
 
     @FXML
     private void handleSelectButton() {
-        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
+        GameType selectedGame = GameType.values()[currentFrameIndex]; // get gametype based on frame index
 
-        // TODO: this isnt working. getprivatematches() returns null??
-//        // pass it to PrivateMatch
-//        PrivateMatch privateMatch = new PrivateMatch();
-//        privateMatch.hostSelectGame(selectedGame);
+        // Get hosting details
+        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
+        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        String roomCode = handler.getUniqueRoomCode();
+        String networkingInformation = "";      // TODO: Integrate w/ networking
 
         // go to next screen
         hostPopup.setVisible(false);
         codePopup.setVisible(true);
         gameSelectedLabel.setText("You selected:  " + selectedGame);
-        matchIDLabel.setText(privateMatch.findUniqueID());
+        matchIDLabel.setText(roomCode);
 
+        // Wait for someone to join
+        try {
+            TimeUnit.SECONDS.sleep(1);
+            // Start hosting.
+            handler.startHosting(accountID, selectedGame, roomCode, networkingInformation);
+        } catch (InterruptedException e) {
+            System.out.println("Hosting interrupted");
+        }
     }
 
     @FXML
@@ -228,6 +237,8 @@ public class MatchTypeController extends Application {
     private void onBackButtonClicked() {
         codePopup.setVisible(false);
         hostPopup.setVisible(true);
+        activeAccount.getMatchmakingHandler().stopHosting();
+        activeAccount.getMatchmakingHandler().stopMatchmaking();
     }
 
 
@@ -260,41 +271,38 @@ public class MatchTypeController extends Application {
         }
     }
 
-    private void startPrivateMatch() {
-        // call hostStartGame to start the match.
-        privateMatch.hostStartGame();
-
-        // TODO: there needs to be a conditional here? IF hostStartGame starts successfully, then transition to the given game screen??
-        // but what does hostStartGame even return??????
-
+    /**
+     * Called from outside of this class by the MatchmakingHandler to load the game GUI
+     * @param selectedGame  Game GUI to load
+     */
+    public static void startGame(GameType selectedGame){
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
 
         // switch to that game screen
         String gameScreenFXML = getGameScreenFXML(selectedGame);
             SceneManager.switchScene(stage, gameScreenFXML);
         }
 
+
+
     // Helper method to map selected game type to corresponding FXML screen
-    private String getGameScreenFXML(GameType selectedGame) {
-        switch (selectedGame) {
-            case CHESS:
-                return "screens/Chess.fxml"; // Replace with actual screen path for Chess
-            case CHECKERS:
-                return "screens/Checkers.fxml"; // Replace with actual screen path for Checkers
-            case TICTACTOE:
-                return "screens/TicTacToe.fxml"; // Replace with actual screen path for TicTacToe
-            case CONNECT4:
-                return "screens/Connect4.fxml"; // Replace with actual screen path for Connect4
-            default:
-                return null;
-        }
+    private static String getGameScreenFXML(GameType selectedGame) {
+        return switch (selectedGame) {
+            case CHESS -> "screens/Chess.fxml";         // Replace with actual screen path for Chess
+            case CHECKERS -> "screens/Checkers.fxml";   // Replace with actual screen path for Checkers
+            case TICTACTOE -> "screens/TicTacToe.fxml"; // Replace with actual screen path for TicTacToe
+            case CONNECT4 -> "screens/Connect4.fxml";   // Replace with actual screen path for Connect4
+        };
     }
 
     @FXML
     private void onSubmitButtonClicked() {
-//       privateMatch.connectToPrivateMatch();
-       startPrivateMatch();
+        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        String roomCode = roomCodeInput.getText();                // TODO: Get input from text field
+        String networkingInformation = "";      // TODO: Integrate w/ networking
+
+        // Try to join the host with the provided room code.
+        activeAccount.getMatchmakingHandler().tryJoinHost(accountID, roomCode, networkingInformation);
     }
 
     @FXML
