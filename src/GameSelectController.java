@@ -32,10 +32,7 @@ public class GameSelectController extends Application {
     StackPane backButton;
     @FXML
     Text errorMessage;
-    @FXML
-    StackPane profile;
-    @FXML
-    StackPane leaderboard;
+
     @FXML
     Pane joinPopup;
     @FXML
@@ -84,8 +81,6 @@ public class GameSelectController extends Application {
         UtilityManager.createTranslationTransition(pinkCartridge);
         UtilityManager.createTranslationTransition(purpleCartridge);
         UtilityManager.createTranslationTransition(orangeCartridge);
-        UtilityManager.createScaleTransition(leaderboard);
-        UtilityManager.createScaleTransition(profile);
 
         startDotAnimation();
     }
@@ -96,12 +91,6 @@ public class GameSelectController extends Application {
         SceneManager.switchScene(stage, "screens/Start.fxml");
     }
 
-    @FXML
-    private void switchToProfile(javafx.scene.input.MouseEvent mouseEvent) {
-
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/UserProfile.fxml");
-    }
 
     // TODO: all four of these games should open joinPopup when a game is clicked, wait for a match to be found, and then switch screens to the appropriate game
     // right now, it opens the popup and then switches screens w/o waiting for a match to be found
@@ -138,12 +127,6 @@ public class GameSelectController extends Application {
         joinPopup.setVisible(true);
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/P1Checkers.fxml");
-    }
-
-    @FXML
-    private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
     }
 
     @FXML

@@ -97,25 +97,6 @@
          </children>
       </StackPane>
 
-      <StackPane fx:id="leaderboard" layoutX="608.0" layoutY="142.0" onMouseClicked="#switchToLB">
-         <children>
-            <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/leaderboard_circlebutton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
-      <StackPane fx:id="profile" layoutX="608.0" layoutY="92.0">
-         <children>
-            <ImageView fitHeight="56.0" fitWidth="57.0" onMouseClicked="#switchToProfile" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-               <image>
-                  <Image url="@../images/user_circlebutton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
-
       <StackPane fx:id="backButton" layoutX="11.0" layoutY="14.0" onMouseClicked="#switchToHome">
          <children>
             <ImageView fitHeight="49.0" fitWidth="114.0" layoutX="2.4000000953674316" layoutY="10.199999809265137" pickOnBounds="true" preserveRatio="true">

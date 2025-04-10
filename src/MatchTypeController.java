@@ -84,6 +84,13 @@ public class MatchTypeController extends Application {
     @FXML
     private Pane codePopup;
 
+    @FXML
+    private StackPane profile;
+    @FXML
+    private StackPane leaderboard;
+    @FXML
+    private StackPane help;
+
     private final GameType[] gameTypes = new GameType[]{
             GameType.CHESS,
             GameType.CHECKERS,
@@ -150,6 +157,11 @@ public class MatchTypeController extends Application {
         UtilityManager.createScaleTransition(submitButton2);
         UtilityManager.createScaleTransition(selectButton);
 
+
+        UtilityManager.createScaleTransition(leaderboard);
+        UtilityManager.createScaleTransition(profile);
+        UtilityManager.createScaleTransition(help);
+
         System.out.println("Chess: " + chess);
         System.out.println("Checkers: " + checkers);
         System.out.println("TicTacToe: " + tictactoe);
@@ -166,6 +178,23 @@ public class MatchTypeController extends Application {
 
     }
 
+    @FXML
+    private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
+    }
+
+    @FXML
+    private void switchToProfile(javafx.scene.input.MouseEvent mouseEvent) {
+
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/UserProfile.fxml");
+    }
+
+    @FXML
+    private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/Help.fxml", rootPane);
+    }
 
     @FXML
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {

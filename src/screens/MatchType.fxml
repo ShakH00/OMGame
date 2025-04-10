@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MatchTypeController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MatchTypeController">
     <children>
         <!-- Background -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -668,5 +659,32 @@
             <Font name="Press Start 2P Regular" size="15.0" />
          </font>
       </Text>
+       <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                   <Image url="@../images/leaderboard_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
+       <StackPane fx:id="profile" layoutX="736.0" layoutY="1.0" onMouseClicked="#switchToProfile">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                <image>
+                   <Image url="@../images/user_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
+       <StackPane fx:id="help" layoutX="618.0" layoutY="1.0" onMouseClicked="#openHelpPopup">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                <image>
+                   <Image url="@../images/help_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
     </children>
 </AnchorPane>
