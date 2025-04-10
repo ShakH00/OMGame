@@ -33,7 +33,7 @@ public class UtilityManager {
      * @param path Path to page
      * @param rootPane Pane that the popup is added to
      *
-     * @author Emily M
+     * @author Emily M & Arwa
      */
     // TODO: Implement separately from main screen help popup
     @FXML
@@ -50,28 +50,6 @@ public class UtilityManager {
             currentPopup.setVisible(true);
 
             // TODO; make popup close in different ways
-
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-                // I wrote this :) 👍
-                String url ="https://omgame.club/";
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.browse(new URI(url));
-                    } catch (IOException | URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Runtime runtime = Runtime.getRuntime();
-                    try {
-                        runtime.exec("xdg-open " + url);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -158,12 +136,12 @@ public class UtilityManager {
      *
      * @author Emily M
      */
-    public static void colourTransition(Text text) {
+    public static void colourTransition(Text text, Color color) {
         text.setOnMouseEntered(event -> {
             text.setFill(Color.BLUE);
         });
         text.setOnMouseExited(event -> {
-            text.setFill(Color.color(0.6235, 0.5961, 0.549, 1.0));
+            text.setFill(color);
         });
     }
 

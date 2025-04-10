@@ -69,7 +69,7 @@
             <Image url="@../images/tetriscat_paws.GIF" />
          </image>
       </ImageView>
-      <Text fill="#1b3b5d" layoutX="170.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="need help? visit us at omgame.club for tips and other info!" textAlignment="CENTER" wrappingWidth="470.1367244720459">
+      <Text fx:id="text" fill="#1b3b5d" layoutX="170.0" layoutY="296.0" onMouseClicked="#helpWebsite" strokeType="OUTSIDE" strokeWidth="0.0" text="need help? visit us at omgame.club for tips and other info!" textAlignment="CENTER" wrappingWidth="470.1367244720459">
          <font>
             <Font name="Press Start 2P Regular" size="24.0" />
          </font>
