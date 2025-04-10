@@ -115,7 +115,7 @@ public class P2CheckersController extends Application {
     }
 
     public PieceType getCurrentPlayer() {
-        return game.getGameState() == GameState.P2_TURN ? PieceType.LIGHT : PieceType.DARK;
+        return game.getGameState() == GameState.P1_TURN ? PieceType.DARK : PieceType.LIGHT;
     }
 
 
@@ -125,10 +125,10 @@ public class P2CheckersController extends Application {
         Piece[][] board = game.getBoard().getBoardState();
 
         if (game.getGameState() == GameState.P1_TURN) {
-            System.out.println("Player 1 (Pink)'s turn!");
+            System.out.println("Player 1 (Purple)'s turn!");
             updatePlayerLabels();
         } else if (game.getGameState() == GameState.P2_TURN){
-            System.out.println("Player 2 (Purple)'s turn!");
+            System.out.println("Player 2 (Pink)'s turn!");
             updatePlayerLabels();
         }
 
@@ -142,16 +142,16 @@ public class P2CheckersController extends Application {
                 if (currentPiece == null) {
                     imageView.setImage(null); // empty cell
                 } else {
-                    if (currentPiece.getColor().equals(Color.BLACK)) {
+                    if (currentPiece.getColor().equals(Color.WHITE)) {
                         imageView.setImage(new Image(ASSETS_PATH + "pinkChecker.png"));
-                    } else if (currentPiece.getColor().equals(Color.WHITE)) {
+                    } else if (currentPiece.getColor().equals(Color.BLACK)) {
                         imageView.setImage(new Image(ASSETS_PATH + "purpleChecker.png"));
                     }
 
                     // update king pieces to reflect their new role :P
                     if (currentPiece.isKing()) {
                         // Overlay or use a different image if you have one
-                        if (currentPiece.getPieceType() == PieceType.DARK) {
+                        if (currentPiece.getPieceType() == PieceType.LIGHT) {
                             imageView.setImage(new Image(ASSETS_PATH + "pinkKingChecker.png"));
                         } else {
                             imageView.setImage(new Image(ASSETS_PATH + "purpleKingChecker.png"));
@@ -178,16 +178,16 @@ public class P2CheckersController extends Application {
     }
 
     private void updatePlayerLabels() {
-            if (game.getGameState() == GameState.P2_TURN) {
-                p1Label.setOpacity(.5);
-                p2Label.setOpacity(1);
-            } else if (game.getGameState() == GameState.P1_TURN) {
-                p1Label.setOpacity(1);
-                p2Label.setOpacity(.5);
-            } else {
-                p1Label.setOpacity(1);
-                p2Label.setOpacity(1);
-            }
+        if (game.getGameState() == GameState.P2_TURN) {
+            p1Label.setOpacity(.5);
+            p2Label.setOpacity(1);
+        } else if (game.getGameState() == GameState.P1_TURN) {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(.5);
+        } else {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(1);
+        }
 
     }
 
