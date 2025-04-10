@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
-import database.EncryptionAuthentication;
 import game.GameType;
 import account.statistics.*;
 import matchmaking.MatchmakingHandler;
@@ -51,7 +50,7 @@ public class Account {
 
     private String[][] matchHistory;
 
-    private final MatchmakingHandler matchmakingHandler = new MatchmakingHandler();
+    private final MatchmakingHandler matchmakingHandler = new matchmaking.MatchmakingHandler();
 
     /**
      * Initialize a guest Account
@@ -592,7 +591,7 @@ public class Account {
      * Get the object that is in charge of matchmaking for this Account.
      * @return
      */
-    public MatchmakingHandler getMatchmakingHandler(){
+    public matchmaking.MatchmakingHandler getMatchmakingHandler(){
         return matchmakingHandler;
     }
 }
