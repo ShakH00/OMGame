@@ -1,3 +1,5 @@
+import authentication.Authentication.CAPTCHAAuthentication;
+import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -5,7 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import javax.swing.text.html.ImageView;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.util.Random;
 
 public class CaptchaPopupController extends Application  {
 
@@ -14,6 +23,48 @@ public class CaptchaPopupController extends Application  {
 
     @FXML
     private StackPane submitButton;
+    @FXML
+    private javafx.scene.image.ImageView img;
+    @FXML
+    private Text textBased;
+    @FXML
+    private Text prompt;
+    @FXML
+    private javafx.scene.control.TextField input;
+
+    private CAPTCHAAuthentication.captcha cap;
+
+    private Random rand = new Random();
+    private int randomNumber = rand.nextInt(3); // 0 to 3 inclusive
+    private String imageAddress;
+
+    public void initialize(){
+        img.setVisible(false);
+        textBased.setText("");
+        prompt.setText("");
+
+
+        if(randomNumber == 0){
+            // Image captcha test
+            imageAddress = "/authentication/CAPTCHAImages/";
+            imageAddress += CAPTCHAAuthentication.chooseImage();
+            javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource(imageAddress).toExternalForm());
+            img.setImage(image);
+            img.setVisible(true);
+            prompt.setText("Enter the text from the image to continue.");
+        }else if(randomNumber == 1){
+            // Text Captcha
+            cap = CAPTCHAAuthentication.generateTextProblem();
+            textBased.setText(cap.getInstructions());
+            prompt.setText(cap.getPrompt());
+        }else{
+            // Math captcha
+            cap = CAPTCHAAuthentication.generateProblem();
+            textBased.setText(cap.getInstructions());
+            prompt.setText(cap.getPrompt());
+        }
+    }
+
 
 
     // TODO; Ethan
@@ -48,6 +99,25 @@ public class CaptchaPopupController extends Application  {
 //TODO; Put in the checks before closing
     @FXML
     private void submitButton(){
-        UtilityManager.popupClose(rootPane);
+        try {
+            if (randomNumber == 0) {
+                // Image based
+                String expected = imageAddress.substring(30, imageAddress.length()-4);
+                CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", expected);
+            } else if (randomNumber == 1) {
+                // Text based
+                CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", cap.getAnswer());
+            } else {
+                // Math based
+                CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", cap.getAnswer());
+            }
+            UtilityManager.popupClose(rootPane);
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        }catch (CAPTCHAAuthenticationFailedException e){
+            System.out.println("Captcha failed");
+            UtilityManager.popupClose(rootPane);
+        }
+
     }
 }

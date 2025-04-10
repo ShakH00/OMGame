@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CaptchaPopupController">
+<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CaptchaPopupController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
@@ -59,17 +59,14 @@
                         </Rectangle>
                         <VBox alignment="CENTER">
                            <children>
-                              <ImageView fitHeight="69.0" fitWidth="224.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" translateY="-10.0">
+                              <ImageView fx:id="img" fitHeight="69.0" fitWidth="224.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" translateY="-10.0">
                                  <image>
                                     <Image url="@../images/23mdg.png" />
                                  </image>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type the characters above." textAlignment="CENTER" translateY="10.0" wrappingWidth="218.099609375">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Text>
-                              <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="38.0" prefWidth="206.0" promptText="Captcha" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;" translateY="30.0">
+                              <Text fx:id="textBased" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" translateY="-50.0" wrappingWidth="195.0" />
+                              <Text fx:id="prompt" strokeType="OUTSIDE" strokeWidth="0.0" text="Type the characters above." textAlignment="CENTER" translateY="10.0" wrappingWidth="218.099609375" />
+                              <TextField fx:id="input" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="38.0" prefWidth="206.0" promptText="Captcha" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;" translateY="30.0">
                                  <font>
                                     <Font name="Press Start 2P Regular" size="10.0" />
                                  </font>

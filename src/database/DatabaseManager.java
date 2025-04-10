@@ -394,4 +394,15 @@ public class DatabaseManager {
         }
         return tempID;
     }
+
+    /**
+     * These are helper class for SignUpController to check if the username or email was already taken
+     * */
+     public static boolean isUsernameExist(String username) {
+         return queryAccountByUsername(username) != null;
+     }
+     public static boolean isEmailExist(String email) throws EncryptionFailedException {
+        String encryptedEmail = EncryptionAuthentication.encryptionDriver(email);
+        return queryAccountByEmail(encryptedEmail) != null;
+     }
 }

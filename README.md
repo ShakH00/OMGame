@@ -488,11 +488,8 @@ _* MFAAuthentication.java_
   * Simple MFA is integrated within our system. A random 6-digit code is generated and sent to the users email, the user receives the email on our system, enters in the code to be verified.
   * However, before a verification code is sent to the users email, the database checks if the email exists on file first. Then proceeds with further steps.
 
-_* MFAAuthenticationV2.java_
-  * Sends a code to user's email, user enter's in the code, if the code is incorrect an Exception is thrown
-
 _* MFAInputPopup.java_
-  * This class creates a JavaFX pop-up dialog for entering an MFA code. It verifies the input with the expected code, it displays a success or error an message, and returns the result. It will return null if the code is incorrect.
+  * This class creates a JavaFX pop-up dialog for entering an MFA code. It verifies the input with the expected code, it displays a success or error a message, and returns the result. It will return null if the code is incorrect.
 
 _* EmailSender.java_
   * This class sends a 6-digit verification code via email using the Jakarta Mail API. This class connects the Gmail's SMTP server with an app-specific
