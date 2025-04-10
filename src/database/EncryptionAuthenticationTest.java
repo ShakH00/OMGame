@@ -63,6 +63,13 @@ public class EncryptionAuthenticationTest {
         });
     }
 
+    @org.junit.Test
+    @Test
+    public void testEncryptionDriver_specialCharacters() throws EncryptionFailedException {
+        String input = "!@#ABCxyz";
+        String expected = "$C&DEF{|}";  // Each char +3
+        assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
+    }
 
 }
 
