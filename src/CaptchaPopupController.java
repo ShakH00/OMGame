@@ -49,6 +49,5 @@ public class CaptchaPopupController extends Application  {
     @FXML
     private void submitButton(){
         UtilityManager.popupClose(rootPane);
-        System.out.println("Popup closed");
     }
 }

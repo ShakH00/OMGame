@@ -36,6 +36,5 @@ public class DrawSentController extends Application  {
     @FXML
     private void closeButton(){
         UtilityManager.popupClose(rootPane);
-        System.out.println("Popup closed");
     }
 }
