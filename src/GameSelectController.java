@@ -137,7 +137,7 @@ public class GameSelectController extends Application {
         gameSelectedLabel.setText("You selected: Checkers");
         joinPopup.setVisible(true);
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Checkers.fxml");
+        SceneManager.switchScene(stage, "screens/P1Checkers.fxml");
     }
 
     @FXML

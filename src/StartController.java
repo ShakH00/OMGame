@@ -1,9 +1,6 @@
-import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,8 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
-import java.io.IOException;
+
 import java.util.Objects;
 
 public class StartController extends Application {
@@ -59,7 +55,7 @@ public class StartController extends Application {
 
             SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
                     "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
-                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/Checkers.fxml",
+                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/P1Checkers.fxml",
                     "screens/TicTacToe.fxml", "screens/AdminScreen.fxml", "screens/LeaderboardScreen.fxml","screens/UserPopup.fxml", "screens/MatchType.fxml"); // , "screens/<Screen>.fxml>"
 
         } catch (Exception e) {
