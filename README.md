@@ -429,15 +429,28 @@ Integration diagram with the gui and buttons.
 Integration diagram with the networking and database.
 ****
 #### `(DRAFT)error_handling_1 mermaid diagram.png`
-
+Diagram for player's turn errors. 
+****
 #### `(DRAFT)error_handling_2 mermaid diagram.png`
+Diagrams for a player being disconnected. 
+****
 #### `DRAFT_use_case.png`
+Diagrams for client side connection.
+****
 #### `figjamLink.txt`
+Link to all figma diagrams in case It's hard to see.
+****
 #### `gameClassDiagram.png`
+Diagrams for connecting two player with a server.
+****
 #### `gameProcess.png`
+Diagram for how the game will function.
+****
 #### `player_and_localSetup.png`
+Diagram to set up the local host to connect the two players.
+****
 #### `tentativeGameStateTransistionDiagarm.png`
-
+Diagram for turn base from two players.
 ***
 ###  Profile Matchmaking⠀        
 #### `class_structure_diagrams`
