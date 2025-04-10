@@ -1,9 +1,13 @@
 import account.Account;
+import authentication.Authentication.MFAAuthentication;
+import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+import authentication.MFAPopupController;
 import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class LoginController extends Application {
 
@@ -99,6 +104,7 @@ public class LoginController extends Application {
         if(accountExists){
             if(user.getPassword().equals(password)){
                 // If the password matches the username/email, log them in
+                openMFAPopup(user.getEmail());
                 SceneManager.switchScene(stage, "screens/GameSelect.fxml");
                 return;
             }
@@ -112,6 +118,34 @@ public class LoginController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
+
+
+    @FXML
+    private void openMFAPopup(String email) {
+        // TODO: turn errors into messages in gui
+        // TODO: make sure it doesnt grant access to games if code is wrong or cancelled
+        try {
+            // Generate and send the verification code via email
+            String verificationCode = MFAAuthentication.emailAuthenticatorDriver(email);
+
+            // Load the FXML file for the MFA pop-up
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MFAPopup.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and set the verification code
+            MFAPopupController controller = loader.getController();
+            controller.setVerificationCode(verificationCode); // Pass the generated code to the controller
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (MFAAuthenticationFailedException e) {
+            e.printStackTrace();
+            System.err.println("Failed to send the verification code: " + e.getMessage());
+        }
+    }
+
+
 
 
     public static void main(String[] args) {
