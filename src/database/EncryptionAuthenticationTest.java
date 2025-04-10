@@ -71,5 +71,13 @@ public class EncryptionAuthenticationTest {
         assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
     }
 
+    @org.junit.Test
+    @Test
+    public void testDecryptionDriver_specialCharacters() throws DecryptionFailedException {
+        String input = "$C&DEF{|}";
+        String expected = "!@#ABCxyz";  // Each char -3
+        assertEquals(expected, DecryptionAuthentication.decryptionDriver(input));
+    }
+
 }
 
