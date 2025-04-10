@@ -63,6 +63,8 @@ public class CaptchaPopupController extends Application  {
             textBased.setText(cap.getInstructions());
             prompt.setText(cap.getPrompt());
         }
+
+        UtilityManager.createScaleTransition(submitButton);
     }
 
 
