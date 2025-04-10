@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="UserSettingsController" prefWidth="950" prefHeight="600">
+
+    <!-- Background Image -->
+    <ImageView fitWidth="950" fitHeight="600" preserveRatio="false">
+        <image>
+            <Image url="file:/D:/seng300-project/src/images/adjustedstars.png"/>
+        </image>
+    </ImageView>
+
+    <!-- Main Content Layout -->
+    <HBox alignment="TOP_CENTER" spacing="50">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- === LEFT PANEL === -->
+        <VBox alignment="TOP_CENTER" spacing="18" prefWidth="250" maxHeight="320"
+              style="-fx-background-color: #2b355e; -fx-border-color: #fda4ba; -fx-border-width: 3px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+
+            <ImageView fx:id="avatarImage" fitWidth="70" fitHeight="70">
+                <image>
+                    <Image url="file:/D:/seng300-project/src/images/sprites/tetrisCatIcon.png"/>
+                </image>
+            </ImageView>
+
+            <Label text="TetrisCat" textFill="WHITE">
+                <font>
+                    <Font name="RetroGaming" size="20"/>
+                </font>
+            </Label>
+
+            <Rectangle width="120" height="5" arcWidth="10" arcHeight="10" fill="CYAN"/>
+
+            <Label text="I may be a cat,\nBut around these\nparts, they call\nme the GOAT 🐐🐐"
+                   textFill="LIGHTGRAY" alignment="CENTER">
+                <font>
+                    <Font name="Courier New" size="14"/>
+                </font>
+            </Label>
+        </VBox>
+
+        <!-- === RIGHT PANEL === -->
+        <VBox alignment="TOP_LEFT" spacing="25">
+
+            <Text text="EDIT PROFILE" fill="WHITE">
+                <font>
+                    <Font name="RetroGaming" size="26"/>
+                </font>
+            </Text>
+
+            <!-- === Form Fields === -->
+            <VBox spacing="20">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Display name:" textFill="WHITE">
+                        <font>
+                            <Font name="RetroGaming" size="16"/>
+                        </font>
+                    </Label>
+                    <TextField fx:id="displayNameField" prefWidth="160"
+                               style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';"/>
+                    <Button text="Change Avatar"
+                            style="-fx-background-color: #f4b400; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Old Password:" textFill="WHITE">
+                        <font>
+                            <Font name="RetroGaming" size="16"/>
+                        </font>
+                    </Label>
+                    <PasswordField fx:id="oldPasswordField" prefWidth="160"
+                                   style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="New Password:" textFill="WHITE">
+                        <font>
+                            <Font name="RetroGaming" size="16"/>
+                        </font>
+                    </Label>
+                    <PasswordField fx:id="newPasswordField" prefWidth="160"
+                                   style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';"/>
+                    <Button text="Change Banner"
+                            style="-fx-background-color: #00bcd4; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;"/>
+                </HBox>
+            </VBox>
+
+            <!-- === Privacy Toggles === -->
+            <VBox spacing="15">
+                <Text text="Privacy" fill="WHITE">
+                    <font>
+                        <Font name="RetroGaming" size="20"/>
+                    </font>
+                </Text>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Hide stats profile" textFill="WHITE">
+                        <font>
+                            <Font name="RetroGaming" size="16"/>
+                        </font>
+                    </Label>
+                    <RadioButton fx:id="hideStatsYes" text="yes"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                    <RadioButton fx:id="hideStatsFriends" text="friends"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                    <RadioButton fx:id="hideStatsNo" text="no"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Friend visibility" textFill="WHITE">
+                        <font>
+                            <Font name="RetroGaming" size="16"/>
+                        </font>
+                    </Label>
+                    <RadioButton fx:id="friendVisYes" text="yes"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                    <RadioButton fx:id="friendVisFriends" text="friends"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                    <RadioButton fx:id="friendVisNo" text="no"
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </HBox>
+</StackPane>
