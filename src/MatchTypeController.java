@@ -257,7 +257,8 @@ public class MatchTypeController extends Application {
             // Start hosting.
             handler.startHosting(accountID, selectedGame, activeAccount.getElo(selectedGame), roomCode, networkingInformation);
 
-            // Once the matchmaking handler finds a game, start the GUI
+            // Start another thread called "watcher" which watches the matchmaking handler
+            // Once the watcher finds a match, it will call startMatch() in this class with match-related parameters.
             MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
             watcher.start();
         } catch (InterruptedException e) {
@@ -265,31 +266,38 @@ public class MatchTypeController extends Application {
         }
     }
 
-//    @FXML
-//    private void handleSelectButton() {
-//        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
-//
-//        // Get hosting details
-//        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
-//        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
-//        String networkingInformation = "";      // TODO: Integrate w/ networking
-//
-//        // go to next screen
-//        hostPopup.setVisible(false);
-//        codePopup.setVisible(true);
-//
-//        // Wait for someone to join
-//        try {
-//            // Start matchmaking.
-//            handler.startMatchmaking(accountID, selectedGame, activeAccount.getElo(selectedGame), networkingInformation);
-//
-//            // Once the matchmaking handler finds a game, start the GUI
-//            MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
-//            watcher.start();
-//        } catch (InterruptedException e) {
-//            System.out.println("Hosting interrupted");
-//        }
-//    }
+    // TODO: YOU NEED TO USE THE FUNCTIONS IN HERE FOR MATCHMAKING !!!
+    @FXML
+    private void handleMatchmakingButton() {
+        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
+
+        // Get matchmaking details
+        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
+        int accountID = activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        String networkingInformation = "";      // TODO: Integrate w/ networking
+
+        // Show matchmaking popup
+        // TODO: Start matchmaking ("waiting ...") UI
+
+        // Wait for someone to join
+        try {
+            // Start matchmaking
+            handler.startMatchmaking(accountID, selectedGame, activeAccount.getElo(selectedGame), networkingInformation);
+
+            // Start another thread called "watcher" which watches the matchmaking handler
+            // Once the watcher finds a match, it will call startMatch() in this class with match-related parameters.
+            MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
+            watcher.start();
+        } catch (InterruptedException e) {
+            System.out.println("Hosting interrupted");
+        }
+    }
+
+    @FXML
+    private void handleStopMatchmakingButton() {
+        // TODO: Disable matchmaking ("waiting ...") UI
+        activeAccount.getMatchmakingHandler().stopMatchmaking();
+    }
 
     @FXML
     private void onSwipeNextButtonClicked() {
@@ -312,7 +320,6 @@ public class MatchTypeController extends Application {
         codePopup.setVisible(false);
         hostPopup.setVisible(true);
         activeAccount.getMatchmakingHandler().stopHosting();
-        activeAccount.getMatchmakingHandler().stopMatchmaking();
     }
 
 
@@ -398,7 +405,8 @@ public class MatchTypeController extends Application {
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
         boolean success = handler.tryJoinHost(accountID, activeAccount, roomCode, networkingInformation);
         if (success){
-            // Start the GUI
+            // Start another thread called "watcher" which watches the matchmaking handler
+            // Once the watcher finds a match, it will call startMatch() in this class with match-related parameters.
             MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
             watcher.start();
         }
