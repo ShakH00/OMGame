@@ -68,6 +68,8 @@ public class UserProfileController extends Application {
     private Tab overview;
     @FXML
     private Tab matches;
+    @FXML
+    private StackPane backButton;
 
 
 //    public void setAccount(Account account) {
@@ -122,17 +124,24 @@ public class UserProfileController extends Application {
         UtilityManager.addHoverEffect(overallPane);
         UtilityManager.addHoverEffect(friendsPane);
         UtilityManager.createScaleTransition(settingsButton);
+        UtilityManager.createScaleTransition(backButton);
     }
 
     @FXML
     private void goToSettings() {
-        System.out.println("To user settings");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/UserSettings.fxml");
     }
 
     @FXML
     public void openPopup(javafx.scene.input.MouseEvent event) {
         UtilityManager.popupOpen(event,"screens/UserPopup.fxml", rootPane);
+    }
 
+    @FXML
+    public void setBackButton() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
     public static void main (String[]args){
