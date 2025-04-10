@@ -70,7 +70,7 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
-    public void handleSubmitButton() throws EncryptionFailedException {
+    public void handleSubmitButton(javafx.scene.input.MouseEvent mouseEvent) throws EncryptionFailedException {
         String email = emailField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -109,6 +109,7 @@ public class SignUpController extends Application {
             notificationText.setText("Email already exists");
             return;
         }
+
         // Call the create account method
         boolean success;
         try {
@@ -118,8 +119,7 @@ public class SignUpController extends Application {
         }
 
         if (success){
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+            UtilityManager.popupOpen(mouseEvent, "screens/CaptchaPopup.fxml", rootPane);
         } else {
             notificationText.setText("Sign Up Failed");
         }
