@@ -1,0 +1,104 @@
+.hero {
+	text-align: center;
+	padding: 180px 30px 120px;
+	/*background-image: url("assets/mountainstars_bg.png");*/
+	background: linear-gradient(135deg, #22466a, #091c30);
+}
+
+.hero h1 {
+	font-size: 4rem;
+	margin-bottom: 20px;
+	color: white;
+}
+
+.hero p {
+	font-size: 1.3rem;
+	max-width: 600px;
+	margin: auto;
+	margin-bottom: 40px;
+	color: white;
+}
+
+.hero a {
+	background-color: #fff;
+	color: #111;
+	padding: 12px 30px;
+	border-radius: 50px;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	display: inline-block;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hero a:hover {
+	transform: scale(1.1);
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vision-div {
+	/*background: linear-gradient(135deg, #1E4165, #0A1C2F);*/
+	background-image: url("assets/twinklingstars.gif");
+	padding: 100px;
+}
+
+.vision-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.vision {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section {
+	padding: 80px 40px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+.section h2, .vision h2 {
+	font-size: 2.5rem;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.section p, .vision p {
+	font-size: 1.1rem;
+	line-height: 1.8;
+	text-align: center;
+}
+
+.features-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 30px;
+	margin-top: 60px;
+}
+
+.feature-card {
+	background-color: white;
+	border-radius: 20px;
+	padding: 30px;
+	text-align: center;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.feature-card:hover {
+	/*cursor: pointer;*/
+	transform: scale(1.03);
+}
+
+.feature-card h3 {
+	font-size: 1.5rem;
+	margin-bottom: 15px;
+}

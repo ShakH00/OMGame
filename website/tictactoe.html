@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="all.css">
+        <link rel="stylesheet" href="tictactoe.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
+            <div class="header-center">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="signup.html" class="signup-btn">Sign up</a>
+                <a href="login.html" class="login-btn" id="login-btn">Login</a>
+                <span id="username-display" style="display: none;"></span>
+            </div>
+        </div>
+
+        <div class="scroll-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
+        </div>
+
+        <h1>Tic Tac Toe</h1>
+        <div class="board" id="board"></div>
+        <button class="button" onclick="resetGame()">Reset Board</button>
+
+        <div class="overlay" id="TTToverlay" onclick="closePopup()"></div>
+        <div class="container" id="TTTpopupBox">
+            <img class="popup-tetriscat" style="rotate: 0deg; height: 150px; width: auto; left: 285px; top: -148px;" src="assets/tetrisCat3.GIF" alt=""/>
+            <div class="contact-box">
+                <div class="sos-box">SOS!!</div>
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <p id="popup-text"></p>
+            </div>
+        </div>
+
+<!--        <div class="footer">-->
+<!--            &copy; 2025 OMG Platform | Created by dreamers, for players. | Contact us at contact@omgame.club-->
+<!--        </div>-->
+        <script src="script.js"></script>
+        <script src="tictactoe.js"></script>
+    </body>
+</html>
