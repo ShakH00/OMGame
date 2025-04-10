@@ -384,7 +384,7 @@ Game logic documentation developed during the initial phase of the project.
 **Purpose:** Game's logic use case diagrams.
 ***
 ###  GUI⠀ ⠀⠀           
-#### `assests`
+#### Assests
 **Purpose:** Screens and Sprites that will be used in the main game.
 - **[screens](#screens)**
 - **[sprites](#sprites)**
@@ -410,7 +410,7 @@ Game logic documentation developed during the initial phase of the project.
 - **[player_and_localhostSetup.png](#player_and_localsetuppng)**
 - **[tentativeGameStateTransitionDiagram.png](#tentativegamestatetransistiondiagarmpng)**
 ***
-#### `integration`
+#### Integration
 **Purpose:** Images on how to integrate each part
 - **[auth_mm.png](#auth_mmpng)**
 - **[gameLogic.png](#gamelogicpng)**
@@ -469,10 +469,169 @@ Game logic documentation developed during the initial phase of the project.
 ***
 
 ## Code Organization
+- **[account](#account)**
+  - **[statistics:](#statistics)**
+    - **[AStatistic.java](#astatisticsjava)**
+    - **[IStatistics.interface](#istatisticsinterface)**
+    - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+    - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+    - **[StatisticsCheckers.java](#statisticscheckersjava)**
+    - **[StatisticsChess.java](#statisticschessjava)**
+    - **[StatisticsCombined.java](#statisticscombinedjava)**
+    - **[StatisticsConnect4.java](#statisticsconnect4java)**
+    - **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+    - **[StatisticType.enum](#statisticstypeenum)**
+  - **[Account.java](#acccountjava)**
+  - **[AccountStorageUtility.java](#accountstorageutilityjava)**
+  - **[CreateAccount.java](#createaccountjava)**
+  - **[NoAccountError.exception](#noaccounterrorexecption)**
+
+
+- **[authentication:](#authentication)**
+  - **[Authentication:](#authentication-)**
+    - **[Admin.java](#adminjava)**
+    - **[AuthenticationTest.java](#authenticationtestjava)**
+    - **[AuthenticationTestMain.java](#authenticationtestmainjava)**
+    - **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+    - **[EmailSender.java](#emailsenderjava)**
+    - **[MFAAuthentication.java](#mfaauthenitcationjava)**
+    - **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+    - **[MFAInputPopUp.java](#mfainputpopupjava)**
+
+  - **[CAPTCHImages](#captchaimages)**
+
+  - **[ExceptionAuthentication:](#exceptionauthentications)**
+    - **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+    - **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+    - **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+    - **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+  - **[MFAPopUpController.java](#mfapopupcontrollerjava)**
+
+
+  - **[Com.Example](#comexample)**
+
+
+- **[database](#database)**
+  - **[DatabaseConnection.java](#databaseconnectionjava)**
+  - **[DatabaseManager.java](#databasemanagerjava)**
+  - **[DecryptionAuthentication.java](#decryptionauthenitactionjava)**
+  - **[EncryptionAuthentication.java](#encryptionauthenticationjava)**
+
+
+- **[game](#game)**
+  - **[checkers](#checkers)**
+    - **[Checkers.java](#checkersjava)**
+    - **[CheckersController.java](#checkerscontrollerjava)**
+    - **[CheckersPiece.java](#checkerspiecejava)**
+  - **[Chess](#chess)**
+    - **[Bishop.java](#bishopjava)**
+    - **[Chess.java](#chessjava)**
+    - **[King.java](#kingjava)**
+    - **[Pawn.java](#pawnjava)**
+    - **[Queen.java](#queenjava)**
+    - **[Rook.java](#rookjava)**
+  - **[connect4](#connect4)**
+    -  
 ***
 ### Account
+  - **[statistics](#statistics)**
+    - **[AStatistic.java](#astatisticsjava)**
+    - **[IStatistics.interface](#istatisticsinterface)**
+    - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+    - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+    - **[StatisticsCheckers.java](#statisticscheckersjava)**
+    - **[StatisticsChess.java](#statisticschessjava)**
+    - **[StatisticsCombined.java](#statisticscombinedjava)**
+    - **[StatisticsConnect4.java](#statisticsconnect4java)**
+    - **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+    - **[StatisticType.enum](#statisticstypeenum)**
+ 
+
+  - **[Account.java](#acccountjava)**
+  - **[AccountStorageUtility.java](#accountstorageutilityjava)**
+  - **[CreateAccount.java](#createaccountjava)**
+  - **[NoAccountError.exception](#noaccounterrorexecption)**
+***
+### statistics
+   - **[AStatistic.java](#astatisticsjava)**
+   - **[IStatistics.interface](#istatisticsinterface)**
+   - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+   - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+   - **[StatisticsCheckers.java](#statisticscheckersjava)**
+   - **[StatisticsChess.java](#statisticschessjava)**
+   - **[StatisticsCombined.java](#statisticscombinedjava)**
+   - **[StatisticsConnect4.java](#statisticsconnect4java)**
+- **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+- **[StatisticType.enum](#statisticstypeenum)**
+- **[Account.java](#acccountjava)**
+***
+#### `AStatistics.java`
+#### `IStatistics.interface`
+#### `MatchOutcomeHandler.java`
+#### `MatchOutcomeInvalidError.execption`
+#### `StatisticsCheckers.java`
+#### `StatisticsChess.java`
+#### `StatisticsCombined.java`
+#### `StatisticsConnect4.java`
+#### `StatisticsTicTacToe.java`
+#### `StatisticsType.enum`
+#### `Acccount.java`
+#### `AccountStorageUtility.java`
+#### `CreateAccount.java`
+#### `NoAccountError.execption`
+
 ***
 ### Authentication
+- **[Authentication](#authentication-)**
+  - **[Admin.java](#adminjava)**
+  - **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+  - **[EmailSender.java](#emailsenderjava)**
+  - **[MFAAuthentication.java](#mfaauthenitcationjava)**
+  - **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+  - **[MFAInputPopUp.java](#mfainputpopupjava)**
+
+
+- **[CAPTCHImages](#captchaimages)**
+
+
+- **[ExceptionAuthentication](#exceptionauthentications)**
+  - **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+  - **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+  - **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+  - **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+
+
+- **[MFAPopUpController](#mfapopupcontrollerjava)**
+***
+### Authentication 
+- **[Admin.java](#adminjava)**
+- **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+- **[EmailSender.java](#emailsenderjava)**
+- **[MFAAuthentication.java](#mfaauthenitcationjava)**
+- **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+- **[MFAInputPopUp.java](#mfainputpopupjava)**
+***
+#### `Admin.java`
+#### `CAPTCHAAUthentication.java`
+#### `EmailSender.java`
+#### `MFAAuthenitcation.java`
+#### `MFAAuthenticationV2.java`
+#### `MFAInputPopup.java`
+***
+### CAPTCHAImages
+***
+### ExceptionAuthentications
+- **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+- **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+- **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+- **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+***
+#### `CAPTCHAAuthenticationFailedEcpection.exception`
+#### `DecryptionFailedException.exception`
+#### `EncryptionFailedException.exception`
+#### `MFAAuthenticationFailedException.exception`
+***
+#### `MFAPopupController.java`
 ***
 _* CAPTCHAAuthentication.java_
   * Simple CAPTCHA system to verify that a human is interacting with the application.
@@ -502,22 +661,144 @@ _* Admin.java_
   * This class provides backend functionality for managing and modifying a users account within our system
     Users can update their email, passwords, usernames and more while interacting with the database
 ### Com.Example
+- **[Main.java](#mainjava)**
+***
+#### `Main.java`
 ***
 ### Database
+#### `DatabaseConnection.java`
+#### `DatabaseManager.java`
+#### `DecryptionAuthenitaction.java`
+#### `ENcryptionAuthentication.java`
 ***
 ### Game
+### checkers
+#### `Checkers.java`
+#### `CheckersController.java`
+#### `CheckersPiece.java`
+end of checkers
+### chess
+#### `Bishop.java`
+#### `Chess.java`
+#### `King.java`
+#### `Knight.java`
+#### `Pawn.java`
+#### `Queen.java`
+#### `Rook.java`
+end of chess
+### connect4
+#### `Connect4.java`
+#### `Connect4Piece.java`
+end of connect4
+### pieces
+#### `MovingPiece.java`
+#### `Piece.java`
+#### `PieceType.enum`
+#### `SattionaryPiece.java`
+end of pieces
+### tictactoe
+#### `TicTacToe.java`
+#### `TicTacToePiece`
+end of tictactoe
+#### `Board.java`
+#### `Game.java`
+#### `GameRules.java`
+#### `GamesEnum.enum`
+#### `GamesState.enum`
+#### `GameType.enum`
+#### `Player.java`
+
 ***
 ### Images
+### sprite
+#### `sprites`
+end of folder sprites
+#### `screens` 
+All the png that is not in the sprites folder is being used as a screen in the game.
 ***
 ### Leaderboard
+#### `Leaderboard.java`
 ***
 ### Matchmaking
+#### `MatchmakingHandler.java`
+### MatchmakingHandlerTest.java
+#### `ClientThread.java`
+#### `HostThread.java`
+end of folder matchmakinghandlertest
+#### `MatchmakingState.enum`
 ***
 ### Networking
+### test
+### networkingObjectSending
+#### `GameServer`
+#### `Message`
+#### `PlayerClient`
+#### `PracticeGameObj`
+end of folder 2 networking object sending
+#### `Dockerfile-gameS.file`
+#### `GameServerT.java`
+#### `PlayerData.java`
+#### `PlayerDatabase.java`
+#### `PlayerT.java`
+#### `stubs`
+end of folder 1 test
+#### `badwords.txt`
+#### `Networking.java`
 ***
 ### Resources.Fonts
+fonts that it
+#### `Pixelite.tff`
+#### `PressStart2P-Regular.tff`
+#### `RetroGaming.ttf`
 ***
 ### Screens
+
+#### `AdminScreen.fxml`
+#### `Checkers.fxml`
+#### `Chess.fxml`
+#### `Connect4.fxml`
+#### `draw_styles.css`
+#### `DrawScreen.fxml`
+#### `GameSelect.fxml`
+#### `Help.fxml`
+#### `LeaderboardScreen.fxml`
+#### `LeaderboardStyle.css`
+#### `Login.fxml`
+#### `lose_styles.css`
+#### `LoseScreen.fxml`
+#### `MatchType.fxml`
+#### `MenuPopup.fxml`
+#### `Signup.fxml`
+#### `Start.fxml`
+#### `styles.css`
+#### `TicTacToe.fxml`
+#### `Userpopup.fxml`
+#### `WinScreen.fxml`
+***
+#### `AdminController.java`
+#### `CheckersController.java`
+#### `ChessController.java`
+#### `Connect4Controller.java`
+#### `DrawScreenController.java`
+#### `GameSelectController.java`
+#### `HelpController.java`
+#### `LeaderboardController.java`
+#### `LoginController.java`
+#### `LoseScreenController.java`
+#### `Main.java`
+#### `MatchTypeController.java`
+#### `MenuPopupController.java`
+#### `SceneManager.java`
+#### `SignUpController.java`
+#### `StartController.java`
+#### `styles.css`
+#### `TicTacToeController.java`
+#### `UserProfileController.java`
+#### `UtilityManager.java`
+#### `WinScreenController`
+
+
+***
 ## Test Folder
 
 ## Git Log & Git link
