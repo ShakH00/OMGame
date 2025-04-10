@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jdk.jshell.execution.Util;
 import matchmaking.PrivateMatch;
 
 
@@ -43,9 +44,47 @@ public class MatchTypeController extends Application {
     private Label matchIDLabel;
     @FXML
     private Label gameSelectedLabel;
-
+    @FXML
+    private StackPane backButtonLogin;
+    @FXML
+    private Label backButton1;
+    @FXML
+    private StackPane backButton2;
+    @FXML
+    private Label nextButton;
+    @FXML
+    private StackPane cancelButton1;
+    @FXML
+    private StackPane cancelButton2;
+    @FXML
+    private StackPane startButton1;
+    @FXML
+    private StackPane startButton2;
+    @FXML
+    private StackPane startButton3;
+    @FXML
+    private StackPane submitButton1;
+    @FXML
+    private StackPane submitButton2;
+    @FXML
+    private StackPane selectButton;
     @FXML
     private Label waitingLabel;
+    @FXML
+    private StackPane gamesPane;
+    @FXML
+    private Pane connect4;
+    @FXML
+    private Pane tictactoe;
+    @FXML
+    private Pane checkers;
+    @FXML
+    private Pane chess;
+    @FXML
+    private Pane hostPopup;
+    @FXML
+    private Pane codePopup;
+
 
     private GameType[] gameTypes = {
             GameType.CHESS,
@@ -89,6 +128,23 @@ public class MatchTypeController extends Application {
         UtilityManager.addHoverEffectRectangle(hostGamePane);
         UtilityManager.addHoverEffectRectangle(joinGamePane);
         UtilityManager.addHoverEffectRectangle(standardGamePane);
+
+        UtilityManager.createScaleTransition(backButtonLogin);
+        UtilityManager.colourTransition1(backButton1);
+        UtilityManager.createScaleTransition(backButton2);
+        UtilityManager.colourTransition1(nextButton);
+
+        UtilityManager.createScaleTransition(cancelButton1);
+        UtilityManager.createScaleTransition(cancelButton2);
+
+        UtilityManager.createScaleTransition(startButton1);
+        UtilityManager.createScaleTransition(startButton2);
+        UtilityManager.createScaleTransition(startButton3);
+
+        UtilityManager.createScaleTransition(submitButton1);
+        UtilityManager.createScaleTransition(submitButton2);
+        UtilityManager.createScaleTransition(selectButton);
+
         System.out.println("Chess: " + chess);
         System.out.println("Checkers: " + checkers);
         System.out.println("TicTacToe: " + tictactoe);
@@ -117,22 +173,6 @@ public class MatchTypeController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
-
-    @FXML
-    private StackPane gamesPane;
-
-    @FXML
-    private Pane connect4;
-    @FXML
-    private Pane tictactoe;
-    @FXML
-    private Pane checkers;
-    @FXML
-    private Pane chess;
-    @FXML
-    private Pane hostPopup;
-    @FXML
-    private Pane codePopup;
 
 
     private Pane[] gameFrames; // array to hold frames

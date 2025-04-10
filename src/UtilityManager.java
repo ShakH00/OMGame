@@ -1,9 +1,11 @@
+import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -133,6 +135,27 @@ public class UtilityManager {
         });
     }
 
+    /**
+     * Method to change the color of arrow labels when hovered over
+     *
+     * @param label Label that is hovered on
+     *
+     * @author Shakil H
+     */
+    public static void colourTransition1(Label label) {
+        Color hoverColor = Color.web("#254663");
+        Color normalColor = Color.web("#13283b");
+
+        label.setTextFill(normalColor);
+
+        label.setOnMouseEntered(event -> {
+            label.setTextFill(hoverColor);
+        });
+
+        label.setOnMouseExited(event -> {
+            label.setTextFill(normalColor);
+        });
+    }
 
     /**
      * Method to add hover effects to user info panes
