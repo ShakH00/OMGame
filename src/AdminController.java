@@ -1,4 +1,7 @@
 //import authentication.Authentication.Admin;
+import account.Account;
+import authentication.Authentication.Admin;
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,16 +83,16 @@ public class AdminController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Start.fxml");
     }
-    // all commented out code should work after merging wtih leaderboard
+
     @FXML
     private void findUserButton() {
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //Account player = database.queryAccountByID(userID);
+        Account player = DatabaseManager.queryAccountByID(userID);
 
-        //userNameField.setText(player.getUsername);
-        //passwordField.setText(player.getPassword);
-        //emailField.setText(player.getEmail);
+        userNameField.setText(player.getUsername());
+        passwordField.setText(player.getPassword());
+        emailField.setText(player.getEmail());
         //TODO: call up methods from profile
         System.out.println("Find user button pressed");
     }
@@ -100,7 +103,7 @@ public class AdminController extends Application {
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         //Account player = database.queryAccountByID(userID);
-        //idk if this one is possible rn with the way stars work
+        //idk if this one is possible rn with the way stats work
 
         System.out.println("Clear stats button pressed");
     }
@@ -110,8 +113,7 @@ public class AdminController extends Application {
         //TODO: call up methods from profile
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //adminUser.deleteUser(database, userIDstr);
-        //how do we get database?
+        Admin.deleteUser(userID);
         System.out.println("Delete user button pressed");
     }
 
@@ -123,10 +125,9 @@ public class AdminController extends Application {
         String username = userNameField.getText();
         String userEmail = emailField.getText();
         String userPassword = passwordField.getText();
-        //adminUser.updateUsername(database, username);
-        //adminUser.updateEmail(database, userEmail);
-        //adminUser.updatePassword(database, userPassword);
-        //how do we get database?
+        Admin.updateUsername(userID, username);
+        Admin.updateEmail(userID, userEmail);
+        Admin.updatePassword(userID, userPassword);
         System.out.println("Submit button pressed");
     }
 

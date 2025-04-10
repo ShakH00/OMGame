@@ -399,8 +399,12 @@ public class Account {
      *
      * @param email the new email address to set
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public boolean setEmail(String email) {
+        if(isValidEmail(email)){
+            this.email = email;
+            return true;
+        }
+        return false;
     }
 
     /**
