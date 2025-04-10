@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Shakil Hussain and Arwa A, modified by Adam Chan
  */
-public class ChessController extends Application {
+public class P1ChessController extends Application {
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -69,7 +69,7 @@ public class ChessController extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Chess.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/P1Chess.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
