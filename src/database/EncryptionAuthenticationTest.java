@@ -4,6 +4,7 @@ import account.Account;
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import org.junit.jupiter.api.Test;
+import java.lang.reflect.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -16,6 +17,7 @@ public class EncryptionAuthenticationTest {
         String expected = "def[\\]456";
         assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
     }
+
     @org.junit.Test
     @Test
     public void testDecryptionDriver_nullInput() {
@@ -41,8 +43,25 @@ public class EncryptionAuthenticationTest {
     }
 
 
+    @org.junit.Test
+    @Test
+    public void testDecryptAccount_nullFields() throws Exception {
+        Account account = new Account(); // guest account
 
+        // Use reflection to bypass setter and directly set the private fields
+        Field emailField = Account.class.getDeclaredField("email");
+        Field passwordField = Account.class.getDeclaredField("password");
 
+        emailField.setAccessible(true);
+        passwordField.setAccessible(true);
+
+        emailField.set(account, null);
+        passwordField.set(account, null);
+
+        assertThrows(DecryptionFailedException.class, () -> {
+            DecryptionAuthentication.decryptAccount(account);
+        });
+    }
 
 
 }
