@@ -1,9 +1,11 @@
 package database;
 
 import account.Account;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 public class EncryptionAuthenticationTest {
 
@@ -14,5 +16,18 @@ public class EncryptionAuthenticationTest {
         String expected = "def[\\]456";  // Each character shifted by +3
         assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
     }
+    @org.junit.Test
+    @Test
+    public void testDecryptionDriver_nullInput() {
+        assertThrows(DecryptionFailedException.class, () -> {
+            DecryptionAuthentication.decryptionDriver(null);
+        });
+    }
+
+
+
+
+
+
 }
 
