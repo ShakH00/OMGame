@@ -126,5 +126,6 @@
                 <Image url="@../images/login_text.png" />
             </image>
         </ImageView>
+        <Text fx:id="notificationText" fill="#fc0000" layoutX="242.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="337.0" />
     </children>
 </AnchorPane>

@@ -42,6 +42,8 @@ public class LoginController extends Application {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Text notificationText;
 
 
     @Override
@@ -118,8 +120,7 @@ public class LoginController extends Application {
                 return;
             }
         }
-        // TODO: Print system error message
-        System.out.println("Incorrect username or password");
+        notificationText.setText("Incorrect username or password");
     }
 
     @FXML
