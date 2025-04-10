@@ -45,6 +45,7 @@ public class UtilityManager {
             currentPopup.setId("popupHelp");
 
             rootPane.getChildren().add(currentPopup);  // rootPane is the main container in Start.fxml
+            currentPopup.getStylesheets().add(UtilityManager.class.getResource("styles.css").toExternalForm());
 
             // set the helpRoot visible (it will be hidden initially)
             currentPopup.setVisible(true);
