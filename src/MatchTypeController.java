@@ -353,15 +353,15 @@ public class MatchTypeController extends Application {
      * @param opponentNetworkingInformation
      */
     public void startMatch(GameType game,
-                                  boolean affectsElo,
-                                  int selfID,
-                                  String selfUsername,
-                                  int selfElo,
-                                  String selfNetworkingInformation,
-                                  int opponentID,
-                                  String opponentUsername,
-                                  int opponentElo,
-                                  String opponentNetworkingInformation){
+                           boolean affectsElo,
+                           int selfID,
+                           String selfUsername,
+                           int selfElo,
+                           String selfNetworkingInformation,
+                           int opponentID,
+                           String opponentUsername,
+                           int opponentElo,
+                           String opponentNetworkingInformation){
         System.out.println("Trying to start GUI");
         Stage stage = (Stage) rootPane.getScene().getWindow();
 
