@@ -1,4 +1,5 @@
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.DatabaseManager;
 import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -38,6 +39,8 @@ public class SignUpController extends Application {
     private StackPane submitButton;
     @FXML
     private Text guestText;
+    @FXML
+    private Text notificationText;
 
     @Override
     public void start(Stage primaryStage) {
@@ -67,13 +70,43 @@ public class SignUpController extends Application {
         }
     }
 
-    public void handleSubmitButton() {
+    public void handleSubmitButton(javafx.scene.input.MouseEvent mouseEvent) throws EncryptionFailedException {
         String email = emailField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-
-        if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-
+        //Check for empty text field
+        if (email.isEmpty()){
+                notificationText.setText("Please enter an email address");
+                return;
+        }
+        else if (username.isEmpty()){
+                notificationText.setText("Please enter a username");
+                return;
+        }
+            else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password");
+            return;
+        }
+        // Check format for email, username and password
+        if(!CreateAccount.isValidEmail(email)){
+            notificationText.setText("Invalid email address");
+            return;
+        }
+        else if (!CreateAccount.isValidUsername(username)){
+            notificationText.setText("Username must have at least 4 character (only letters, numbers, underscores)");
+            return;
+        }
+        else if (!CreateAccount.isValidPassword(password)){
+            notificationText.setText("Password must have at least 8 character (contains uppercase, lowercase, number, special character)");
+            return;
+        }
+        // Check for existing email, username
+        if (DatabaseManager.isUsernameExist(username)){
+            notificationText.setText("Username already exists");
+            return;
+        }
+        else if (DatabaseManager.isEmailExist(email)){
+            notificationText.setText("Email already exists");
             return;
         }
 
@@ -86,9 +119,9 @@ public class SignUpController extends Application {
         }
 
         if (success){
-            // Switch to game menu?
+            UtilityManager.popupOpen(mouseEvent, "screens/CaptchaPopup.fxml", rootPane);
         } else {
-            // Show error
+            notificationText.setText("Sign Up Failed");
         }
     }
 

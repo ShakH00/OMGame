@@ -10,15 +10,18 @@ public class CAPTCHAAuthentication {
     public static class captcha {
         private final String prompt;
         private final String answer;
+        private final String instructions;
+
 
         /**
          *
          * @param prompt - The question present to the user
          * @param answer - The correct answer in order to pass CAPTCHA
          */
-        public captcha(String prompt, String answer) {
+        public captcha(String prompt, String answer, String instructions) {
             this.prompt = prompt;
             this.answer = answer;
+            this.instructions = instructions;
         }
 
         /**
@@ -27,6 +30,14 @@ public class CAPTCHAAuthentication {
          */
         public String getPrompt() {
             return prompt;
+        }
+
+        /**
+         * Returns the instructions which is displayed to the user
+         * @return - The CAPTCHA prompt string
+         */
+        public String getInstructions() {
+            return instructions;
         }
 
         /**
@@ -69,7 +80,7 @@ public class CAPTCHAAuthentication {
             problem = a + " / " + b;
         }
 
-        return new captcha("Solve this CAPTCHA to continue: " + problem, String.valueOf(answer));
+        return new captcha(problem, String.valueOf(answer), "Solve this CAPTCHA to continue: ");
     }
 
     /**
@@ -87,16 +98,18 @@ public class CAPTCHAAuthentication {
 
         String prompt;
         String expectedAnswer;
+        String inst;
 
         if (reverseText) {
-            String reversed = new StringBuilder(word).reverse().toString();
-            prompt = "CAPTCHA: Type this word reversed: " + reversed;
+            prompt = new StringBuilder(word).reverse().toString();
+            inst = "CAPTCHA: \nType this word reversed: ";
             expectedAnswer = word;
         } else {
-            prompt = "CAPTCHA: Type this word in uppercase: " + word.toUpperCase();
+            prompt = word.toLowerCase();
+            inst = "CAPTCHA: \nType this word in uppercase: ";
             expectedAnswer = word.toUpperCase();
         }
-        return new captcha(prompt, expectedAnswer);
+        return new captcha(prompt, expectedAnswer, inst);
     }
 
     /**
@@ -155,15 +168,15 @@ public class CAPTCHAAuthentication {
      * The CAPTCHA will choose a random image from the files if user enters the mode as "image"
      * @return - Image from one of the files
      */
-    public static File chooseImage(){
+    public static String chooseImage(){
         Random rand = new Random();
-        String[] files = {"4f8yp.png", "6t9bcds.png", "381057.png", "cdfen.png", "data.png", "dsjcbka.png" +
+        String[] files = {"4f8yp.png", "6t9bcds.png", "381057.png", "cdfen.png", "data.png", "dsjcbka.png",
                 "eridati.png", "fche6.png", "finding.png", "following.png", "m8m4x.png"};
         Integer index = rand.nextInt() % files.length;
         if(index < 0){
             index = -index;
         }
-        File image = new File(files[index]);
+        String image = files[index];
         return image;
     }
 
