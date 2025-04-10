@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
+<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuPopupController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
@@ -111,21 +111,17 @@
                               </StackPane>
                            </children>
                         </VBox>
-                        <StackPane prefHeight="453.0" prefWidth="250.0">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ff5454" height="32.0" rotate="-10.8" stroke="TRANSPARENT" strokeType="INSIDE" translateX="-100.0" translateY="-158.0" width="76.0" />
-                              <Text fill="WHITE" rotate="-10.8" strokeType="OUTSIDE" strokeWidth="0.0" text="SOS" translateX="-100.0" translateY="-158.0">
-                                 <font>
-                                    <Font name="Press Start 2P Regular" size="13.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
                      </children>
                   </StackPane>
                </children>
             </HBox>
          </children>
       </VBox>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ff5454" height="32.0" layoutX="262.0" layoutY="112.0" rotate="-15.5" stroke="TRANSPARENT" strokeType="INSIDE" width="76.0" />
+      <Text fill="WHITE" layoutX="279.0" layoutY="134.0" rotate="-15.5" strokeType="OUTSIDE" strokeWidth="0.0" text="SOS">
+         <font>
+            <Font name="Press Start 2P Regular" size="13.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
