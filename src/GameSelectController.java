@@ -142,10 +142,8 @@ public class GameSelectController extends Application {
 
     @FXML
     private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
-        //TODO: uncomment when merged
-//        Stage stage = (Stage) rootPane.getScene().getWindow();
-//        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
-        System.out.println("LEADERBOARD");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
     }
 
     @FXML
