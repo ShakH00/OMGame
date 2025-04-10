@@ -83,48 +83,40 @@ public class Leaderboard {
             StatisticType sortStatistic,
             StatisticType additionalStatistic,
             boolean isAscending,
-            int accountsPerPage,
-            int pageNumber)
-    {
-        // Initialize comparator that sorts Accounts by the sortStatistic in ascending or descending order
-        Comparator<Account> filterGlobalLeaderboard;
-        if (isAscending) {
-            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) a.getStatistic(game, sortStatistic), (Double) b.getStatistic(game, sortStatistic));
-        }
-        else {
-            filterGlobalLeaderboard = (a,b) -> Double.compare((Double) b.getStatistic(game, sortStatistic), (Double) a.getStatistic(game, sortStatistic));
+            int accountsPerPage, // unused now
+            int pageNumber       // unused now
+    ) {
+        System.out.println("Accounts received: " + accounts.size());
+
+        Comparator<Account> filterGlobalLeaderboard = Comparator.comparingDouble(
+                a -> {
+                    Number val = a.getStatistic(game, sortStatistic);
+                    return val != null ? val.doubleValue() : 0.0;
+                }
+        );
+
+        if (!isAscending) {
+            filterGlobalLeaderboard = filterGlobalLeaderboard.reversed();
         }
 
-        // Sort the Accounts using the comparator
         List<Account> sortedAccounts = accounts.stream().sorted(filterGlobalLeaderboard).toList();
 
-        // Initialize leaderboard String[][]. Rows = header + players. Columns = rank, name, elo, win%, wins, other
-        String[][] leaderboard = new String[1 + accountsPerPage][6];
+        // Remove pagination: just show all accounts
+        int totalAccounts = sortedAccounts.size();
+        String[][] leaderboard = new String[1 + totalAccounts][6];
 
-        // Add header row to leaderboard
         leaderboard[0] = getLeaderboardHeader(additionalStatistic);
 
-        // Add player rows to leaderboard
-        int startRank = 1 + (pageNumber - 1) * accountsPerPage;
-        for (int rank = startRank; rank <= startRank + accountsPerPage; rank++) {
-            int row = rank - 1; // Current row of leaderboard String[][]
-
-            // Try to find the Player at this rank and add them to the leaderboard String[][]
-            try {
-                Account account = sortedAccounts.get(rank);
-                leaderboard[row] = new String[]{
-                        String.valueOf(rank),                                       // Rank
-                        account.getUsername(),                                      // Username
-                        account.getStatistic(game, ELO).toString(),                 // Elo/rating
-                        account.getStatistic(game, WIN_RATE).toString(),            // Win rate
-                        account.getStatistic(game, WINS).toString(),                // Total wins
-                        account.getStatistic(game, additionalStatistic).toString()  // Chosen statistic
-                };
-            }
-            // If there are no more Players, add an empty row.
-            catch (IndexOutOfBoundsException e) {
-                leaderboard[row] = new String[]{"", "", "", "", "", ""};
-            }
+        for (int i = 0; i < totalAccounts; i++) {
+            Account account = sortedAccounts.get(i);
+            leaderboard[i + 1] = new String[]{
+                    String.valueOf(i + 1),                                       // Rank
+                    account.getUsername(),                                      // Username
+                    account.getStatistic(game, ELO).toString(),                 // Elo/rating
+                    account.getStatistic(game, WIN_RATE).toString(),            // Win rate
+                    account.getStatistic(game, WINS).toString(),                // Total wins
+                    account.getStatistic(game, additionalStatistic).toString()  // Chosen statistic
+            };
         }
 
         return leaderboard;

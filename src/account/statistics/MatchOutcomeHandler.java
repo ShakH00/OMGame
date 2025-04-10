@@ -3,6 +3,8 @@ package account.statistics;
 import game.GameType;
 import account.Account;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -13,14 +15,14 @@ public class MatchOutcomeHandler {
     /**
      * Add the results of a Match to the participating players' statistics and match history.
      * @param game                          GameType for the game that is being played
-     * @param matchID                       int unique ID for this match to store in database
+     * @param affectElo                     boolean for whether the match should count towards players' Elo or not
      * @param account1                      Account for player 1 of this match
      * @param account1Results               HashMap containing statistics for player 1
      * @param account2                      Account for player 2 of this match
      * @param account2Results               HashMap containing statistics for player 2
      * @throws MatchOutcomeInvalidError     Error thrown if the Match Outcome is malformed and cannot be processed
      */
-    public static void RecordMatchOutcome(GameType game, int matchID,
+    public static void RecordMatchOutcome(GameType game, boolean affectElo,
                                           Account account1, HashMap<StatisticType, Integer> account1Results,
                                           Account account2, HashMap<StatisticType, Integer> account2Results)
                         throws MatchOutcomeInvalidError
@@ -32,29 +34,31 @@ public class MatchOutcomeHandler {
             account2.updateStatistics(game, account2Results);
 
             // Add a String[] representation of the match outcome to both players' accounts
-            account1.logMatch(composeMatchLog(game, account1Results, account2, matchID));
-            account2.logMatch(composeMatchLog(game, account2Results, account1, matchID));
+            account1.logMatch(composeMatchLog(game, account1Results, account2));
+            account2.logMatch(composeMatchLog(game, account2Results, account1));
 
-            // Update both players' Elo
-            int player1OldElo = account1.getElo(game);
-            int player2OldElo = account2.getElo(game);
+            // Update both players' Elo (if it wasn't a private/friendly match)
+            if (affectElo) {
+                int player1OldElo = account1.getElo(game);
+                int player2OldElo = account2.getElo(game);
 
-            double player1Score = getMatchScore(account1Results);
-            double player2Score = getMatchScore(account2Results);
+                double player1Score = getMatchScore(account1Results);
+                double player2Score = getMatchScore(account2Results);
 
-            double player1Expected = getExpectedScore(player1OldElo, player2OldElo);
-            double player2Expected = getExpectedScore(player2OldElo, player1OldElo);
+                double player1Expected = getExpectedScore(player1OldElo, player2OldElo);
+                double player2Expected = getExpectedScore(player2OldElo, player1OldElo);
 
-            int kFactor = getKFactor(game);
+                int kFactor = getKFactor(game);
 
-            int player1EloChange = (int) Math.round(kFactor * (player1Score - player1Expected));
-            int player2EloChange = (int) Math.round(kFactor * (player2Score - player2Expected));
+                int player1EloChange = (int) Math.round(kFactor * (player1Score - player1Expected));
+                int player2EloChange = (int) Math.round(kFactor * (player2Score - player2Expected));
 
-            int player1NewElo = player1OldElo + player1EloChange;
-            int player2NewElo = player2OldElo + player2EloChange;
+                int player1NewElo = player1OldElo + player1EloChange;
+                int player2NewElo = player2OldElo + player2EloChange;
 
-            account1.updateElo(game, player1NewElo);
-            account2.updateElo(game, player2NewElo);
+                account1.updateElo(game, player1NewElo);
+                account2.updateElo(game, player2NewElo);
+            }
         }
     }
 
@@ -103,19 +107,18 @@ public class MatchOutcomeHandler {
 
     private static String[] composeMatchLog(GameType game,
                                             HashMap<StatisticType, Integer> playerResults,
-                                            Account opponent,
-                                            int matchID)
+                                            Account opponent)
     {
         String[] matchLog = new String[6];
 
         // index 0: game result (win/loss/draw)
-        if (playerResults.get(StatisticType.WINS) == 1){
+        if (playerResults.getOrDefault(StatisticType.WINS, 0) == 1){
             matchLog[0] = "Win";
         }
-        else if (playerResults.get(StatisticType.LOSSES) == 1){
+        else if (playerResults.getOrDefault(StatisticType.LOSSES, 0) == 1){
             matchLog[0] = "Loss";
         }
-        else if (playerResults.get(StatisticType.DRAWS) == 1){
+        else if (playerResults.getOrDefault(StatisticType.DRAWS, 0) == 1){
             matchLog[0] = "Draw";
         }
 
@@ -136,8 +139,9 @@ public class MatchOutcomeHandler {
         // index 4: opponent Elo
         matchLog[4] = String.valueOf(opponent.getElo(game));
 
-        // index 5: match ID
-        matchLog[5] = String.valueOf(matchID);
+        // index 5: match date
+        Format format = new SimpleDateFormat("yyyy-MM-dd");
+        matchLog[5] = format.format(new java.util.Date());
 
         // return
         return matchLog;

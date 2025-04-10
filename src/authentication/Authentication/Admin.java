@@ -1,0 +1,85 @@
+package authentication.Authentication;
+import database.DatabaseManager;
+import account.Account;
+
+public class Admin {
+    /**
+     * Integer ID; unique for this Account, given by the Database. 16 chars long
+     */
+    private Integer id;
+
+    /**
+     * String for the username associated with this Account
+     */
+    private String username;
+
+    /**
+     * String for the email associated with this Account
+     */
+    private String email;
+
+    /**
+     * String for the password associated with this Account
+     */
+    private String password;
+
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being edited
+     * @param newPassword the new password to set
+     */
+    private boolean updatePassword(DatabaseManager db, int id, String newPassword){
+        Account account = db.queryAccountByID(id);
+        boolean success = account.setPassword(newPassword);
+        if(success){
+            db.saveAccount(account);
+        }
+        return success;
+    }
+
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being edited
+     * @param newUsername the new username to set
+     */
+    private boolean updateUsername(DatabaseManager db, int id, String newUsername){
+        Account account = db.queryAccountByID(id);
+        boolean success = account.setUsername(newUsername);
+        if(success) {
+            db.saveAccount(account);
+        }
+        return success;
+    }
+
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being edited
+     * @param newEmail the new email to set
+     */
+    private void updateEmail(DatabaseManager db, int id, String newEmail){
+        Account account = db.queryAccountByID(id);
+        account.setEmail(newEmail);
+    }
+
+    /**
+     * Sets the password for the account.
+     *
+     * @param db the databaseManager being used
+     * @param id the id of the player being deleted
+     */
+    private boolean deleteUser(DatabaseManager db, int id){
+        Account account = db.queryAccountByID(id);
+        boolean success = db.deleteAccount(id);
+        if(success) {
+            db.saveAccount(account);
+        }
+        return success;
+    }
+
+}

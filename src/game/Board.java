@@ -1,5 +1,6 @@
 package game;
 
+import game.chess.*;
 import game.pieces.Piece;
 import game.checkers.CheckersPiece;
 import game.pieces.PieceType;
@@ -36,17 +37,50 @@ public class Board{
         board = new Piece[rows][cols];
     }
 
+    /**
+     * Method specific for filling chess board as Player attribute matters across the board within our methods
+     * @param gameType: There as a check, in case called by other game accidentally
+     * @param player1: Player 1 who will own all the LIGHT pieces
+     * @param player2: Player 2 who will own all the DARK pieces
+     */
+    public void fillChessBoard(GameType gameType, Player player1, Player player2){
+        if(gameType.equals(GameType.CHESS)){
+            //DARK pieces fill in
+            board[0][0] = new Rook(0,0, Color.BLACK, PieceType.DARK, player2);
+            board[0][1] = new Knight(0, 1, Color.BLACK, PieceType.DARK, player2);
+            board[0][2] = new Bishop(0, 2, Color.BLACK, PieceType.DARK, player2);
+            board[0][3] = new Queen(0, 3, Color.BLACK, PieceType.DARK, player2);
+            board[0][4] = new King(0, 4, Color.BLACK, PieceType.DARK, player2);
+            board[0][5] = new Bishop(0, 5, Color.BLACK, PieceType.DARK, player2);
+            board[0][6] = new Knight(0, 6, Color.BLACK, PieceType.DARK, player2);
+            board[0][7] = new Rook(0, 7, Color.BLACK, PieceType.DARK, player2);
+            for (int col = 0; col < 8; col++) {
+                board[1][col] = new Pawn(1, col, Color.BLACK, PieceType.DARK, player2);
+            }
+
+            //LIGHT pieces, bottom two rows
+            String white = "white";
+            board[7][0] = new Rook(7, 0, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][1] = new Knight(7, 1, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][2] = new Bishop(7, 2, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][3] = new Queen(7, 3, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][4] = new King(7, 4, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][5] = new Bishop(7, 5, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][6] = new Knight(7, 6, Color.WHITE, PieceType.LIGHT, player1);
+            board[7][7] = new Rook(7, 7, Color.WHITE, PieceType.LIGHT, player1);
+            for (int col = 0; col < 8; col++) {
+                board[6][col] = new Pawn(6, col, Color.WHITE, PieceType.LIGHT, player1);
+            }
+        }
+    }
+
     public void fillBoard(GameType gameType)
     {
         Player player1 = new Player();
         Player player2 = new Player();
 
-        if(gameType == GameType.CHESS)
-        {
-            // Method to fill board with game.chess game.pieces
-        }
 
-        else if(gameType == GameType.CHECKERS)
+        if(gameType == GameType.CHECKERS)
         {
             for (int i = 0; i < rows; i++)
             {
@@ -92,7 +126,6 @@ public class Board{
     }
 
     public void displayBoard(){
-
     }
 
     public void place(Piece piece, int row, int col)
