@@ -1,3 +1,4 @@
+import account.CreateAccount;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import database.EncryptionAuthentication;
