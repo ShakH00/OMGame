@@ -37,7 +37,6 @@ public class MFAAuthentication {
         if (!testMode) {
             code = generateRandomCode();
             // Simulate sending the code via email
-            System.out.println("Verification code sent to email: " + email);
             EmailSender.sendEmail(email, code); // Ensure this sends the email
         } else {
             code = "123456"; // Test mode uses a fixed code
@@ -50,7 +49,6 @@ public class MFAAuthentication {
 
         // Handle cancellation or invalid input
         if (userInput == null) {
-            System.err.println("User canceled the verification process or entered invalid input.");
             return "Verification canceled or invalid input.";
         }
 

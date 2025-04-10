@@ -615,7 +615,7 @@
                   <Image url="@../images/cancel_circlebutton.png" />
                </image>
             </ImageView>
-            <TextField alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
+            <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
                <font>
                   <Font name="Press Start 2P Regular" size="22.0" />
                </font>
