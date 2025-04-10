@@ -113,7 +113,7 @@ public class CaptchaPopupController extends Application  {
             }
             UtilityManager.popupClose(rootPane);
             Stage stage = (Stage) rootPane.getScene().getWindow();
-            SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+            SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
             System.out.println("Captcha failed");
             UtilityManager.popupClose(rootPane);
