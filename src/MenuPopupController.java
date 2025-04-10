@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -11,6 +12,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MenuPopupController extends Application {
+    @FXML
+    private AnchorPane rootPane;
     @FXML
     private StackPane closeButton;
     @FXML
@@ -45,6 +48,8 @@ public class MenuPopupController extends Application {
             e.printStackTrace();
         }
     }
+
+    // TODO; This won't work for some reason...
     public void initialize() {
 //        UtilityManager.createScaleTransition(closeButton);
 //        UtilityManager.createScaleTransition(drawButton);
@@ -52,13 +57,15 @@ public class MenuPopupController extends Application {
     }
 
     @FXML
-    private void closeButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MenuPopup.fxml"));
-        Parent helpRoot = loader.load();
-        helpRoot.setOnMouseClicked(event -> {
-            helpRoot.setVisible(false);  // hide the popup
-        });
+    private void closeButton(){
+      UtilityManager.popupClose(rootPane);
+        System.out.println("Popup closed");
     }
+
+    private void draw(javafx.scene.input.MouseEvent mouseEvent) {
+
+    }
+
 
     public static void main(String[] args) {
         launch(args);

@@ -168,10 +168,10 @@ public class Connect4Controller extends Application {
             UtilityManager.createScaleTransition(menuButton);
             UtilityManager.createScaleTransition(chatButton);
         }
-// TODO; get popup done
+
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
     @FXML

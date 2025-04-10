@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="helpPopup" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HelpController">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HelpController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b3b3bb2" height="586.0" layoutX="-7.0" layoutY="-9.0" stroke="TRANSPARENT" strokeType="INSIDE" width="813.0" />
       <ImageView fitHeight="570.0" fitWidth="802.0" pickOnBounds="true" preserveRatio="true">
@@ -90,7 +90,7 @@
             <Font name="Press Start 2P Regular" size="22.0" />
          </font>
       </Text>
-      <Label fx:id="closeButton" layoutX="676.0" layoutY="223.0" onMouseClicked="#handleCloseButton" text="x" textFill="#1b3b5d">
+      <Label fx:id="closeButton" layoutX="676.0" layoutY="223.0" onMouseClicked="#closeButton" text="x" textFill="#1b3b5d">
          <font>
             <Font name="Retro Gaming" size="19.0" />
          </font>

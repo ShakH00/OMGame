@@ -76,7 +76,7 @@ public class StartController extends Application {
     // open the help popup overlay
     @FXML
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/Help.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/Help.fxml", rootPane);
     }
 
     @FXML

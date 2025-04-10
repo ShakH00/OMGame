@@ -1,9 +1,9 @@
-import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +17,12 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+import static com.sun.glass.ui.Cursor.setVisible;
+
 public class UtilityManager {
+
+    private static Parent currentPopup;
+
     /**
      * Method to open up the resignation/offer draw popup
      *
@@ -29,29 +34,37 @@ public class UtilityManager {
      */
     // TODO: Implement separately from main screen help popup
     @FXML
-    public static void popupControl(MouseEvent mouseEvent, String path, AnchorPane rootPane) {
-        // TODO; check if it works with other not help popups
+    public static void popupOpen(MouseEvent mouseEvent, String path, AnchorPane rootPane) {
         try {
             // load help.fxml
             FXMLLoader loader = new FXMLLoader(UtilityManager.class.getResource(path));
-            Parent helpRoot = loader.load();
+            currentPopup = loader.load();
+            currentPopup.setId("popupHelp");
 
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
+            rootPane.getChildren().add(currentPopup);  // rootPane is the main container in Start.fxml
 
             // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
+            currentPopup.setVisible(true);
 
             // TODO; make popup close in different ways
 
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-            });
+//            // to close the popup, click anywhere
+//            helpRoot.setOnMouseClicked(event -> {
+//                helpRoot.setVisible(false);  // Hide the popup
+//            });
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("Popup initialized");
+    }
+    @FXML
+    public static void popupClose(AnchorPane rootPane) {
+        if (currentPopup != null) {
+            currentPopup.setVisible(false);
+            rootPane.getChildren().remove(currentPopup);
+        }
+        System.out.println("Popup closed");
     }
 
     /**
