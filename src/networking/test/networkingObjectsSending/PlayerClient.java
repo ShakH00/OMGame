@@ -344,7 +344,7 @@ public class PlayerClient extends Application {
     /**
      * The networking client side
      */
-    private class ClientSideConnection {
+    class ClientSideConnection {
         private Socket gameSocket;
         private Socket chatSocket;
 
@@ -406,7 +406,7 @@ public class PlayerClient extends Application {
             }).start();
         }
 
-        private void sendChat(String msg) {
+        void sendChat(String msg) {
             try {
                 chatOutObj.writeObject(msg);
                 chatOutObj.flush();
