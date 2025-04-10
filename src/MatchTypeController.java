@@ -2,36 +2,31 @@ import account.Account;
 import database.DatabaseManager;
 import game.GameType;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import matchmaking.MatchmakingHandler;
+import matchmaking.MatchmakingState;
 
 
-
-import javax.swing.text.html.ImageView;
 import java.util.concurrent.TimeUnit;
 
 public class MatchTypeController extends Application {
 
     @FXML
-    static AnchorPane rootPane;
+    AnchorPane rootPane;
     @FXML
     private Pane hostGamePane;
     @FXML
@@ -78,6 +73,9 @@ public class MatchTypeController extends Application {
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            // TODO: remove temporary lines below
+            SceneManager.registerScenes("screens/Chess.fxml", "screens/Checkers.fxml", "screens/Connect4.fxml", "screens/TicTacToe.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,13 +207,42 @@ public class MatchTypeController extends Application {
 
         // Wait for someone to join
         try {
-            TimeUnit.SECONDS.sleep(1);
             // Start hosting.
-            handler.startHosting(accountID, selectedGame, roomCode, networkingInformation);
+            handler.startHosting(accountID, selectedGame, activeAccount.getElo(selectedGame), roomCode, networkingInformation);
+
+            // Once the matchmaking handler finds a game, start the GUI
+            MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
+            watcher.start();
         } catch (InterruptedException e) {
             System.out.println("Hosting interrupted");
         }
     }
+
+//    @FXML
+//    private void handleSelectButton() {
+//        GameType selectedGame = GameType.values()[currentFrameIndex]; // get gametype based on frame index
+//
+//        // Get hosting details
+//        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
+//        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+//        String networkingInformation = "";      // TODO: Integrate w/ networking
+//
+//        // go to next screen
+//        hostPopup.setVisible(false);
+//        codePopup.setVisible(true);
+//
+//        // Wait for someone to join
+//        try {
+//            // Start matchmaking.
+//            handler.startMatchmaking(accountID, selectedGame, activeAccount.getElo(selectedGame), networkingInformation);
+//
+//            // Once the matchmaking handler finds a game, start the GUI
+//            MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
+//            watcher.start();
+//        } catch (InterruptedException e) {
+//            System.out.println("Hosting interrupted");
+//        }
+//    }
 
     @FXML
     private void onSwipeNextButtonClicked() {
@@ -272,16 +299,35 @@ public class MatchTypeController extends Application {
     }
 
     /**
-     * Called from outside of this class by the MatchmakingHandler to load the game GUI
-     * @param selectedGame  Game GUI to load
+     *
+     * @param game
+     * @param affectsElo
+     * @param selfID
+     * @param selfUsername
+     * @param selfElo
+     * @param selfNetworkingInformation
+     * @param opponentID
+     * @param opponentUsername
+     * @param opponentElo
+     * @param opponentNetworkingInformation
      */
-    public static void startGame(GameType selectedGame){
+    public void startMatch(GameType game,
+                                  boolean affectsElo,
+                                  int selfID,
+                                  String selfUsername,
+                                  int selfElo,
+                                  String selfNetworkingInformation,
+                                  int opponentID,
+                                  String opponentUsername,
+                                  int opponentElo,
+                                  String opponentNetworkingInformation){
+        System.out.println("Trying to start GUI");
         Stage stage = (Stage) rootPane.getScene().getWindow();
 
         // switch to that game screen
-        String gameScreenFXML = getGameScreenFXML(selectedGame);
-            SceneManager.switchScene(stage, gameScreenFXML);
-        }
+        String gameScreenFXML = getGameScreenFXML(game);
+        SceneManager.switchScene(stage, gameScreenFXML);
+    }
 
 
 
@@ -298,11 +344,17 @@ public class MatchTypeController extends Application {
     @FXML
     private void onSubmitButtonClicked() {
         int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
-        String roomCode = roomCodeInput.getText();                // TODO: Get input from text field
-        String networkingInformation = "";      // TODO: Integrate w/ networking
+        String roomCode = roomCodeInput.getText();
+        String networkingInformation = "";                  // TODO: Networking integration
 
         // Try to join the host with the provided room code.
-        activeAccount.getMatchmakingHandler().tryJoinHost(accountID, roomCode, networkingInformation);
+        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
+        boolean success = handler.tryJoinHost(accountID, activeAccount, roomCode, networkingInformation);
+        if (success){
+            // Start the GUI
+            MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
+            watcher.start();
+        }
     }
 
     @FXML
@@ -313,5 +365,43 @@ public class MatchTypeController extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+}
+
+class MatchmakingHandlerWatcher extends Thread {
+    private final MatchTypeController guiController;
+    private final MatchmakingHandler handler;
+    public MatchmakingHandlerWatcher(MatchTypeController guiController, MatchmakingHandler handler){
+        this.guiController = guiController;
+        this.handler = handler;
+    }
+
+    public void run(){
+        while (handler.getState() != MatchmakingState.ONLINE){  // stop early if they stop matchmaking
+            // Check if the handler has found a match. If it has, start the game UI
+            if (handler.startGame){
+                GameType game = handler.m_game;
+                boolean affectsElo = handler.m_affectsElo;
+                int selfID = handler.m_selfID;
+                String selfUsername = handler.m_selfUsername;
+                int selfElo = handler.m_selfElo;
+                String selfNetworkingInformation = handler.m_selfNetworkingInformation;
+                int opponentID = handler.m_opponentID;
+                String opponentUsername = handler.m_opponentUsername;
+                int opponentElo = handler.m_opponentElo;
+                String opponentNetworkingInformation = handler.m_opponentNetworkingInformation;
+
+                guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation);
+                break;
+            }
+
+            // Sleep 1 sec before repeating
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        handler.startGame = false;
     }
 }
