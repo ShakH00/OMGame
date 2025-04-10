@@ -29,13 +29,13 @@
                 <Image url="@../images/adjustedstars.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1028.0" layoutY="-739.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-739.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
             <image>
                 <Image url="@../images/chessboard.png" />
             </image>
         </ImageView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="32.0" layoutX="328.0" layoutY="161.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="21.0" layoutX="356.0" layoutY="158.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="92.0" />
         <StackPane fx:id="backButtonLogin" layoutX="2.4000000953674316" layoutY="10.199999809265137" onMouseClicked="#switchToHome">
             <children>
                 <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
@@ -61,9 +61,9 @@
         <StackPane fx:id="submitButton1" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
         <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
-        <ImageView fitHeight="93.0" fitWidth="301.0" layoutX="270.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="93.0" fitWidth="301.0" layoutX="258.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../images/login_text.png" />
+                <Image url="@../images/match_text.png" />
             </image>
         </ImageView>
       <HBox fillHeight="false" layoutY="155.0" prefHeight="415.0" prefWidth="800.0" spacing="40.0">
@@ -400,7 +400,7 @@
                   </Label>
                </children>
             </StackPane>
-            <StackPane  layoutX="545.0" layoutY="275.0" onMouseClicked="#onSwipeNextButtonClicked">
+            <StackPane layoutX="545.0" layoutY="275.0" onMouseClicked="#onSwipeNextButtonClicked">
                <children>
                   <Label fx:id="nextButton" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="&gt;" textFill="#254663">
                      <font>
@@ -663,5 +663,10 @@
             </TextField>
          </children>
       </Pane>
+      <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
+         <font>
+            <Font name="Press Start 2P Regular" size="15.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
