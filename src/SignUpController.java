@@ -66,6 +66,7 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
+
     public void handleSubmitButton() {
         String email = emailField.getText();
         String username = usernameField.getText();
@@ -89,8 +90,6 @@ public class SignUpController extends Application {
         } else {
             // Show error
         }
-
-
     }
 
     public void initialize() {
