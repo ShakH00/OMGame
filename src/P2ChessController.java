@@ -223,18 +223,19 @@ public class P2ChessController extends Application {
             }
         game.start(); // push game out of setup mode
         updateBoard();
-        //UtilityManager.createScaleTransition(menuButton);
-        //UtilityManager.createScaleTransition(chatButton);
+
+        UtilityManager.createScaleTransition(menuButton);
+        UtilityManager.createScaleTransition(chatButton);
     }
 
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        //UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
     @FXML
     public void goToChat() {
-        //UtilityManager.chatControl();
+        UtilityManager.chatControl();
     }
 
     private void handleOfferDraw() {
