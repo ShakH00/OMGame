@@ -18,7 +18,7 @@
                 <Image url="@../images/twinklingstars.gif" />
             </image>
         </ImageView>
-        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1028.0" layoutY="-739.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
             <image>
                 <Image url="@../images/chessboard.png" />
             </image>
