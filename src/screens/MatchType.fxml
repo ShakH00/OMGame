@@ -639,13 +639,14 @@
                      </image>
                   </ImageView>
                   <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                     </font>
+                  </TextField>
                </children>
             </StackPane>
 
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </TextField>
+
             <StackPane fx:id="submitButton2" layoutX="313.0" layoutY="314.0" onMouseClicked="#onSubmitButtonClicked" prefHeight="56.0" prefWidth="171.0">
                <children>
                   <ImageView fitHeight="57.0" fitWidth="200.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">

@@ -17,13 +17,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-<<<<<<< src/MatchTypeController.java
-import jdk.jshell.execution.Util;
-import matchmaking.PrivateMatch;
-=======
 import matchmaking.MatchmakingHandler;
 import matchmaking.MatchmakingState;
->>>>>>> src/MatchTypeController.java
 
 
 import java.util.concurrent.TimeUnit;
@@ -69,6 +64,7 @@ public class MatchTypeController extends Application {
     @FXML
     private StackPane selectButton;
 
+    @FXML
     private TextField roomCodeInput;
 
     @FXML
