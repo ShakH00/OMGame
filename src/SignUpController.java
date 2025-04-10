@@ -1,9 +1,14 @@
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -12,8 +17,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SignUpController extends Application {
+import static account.CreateAccount.createAccount;
 
+public class SignUpController extends Application {
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
 
     @FXML
     AnchorPane rootPane;
@@ -53,6 +65,32 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
+    public void handleSubmitButton() {
+        String email = emailField.getText();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+
+            return;
+        }
+
+        // Call the create account method
+        boolean success;
+        try {
+            success = createAccount(username, email, password);
+        }catch(EncryptionFailedException e){
+            success = false;
+        }
+
+        if (success){
+            // Switch to game menu?
+        } else {
+            // Show error
+        }
+
+
+    }
 
     public void initialize() {
         UtilityManager.createScaleTransition(backButtonSignUp);
@@ -78,6 +116,14 @@ public class SignUpController extends Application {
         SceneManager.switchScene(stage, "screens/GameSelect.fxml");
     }
 
+    @FXML
+    private void handleCloseButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Signup.fxml"));
+        Parent helpRoot = loader.load();
+        helpRoot.setOnMouseClicked(event -> {
+            helpRoot.setVisible(false);  // Hide the popup
+        });
+    }
 
     public static void main(String[] args) {
         launch(args);

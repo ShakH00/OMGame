@@ -10,6 +10,7 @@ public class CAPTCHAAuthenticationFailedException extends Exception {
      * @param message - Message is displayed if an exception occurs
      */
     public CAPTCHAAuthenticationFailedException(String message) {
+
         super(message);
     }
 }

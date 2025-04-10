@@ -1,6 +1,7 @@
 package game.connect4;
 
 import game.*;
+import game.checkers.Checkers;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
@@ -19,6 +20,7 @@ public class Connect4 extends Game {
 
     public Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
     public Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
+    private networking.Networking networking = new networking.Networking();
 
     public void move(Piece piece, int col) {
         if (col >= 0 && col < board.getCols()) {
@@ -106,9 +108,12 @@ public class Connect4 extends Game {
         }
 
         // Check for draw
-        if(board.isFull())
+        if(gameState != GameState.P1_WIN && gameState != GameState.P2_WIN && gameState != GameState.DRAW)
         {
-            gameState = GameState.DRAW;
+            if(board.isFull())
+            {
+                gameState = GameState.DRAW;
+            }
         }
     }
 
@@ -247,12 +252,39 @@ public class Connect4 extends Game {
         if(gameState.equals(GameState.P1_TURN))
         {
             gameState = GameState.P2_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
 
         else if(gameState.equals(GameState.P2_TURN))
         {
             gameState = GameState.P1_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
+    }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
+    }
+
+    public Player getPlayer1(){
+        return this.player1;
+    }
+
+    public Player getPlayer2(){
+        return this.player2;
+    }
+
+    private void netUpdateGame(){
+        Connect4 temp = (Connect4) networking.recieveGame();
+        this.board = temp.board;
+        this.gameState = temp.gameState;
+        this.score1 = temp.score1;
+        this.score2 = temp.score2;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }
 

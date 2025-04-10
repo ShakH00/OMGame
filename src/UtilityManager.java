@@ -15,7 +15,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static com.sun.glass.ui.Cursor.setVisible;
 
@@ -48,15 +51,31 @@ public class UtilityManager {
 
             // TODO; make popup close in different ways
 
-//            // to close the popup, click anywhere
-//            helpRoot.setOnMouseClicked(event -> {
-//                helpRoot.setVisible(false);  // Hide the popup
-//            });
+            // to close the popup, click anywhere
+            helpRoot.setOnMouseClicked(event -> {
+                helpRoot.setVisible(false);  // Hide the popup
+                // I wrote this :) 👍
+                String url ="https://omgame.club/";
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(new URI(url));
+                    } catch (IOException | URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        runtime.exec("xdg-open " + url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Popup initialized");
     }
     @FXML
     public static void popupClose(AnchorPane rootPane) {
