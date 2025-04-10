@@ -16,7 +16,80 @@ import javafx.scene.layout.Pane;
 import java.awt.*;
 
 public class UserProfileController extends Application {
+    @FXML
+    private Pane rankPane;
 
+    @FXML
+    private Pane chessPane;
+
+    @FXML
+    private Pane tictactoePane;
+
+    @FXML
+    private Pane checkersPane;
+
+    @FXML
+    private Pane connect4Pane;
+
+    @FXML
+    private Pane overallPane;
+
+    @FXML
+    private Pane friendsPane;
+
+    @FXML
+    private StackPane settingsButton;
+
+    @FXML
+    private AnchorPane rootPane;
+
+    @FXML
+    private Label username;
+
+    @FXML
+    private Label ELO;
+
+    @FXML
+    private Label gamesPlayedOverall;
+
+    @FXML
+    private Label gamesPlayedChess;
+
+    @FXML
+    private Label gamesPlayedCheckers;
+
+    @FXML
+    private Label gamesPlayedConnect4;
+
+    @FXML
+    private Label gamesPlayedTicTacToe;
+
+    @FXML
+    private Label gamesWonOverall;
+
+    @FXML
+    private Label gamesWonChess;
+
+    @FXML
+    private Label gamesWonCheckers;
+
+    @FXML
+    private Label gamesWonConnect4;
+
+    @FXML
+    private Label gamesWonTicTacToe;
+
+    @FXML
+    private Label bestGame;
+
+    @FXML
+    private Tab overview;
+
+    @FXML
+    private Tab matches;
+
+    @FXML
+    private StackPane backButton;
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,26 +125,6 @@ public class UserProfileController extends Application {
     }
 
 
-    @FXML
-    private Label usernameLabel;
-
-    @FXML
-    private ImageView avatarImageView;
-
-    @FXML
-    private Label statsLabel;
-
-    @FXML
-    private Rectangle bannerRegion;
-
-    @FXML
-    private Tab overview;
-    @FXML
-    private Tab matches;
-    @FXML
-    private StackPane backButton;
-
-
 //    public void setAccount(Account account) {
 //
 //        // bind text to get username
@@ -85,33 +138,6 @@ public class UserProfileController extends Application {
 //        //bannerRegion.setStyle("-fx-background-color: " + currentAccount.getBannerColor() + ";");
 //    }
 
-
-    @FXML
-    private Pane rankPane;
-
-    @FXML
-    private Pane chessPane;
-
-    @FXML
-    private Pane tictactoePane;
-
-    @FXML
-    private Pane checkersPane;
-
-    @FXML
-    private Pane connect4Pane;
-
-    @FXML
-    private Pane overallPane;
-
-    @FXML
-    private Pane friendsPane;
-
-    @FXML
-    private StackPane settingsButton;
-
-    @FXML
-    private AnchorPane rootPane;
 
     @FXML
     public void initialize() {
