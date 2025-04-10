@@ -63,7 +63,7 @@ seng300-project is our recreation of an <ins> online multiplayer game</ins>, or 
 
 To launch OMG it would require an installation of javafx and the database our company as used.
 * Steps to install [JavaFx](#javafx-installation-instructions) 
-* Steps to install [Database](#step-1-download--install-xampp)
+* Steps to install [Database](#data-base-installation-instructions)
 * Steps to install [Jakarta](#jakarta-installation-instructions)
 
 ***
@@ -241,8 +241,6 @@ Thank you for choosing
 
 <img src="src/images/omg_title.png" alt="drawing" width="80"/>
 
-### I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
-
 ***
 
 ## Jakarta Installation Instructions
@@ -276,7 +274,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 Thank you for choosing
 
-<img src="src/images/omg_title.png" alt="drawing" width="80"/>
+<img src="src/images/omg_title.png" alt="drawing" width= "80"/>
 
 
 ***
@@ -292,7 +290,7 @@ Thank you for choosing
   - **[use_case_descriptions.pdf](#use_case_descriptionspdf)**
 
 
-- **[GUI](#gui-)**
+- **[GUI](#gui)**
   - **[gui_design_ideas.pdf](#gui_design_ideaspdf)**
   - **[gui_v1_designs.pdf](#gui_v1_designspdf)** 
 
@@ -409,7 +407,7 @@ Game logic documentation developed during the initial phase of the project.
   
 
 - **[Networking](#networking)**
-  - **[integration](#integation)**
+  - **[integration](#integration)**
     - **[auth_mm.png](#auth_mmpng)** 
     - **[gameLogic.png](#gamelogicpng)**
     - **[gui.png](#guipng)**
@@ -547,8 +545,6 @@ Game logic documentation developed during the initial phase of the project.
 - **[authentication:](#authentication)**
   - **[Authentication:](#authentication-)**
     - **[Admin.java](#adminjava)**
-    - **[AuthenticationTest.java](#authenticationtestjava)**
-    - **[AuthenticationTestMain.java](#authenticationtestmainjava)**
     - **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
     - **[EmailSender.java](#emailsenderjava)**
     - **[MFAAuthentication.java](#mfaauthenitcationjava)**
