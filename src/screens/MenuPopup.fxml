@@ -58,7 +58,7 @@
                         </Rectangle>
                         <VBox alignment="CENTER">
                            <children>
-                              <StackPane fx:id="resignButton">
+                              <StackPane fx:id="resignButton" onMouseClicked="#resign">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="20.0" />
                                  </VBox.margin>
