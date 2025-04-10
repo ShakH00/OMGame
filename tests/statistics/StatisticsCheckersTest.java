@@ -1,4 +1,4 @@
-package account.statistics;
+package statistics;
 
 import account.statistics.*;
 import org.junit.Before;
@@ -8,35 +8,34 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class StatisticsChessTest {
+public class StatisticsCheckersTest {
 
-    private StatisticsChess stats;
+    private StatisticsCheckers stats;
 
     @Before
     public void setUp() {
-        stats = new StatisticsChess();
+        stats = new StatisticsCheckers();
     }
 
     @Test
     public void testInitialValues_DefaultConstructor() {
         assertEquals(1000, stats.getStatistic(StatisticType.ELO));
         assertEquals(0.0, stats.getStatistic(StatisticType.WIN_RATE));
-        assertEquals(0, stats.getStatistic(StatisticType.CHECKMATES));
-        assertEquals(0, stats.getStatistic(StatisticType.KINGS_CAPTURED));
+        assertEquals(0, stats.getStatistic(StatisticType.WINS));
+        assertEquals(0, stats.getStatistic(StatisticType.LOSSES));
+        assertEquals(0, stats.getStatistic(StatisticType.DRAWS));
     }
 
     @Test
     public void testCustomConstructor_OverridesValues() {
         HashMap<StatisticType, Number> customStats = new HashMap<>();
-        customStats.put(StatisticType.WINS, 10);
-        customStats.put(StatisticType.CHECKS, 4);
-        customStats.put(StatisticType.ELO, 1600);
+        customStats.put(StatisticType.WINS, 5);
+        customStats.put(StatisticType.ELO, 1234);
 
-        StatisticsChess customStatsObj = new StatisticsChess(customStats);
+        StatisticsCheckers customStatsObj = new StatisticsCheckers(customStats);
 
-        assertEquals(10, customStatsObj.getStatistic(StatisticType.WINS));
-        assertEquals(4, customStatsObj.getStatistic(StatisticType.CHECKS));
-        assertEquals(1600, customStatsObj.getStatistic(StatisticType.ELO));
+        assertEquals(5, customStatsObj.getStatistic(StatisticType.WINS));
+        assertEquals(1234, customStatsObj.getStatistic(StatisticType.ELO));
     }
 
     @Test
@@ -44,13 +43,11 @@ public class StatisticsChessTest {
         HashMap<StatisticType, Integer> toAdd = new HashMap<>();
         toAdd.put(StatisticType.WINS, 1);
         toAdd.put(StatisticType.MATCHES_PLAYED, 1);
-        toAdd.put(StatisticType.CHECKMATES, 2);
 
         stats.addStatistics(toAdd);
 
         assertEquals(1, stats.getStatistic(StatisticType.WINS));
         assertEquals(1, stats.getStatistic(StatisticType.MATCHES_PLAYED));
-        assertEquals(2, stats.getStatistic(StatisticType.CHECKMATES));
     }
 
     @Test
@@ -65,7 +62,7 @@ public class StatisticsChessTest {
     }
 
     @Test
-    public void testCanAddStatistics_Invalid_MultipleResults() {
+    public void testCanAddStatistics_Invalid_WrongSum() {
         HashMap<StatisticType, Number> invalid = new HashMap<>();
         invalid.put(StatisticType.WINS, 1);
         invalid.put(StatisticType.LOSSES, 1);
@@ -77,30 +74,33 @@ public class StatisticsChessTest {
 
     @Test
     public void testUpdateElo_SetsCorrectValue() {
-        stats.updateElo(1500);
-        assertEquals(1500, stats.getStatistic(StatisticType.ELO));
+        stats.updateElo(1400);
+        assertEquals(1400, stats.getStatistic(StatisticType.ELO));
     }
 
     @Test
     public void testUpdateWinRate_ComputesCorrectly() {
-        stats.addStatistic(StatisticType.WINS, 6);
-        stats.addStatistic(StatisticType.LOSSES, 2);
+        // Simulate 3 wins, 1 loss
+        stats.addStatistic(StatisticType.WINS, 3);
+        stats.addStatistic(StatisticType.LOSSES, 1);
+        // WIN_RATE should be 3 / (3+1) = 0.75
         assertEquals(0.75, stats.getStatistic(StatisticType.WIN_RATE));
     }
 
     @Test
-    public void testGetStatisticsOrdered() {
-        stats.updateElo(1337);
-        stats.addStatistic(StatisticType.ROOKS_CAPTURED, 3);
-
+    public void testGetStatistics_ReturnsInOrder() {
         StatisticType[] order = new StatisticType[]{
                 StatisticType.ELO,
-                StatisticType.ROOKS_CAPTURED
+                StatisticType.WINS
         };
 
-        Number[] result = stats.getStatistics(order);
+        stats.updateElo(1100);
+        stats.addStatistic(StatisticType.WINS, 2);
 
-        assertEquals(1337, result[0]);
-        assertEquals(3, result[1]);
+        Number[] values = stats.getStatistics(order);
+
+        assertEquals(1100, values[0]);
+        assertEquals(2, values[1]);
     }
 }
+

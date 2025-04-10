@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author Shakil Hussain and Arwa A, modified by Adam Chan
  */
-public class CheckersController extends Application {
+public class P2CheckersController extends Application {
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -51,7 +51,7 @@ public class CheckersController extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/Checkers.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/P2Checkers.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -178,16 +178,16 @@ public class CheckersController extends Application {
     }
 
     private void updatePlayerLabels() {
-            if (game.getGameState() == GameState.P2_TURN) {
-                p1Label.setOpacity(.5);
-                p2Label.setOpacity(1);
-            } else if (game.getGameState() == GameState.P1_TURN) {
-                p1Label.setOpacity(1);
-                p2Label.setOpacity(.5);
-            } else {
-                p1Label.setOpacity(1);
-                p2Label.setOpacity(1);
-            }
+        if (game.getGameState() == GameState.P2_TURN) {
+            p1Label.setOpacity(.5);
+            p2Label.setOpacity(1);
+        } else if (game.getGameState() == GameState.P1_TURN) {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(.5);
+        } else {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(1);
+        }
 
     }
 

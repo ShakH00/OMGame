@@ -6,7 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class HelpController extends Application {
 
@@ -35,6 +38,7 @@ public class HelpController extends Application {
         private void handleCloseButton() throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/Help.fxml"));
             Parent helpRoot = loader.load();
+
             helpRoot.setOnMouseClicked(event -> {
                 helpRoot.setVisible(false);  // hide the popup
             });

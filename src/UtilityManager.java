@@ -1,9 +1,11 @@
+import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -13,7 +15,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class UtilityManager {
     /**
@@ -44,12 +49,28 @@ public class UtilityManager {
             // to close the popup, click anywhere
             helpRoot.setOnMouseClicked(event -> {
                 helpRoot.setVisible(false);  // Hide the popup
+                // I wrote this :) 👍
+                String url ="https://omgame.club/";
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(new URI(url));
+                    } catch (IOException | URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        runtime.exec("xdg-open " + url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             });
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Popup initialized");
     }
 
     /**
@@ -133,6 +154,27 @@ public class UtilityManager {
         });
     }
 
+    /**
+     * Method to change the color of arrow labels when hovered over
+     *
+     * @param label Label that is hovered on
+     *
+     * @author Shakil H
+     */
+    public static void colourTransition1(Label label) {
+        Color hoverColor = Color.web("#254663");
+        Color normalColor = Color.web("#13283b");
+
+        label.setTextFill(normalColor);
+
+        label.setOnMouseEntered(event -> {
+            label.setTextFill(hoverColor);
+        });
+
+        label.setOnMouseExited(event -> {
+            label.setTextFill(normalColor);
+        });
+    }
 
     /**
      * Method to add hover effects to user info panes

@@ -58,7 +58,7 @@
             </children>
         </StackPane>
 
-        <StackPane fx:id="submitButton" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
+        <StackPane fx:id="submitButton1" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
         <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
         <ImageView fitHeight="93.0" fitWidth="301.0" layoutX="270.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
@@ -110,7 +110,7 @@
                         <Font name="Retro Gaming" size="18.0" />
                      </font>
                   </Text>
-                  <StackPane layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
+                  <StackPane fx:id="startButton1" layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
                      <children>
                         <ImageView fitHeight="51.0" fitWidth="200.0" pickOnBounds="true">
                            <image>
@@ -171,7 +171,7 @@
                         <Font name="Retro Gaming" size="18.0" />
                      </font>
                   </Text>
-                  <StackPane layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
+                  <StackPane fx:id="startButton2" layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
                      <children>
                         <ImageView fitHeight="51.0" fitWidth="200.0" pickOnBounds="true">
                            <image>
@@ -232,7 +232,7 @@
                         <Font name="Retro Gaming" size="18.0" />
                      </font>
                   </Text>
-                  <StackPane layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
+                  <StackPane fx:id="startButton3" layoutX="14.0" layoutY="230.0" prefHeight="45.0" prefWidth="183.0">
                      <children>
                         <ImageView fitHeight="51.0" fitWidth="200.0" pickOnBounds="true">
                            <image>
@@ -388,23 +388,32 @@
                   </Pane>
                </children>
             </StackPane>
-            <Label fx:id="backButton" layoutX="215.0" layoutY="275.0" onMouseClicked="#onSwipeBackButtonClicked" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="&lt;" textFill="#254663">
-               <font>
-                  <Font size="43.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label fx:id="nextButton" layoutX="545.0" layoutY="275.0" onMouseClicked="#onSwipeNextButtonClicked" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="&gt;" textFill="#254663">
-               <font>
-                  <Font size="43.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Pane layoutX="313.0" layoutY="435.0" onMouseClicked="#handleSelectButton" prefHeight="56.0" prefWidth="171.0">
+            <StackPane layoutX="215.0" layoutY="275.0" onMouseClicked="#onSwipeBackButtonClicked">
+               <children>
+                  <Label fx:id="backButton1" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="&lt;" textFill="#254663">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane  layoutX="545.0" layoutY="275.0" onMouseClicked="#onSwipeNextButtonClicked">
+               <children>
+                  <Label fx:id="nextButton" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="&gt;" textFill="#254663">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </StackPane>
+
+            <StackPane fx:id="selectButton" layoutX="313.0" layoutY="435.0" onMouseClicked="#handleSelectButton" prefHeight="56.0" prefWidth="171.0">
                <children>
                   <ImageView fitHeight="57.0" fitWidth="200.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -416,12 +425,17 @@
                         <Font name="Press Start 2P Regular" size="17.0" />
                      </font></Text>
                </children>
-            </Pane>
-            <ImageView fx:id="cancelButton" fitHeight="66.0" fitWidth="54.0" layoutX="669.0" layoutY="67.0" onMouseClicked="#onCancelButtonClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/cancel_circlebutton.png" />
-               </image>
-            </ImageView>
+            </StackPane>
+            <StackPane fx:id="cancelButton1" layoutX="669.0" layoutY="67.0" onMouseClicked="#onCancelButtonClicked">
+               <children>
+                  <ImageView fitHeight="66.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/cancel_circlebutton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+
          </children>
       </Pane>
       <Pane fx:id="codePopup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
@@ -521,11 +535,17 @@
                   <Font name="Press Start 2P Regular" size="17.0" />
                </font>
             </Text>
-            <ImageView fx:id="backButton" fitHeight="66.0" fitWidth="54.0" layoutX="88.0" layoutY="65.0" onMouseClicked="#onBackButtonClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/back_circlebutton.png" />
-               </image>
-            </ImageView>
+
+            <StackPane fx:id="backButton2" layoutX="88.0" layoutY="65.0" onMouseClicked="#onBackButtonClicked">
+               <children>
+                  <ImageView fitHeight="66.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/back_circlebutton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="324.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/sprites/tetrisCat2.GIF" />
@@ -610,17 +630,24 @@
                   <Font name="Press Start 2P Regular" size="17.0" />
                </font>
             </Text>
-            <ImageView fx:id="cancelButton" fitHeight="46.0" fitWidth="54.0" layoutX="601.0" layoutY="135.0" onMouseClicked="#onCancelButtonClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/cancel_circlebutton.png" />
-               </image>
-            </ImageView>
-            <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </TextField>
-            <Pane layoutX="313.0" layoutY="314.0" onMouseClicked="#onSubmitButtonClicked" prefHeight="56.0" prefWidth="171.0">
+
+            <StackPane fx:id="cancelButton2" layoutX="601.0" layoutY="135.0" onMouseClicked="#onCancelButtonClicked">
+               <children>
+                  <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/cancel_circlebutton.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </StackPane>
+
+
+            <StackPane fx:id="submitButton2" layoutX="313.0" layoutY="314.0" onMouseClicked="#onSubmitButtonClicked" prefHeight="56.0" prefWidth="171.0">
                <children>
                   <ImageView fitHeight="57.0" fitWidth="200.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -633,7 +660,7 @@
                      </font>
                   </Text>
                </children>
-            </Pane>
+            </StackPane>
          </children>
       </Pane>
     </children>
