@@ -81,16 +81,16 @@ public class StartController extends Application {
     }
 
     @FXML
-    private void switchToSignUp(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Signup.fxml");
+        SceneManager.switchScene(stage, "screens/Login.fxml");
     }
 
     @FXML
     private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
         //TODO: uncomment when merged
-//        Stage stage = (Stage) rootPane.getScene().getWindow();
-//        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
         System.out.println("LEADERBOARD");
     }
 
