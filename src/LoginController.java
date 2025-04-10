@@ -32,8 +32,6 @@ public class LoginController extends Application {
     @FXML
     private StackPane submitButton;
     @FXML
-    private StackPane guestButton;
-    @FXML
     private Text guestText;
     @FXML
     private TextField usernameField;
