@@ -84,6 +84,12 @@ public class MatchTypeController extends Application {
     @FXML
     private Pane codePopup;
 
+    private final GameType[] gameTypes = new GameType[]{
+            GameType.CHESS,
+            GameType.CHECKERS,
+            GameType.TICTACTOE,
+            GameType.CONNECT4
+    };
 
     Account activeAccount;
 
@@ -106,7 +112,7 @@ public class MatchTypeController extends Application {
             primaryStage.setResizable(false);
 
             MatchTypeController controller = loader.getController();
-            Account testAccount = DatabaseManager.queryAccountByID(4);
+            Account testAccount = DatabaseManager.queryAccountByID(5);
             controller.setAccount(testAccount);
 
             // Set up the primary stage
@@ -115,7 +121,7 @@ public class MatchTypeController extends Application {
             primaryStage.show();
 
             // TODO: remove temporary lines below
-            SceneManager.registerScenes("screens/Chess.fxml", "screens/Checkers.fxml", "screens/Connect4.fxml", "screens/TicTacToe.fxml");
+            SceneManager.registerScenes("screens/Connect4.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,7 +238,7 @@ public class MatchTypeController extends Application {
 
     @FXML
     private void handleSelectButton() {
-        GameType selectedGame = GameType.values()[currentFrameIndex]; // get gametype based on frame index
+        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
 
         // Get hosting details
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
@@ -261,7 +267,7 @@ public class MatchTypeController extends Application {
 
 //    @FXML
 //    private void handleSelectButton() {
-//        GameType selectedGame = GameType.values()[currentFrameIndex]; // get gametype based on frame index
+//        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
 //
 //        // Get hosting details
 //        MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
