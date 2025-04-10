@@ -231,31 +231,31 @@ Companies contract that everyone signed and was created by Project Manager and t
 ***
 ### Authentication
 ***
-* CAPTCHAAuthentication.java
+_* CAPTCHAAuthentication.java_
   * Simple CAPTCHA system to verify that a human is interacting with the application.
     This helps support math, image, and text based CAPTCHA. This was integrated within the Authentication folder to prevent bots from entering the system.
-  * MATH CAPTCHA:
+  _* MATH CAPTCHA:_
     * A random equation is generated for the user to answer
-  * TEXT CAPTCHA:
+  _* TEXT CAPTCHA:_
     * A random set of words are generated for the user to answer
-  * IMAGE CAPTCHA:
+  _* IMAGE CAPTCHA:_
     * A random image is chosen from one of the CAPTCHAImages folder to be output to user
 
-* MFAAuthentication.java
+_* MFAAuthentication.java_
   * Simple MFA is integrated within our system. A random 6-digit code is generated and sent to the users email, the user receives the email on our system, enters in the code to be verified.
   * However, before a verification code is sent to the users email, the database checks if the email exists on file first. Then proceeds with further steps.
 
-* MFAAuthenticationV2.java
+_* MFAAuthenticationV2.java_
   * Sends a code to user's email, user enter's in the code, if the code is incorrect an Exception is thrown
 
-* MFAInputPopup.java
+_* MFAInputPopup.java_
   * This class creates a JavaFX pop-up dialog for entering an MFA code. It verifies the input with the expected code, it displays a success or error an message, and returns the result. It will return null if the code is incorrect.
 
-* EmailSender.java
+_* EmailSender.java_
   * This class sends a 6-digit verification code via email using the Jakarta Mail API. This class connects the Gmail's SMTP server with an app-specific
     password and then sends the code to the users email. Used for MFA verification.
 
-* Admin.java
+_* Admin.java_
   * This class provides backend functionality for managing and modifying a users account within our system
     Users can update their email, passwords, usernames and more while interacting with the database
 ### Com.Example
