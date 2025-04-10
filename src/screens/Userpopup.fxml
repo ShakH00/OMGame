@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" onMouseClicked="#closeButton" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserPopupController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
@@ -82,7 +82,7 @@
                               </Text>
                            </children>
                         </StackPane>
-                        <Text fill="#a19c9c" lineSpacing="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="I may be a cat, but around these parts, they call me the GOAT" textAlignment="CENTER" translateY="40.0" wrappingWidth="218.44970703125">
+                        <Text fill="#a19c9c" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I may be a cat, but around these parts, they call me the GOAT" textAlignment="CENTER" translateY="40.0" wrappingWidth="218.44970703125">
                            <font>
                               <Font size="14.0" />
                            </font>

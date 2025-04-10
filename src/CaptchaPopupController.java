@@ -1,33 +1,26 @@
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+public class CaptchaPopupController extends Application  {
 
-public class MenuPopupController extends Application {
     @FXML
     private AnchorPane rootPane;
 
     @FXML
-    private StackPane closeButton;
+    private StackPane submitButton;
 
-    @FXML
-    private StackPane drawButton;
 
-    @FXML
-    private StackPane resignButton;
-
+    // TODO; Ethan
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MenuPopup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/CaptchaPopup.fxml"));
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -52,42 +45,10 @@ public class MenuPopupController extends Application {
         }
     }
 
-    // TODO; This won't work for some reason...
-    public void initialize() {
-        UtilityManager.createScaleTransition(closeButton);
-        UtilityManager.createScaleTransition(drawButton);
-        UtilityManager.createScaleTransition(resignButton);
-    }
-
+//TODO; Put in the checks before closing
     @FXML
-    private void closeButton(){
-      UtilityManager.popupClose(rootPane);
+    private void submitButton(){
+        UtilityManager.popupClose(rootPane);
         System.out.println("Popup closed");
     }
-
-    @FXML
-    private void draw(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupOpen(mouseEvent, "screens/DrawRejected.fxml", rootPane);
-        //UtilityManager.popupClose(rootPane);
-    }
-
-    // TODO; send signal to p2 of win screen
-    @FXML
-    private void resign(javafx.scene.input.MouseEvent mouseEvent) {
-        //P1
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/LoseScreen.fxml");
-
-        // P2
-//        Stage stage = (Stage) rootPane.getScene().getWindow();
-//        SceneManager.switchScene(stage, "screens/WinScreen.fxml");
-
-    }
-
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
-
