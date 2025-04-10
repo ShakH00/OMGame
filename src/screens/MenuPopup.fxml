@@ -75,12 +75,12 @@
                                     </Text>
                                  </children>
                               </StackPane>
-                              <StackPane fx:id="drawButton">
+                              <StackPane fx:id="drawButton" onMouseClicked="#draw">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                                  <children>
-                                    <ImageView fitHeight="338.0" fitWidth="170.0" onMouseClicked="#draw" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="338.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/green.png" />
                                        </image>

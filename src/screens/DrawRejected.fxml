@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrawPopupController">
+<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrawRejectedController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
@@ -59,7 +59,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" translateY="-50.0" />
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="95.0" translateY="100.0">
                            <children>
-                              <ImageView fx:id="closeButton" fitHeight="56.0" fitWidth="187.0" onMouseClicked="#closePopup" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="closeButton" fitHeight="56.0" fitWidth="187.0" onMouseClicked="#closeButton" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/pink.png" />
                                  </image>

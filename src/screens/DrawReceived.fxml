@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrawPopupController">
+<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrawReceivedController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a0f28b2" height="570.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <VBox alignment="CENTER" prefHeight="570.0" prefWidth="800.0">
@@ -58,7 +58,7 @@
                         <Text lineSpacing="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your opponent requests a draw!" textAlignment="CENTER" translateY="-100.0" wrappingWidth="221.134765625" />
                         <HBox alignment="CENTER">
                            <children>
-                              <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="95.0" translateY="120.0">
+                              <StackPane fx:id="closeButton" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#closeButton" prefHeight="56.0" prefWidth="95.0" translateY="120.0">
                                  <children>
                                     <ImageView fitHeight="37.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -72,9 +72,9 @@
                                     </Text>
                                  </children>
                               </StackPane>
-                              <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="95.0" translateY="120.0">
+                              <StackPane fx:id="okayButton" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#okayButton" prefHeight="56.0" prefWidth="95.0" translateY="120.0">
                                  <children>
-                                    <ImageView fitHeight="37.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="37.0" fitWidth="181.0" onMouseClicked="#okayButton" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/green.png" />
                                        </image>

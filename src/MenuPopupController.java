@@ -14,10 +14,13 @@ import java.io.IOException;
 public class MenuPopupController extends Application {
     @FXML
     private AnchorPane rootPane;
+
     @FXML
     private StackPane closeButton;
+
     @FXML
     private StackPane drawButton;
+
     @FXML
     private StackPane resignButton;
 
@@ -51,9 +54,9 @@ public class MenuPopupController extends Application {
 
     // TODO; This won't work for some reason...
     public void initialize() {
-//        UtilityManager.createScaleTransition(closeButton);
-//        UtilityManager.createScaleTransition(drawButton);
-//        UtilityManager.createScaleTransition(resignButton);
+        UtilityManager.createScaleTransition(closeButton);
+        UtilityManager.createScaleTransition(drawButton);
+        UtilityManager.createScaleTransition(resignButton);
     }
 
     @FXML
@@ -68,10 +71,16 @@ public class MenuPopupController extends Application {
         //UtilityManager.popupClose(rootPane);
     }
 
+    // TODO; send signal to p2 of win screen
     @FXML
     private void resign(javafx.scene.input.MouseEvent mouseEvent) {
-        //UtilityManager.popupClose(rootPane);
-        UtilityManager.popupOpen(mouseEvent, "screens/DrawReceived.fxml", rootPane);
+        //P1
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LoseScreen.fxml");
+
+        // P2
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/WinScreen.fxml");
 
     }
 
