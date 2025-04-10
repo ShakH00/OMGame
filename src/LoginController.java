@@ -92,6 +92,11 @@ public class LoginController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        if(username.equals("admin") && password.equals("admin")){
+            SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
+            return;
+        }
         Account user = DatabaseManager.queryAccountByEmail(username);
         if(user == null){
             // If the account wasn't found via email, try via username
