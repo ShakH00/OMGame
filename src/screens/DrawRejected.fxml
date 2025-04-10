@@ -55,11 +55,11 @@
                               </LinearGradient>
                            </stroke>
                         </Rectangle>
-                        <Text lineSpacing="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You have requested a draw!" textAlignment="CENTER" translateY="-100.0" wrappingWidth="221.134765625" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please Wait..." translateY="-50.0" />
+                        <Text lineSpacing="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your opponent has rejected you request..." textAlignment="CENTER" translateY="-100.0" wrappingWidth="221.134765625" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" translateY="-50.0" />
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="95.0" translateY="100.0">
                            <children>
-                              <ImageView fitHeight="56.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                              <ImageView fx:id="closeButton" fitHeight="56.0" fitWidth="187.0" onMouseClicked="#closePopup" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/pink.png" />
                                  </image>
@@ -71,9 +71,9 @@
                               </Text>
                            </children>
                         </StackPane>
-                        <ImageView fitHeight="177.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" translateY="60.0">
+                        <ImageView fitHeight="136.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/sprites/tetrisCat2.GIF" />
+                              <Image url="@../images/sprites/tetrisCat6.gif" />
                            </image>
                         </ImageView>
                      </children>
