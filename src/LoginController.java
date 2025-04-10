@@ -114,7 +114,7 @@ public class LoginController extends Application {
             if(user.getPassword().equals(password)){
                 // If the password matches the username/email, log them in
                 openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+                SceneManager.switchScene(stage, "screens/MatchType.fxml");
                 return;
             }
         }
@@ -125,7 +125,7 @@ public class LoginController extends Application {
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
 

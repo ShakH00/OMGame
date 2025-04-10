@@ -113,7 +113,7 @@ public class SignUpController extends Application {
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
     @FXML
