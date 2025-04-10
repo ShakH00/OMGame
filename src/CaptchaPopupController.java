@@ -36,6 +36,7 @@ public class CaptchaPopupController extends Application  {
 
     private Random rand = new Random();
     private int randomNumber = rand.nextInt(3); // 0 to 3 inclusive
+    private String imageAddress;
 
     public void initialize(){
         img.setVisible(false);
@@ -45,7 +46,7 @@ public class CaptchaPopupController extends Application  {
 
         if(randomNumber == 0){
             // Image captcha test
-            String imageAddress = "/authentication/CAPTCHAImages/";
+            imageAddress = "/authentication/CAPTCHAImages/";
             imageAddress += CAPTCHAAuthentication.chooseImage();
             javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResource(imageAddress).toExternalForm());
             img.setImage(image);
@@ -101,7 +102,8 @@ public class CaptchaPopupController extends Application  {
         try {
             if (randomNumber == 0) {
                 // Image based
-                CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", cap.getAnswer());
+                String expected = imageAddress.substring(30, imageAddress.length()-4);
+                CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", expected);
             } else if (randomNumber == 1) {
                 // Text based
                 CAPTCHAAuthentication.captchaAuthenticatorDriver(input.getText(), "image", cap.getAnswer());
