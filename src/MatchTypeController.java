@@ -112,8 +112,17 @@ public class MatchTypeController extends Application {
             primaryStage.setResizable(false);
 
             MatchTypeController controller = loader.getController();
-            Account testAccount = DatabaseManager.queryAccountByID(5);
-            controller.setAccount(testAccount);
+
+            Account guestAccount = new Account();
+            Account player1Account = new Account(-1, "Arwa", "arwa@gmail.com", "arwa123");
+            Account player2Account = new Account(-1, "Elijah", "elijah@gmail.com", "elijah123");
+            DatabaseManager.saveAccount(player1Account);
+            DatabaseManager.saveAccount(player2Account);
+            player1Account = DatabaseManager.queryAccountByUsername("Arwa");
+            player2Account = DatabaseManager.queryAccountByUsername("Elijah");
+
+            // CHANGE THE ACCOUNT ARG HERE BEFORE RUNNING THE CONTROLLER TO START WITH A DIFFERENT ACCOUNT
+            controller.setAccount(player1Account);
 
             // Set up the primary stage
             primaryStage.setTitle("OMG!");
@@ -381,6 +390,8 @@ public class MatchTypeController extends Application {
         // switch to that game screen
         String gameScreenFXML = getGameScreenFXML(game);
         SceneManager.switchScene(stage, gameScreenFXML);
+
+
     }
 
 
