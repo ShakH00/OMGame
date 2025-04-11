@@ -350,7 +350,6 @@ public class DatabaseManager {
                 stmt.setInt(1, userID);
                 int rowsDeleted = stmt.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("Account with ID " + userID + " deleted successfully.");
                     return true;
                 } else {
                     System.out.println("No account found with ID " + userID + ".");
@@ -384,7 +383,6 @@ public class DatabaseManager {
                 stmt.setString(1, newEmail);
                 stmt.setInt(2, userID);
                 stmt.executeUpdate();
-                System.out.println("Account with ID " + userID + " updated successfully.");
                 return true;
             }
         } catch (SQLException e) {
@@ -413,7 +411,6 @@ public class DatabaseManager {
                 stmt.setString(1, newUsername);
                 stmt.setInt(2, userID);
                 stmt.executeUpdate();
-                System.out.println("Account with ID " + userID + " updated successfully.");
                 return true;
             }
         } catch (SQLException e) {
@@ -443,7 +440,6 @@ public class DatabaseManager {
                 stmt.setString(1, newPassword);
                 stmt.setInt(2, userID);
                 stmt.executeUpdate();
-                System.out.println("Account with ID " + userID + " updated successfully.");
                 return true;
             }catch (EncryptionFailedException e){
                 return false;
