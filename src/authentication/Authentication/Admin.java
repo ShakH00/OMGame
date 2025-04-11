@@ -1,6 +1,9 @@
 package authentication.Authentication;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import account.Account;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 
 public class Admin {
     /**
@@ -29,13 +32,13 @@ public class Admin {
      * @param id the id of the player being edited
      * @param newPassword the new password to set
      */
-    public static boolean updatePassword(Integer id, String newPassword){
-        Account account = DatabaseManager.queryAccountByID(id);
-        boolean success = account.setPassword(newPassword);
-        if(success){
-            DatabaseManager.saveAccount(account);
+    public static void updatePassword(Integer id, String newPassword){
+        try {
+            newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
+            DatabaseManager.updateAccountPassword(id, newPassword);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
         }
-        return success;
     }
 
     /**
@@ -44,13 +47,8 @@ public class Admin {
      * @param id the id of the player being edited
      * @param newUsername the new username to set
      */
-    public static boolean updateUsername(Integer id, String newUsername){
-        Account account = DatabaseManager.queryAccountByID(id);
-        boolean success = account.setUsername(newUsername);
-        if(success) {
-            DatabaseManager.saveAccount(account);
-        }
-        return success;
+    public static void updateUsername(Integer id, String newUsername){
+        DatabaseManager.updateAccountUsername(id, newUsername);
     }
 
     /**
@@ -60,10 +58,11 @@ public class Admin {
      * @param newEmail the new email to set
      */
     public static void updateEmail(Integer id, String newEmail){
-        Account account = DatabaseManager.queryAccountByID(id);
-        boolean success = account.setEmail(newEmail);
-        if(success) {
-            DatabaseManager.saveAccount(account);
+        try {
+            newEmail = EncryptionAuthentication.encryptionDriver(newEmail);
+            DatabaseManager.updateAccountEmail(id, newEmail);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
         }
     }
 
@@ -73,12 +72,6 @@ public class Admin {
      * @param id the id of the player being deleted
      */
     public static boolean deleteUser(int id){
-        Account account = DatabaseManager.queryAccountByID(id);
-        boolean success = DatabaseManager.deleteAccount(id);
-        if(success) {
-            DatabaseManager.saveAccount(account);
-        }
-        return success;
+        return DatabaseManager.deleteAccount(id);
     }
-
 }

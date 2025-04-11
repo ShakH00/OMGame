@@ -1,5 +1,6 @@
 import authentication.Authentication.CAPTCHAAuthentication;
 import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -118,6 +119,7 @@ public class CaptchaPopupController extends Application  {
             SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
             System.out.println("Captcha failed");
+            DatabaseManager.deleteAccount(LoginController.getAccount().getEmail());
             UtilityManager.popupClose(rootPane);
         }
 

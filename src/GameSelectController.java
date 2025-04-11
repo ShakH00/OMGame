@@ -1,8 +1,12 @@
+import account.Account;
+import database.DatabaseManager;
+import game.GameType;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 
 public class GameSelectController extends Application {
@@ -42,6 +48,16 @@ public class GameSelectController extends Application {
     @FXML
     private StackPane backButton1;
 
+
+    private GameType selectedGame;
+
+    public  MatchTypeController controller;
+    public  MatchTypeController MatchTypeController;
+   Account activeAccount;
+
+    private Parent matchTypeRoot;
+    private MatchTypeController matchTypeController;
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -65,6 +81,21 @@ public class GameSelectController extends Application {
             // TODO; make this variable
             //profile.setImage(new Image("/images/pink_circlebutton.png"));
 
+
+            GameSelectController meow = loader.getController();
+            Account guestAccount = new Account();
+            Account player1Account = new Account(-1, "Arwa", "arwa@gmail.com", "arwa123");
+            Account player2Account = new Account(-1, "Elijah", "elijah@gmail.com", "elijah123");
+            DatabaseManager.saveAccount(player1Account);
+            DatabaseManager.saveAccount(player2Account);
+            player1Account = DatabaseManager.queryAccountByUsername("Arwa");
+            player2Account = DatabaseManager.queryAccountByUsername("Elijah");
+            meow.setAccount(player2Account);
+
+
+            MatchTypeController controller = loader.getController();
+            controller.setGameSelectController(this); // pass this reference
+            System.out.println("controller = " + controller);
             primaryStage.setResizable(true);
 
             // Set up the primary stage
@@ -77,7 +108,11 @@ public class GameSelectController extends Application {
         }
     }
 
-    public void initialize() {
+    public void setAccount(Account account) {
+        this.activeAccount = account;
+    }
+
+    public void initialize() throws IOException {
         UtilityManager.createScaleTransition(backButton);
         UtilityManager.createTranslationTransition(greenCartridge);
         UtilityManager.createTranslationTransition(pinkCartridge);
@@ -86,6 +121,12 @@ public class GameSelectController extends Application {
         UtilityManager.createScaleTransition(backButton1);
 
         startDotAnimation();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MatchType.fxml"));
+        matchTypeRoot = loader.load();
+        matchTypeController = loader.getController();
+
+
     }
 
     @FXML
@@ -98,42 +139,70 @@ public class GameSelectController extends Application {
     // TODO: all four of these games should open joinPopup when a game is clicked, wait for a match to be found, and then switch screens to the appropriate game
     // right now, it opens the popup and then switches screens w/o waiting for a match to be found
 
+
+    public void setMatchTypeController(MatchTypeController controller) {
+        this.MatchTypeController = controller;
+    }
+
     @FXML
-    private void switchToConnect4(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToConnect4() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MatchType.fxml"));
+        Parent root = loader.load();
+        MatchTypeController controller = loader.getController();
+
+
+        setMatchTypeController(controller);
         gameSelectedLabel.setText("You selected: Connect 4");
         joinPopup.setVisible(true);
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Connect4.fxml");
+        MatchTypeController.handleMatchmakingButton(GameType.CONNECT4);
+
+//
+//        Stage stage = (Stage) rootPane.getScene().getWindow();
+//        SceneManager.switchScene(stage, "screens/TicTacToe.fxml");
     }
 
     @FXML
-    private void switchToTicTacToe(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToTicTacToe(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MatchType.fxml"));
+        Parent root = loader.load();
+        MatchTypeController controller = loader.getController();
+
+
+        setMatchTypeController(controller);
         gameSelectedLabel.setText("You selected: TicTacToe");
         joinPopup.setVisible(true);
-
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/TicTacToe.fxml");
+        MatchTypeController.handleMatchmakingButton(GameType.TICTACTOE);
     }
 
     @FXML
-    private void switchToChess(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToChess(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MatchType.fxml"));
+        Parent root = loader.load();
+        MatchTypeController controller = loader.getController();
+
+
+        setMatchTypeController(controller);
         gameSelectedLabel.setText("You selected: Chess");
         joinPopup.setVisible(true);
-
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Chess.fxml");
+        MatchTypeController.handleMatchmakingButton(GameType.CHESS);
     }
 
     @FXML
-    private void switchToCheckers(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToCheckers(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/MatchType.fxml"));
+        Parent root = loader.load();
+        MatchTypeController controller = loader.getController();
+
+
+        setMatchTypeController(controller);
         gameSelectedLabel.setText("You selected: Checkers");
         joinPopup.setVisible(true);
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/P1Checkers.fxml");
+        MatchTypeController.handleMatchmakingButton(GameType.CHECKERS);
     }
 
     @FXML
-    private void onCancelButtonClicked() {
+    private void onCancelButtonClicked() throws IOException {
+        MatchTypeController.handleStopMatchmakingButton();
         joinPopup.setVisible(false);
     }
 
