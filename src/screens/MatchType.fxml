@@ -66,6 +66,11 @@
             <Image url="@../images/match_text.png" />
          </image>
       </ImageView>
+      <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
+         <font>
+            <Font name="Press Start 2P Regular" size="15.0" />
+         </font>
+      </Text>
       <HBox fillHeight="false" layoutY="155.0" prefHeight="415.0" prefWidth="800.0" spacing="40.0">
          <children>
             <Pane fx:id="hostGamePane" onMouseClicked="#openHostGame" prefHeight="289.0" prefWidth="262.0">
@@ -256,11 +261,6 @@
             <Insets bottom="30.0" left="30.0" right="40.0" top="30.0" />
          </padding>
       </HBox>
-      <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
-         <font>
-            <Font name="Press Start 2P Regular" size="15.0" />
-         </font>
-      </Text>
       <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
          <children>
             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
