@@ -138,9 +138,9 @@ public class LeaderboardController implements Initializable {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //
-        SceneManager.registerScenes("/screens/Start.fxml");
+        SceneManager.registerScenes("/screens/MatchType.fxml");
 
-        SceneManager.switchScene(stage, "/screens/Start.fxml");
+        SceneManager.switchScene(stage, "/screens/MatchType.fxml");
     }
 
     @FXML
