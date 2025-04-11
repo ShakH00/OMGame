@@ -27,7 +27,7 @@ public class LoginController extends Application {
     public static Account getAccount(){
         return user;
     }
-
+    public static void setAccount(Account newUser){user = newUser;}
     @FXML
     AnchorPane rootPane;
     @FXML
@@ -136,6 +136,7 @@ public class LoginController extends Application {
 
     @FXML
     private void continueAsGuest(javafx.scene.input.MouseEvent mouseEvent) {
+        LoginController.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }

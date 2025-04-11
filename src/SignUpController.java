@@ -1,3 +1,4 @@
+import account.Account;
 import account.CreateAccount;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
@@ -112,14 +113,15 @@ public class SignUpController extends Application {
         }
 
         // Call the create account method
-        boolean success;
+        Account newAccount;
         try {
-            success = createAccount(username, email, password);
+            newAccount = createAccount(username, email, password);
+            LoginController.setAccount(newAccount);
         }catch(EncryptionFailedException e){
-            success = false;
+            newAccount = null;
         }
 
-        if (success){
+        if (newAccount != null){
             UtilityManager.popupOpen(mouseEvent, "screens/CaptchaPopup.fxml", rootPane);
         } else {
             notificationText.setText("Sign Up Failed");
@@ -146,6 +148,7 @@ public class SignUpController extends Application {
     }
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+        LoginController.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }

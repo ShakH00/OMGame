@@ -552,17 +552,17 @@ public class Account {
         }
         return false;
     }
-    public boolean guestToPermanentAccount(String username, String email, String password) {
+    public Account guestToPermanentAccount(String username, String email, String password) {
         // Attempt to create the permanent account using the CreateAccount helper class
-        boolean success;
+        Account newAccount;
         try {
-            success = CreateAccount.createAccount(username, email, password);
+            newAccount = CreateAccount.createAccount(username, email, password);
         }catch(EncryptionFailedException e){
-            success = false;
+            newAccount = null;
         }
 
 
-        if (success) {
+        if (newAccount != null) {
             // If creation succeeded, pull the new account data from the DB
             Account createdAccount = DatabaseManager.queryAccountByUsername(username);
 
@@ -579,7 +579,7 @@ public class Account {
             }
         }
 
-        return success;
+        return newAccount;
     }
 
     public String getEmail() {
