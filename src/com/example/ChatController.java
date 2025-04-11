@@ -132,7 +132,7 @@ public class ChatController {
                 while (isConnected && !Thread.currentThread().isInterrupted()) {
                     try {
                         Object receivedObj = chatInObj.readObject();
-                        System.out.println("Received  message: " + receivedObj);
+                        System.out.println("Received message: " + receivedObj);
 
                         if (receivedObj instanceof String) {
                             String receivedMsg = (String) receivedObj;

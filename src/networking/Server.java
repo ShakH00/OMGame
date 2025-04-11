@@ -21,7 +21,7 @@ public class Server {
             serverSocket = new ServerSocket(port);
             System.out.println("Server started on port " + port);
         } catch (IOException e) {
-            System.out.println("Error creating server: " + e.getMessage());
+            System.err.println("Error creating server: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -49,7 +49,7 @@ public class Server {
                     handler.start();
 
                 } catch (IOException e) {
-                    System.out.println("Error accepting client: " + e.getMessage());
+                    System.err.println("Error accepting client: " + e.getMessage());
                 }
             }
         }).start();
@@ -117,17 +117,17 @@ public class Server {
                             if (objectIn instanceof Game game) {
                                 broadcast(game, this);
                             } else {
-                                System.out.println("Received non-string object: " + objectIn.getClass().getName());
+                                System.err.println("Received non-string/game object: " + objectIn.getClass().getName());
                             }
                         } catch (ClassNotFoundException e) {
-                            System.out.println("Unknown object type received");
+                            System.err.println("Unknown object type received");
                         } catch (IOException e) {
-                            System.out.println("Client #" + clientId + " disconnected: " + e.getMessage());
+                            System.err.println("Client #" + clientId + " disconnected: " + e.getMessage());
                             break;
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("Error handling client #" + clientId + ": " + e.getMessage());
+                    System.err.println("Error handling client #" + clientId + ": " + e.getMessage());
                 } finally {
                     cleanupClient();
                 }
@@ -180,7 +180,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.out.println("Error sending to client #" + clientId + ": " + e.getMessage());
+                System.err.println("Error sending to client #" + clientId + ": " + e.getMessage());
                 active = false;
             }
         }
@@ -192,7 +192,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.out.println("Error sending to client #" + clientId + ": " + e.getMessage());
+                System.err.println("Error sending to client #" + clientId + ": " + e.getMessage());
                 active = false;
             }
         }
