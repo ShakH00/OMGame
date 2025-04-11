@@ -51,7 +51,8 @@
      ELO_RANGE INT,
      OPPONENT_ID INT,
      NETWORKING_INFO VARCHAR(255),
-     ROOM_CODE VARCHAR(255)
+     ROOM_CODE VARCHAR(255),
+     PLAYER_NO INT
      )
 3. Then you should be able to see your database in the left side bar and your tables inside!
 

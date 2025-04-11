@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Store | Online Multiplayer Games - OMG</title>
+        <link rel="stylesheet" href="store.css">
+        <link rel="stylesheet" href="all.css">
+        <link rel="shortcut icon" type="image/png" href="assets/tetrisCatIcon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="header-left"><a href="index.html"><img style="height: auto; width: 35px" src="assets/tetrisCatIcon.png"/></a></div>
+            <div class="header-center">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="store.html">Store</a>
+            </div>
+            <div class="header-right">
+                <a href="signup.html" class="signup-btn">Sign up</a>
+                <a href="login.html" class="login-btn" id="login-btn">Login</a>
+                <span id="username-display" style="display: none;"></span>
+            </div>
+        </div>
+
+        <div class="scroll-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
+        </div>
+
+        <div class="store-container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('loot', event)">Loot Boxes</button>
+                <button class="tab-button" onclick="openTab('ranks', event)">Ranks</button>
+                <button class="tab-button" onclick="openTab('skins', event)">Skins</button>
+            </div>
+
+
+            <div class="tab-content-wrapper">
+                <div class="tab-content-container">
+                    <!-- Loot Boxes Section -->
+                    <div class="tab-content active" id="loot">
+                        <div class="item-grid">
+                            <div class="card">
+                                <img src="assets/chestWood.png" alt="Wood Loot Box">
+                                <h3>Wood Loot Box</h3>
+                                <p>Basic starter items.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestWood.png', 'Wood Loot Box', 'Basic starter items.', true, 0.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chestBronze.png" alt="Bronze Loot Box">
+                                <h3>Bronze Loot Box</h3>
+                                <p>Decent rewards for beginners.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestBronze.png', 'Bronze Loot Box', 'Decent rewards for beginners.', true, 2.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chestSilver.png" alt="Silver Loot Box">
+                                <h3>Silver Loot Box</h3>
+                                <p>A chance for exclusive cosmetics!</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestSilver.png', 'Silver Loot Box', 'A chance for exclusive cosmetics!', true, 3.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chestGold.png" alt="Golden Loot Box">
+                                <h3>Gold Loot Box</h3>
+                                <p>Contains rare and legendary items!</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestGold.png', 'Gold Loot Box', 'Contains rare items!', true, 5.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chestDiamond.png" alt="Diamond Loot Box">
+                                <h3>Diamond Loot Box</h3>
+                                <p>Contains ultra-rare items!</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestDiamond.png', 'Diamond Loot Box', 'Contains ultra-rare items!', true, 7.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                            <img src="assets/chestPlatinum.png" alt="Platinum Loot Box">
+                                <h3>Platinum Loot Box</h3>
+                                <p>Contains legendary items!</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chestPlatinum.png', 'Platinum Loot Box', 'Contains legendary items!', true, 10.99)">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ranks Section -->
+                    <div class="tab-content" id="ranks">
+                        <div class="item-grid">
+                            <div class="card">
+                                <img src="assets/rankWood.png" alt="Wood Rank">
+                                <h3>Wood Rank</h3>
+                                <p>Entry-level rank with small perks.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankWood.png', 'Wood Rank', 'Entry-level rank with small perks.', false, 1.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/rankBronze.png" alt="Bronze Rank">
+                                <h3>Bronze Rank</h3>
+                                <p>Better rewards and privileges.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankBronze.png', 'Bronze Rank', 'Better rewards and privileges.', false, 2.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/rankSilver.png" alt="Silver Rank">
+                                <h3>Silver Rank</h3>
+                                <p>Exclusive benefits and bonuses.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankSilver.png', 'Silver Rank', 'Exclusive benefits and bonuses.', false, 4.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/rankGold.png" alt="Gold Rank">
+                                <h3>Gold Rank</h3>
+                                <p>Elite perks and in-game advantages.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankGold.png', 'Gold Rank', 'Elite perks and in-game advantages.', false, 6.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/rankAscendant.png" alt="Ascendant Rank">
+                                <h3>Ascendant Rank</h3>
+                                <p>Top-tier privileges and rewards.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankAscendant.png', 'Ascendant Rank', 'Top-tier privileges and rewards.', false, 8.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/rankGrandmaster.png" alt="Grandmaster Rank">
+                                <h3>Grandmaster Rank</h3>
+                                <p>Ultimate prestige with legendary perks.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/rankGrandmaster.png', 'Grandmaster Rank', 'Ultimate prestige with legendary perks.', false, 14.99)">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skins Section -->
+                    <div class="tab-content" id="skins">
+                        <div class="item-grid">
+                            <div class="card">
+                                <img src="assets/chessPawnWhite.png" alt="Basic Skin">
+                                <h3>Basic Skin</h3>
+                                <p>A simple in-game appearance.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnWhite.png', 'Basic Skin', 'A simple in-game appearance.', false, 4.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chessPawnBlack.png" alt="Rare Skin">
+                                <h3>Rare Skin</h3>
+                                <p>A rare and unique in-game appearance.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnBlack.png', 'Rare Skin', 'A rare and unique in-game appearance.', false, 9.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chessPawnPink.png" alt="Epic Skin">
+                                <h3>Epic Skin</h3>
+                                <p>An epic in-game appearance.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnPink.png', 'Epic Skin', 'An epic in-game appearance.', false, 12.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chessPawnBlue.png" alt="Legendary Skin">
+                                <h3>Legendary Skin</h3>
+                                <p>An exclusive in-game appearance with a golden finish.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnBlue.png', 'Legendary Skin', 'An exclusive in-game appearance with a golden finish.', false, 19.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chessPawnGreen.png" alt="Mythic Skin">
+                                <h3>Mythic Skin</h3>
+                                <p>A mythical in-game appearance with glowing effects.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnGreen.png', 'Mythic Skin', 'A mythical in-game appearance with glowing effects.', false, 29.99)">View</button>
+                            </div>
+
+                            <div class="card">
+                                <img src="assets/chessPawnYellow.png" alt="Ultra Rare Skin">
+                                <h3>Ultra Rare Skin</h3>
+                                <p>A stunning in-game appearance with dazzling animations.</p>
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="view-btn" onclick="openModal('assets/chessPawnYellow.png', 'Ultra Rare Skin', 'A stunning in-game appearance with dazzling animations.', false, 39.99)">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <img id="modal-image" class="modal-image" src="" alt="Product">
+                <div class="modal-text">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+
+                    <div id="quantity-container" class="quantity-container" style="display: none;">
+                        <label for="purchase-select">Quantity:</label>
+                        <select id="purchase-select" class="purchase-select" onchange="handleQuantityChange(); updatePrice()">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <input type="number" id="custom-quantity" class="custom-quantity" placeholder="1" min="1" max="100" style="display: none;" oninput="validateCustomQuantity()">
+                    </div>
+
+                    <p id="modal-price" class="modal-price"></p>
+                    <button class="buy-btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <button class="chat-button" id="chatToggle">💬</button>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                Chat Support
+                <button class="chat-close-btn" onclick="closeChat()">×</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot">Hi I'm TetrisCat!</div>
+                <div class="chat-message bot">We are currently developing our chat feature.</div>
+                <div class="chat-message bot">Please contact support by email at <a href="mailto:tetrisfans@omgame.club" class="email-link">tetrisfans@omgame.club</a> 😊</div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask me a question..." />
+                <button onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+
+        <!-- Fake Stripe Payment Modal -->
+        <div id="stripe-modal" class="stripe-modal">
+            <div class="stripe-modal-content">
+                <span class="close-btn" onclick="closeStripeModal()">×</span>
+                <h2>Enter Payment Information</h2>
+                <form id="stripe-form">
+                    <div class="stripe-input-container">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="4242 4242 4242 4242" />
+                    </div>
+                    <div class="stripe-input-container">
+                        <label for="expiry-date">Expiry Date</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY" />
+                    </div>
+                    <div class="stripe-input-container">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" />
+                    </div>
+                    <button type="button" class="stripe-submit-btn" onclick="processPayment()">Pay Now</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+        <script src="store.js"></script>
+    </body>
+</html>

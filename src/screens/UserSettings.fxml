@@ -134,14 +134,14 @@
 
         <StackPane layoutX="37.0" layoutY="128.0">
             <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#1e2a47" height="375.0" layoutX="37.0" layoutY="128.0" stroke="#FF8FB7" strokeWidth="3" width="249.0" />
-            <Text fill="WHITE" text="Username" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="username" textFill="WHITE" text="Username" StackPane.alignment="TOP_CENTER">
                 <StackPane.margin>
                     <Insets top="135.0" />
                 </StackPane.margin>
                 <font>
                     <Font size="16.0" />
                 </font>
-            </Text>
+            </Label>
         </StackPane>
 
         <Pane layoutX="40.0" layoutY="131.0" prefHeight="76.0" prefWidth="246.0" style="-fx-background-color: #169fd4; -fx-background-radius: 9 9 0 0;" />

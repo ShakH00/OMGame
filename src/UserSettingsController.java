@@ -1,3 +1,5 @@
+import account.Account;
+import account.LoggedInAccount;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,8 @@ public class UserSettingsController extends Application {
     private StackPane button1;
     @FXML
     private StackPane button2;
+    @FXML
+    private Label username;
 
     @FXML private RadioButton hideStatsYes;
     @FXML private RadioButton hideStatsFriends;
@@ -86,6 +90,12 @@ public class UserSettingsController extends Application {
         friendVisYes.setToggleGroup(friendVisGroup);
         friendVisFriends.setToggleGroup(friendVisGroup);
         friendVisNo.setToggleGroup(friendVisGroup);
+
+        // set Username to account username or guest if guest
+        Account currentAccount = LoggedInAccount.getAccount();
+        if (currentAccount != null) {
+            username.setText(currentAccount.getUsername());
+        }
     }
 
     @FXML
