@@ -57,7 +57,6 @@ public class PlayerClient extends Application {
     }
 
 
-
     public void playerMenu(Stage primaryStage) {
         // CHAT GTP TRANSLATED THIS FROM SWING TO JAVAFX
         primaryStage.setWidth(width);
@@ -81,7 +80,6 @@ public class PlayerClient extends Application {
 
         testText = new TextArea("lol");
         testText.setEditable(false);
-
 
 
         // "Start Game" button
@@ -219,8 +217,8 @@ public class PlayerClient extends Application {
 
 // 🔥 Add chat components once (in order)
         root.getChildren().addAll(chatLabel, chatArea, chatInputBox);
-        
-        
+
+
         if (playerID == 1) {
             message.setText("You are player 1, you go first");
             otherPlayerID = 2;
@@ -415,7 +413,7 @@ public class PlayerClient extends Application {
             }
         }
 
-        public void sendPracticeGameObj(){
+        public void sendPracticeGameObj() {
             try {
                 gameOutObj.writeObject(practiceGameObj);
                 gameOutObj.flush();
@@ -425,18 +423,16 @@ public class PlayerClient extends Application {
         }
 
 
-        public void receivePracticeGameObj(){
+        public void receivePracticeGameObj() {
             try {
                 Object tempObj = gameInObj.readObject(); // vague object gets "catched first_
                 practiceGameObj = (PracticeGameObj) tempObj;
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("Error receiving practice game obj: ");
             } catch (ClassNotFoundException e) {
                 System.out.println("object class not found");
             }
         }
-
-
 
 
         public void closeConnection() {
