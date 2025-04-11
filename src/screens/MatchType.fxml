@@ -247,6 +247,38 @@
             <Insets bottom="30.0" left="30.0" right="40.0" top="30.0" />
          </padding>
       </HBox>
+       <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
+          <font>
+             <Font name="Press Start 2P Regular" size="15.0" />
+          </font>
+       </Text>
+       <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                   <Image url="@../images/leaderboard_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
+       <StackPane fx:id="profile" layoutX="736.0" layoutY="1.0" onMouseClicked="#switchToProfile">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                <image>
+                   <Image url="@../images/user_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
+       <StackPane fx:id="help" layoutX="618.0" layoutY="1.0" onMouseClicked="#openHelpPopup">
+          <children>
+             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                <image>
+                   <Image url="@../images/help_circlebutton.png" />
+                </image>
+             </ImageView>
+          </children>
+       </StackPane>
       <Pane fx:id="hostPopup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
          <children>
             <Rectangle fill="#0f101b7a" height="598.0" layoutX="-14.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
@@ -654,37 +686,5 @@
             </TextField>
          </children>
       </Pane>
-      <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
-         <font>
-            <Font name="Press Start 2P Regular" size="15.0" />
-         </font>
-      </Text>
-       <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                   <Image url="@../images/leaderboard_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
-       <StackPane fx:id="profile" layoutX="736.0" layoutY="1.0" onMouseClicked="#switchToProfile">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                <image>
-                   <Image url="@../images/user_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
-       <StackPane fx:id="help" layoutX="618.0" layoutY="1.0" onMouseClicked="#openHelpPopup">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                <image>
-                   <Image url="@../images/help_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
     </children>
 </AnchorPane>

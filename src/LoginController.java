@@ -120,7 +120,18 @@ public class LoginController extends Application {
                 return;
             }
         }
-        notificationText.setText("Incorrect username or password");
+
+        if (username.isEmpty()){
+            notificationText.setText("Please enter a username!");
+            return;
+        }
+        else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password!");
+            return;
+        } else {
+            notificationText.setText("Incorrect username or password!");
+            return;
+        }
     }
 
     @FXML

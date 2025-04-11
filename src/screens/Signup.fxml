@@ -135,6 +135,10 @@
                  <Font name="Press Start 2P Regular" size="11.0" />
              </font>
          </Text>
-      <Text fx:id="notificationText" fill="#fc0000" layoutX="242.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="337.0" />
+      <Text fx:id="notificationText" fill="#fc0000" layoutX="242.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="337.0">
+          <font>
+              <Font name="Press Start 2P Regular" size="8.0" />
+          </font>
+      </Text>
     </children>
 </AnchorPane>
