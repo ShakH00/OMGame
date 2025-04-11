@@ -128,7 +128,7 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByEmail(String email) {
-        String sql = "SELECT * FROM accounts WHERE email = ?";
+        String sql = "SELECT * FROM Accounts WHERE email = ?";
         Connection conn = DatabaseConnection.getConnection();
         Account account = null;
 
@@ -169,7 +169,7 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByUsername(String username) {
-        String sql = "SELECT * FROM accounts WHERE username = ?";
+        String sql = "SELECT * FROM Accounts WHERE username = ?";
         Connection conn = DatabaseConnection.getConnection();
         Account account = null;
 
