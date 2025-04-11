@@ -92,12 +92,14 @@ public class AdminController extends Application {
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         Account player = DatabaseManager.queryAccountByID(userID);
-        try {
+        if(player != null) {
             userNameField.setText(player.getUsername());
-            passwordField.setText(DecryptionAuthentication.decryptionDriver(player.getPassword()));
-            emailField.setText(DecryptionAuthentication.decryptionDriver(player.getEmail()));
-        }catch (DecryptionFailedException e){
-            System.out.println(e);
+            passwordField.setText(player.getPassword());
+            emailField.setText(player.getEmail());
+        }else{
+            userNameField.setText("");
+            passwordField.setText("");
+            emailField.setText("");
         }
     }
 
