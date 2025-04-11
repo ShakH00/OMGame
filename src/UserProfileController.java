@@ -8,9 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -113,7 +115,7 @@ public class UserProfileController extends Application {
     private StackPane backButton;
 
     @FXML
-    private VBox Friends;
+    private ScrollPane friendsSPane;
 
 
     @Override
@@ -199,7 +201,7 @@ public class UserProfileController extends Application {
             games.add(GameType.CHECKERS);
             games.add(GameType.CONNECT4);
 
-            float winRatePrev = 0;
+            float winRatePrev = -1;
             String bestGame = "n/a"; // which game has the highest winrate
             for (GameType game: games){ // for each game
                 String[] statistics = currentAccount.getGameStatistics(game, order); // get stats
@@ -237,12 +239,22 @@ public class UserProfileController extends Application {
             gamesWonOverall.setText(statistics[1]); // set total games won
             this.bestGame.setText(bestGame); // set best game
 
-            ArrayList<Account> friends = currentAccount.getFriends();
-            System.out.println((friends));
-            for (Account friend: friends){
-                Text text = new Text(String.valueOf(friend) + "\n");
-                text.setFill(Color.WHITE);
-                Friends.getChildren().add(text);
+            try {
+                ArrayList<Account> friends = currentAccount.getFriends();
+                if (friends != null) {
+                    VBox vbox = new VBox();
+                    for (Account friend : friends) {
+                        Text text = new Text(friend.getUsername() + "\n");
+                        System.out.println(text);
+                        text.setFill(Color.WHITE);
+                        vbox.getChildren().add(text);
+                    }
+                    friendsSPane.setContent(vbox);
+                } else {
+                    System.out.println("Friends list is null.");
+                }
+            } catch (Exception e) {
+            e.printStackTrace(); // Better than throwing a new RuntimeException for debugging
             }
         }
     }
@@ -254,7 +266,7 @@ public class UserProfileController extends Application {
     }
 
     @FXML
-    public void openPopup(javafx.scene.input.MouseEvent event) {
+    public void openPopup(MouseEvent event) {
         UtilityManager.popupOpen(event,"screens/UserPopup.fxml", rootPane);
     }
 
