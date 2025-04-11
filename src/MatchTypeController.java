@@ -4,6 +4,7 @@ import com.mysql.cj.log.Log;
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -20,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import matchmaking.MatchmakingHandler;
@@ -73,6 +75,34 @@ public class MatchTypeController extends Application {
 
     @FXML
     private TextField roomCodeInput;
+    @FXML
+    AnchorPane GameSelectPane;
+    @FXML
+    AnchorPane MatchTypePane;
+    @FXML
+    StackPane greenCartridge;
+    @FXML
+    StackPane orangeCartridge;
+    @FXML
+    StackPane pinkCartridge;
+    @FXML
+    StackPane purpleCartridge;
+    @FXML
+    StackPane GameSelectbackButton;
+    @FXML
+    Text errorMessage;
+    @FXML
+    Pane joinPopup;
+    @FXML
+    Label GameSelectwaitingLabel;
+    @FXML
+    Label GameSelectgameSelectedLabel;
+    @FXML
+    private StackPane GameSelectbackButton1;
+
+    public  MatchTypeController controller;
+    public  MatchTypeController MatchTypeController;
+    Account activeAccount;
 
     @FXML
     private Label waitingLabel;
@@ -104,8 +134,6 @@ public class MatchTypeController extends Application {
             GameType.TICTACTOE,
             GameType.CONNECT4
     };
-
-    Account activeAccount;
 
     @Override
     public void start(Stage primaryStage) {
@@ -165,6 +193,13 @@ public class MatchTypeController extends Application {
         UtilityManager.createScaleTransition(profile);
         UtilityManager.createScaleTransition(help);
 
+        UtilityManager.createScaleTransition(GameSelectbackButton);
+        UtilityManager.createTranslationTransition(greenCartridge);
+        UtilityManager.createTranslationTransition(pinkCartridge);
+        UtilityManager.createTranslationTransition(purpleCartridge);
+        UtilityManager.createTranslationTransition(orangeCartridge);
+        UtilityManager.createScaleTransition(GameSelectbackButton1);
+
         gameFrames = new Pane[] {chess, checkers, tictactoe, connect4};
 
         Rectangle clip = new Rectangle();
@@ -195,6 +230,13 @@ public class MatchTypeController extends Application {
         UtilityManager.popupOpen(mouseEvent, "screens/Help.fxml", rootPane);
     }
 
+
+    @FXML
+    private void GameSelectSwitchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
+    }
+
     @FXML
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
@@ -203,8 +245,24 @@ public class MatchTypeController extends Application {
 
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        // transition effect ?
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), MatchTypePane);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished(e -> {
+            MatchTypePane.setVisible(false);
+
+            // Prepare the new pane
+            GameSelectPane.setOpacity(0.0);
+            GameSelectPane.setVisible(true);
+
+            // Fade in the new pane
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), GameSelectPane);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+        fadeOut.play();
     }
 
 
@@ -264,6 +322,8 @@ public class MatchTypeController extends Application {
         this.activeAccount = account;
     }
 
+
+    // private matchmaking: hosting and joining games
     @FXML
     private void handleSelectButton() throws IOException {
         GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
@@ -297,6 +357,37 @@ public class MatchTypeController extends Application {
     }
 
 
+    @FXML
+    private void switchToConnect4() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Connect 4");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CONNECT4);
+    }
+
+    @FXML
+    private void switchToTicTacToe() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: TicTacToe");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.TICTACTOE);
+    }
+
+    @FXML
+    private void switchToChess() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Chess");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CHESS);
+    }
+
+    @FXML
+    private void switchToCheckers() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Checkers");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CHECKERS);
+    }
+
+
+
+
     // TODO: YOU NEED TO USE THE FUNCTIONS IN HERE FOR MATCHMAKING !!!
     @FXML
     void handleMatchmakingButton(GameType selectedGame) throws IOException {
@@ -323,6 +414,7 @@ public class MatchTypeController extends Application {
 
     @FXML
     void handleStopMatchmakingButton() throws IOException {
+        activeAccount = LoggedInAccount.getAccount();
         activeAccount.getMatchmakingHandler().stopMatchmaking();
     }
 
@@ -331,9 +423,6 @@ public class MatchTypeController extends Application {
         swipeToNext();
     }
 
-    public Account getActiveAccount() {
-        return this.activeAccount;
-    }
 
     @FXML
     private void onSwipeBackButtonClicked() {
@@ -341,9 +430,11 @@ public class MatchTypeController extends Application {
     }
 
     @FXML
-    private void onCancelButtonClicked() {
+    private void onCancelButtonClicked() throws IOException {
         hostPopup.setVisible(false);
+        joinPopup.setVisible(false);
         joinCodePopup.setVisible(false);
+        handleStopMatchmakingButton();
     }
 
     @FXML
@@ -376,9 +467,11 @@ public class MatchTypeController extends Application {
         // add dots one by one to the waitingLabel
         if (dotCount < 3) {
             waitingLabel.setText(baseText + ".".repeat(dotCount + 1));
+            GameSelectwaitingLabel.setText(baseText + ".".repeat(dotCount + 1));
             dotCount++;
         } else {
             waitingLabel.setText(baseText);  // reset back to base
+            GameSelectwaitingLabel.setText(baseText + ".".repeat(dotCount + 1));
             dotCount = 0;
         }
     }
@@ -407,6 +500,8 @@ public class MatchTypeController extends Application {
                            int opponentElo,
                            String opponentNetworkingInformation) {
         System.out.println("Trying to start GUI");
+
+        // TODO: EVIL !!!!!!!
         Stage stage = (Stage) rootPane.getScene().getWindow();
 
         // switch to that game screen
@@ -444,9 +539,6 @@ public class MatchTypeController extends Application {
             MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
             watcher.start();
         }
-    }
-
-    public void setGameSelectController(GameSelectController controller) {
     }
 
     @FXML
