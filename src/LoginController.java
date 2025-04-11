@@ -1,9 +1,11 @@
 import account.Account;
 import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAPopupController;
 import database.DatabaseManager;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -99,8 +101,12 @@ public class LoginController extends Application {
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user;
-        user = DatabaseManager.queryAccountByEmail(username);
+        Account user = null;
+        try {
+            user = DatabaseManager.queryAccountByEmail(EncryptionAuthentication.encryptionDriver(username));
+        } catch (EncryptionFailedException e) {
+
+        }
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
@@ -111,11 +117,15 @@ public class LoginController extends Application {
             LoggedInAccount.setAccount(user);
         }
         if(accountExists){
-            if(user.getPassword().equals(password)){
-                // If the password matches the username/email, log them in
-                openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/MatchType.fxml");
-                return;
+            try {
+                if (user.getPassword().equals(EncryptionAuthentication.encryptionDriver(password))) {
+                    // If the password matches the username/email, log them in
+                    openMFAPopup(user.getEmail());
+                    SceneManager.switchScene(stage, "screens/MatchType.fxml");
+                    return;
+                }
+            }catch(EncryptionFailedException e){
+
             }
         }
 
