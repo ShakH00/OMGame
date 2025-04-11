@@ -1,9 +1,13 @@
 import account.Account;
 import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAPopupController;
 import database.DatabaseManager;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -95,12 +99,17 @@ public class LoginController extends Application {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
         if(username.equals("admin") && password.equals("admin")){
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user;
-        user = DatabaseManager.queryAccountByEmail(username);
+        Account user = null;
+        try {
+            user = DatabaseManager.queryAccountByEmail(EncryptionAuthentication.encryptionDriver(username));
+        } catch (EncryptionFailedException e) {
+
+        }
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
@@ -111,15 +120,20 @@ public class LoginController extends Application {
             LoggedInAccount.setAccount(user);
         }
         if(accountExists){
-            if(user.getPassword().equals(password)){
-                // If the password matches the username/email, log them in
-                openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/MatchType.fxml");
-                return;
+            try {
+                String enteredPas = EncryptionAuthentication.encryptionDriver(password);
+                if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(enteredPas)){
+                    // If the password matches the username/email, log them in
+                    openMFAPopup(user.getEmail());
+                    SceneManager.switchScene(stage, "screens/MatchType.fxml");
+                    return;
+                }
+            } catch (DecryptionFailedException e) {
+                System.out.println(e);
+            }catch (EncryptionFailedException e) {
+                System.out.println(e);
             }
-        }
-
-        if (username.isEmpty()){
+        }else if (username.isEmpty()){
             notificationText.setText("Please enter a username!");
             return;
         }
