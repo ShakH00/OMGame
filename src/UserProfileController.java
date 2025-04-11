@@ -1,4 +1,5 @@
 import account.Account;
+import account.LoggedInAccount;
 import account.statistics.AStatistics;
 import account.statistics.StatisticType;
 import game.GameType;
@@ -176,7 +177,7 @@ public class UserProfileController extends Application {
         UtilityManager.createScaleTransition(settingsButton);
         UtilityManager.createScaleTransition(backButton);
 
-        Account currentAccount = LoginController.getAccount();
+        Account currentAccount = LoggedInAccount.getAccount();
 
         if (currentAccount != null) { // make sure the account exits
 

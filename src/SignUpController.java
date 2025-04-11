@@ -1,5 +1,6 @@
 import account.Account;
 import account.CreateAccount;
+import account.LoggedInAccount;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import database.EncryptionAuthentication;
@@ -116,7 +117,7 @@ public class SignUpController extends Application {
         Account newAccount;
         try {
             newAccount = createAccount(username, email, password);
-            LoginController.setAccount(newAccount);
+            LoggedInAccount.setAccount(newAccount);
         }catch(EncryptionFailedException e){
             newAccount = null;
         }
@@ -148,7 +149,7 @@ public class SignUpController extends Application {
     }
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
-        LoginController.setAccount(new Account());
+        LoggedInAccount.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
