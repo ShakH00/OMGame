@@ -1,6 +1,9 @@
 package authentication.Authentication;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import account.Account;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 
 public class Admin {
     /**
@@ -26,60 +29,49 @@ public class Admin {
     /**
      * Sets the password for the account.
      *
-     * @param db the databaseManager being used
      * @param id the id of the player being edited
      * @param newPassword the new password to set
      */
-    private boolean updatePassword(DatabaseManager db, int id, String newPassword){
-        Account account = db.queryAccountByID(id);
-        boolean success = account.setPassword(newPassword);
-        if(success){
-            db.saveAccount(account);
+    public static void updatePassword(Integer id, String newPassword){
+        try {
+            newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
+            DatabaseManager.updateAccountPassword(id, newPassword);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
         }
-        return success;
     }
 
     /**
      * Sets the password for the account.
      *
-     * @param db the databaseManager being used
      * @param id the id of the player being edited
      * @param newUsername the new username to set
      */
-    private boolean updateUsername(DatabaseManager db, int id, String newUsername){
-        Account account = db.queryAccountByID(id);
-        boolean success = account.setUsername(newUsername);
-        if(success) {
-            db.saveAccount(account);
-        }
-        return success;
+    public static void updateUsername(Integer id, String newUsername){
+        DatabaseManager.updateAccountUsername(id, newUsername);
     }
 
     /**
      * Sets the password for the account.
      *
-     * @param db the databaseManager being used
      * @param id the id of the player being edited
      * @param newEmail the new email to set
      */
-    private void updateEmail(DatabaseManager db, int id, String newEmail){
-        Account account = db.queryAccountByID(id);
-        account.setEmail(newEmail);
+    public static void updateEmail(Integer id, String newEmail){
+        try {
+            newEmail = EncryptionAuthentication.encryptionDriver(newEmail);
+            DatabaseManager.updateAccountEmail(id, newEmail);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
+        }
     }
 
     /**
      * Sets the password for the account.
      *
-     * @param db the databaseManager being used
      * @param id the id of the player being deleted
      */
-    private boolean deleteUser(DatabaseManager db, int id){
-        Account account = db.queryAccountByID(id);
-        boolean success = db.deleteAccount(id);
-        if(success) {
-            db.saveAccount(account);
-        }
-        return success;
+    public static boolean deleteUser(int id){
+        return DatabaseManager.deleteAccount(id);
     }
-
 }

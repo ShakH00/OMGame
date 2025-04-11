@@ -53,10 +53,7 @@ public class StartController extends Application {
             primaryStage.show();
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/tetrisCatIcon.png"))));
 
-            SceneManager.registerScenes("screens/Start.fxml", "screens/Signup.fxml", "screens/Login.fxml",
-                    "screens/Help.fxml", "screens/UserProfile.fxml", "screens/TicTacToe.fxml", "screens/Connect4.fxml",
-                    "screens/GameSelect.fxml", "screens/MenuPopup.fxml", "screens/Chess.fxml", "screens/P1Checkers.fxml",
-                    "screens/TicTacToe.fxml", "screens/AdminScreen.fxml", "screens/LeaderboardScreen.fxml","screens/UserPopup.fxml", "screens/MatchType.fxml"); // , "screens/<Screen>.fxml>"
+            SceneManager.registerScenes("screens/AdminScreen.fxml", "screens/CaptchaPopup.fxml", "screens/Connect4.fxml", "screens/DrawReceived.fxml", "screens/DrawRejected.fxml", "screens/DrawScreen.fxml", "screens/DrawSent.fxml", "screens/GameSelect.fxml", "screens/Help.fxml", "screens/LeaderboardScreen.fxml", "screens/Login.fxml", "screens/LoseScreen.fxml", "screens/MatchType.fxml", "screens/MenuPopup.fxml", "screens/MFAPopup.fxml", "screens/P1Checkers.fxml", "screens/P1Chess.fxml", "screens/P2Checkers.fxml", "screens/P2Chess.fxml", "screens/Signup.fxml", "screens/Start.fxml", "screens/TicTacToe.fxml",                    "screens/TicTacToe.fxml","screens/Userpopup.fxml", "screens/UserProfile.fxml", "screens/UserSettings.fxml", "screens/WinScreen.fxml"); // , "screens/<Screen>.fxml>"
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,21 +73,19 @@ public class StartController extends Application {
     // open the help popup overlay
     @FXML
     private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/Help.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/Help.fxml", rootPane);
     }
 
     @FXML
-    private void switchToSignUp(javafx.scene.input.MouseEvent mouseEvent) {
+    private void switchToLogin(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Signup.fxml");
+        SceneManager.switchScene(stage, "screens/Login.fxml");
     }
 
     @FXML
     private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
-        //TODO: uncomment when merged
-//        Stage stage = (Stage) rootPane.getScene().getWindow();
-//        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
-        System.out.println("LEADERBOARD");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
     }
 
     public static void main(String[] args) {

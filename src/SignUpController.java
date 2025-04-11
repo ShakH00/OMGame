@@ -1,4 +1,8 @@
+import account.Account;
+import account.CreateAccount;
+import account.LoggedInAccount;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.DatabaseManager;
 import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,6 +42,8 @@ public class SignUpController extends Application {
     private StackPane submitButton;
     @FXML
     private Text guestText;
+    @FXML
+    private Text notificationText;
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,38 +72,68 @@ public class SignUpController extends Application {
             e.printStackTrace();
         }
     }
-    public void handleSubmitButton() {
+
+    public void handleSubmitButton(javafx.scene.input.MouseEvent mouseEvent) throws EncryptionFailedException {
         String email = emailField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-
-        if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-
+        //Check for empty text field
+        if (email.isEmpty()){
+            notificationText.setText("Please enter an email address!");
+            return;
+        }
+        else if (username.isEmpty()){
+            notificationText.setText("Please enter a username!");
+            return;
+        }
+        else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password!");
+            return;
+        }
+        // Check format for email, username and password
+        if(!CreateAccount.isValidEmail(email)){
+            notificationText.setText("Invalid email address!");
+            return;
+        }
+        else if (!CreateAccount.isValidUsername(username)){
+            notificationText.setText("Username must have at least 4 characters! (only letters, numbers, underscores)");
+            return;
+        }
+        else if (!CreateAccount.isValidPassword(password)){
+            notificationText.setText("Password must have at least 8 characters! (contains uppercase, lowercase, number, special character)");
+            return;
+        }
+        // Check for existing email, username
+        if (DatabaseManager.isUsernameExist(username)){
+            notificationText.setText("Username already exists!");
+            return;
+        }
+        else if (DatabaseManager.isEmailExist(email)){
+            notificationText.setText("Email already exists!");
             return;
         }
 
         // Call the create account method
-        boolean success;
+        Account newAccount;
         try {
-            success = createAccount(username, email, password);
+            newAccount = createAccount(username, email, password);
+            LoggedInAccount.setAccount(newAccount);
         }catch(EncryptionFailedException e){
-            success = false;
+            newAccount = null;
         }
 
-        if (success){
-            // Switch to game menu?
+        if (newAccount != null){
+            UtilityManager.popupOpen(mouseEvent, "screens/CaptchaPopup.fxml", rootPane);
         } else {
-            // Show error
+            notificationText.setText("Sign Up Failed");
         }
-
-
     }
 
     public void initialize() {
         UtilityManager.createScaleTransition(backButtonSignUp);
         UtilityManager.createScaleTransition(toLogin);
         UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.colourTransition(guestText);
+        UtilityManager.colourTransition(guestText, Color.color(0.6235, 0.5961, 0.549, 1.0));
     }
 
     @FXML
@@ -112,8 +149,9 @@ public class SignUpController extends Application {
     }
     @FXML
     private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+        LoggedInAccount.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
     @FXML

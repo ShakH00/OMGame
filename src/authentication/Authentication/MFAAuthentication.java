@@ -1,6 +1,8 @@
 package authentication.Authentication;
 
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+import database.DecryptionAuthentication;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,10 +39,13 @@ public class MFAAuthentication {
         if (!testMode) {
             code = generateRandomCode();
             // Simulate sending the code via email
-            EmailSender.sendEmail(email, code); // Ensure this sends the email
+            try {
+                EmailSender.sendEmail(DecryptionAuthentication.decryptionDriver(email), code); // Ensure this sends the email
+            } catch (DecryptionFailedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             code = "123456"; // Test mode uses a fixed code
-            System.out.println("Test mode. Your code is: " + code);
         }
 
         // Show the MFA input pop-up
@@ -49,13 +54,12 @@ public class MFAAuthentication {
 
         // Handle cancellation or invalid input
         if (userInput == null) {
-            return "Verification canceled or invalid input.";
+            return "Verification was canceled or invalid input.";
         }
 
         // Verify the input
         if (userInput.equals(code)) {
-            System.out.println("Code verified successfully!");
-            return "Code verified";
+            return "Code verified successfully!";
         } else {
             throw new MFAAuthenticationFailedException("Code Entered is Invalid!");
         }

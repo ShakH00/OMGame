@@ -1,8 +1,13 @@
 import account.Account;
+import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAPopupController;
 import database.DatabaseManager;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,13 +37,13 @@ public class LoginController extends Application {
     @FXML
     private StackPane submitButton;
     @FXML
-    private StackPane guestButton;
-    @FXML
     private Text guestText;
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Text notificationText;
 
 
     @Override
@@ -72,7 +78,7 @@ public class LoginController extends Application {
         UtilityManager.createScaleTransition(backButtonLogin);
         UtilityManager.createScaleTransition(toSignUp);
         UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.colourTransition(guestText);
+        UtilityManager.colourTransition(guestText, Color.color(0.6235, 0.5961, 0.549, 1.0));
     }
 
     @FXML
@@ -93,11 +99,18 @@ public class LoginController extends Application {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
         if(username.equals("admin") && password.equals("admin")){
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user = DatabaseManager.queryAccountByEmail(username);
+        Account user = null;
+        try {
+            System.out.println(username);
+            user = DatabaseManager.queryAccountByEmail(EncryptionAuthentication.encryptionDriver(username));
+        } catch (EncryptionFailedException e) {
+
+        }
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
@@ -105,23 +118,40 @@ public class LoginController extends Application {
         boolean accountExists = false;
         if(user != null) {
             accountExists = true;
+            LoggedInAccount.setAccount(user);
         }
         if(accountExists){
-            if(user.getPassword().equals(password)){
-                // If the password matches the username/email, log them in
-                openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/GameSelect.fxml");
-                return;
+            try {
+                String enteredPas = EncryptionAuthentication.encryptionDriver(password);
+                if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(enteredPas)){
+                    // If the password matches the username/email, log them in
+                    openMFAPopup(user.getEmail());
+                    SceneManager.switchScene(stage, "screens/MatchType.fxml");
+                    return;
+                }
+            } catch (DecryptionFailedException e) {
+                System.out.println(e);
+            }catch (EncryptionFailedException e) {
+                System.out.println(e);
             }
+        }else if (username.isEmpty()){
+            notificationText.setText("Please enter a username!");
+            return;
         }
-        // TODO: Print system error message
-        System.out.println("Incorrect username or password");
+        else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password!");
+            return;
+        } else {
+            notificationText.setText("Incorrect username or password!");
+            return;
+        }
     }
 
     @FXML
-    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+    private void continueAsGuest(javafx.scene.input.MouseEvent mouseEvent) {
+        LoggedInAccount.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
 

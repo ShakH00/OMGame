@@ -1,4 +1,15 @@
 //import authentication.Authentication.Admin;
+import account.Account;
+import account.statistics.StatisticsCheckers;
+import account.statistics.StatisticsChess;
+import account.statistics.StatisticsConnect4;
+import account.statistics.StatisticsTicTacToe;
+import authentication.Authentication.Admin;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import database.DatabaseManager;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
+import game.GameType;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 public class AdminController extends Application {
     @FXML
@@ -80,54 +92,53 @@ public class AdminController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/Start.fxml");
     }
-    // all commented out code should work after merging wtih leaderboard
+
     @FXML
     private void findUserButton() {
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //Account player = database.queryAccountByID(userID);
-
-        //userNameField.setText(player.getUsername);
-        //passwordField.setText(player.getPassword);
-        //emailField.setText(player.getEmail);
-        //TODO: call up methods from profile
-        System.out.println("Find user button pressed");
+        Account player = DatabaseManager.queryAccountByID(userID);
+        if(player != null) {
+            userNameField.setText(player.getUsername());
+            passwordField.setText(player.getPassword());
+            emailField.setText(player.getEmail());
+        }else{
+            userNameField.setText("");
+            passwordField.setText("");
+            emailField.setText("");
+        }
     }
 
     @FXML
     private void clearStatsButton() {
-        //TODO: call up methods from profile
+        HashMap statistics = new HashMap<>();
+        statistics.put(GameType.CHESS, new StatisticsChess());
+        statistics.put(GameType.CHECKERS, new StatisticsCheckers());
+        statistics.put(GameType.CONNECT4, new StatisticsConnect4());
+        statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
+
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //Account player = database.queryAccountByID(userID);
-        //idk if this one is possible rn with the way stars work
-
-        System.out.println("Clear stats button pressed");
+        DatabaseManager.updateAccountStats(userID, statistics);
     }
 
     @FXML
     private void deleteUserButton() {
-        //TODO: call up methods from profile
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //adminUser.deleteUser(database, userIDstr);
-        //how do we get database?
-        System.out.println("Delete user button pressed");
+        Admin.deleteUser(userID);
     }
 
     @FXML
     private void submitButton() {
-        //TODO: call up methods from profile
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         String username = userNameField.getText();
         String userEmail = emailField.getText();
         String userPassword = passwordField.getText();
-        //adminUser.updateUsername(database, username);
-        //adminUser.updateEmail(database, userEmail);
-        //adminUser.updatePassword(database, userPassword);
-        //how do we get database?
-        System.out.println("Submit button pressed");
+        Admin.updateUsername(userID, username);
+        Admin.updateEmail(userID, userEmail);
+        Admin.updatePassword(userID, userPassword);
     }
 
 

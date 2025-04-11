@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.HashMap;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 
 public class SceneManager {
     private static final HashMap<String, String> scenePaths = new HashMap<>();
@@ -36,22 +39,35 @@ public class SceneManager {
                 return;
             }
 
-            // Create a fade-out transition for the current scene
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(200), currentScene.getRoot());
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> {
-                Platform.runLater(() -> {
-                    // Switch to the new scene with a fade-in effect
-                    stage.setScene(new Scene(newRoot, 800, 570));
+            Parent oldRoot = currentScene.getRoot();
 
-                    FadeTransition fadeIn = new FadeTransition(Duration.millis(300), newRoot);
-                    fadeIn.setFromValue(0.0);
-                    fadeIn.setToValue(1.0);
-                    fadeIn.play();
-                });
+            // Create a color overlay for fade effect
+            Region colorOverlay = new Region();
+            colorOverlay.setStyle("-fx-background-color: #169FD4;");
+            colorOverlay.setOpacity(0);
+
+            StackPane transitionPane = new StackPane(oldRoot, colorOverlay);
+            Scene transitionScene = new Scene(transitionPane, 800, 570);
+            stage.setScene(transitionScene);
+
+            // Fade in the color overlay
+            FadeTransition fadeToColor = new FadeTransition(Duration.millis(300), colorOverlay);
+            fadeToColor.setFromValue(0.0);
+            fadeToColor.setToValue(1.0);
+            fadeToColor.setOnFinished(e -> {
+                // After fading to the color, switch to the new scene
+                Scene newScene = new Scene(newRoot, 800, 570);
+                stage.setScene(newScene);
+
+                // Optional: fade in the new scene from the color
+                newRoot.setOpacity(0.0);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(300), newRoot);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
             });
-            fadeOut.play();
+
+            fadeToColor.play();
 
         } catch (IOException e) {
             e.printStackTrace();

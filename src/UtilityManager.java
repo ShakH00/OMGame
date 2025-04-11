@@ -1,9 +1,9 @@
-import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +20,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static com.sun.glass.ui.Cursor.setVisible;
+
 public class UtilityManager {
+
+    private static Parent currentPopup;
+
     /**
      * Method to open up the resignation/offer draw popup
      *
@@ -28,48 +33,34 @@ public class UtilityManager {
      * @param path Path to page
      * @param rootPane Pane that the popup is added to
      *
-     * @author Emily M
+     * @author Emily M & Arwa
      */
     // TODO: Implement separately from main screen help popup
     @FXML
-    public static void popupControl(MouseEvent mouseEvent, String path, AnchorPane rootPane) {
-        // TODO; check if it works with other not help popups
+    public static void popupOpen(MouseEvent mouseEvent, String path, AnchorPane rootPane) {
         try {
             // load help.fxml
             FXMLLoader loader = new FXMLLoader(UtilityManager.class.getResource(path));
-            Parent helpRoot = loader.load();
+            currentPopup = loader.load();
+            currentPopup.setId("popupHelp");
 
-            rootPane.getChildren().add(helpRoot);  // rootPane is the main container in Start.fxml
+            rootPane.getChildren().add(currentPopup);  // rootPane is the main container in Start.fxml
+            currentPopup.getStylesheets().add(UtilityManager.class.getResource("styles.css").toExternalForm());
 
             // set the helpRoot visible (it will be hidden initially)
-            helpRoot.setVisible(true);
+            currentPopup.setVisible(true);
 
             // TODO; make popup close in different ways
 
-            // to close the popup, click anywhere
-            helpRoot.setOnMouseClicked(event -> {
-                helpRoot.setVisible(false);  // Hide the popup
-                // I wrote this :) 👍
-                String url ="https://omgame.club/";
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        desktop.browse(new URI(url));
-                    } catch (IOException | URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Runtime runtime = Runtime.getRuntime();
-                    try {
-                        runtime.exec("xdg-open " + url);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    public static void popupClose(AnchorPane rootPane) {
+        if (currentPopup != null) {
+            currentPopup.setVisible(false);
+            rootPane.getChildren().remove(currentPopup);
         }
     }
 
@@ -145,12 +136,12 @@ public class UtilityManager {
      *
      * @author Emily M
      */
-    public static void colourTransition(Text text) {
+    public static void colourTransition(Text text, Color color) {
         text.setOnMouseEntered(event -> {
             text.setFill(Color.BLUE);
         });
         text.setOnMouseExited(event -> {
-            text.setFill(Color.color(0.6235, 0.5961, 0.549, 1.0));
+            text.setFill(color);
         });
     }
 
