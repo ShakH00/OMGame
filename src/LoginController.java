@@ -108,6 +108,7 @@ public class LoginController extends Application {
         boolean accountExists = false;
         if(user != null) {
             accountExists = true;
+            LoggedInAccount.setAccount(user);
         }
         if(accountExists){
             if(user.getPassword().equals(password)){
