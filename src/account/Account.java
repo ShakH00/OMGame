@@ -402,6 +402,7 @@ public class Account {
     public boolean setEmail(String email) {
         if(isValidEmail(email)){
             this.email = email;
+
             return true;
         }
         return false;
@@ -443,11 +444,11 @@ public class Account {
     private boolean isValidEmail(String email) {
         String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
         for(String character: disallowedChars){
-            if (username.contains(character)){
+            if (email.contains(character)){
                 return false;
             }
         }
-        if(username.length() > 64 || username.length() < 1){return false;}
+        if(email.length() > 64 || email.length() < 1){return false;}
         return true;
     }
 
