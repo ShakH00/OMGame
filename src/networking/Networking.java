@@ -69,6 +69,7 @@ public class Networking {
                 outObj.writeObject(game);
                 outObj.flush(); 
                 System.out.println("Message sent successfully");
+                listenMode(); // Switch to listening mode after sending
             } catch (IOException e) {
                 System.err.println("Send failed: " + e.getMessage());
                 handleDisconnection();
