@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 
 /**
  * Main class for all the client-side networking. Initially used for Stubs.
+ *
+ * @author 
  */
 public class Networking {
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
