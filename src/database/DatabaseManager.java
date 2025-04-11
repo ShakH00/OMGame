@@ -486,7 +486,7 @@ public class DatabaseManager {
      * @return  int unique ID which should be overwritten if the guest is converted to an Account
      */
     public static int getTempID(){
-        String sql = "SELECT GREATEST(COALESCE((SELECT MAX(id) FROM Accounts), 0), COALESCE((SELECT MAX(id) FROM matchmaking), 0)) + 100 AS temp_id";
+        String sql = "SELECT GREATEST(COALESCE((SELECT MAX(id) FROM Accounts), 0), COALESCE((SELECT MAX(id) FROM Matchmaking), 0)) + 100 AS temp_id";
         Connection conn = DatabaseConnection.getConnection();
         int tempID = -1;
 
