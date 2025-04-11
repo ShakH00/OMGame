@@ -1,7 +1,10 @@
 //import authentication.Authentication.Admin;
 import account.Account;
 import authentication.Authentication.Admin;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import database.DatabaseManager;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -89,12 +92,13 @@ public class AdminController extends Application {
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         Account player = DatabaseManager.queryAccountByID(userID);
-
-        userNameField.setText(player.getUsername());
-        passwordField.setText(player.getPassword());
-        emailField.setText(player.getEmail());
-        //TODO: call up methods from profile
-        System.out.println("Find user button pressed");
+        try {
+            userNameField.setText(player.getUsername());
+            passwordField.setText(DecryptionAuthentication.decryptionDriver(player.getPassword()));
+            emailField.setText(DecryptionAuthentication.decryptionDriver(player.getEmail()));
+        }catch (DecryptionFailedException e){
+            System.out.println(e);
+        }
     }
 
     @FXML
@@ -110,16 +114,13 @@ public class AdminController extends Application {
 
     @FXML
     private void deleteUserButton() {
-        //TODO: call up methods from profile
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         Admin.deleteUser(userID);
-        System.out.println("Delete user button pressed");
     }
 
     @FXML
     private void submitButton() {
-        //TODO: call up methods from profile
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
         String username = userNameField.getText();
@@ -128,7 +129,6 @@ public class AdminController extends Application {
         Admin.updateUsername(userID, username);
         Admin.updateEmail(userID, userEmail);
         Admin.updatePassword(userID, userPassword);
-        System.out.println("Submit button pressed");
     }
 
 

@@ -1,6 +1,9 @@
 package authentication.Authentication;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import account.Account;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 
 public class Admin {
     /**
@@ -30,7 +33,12 @@ public class Admin {
      * @param newPassword the new password to set
      */
     public static void updatePassword(Integer id, String newPassword){
-        DatabaseManager.updateAccountPassword(id, newPassword);
+        try {
+            newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
+            DatabaseManager.updateAccountPassword(id, newPassword);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
+        }
     }
 
     /**
@@ -50,7 +58,12 @@ public class Admin {
      * @param newEmail the new email to set
      */
     public static void updateEmail(Integer id, String newEmail){
-        DatabaseManager.updateAccountEmail(id, newEmail);
+        try {
+            newEmail = EncryptionAuthentication.encryptionDriver(newEmail);
+            DatabaseManager.updateAccountEmail(id, newEmail);
+        }catch (EncryptionFailedException e){
+            System.out.println(e);
+        }
     }
 
     /**
