@@ -1,0 +1,6 @@
+FROM openjdk:23
+WORKDIR /app
+COPY ./src/ .
+EXPOSE 30001
+RUN mkdir build && javac -d build networking/Server.java
+ENTRYPOINT ["java", "-cp", "build", "networking.Server"]
