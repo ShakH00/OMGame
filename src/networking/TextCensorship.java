@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static networking.Networking.getTime;
 
 /**
  * TextCensorship class to censor words in a message.
@@ -32,7 +31,8 @@ public class TextCensorship {
                 badWords.add(line.trim());
             }
         } catch (IOException e) {
-            System.err.printf("[TextCensor: %s] Error loading bad words: %s\n", getTime(), e.getMessage());
+            // Comment out error message as it will constantly show up when hosted on Docker
+            // System.err.printf("[TextCensor: %s] Error loading bad words: %s\n", getTime(), e.getMessage());
         }
 
         String filteredMessage = message;

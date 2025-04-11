@@ -1,16 +1,15 @@
 # Made by Sultan Amrani and Nova Driscoll
 # GitHub Copilot used to assist in writing this Dockerfile
 FROM openjdk:23
-WORKDIR /app
 
-# Copy the JavaFX SDK
-COPY ~/javafx-sdk-24/lib /app/javafx-sdk-24/lib
-
+# Copy source code
 COPY ./src/ .
+# Copy the JavaFX SDK
+COPY ./lib ./lib/.
 EXPOSE 30001
 
 # Compile with JavaFX
-RUN mkdir build && javac --module-path /app/javafx-sdk-24/lib --add-modules javafx.controls,javafx.fxml -d build networking/Server.java
+RUN mkdir build && javac --module-path ./lib --add-modules javafx.controls,javafx.fxml -d build networking/Server.java
 
 # Run with JavaFX
-ENTRYPOINT ["java", "--module-path", "/app/javafx-sdk-24/lib", "--add-modules", "javafx.controls,javafx.fxml", "-cp", "build", "networking.Server"]
+ENTRYPOINT ["java", "--module-path", "./lib", "--add-modules", "javafx.controls,javafx.fxml", "-cp", "build", "networking.Server"]

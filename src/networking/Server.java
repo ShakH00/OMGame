@@ -113,8 +113,7 @@ public class Server {
                             Object objectIn = in.readObject();
                             if (objectIn instanceof String message) {
                                 processChatMessage(message);
-                            }
-                            if (objectIn instanceof Game game) {
+                            } else if (objectIn instanceof Game game) {
                                 broadcast(game, this);
                             } else {
                                 System.err.println("Received non-string/game object: " + objectIn.getClass().getName());
