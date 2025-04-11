@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Font;
@@ -16,6 +17,9 @@ public class UserSettingsController extends Application {
 
     @FXML
     private TextField displayNameField;
+    @FXML
+    private TextArea bioTextArea;
+
 
     @FXML private RadioButton hideStatsYes;
     @FXML private RadioButton hideStatsFriends;
@@ -75,5 +79,4 @@ public class UserSettingsController extends Application {
         launch(args);
     }
 }
-
 
