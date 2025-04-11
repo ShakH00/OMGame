@@ -1,8 +1,8 @@
 FROM openjdk:23
 
 # Install JavaFX
-RUN apt-get update && \
-    apt-get install -y openjfx
+RUN apt update && \
+    apt install -y openjfx
 
 WORKDIR /app
 COPY ./src/ .
