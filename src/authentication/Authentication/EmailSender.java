@@ -6,14 +6,15 @@ import java.util.Properties;
 
 public class EmailSender {
     public static void sendEmail(String toEmail, String code) {
-        final String fromEmail = "omgameclub77@gmail.com";
-        final String password = "ljqm asjc agox hrnf"; // I used app password here for security purposes
+        final String fromEmail = "donotreply@omgame.club";
+        final String password = "ellendusk"; // I used app password here for security purposes
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // <-- If you're not using Gmail, change this
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.socketFactory.port", "465"); // Use SSL port
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); // Enable SSL
+        props.put("mail.smtp.host", "smtp.migadu.com");
+        props.put("mail.smtp.port", "465");
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
