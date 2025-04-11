@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,32 +18,25 @@ public class DrawScreenController extends Application {
     AnchorPane rootPane;
 
     @FXML
-    private void handleStartOver(javafx.event.ActionEvent event) {
-        System.out.println("Started over");
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void handleStartOver(ActionEvent event) {
+        System.out.println("Started  over");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //
+        SceneManager.registerScenes("/screens/MatchType.fxml");
+        SceneManager.switchScene(stage, "/screens/MatchType.fxml");
 
-        // TODO: Add logic to restart the game
     }
 
     @FXML
-    private void handleMainMenu(javafx.event.ActionEvent event) {
+    private void handleMainMenu(ActionEvent event) {
         System.out.println("Main menu");
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-//        stage.close();
 
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //
-        SceneManager.registerScenes("/screens/Start.fxml");
+        SceneManager.registerScenes("/screens/MatchType.fxml");
+        SceneManager.switchScene(stage, "/screens/MatchType.fxml");
 
-
-
-        SceneManager.switchScene(stage, "/screens/Start.fxml");
-
-//
-//        // TODO: Add logic to go to the main menu
     }
-
 
     @Override
     public void start(Stage primaryStage) {

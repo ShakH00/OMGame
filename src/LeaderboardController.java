@@ -130,7 +130,10 @@ public class LeaderboardController implements Initializable {
     @FXML
     private void onBackButtonClicked(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Start.fxml");
+        //
+        SceneManager.registerScenes("/screens/MatchType.fxml");
+
+        SceneManager.switchScene(stage, "/screens/MatchType.fxml");
     }
 
     @FXML
