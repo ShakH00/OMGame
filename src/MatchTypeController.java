@@ -123,7 +123,7 @@ public class MatchTypeController extends Application {
             player2Account = DatabaseManager.queryAccountByUsername("Elijah");
 
             // CHANGE THE ACCOUNT ARG HERE BEFORE RUNNING THE CONTROLLER TO START WITH A DIFFERENT ACCOUNT
-            controller.setAccount(player1Account);
+            controller.setAccount(player2Account);
 
             // Set up the primary stage
             primaryStage.setTitle("OMG!");
@@ -381,10 +381,12 @@ public class MatchTypeController extends Application {
                            String selfUsername,
                            int selfElo,
                            String selfNetworkingInformation,
+                           int selfPlayerNo,
                            int opponentID,
                            String opponentUsername,
                            int opponentElo,
-                           String opponentNetworkingInformation){
+                           String opponentNetworkingInformation,
+                           int opponentPlayerNo){
 
         // Prepare the MatchOutcomeHandler variables
         MatchOutcomeHandler.affectElo = affectsElo;
@@ -457,12 +459,14 @@ class MatchmakingHandlerWatcher extends Thread {
                 String selfUsername = handler.m_selfUsername;
                 int selfElo = handler.m_selfElo;
                 String selfNetworkingInformation = handler.m_selfNetworkingInformation;
+                int selfPlayerNo = handler.m_selfPlayerNo;
                 int opponentID = handler.m_opponentID;
                 String opponentUsername = handler.m_opponentUsername;
                 int opponentElo = handler.m_opponentElo;
                 String opponentNetworkingInformation = handler.m_opponentNetworkingInformation;
+                int opponentPlayerNo = handler.m_opponentPlayerNo;
 
-                guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation);
+                guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation, opponentPlayerNo);
                 break;
             }
 
