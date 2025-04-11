@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import account.LoggedInAccount;
 import networking.test.CensorshipTest;
 
 public class ImprovedChatServer {
@@ -65,12 +66,14 @@ public class ImprovedChatServer {
         private ObjectOutputStream out;
         private ObjectInputStream in;
         private int clientId;
+        private String clientUsername;
         private static int nextId = 1;
         private boolean active = true;
 
         public ClientHandler(Socket socket) throws IOException {
             this.socket = socket;
             this.clientId = nextId++;
+
 
 
             this.out = new ObjectOutputStream(socket.getOutputStream());
@@ -139,11 +142,12 @@ public class ImprovedChatServer {
 
             sendMessage("Me: " + filteredContent);
 
-
-            broadcast("Client #" + clientId + ": " + filteredContent, this);
+            String name = "saqib";
+            broadcast("Client #" + name + ": " + filteredContent, this);
         }
 
         private void logChat(int playerId, String message) {
+            String name = "saqib";
             String currentLog = chatLogs.getOrDefault(playerId, "");
             chatLogs.put(playerId, currentLog + message + "\n");
         }
