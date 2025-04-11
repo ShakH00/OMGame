@@ -12,23 +12,21 @@ import java.util.HashMap;
  */
 
 public class MatchOutcomeHandler {
+    public static int opponentID = -1;
+    public static int opponentElo = -1;
+    public static String opponentUsername = "Not Found";
+    public static boolean affectElo = false;
+
     /**
      * Given an account and their opponent's details, update the account's statistics.
      * @param game                  GameType game that was played
-     * @param affectElo             boolean for whether the match should affect the account's Elo or not.
-     * @param thisAccount           Account (active player)
      * @param thisAccountResults    HashMap with results for active player
-     * @param opponentID            int for opponent ID
-     * @param opponentElo           int for opponent Elo
-     * @param opponentUsername      String for opponent username
      */
-    public static void RecordMatchOutcome(GameType game, boolean affectElo,
-                                          Account thisAccount,
-                                          HashMap<StatisticType, Integer> thisAccountResults,
-                                          int opponentID,
-                                          int opponentElo,
-                                          String opponentUsername)
+    public static void RecordMatchOutcome(GameType game, HashMap<StatisticType, Integer> thisAccountResults)
     {
+        // Get this account
+        Account thisAccount = null; // TODO: FIIIIIX THIIIIIIS! GET CURRENT ACTIVE ACCOUNT !!!!!!!!!!!!!!!!!!!!!
+
         // Update statistics for account
         thisAccount.updateStatistics(game, thisAccountResults);
         thisAccount.logMatch(composeMatchLog(game, opponentID, opponentUsername, opponentElo, thisAccountResults));

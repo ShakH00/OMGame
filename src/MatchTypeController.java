@@ -1,4 +1,5 @@
 import account.Account;
+import account.statistics.MatchOutcomeHandler;
 import database.DatabaseManager;
 import game.GameType;
 import javafx.animation.KeyFrame;
@@ -384,14 +385,18 @@ public class MatchTypeController extends Application {
                            String opponentUsername,
                            int opponentElo,
                            String opponentNetworkingInformation){
-        System.out.println("Trying to start GUI");
-        Stage stage = (Stage) rootPane.getScene().getWindow();
+
+        // Prepare the MatchOutcomeHandler variables
+        MatchOutcomeHandler.affectElo = affectsElo;
+        MatchOutcomeHandler.opponentElo = opponentElo;
+        MatchOutcomeHandler.opponentID = opponentID;
+        MatchOutcomeHandler.opponentUsername = opponentUsername;
 
         // switch to that game screen
+        System.out.println("Trying to start GUI");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
         String gameScreenFXML = getGameScreenFXML(game);
         SceneManager.switchScene(stage, gameScreenFXML);
-
-
     }
 
 

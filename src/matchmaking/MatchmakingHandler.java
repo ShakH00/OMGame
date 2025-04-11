@@ -737,7 +737,6 @@ class MatchmakingThread extends Thread {
 
             // Search for other players who this can match with
             if (!handler.queryAllOtherIDs(selfID).isEmpty()) {
-                System.out.println("ID: " + handler.queryAllOtherIDs(selfID).getFirst());
                 for (int opponentID : handler.queryAllOtherIDs(selfID)) {
                     double msSinceLastCommunicated = (System.currentTimeMillis() - handler.queryRecentTime(opponentID));
                     if (msSinceLastCommunicated > 5000) {

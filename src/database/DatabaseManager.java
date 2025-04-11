@@ -382,7 +382,6 @@ public class DatabaseManager {
 
                 if (rs.next()) {
                     tempID = rs.getInt("temp_id");
-                    System.out.println(tempID);
                 }
             } catch (SQLException e){
                 e.printStackTrace();
