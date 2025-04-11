@@ -1,0 +1,74 @@
+            body {
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+                background-color: #9ed2e4;
+                padding-top: 90px;
+            }
+
+            h1 {
+                font-size: 45px;
+            }
+
+            .board {
+                width: fit-content;
+                display: grid;
+                grid-template-columns: repeat(7, 70px);
+                grid-template-rows: repeat(6, 70px);
+                gap: 8px;
+                justify-content: center;
+                background-color: #0054A2; /* Dark blue background to match the game */
+                padding: 20px;
+                border-radius: 12px;
+                margin: 20px auto;
+                position: relative;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Added shadow for realism */
+            }
+
+            .cell {
+                width: 70px;
+                height: 70px;
+                background-color: #ecf0f1;
+                border-radius: 50%;
+                position: relative;
+                overflow: hidden;
+                cursor: pointer;
+                z-index: 1;
+                border: 3px solid #2980b9; /* Border around each cell */
+                box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2); /* Inner shadow to give depth */
+            }
+
+            .piece {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                position: absolute;
+                top: -70px;
+                transition: transform 0.5s ease-out;
+                z-index: 2;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow for a 3D effect */
+            }
+
+            .red {
+                background-color: #e74c3c;
+            }
+
+            .yellow {
+                background-color: #f1c40f;
+            }
+
+            .button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 8px;
+                background-color: #ff79c6;
+                color: white;
+                cursor: pointer;
+                transition: background 0.3s ease, transform 0.3s ease;
+            }
+
+            .button:hover {
+                transform: scale(1.05);
+                background-color: #f468b9;
+            }

@@ -21,8 +21,8 @@ public class CreateAccount {
      * @return the new Account if account is created successfully; null otherwise
      */
     public static Account createAccount(String username, String email, String password) throws EncryptionFailedException {
-        Account newAccount = new Account(-1, username, email, password);
-        newAccount = EncryptionAuthentication.encryptAccount(newAccount);
+        Account newAccount = new Account(username, email, password);
+        EncryptionAuthentication.encryptAccount(newAccount);
         DatabaseManager.saveAccount(newAccount);
         return newAccount;
     }

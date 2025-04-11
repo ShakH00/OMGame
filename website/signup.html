@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Sign Up | Online Multiplayer Games - OMG</title>
+        <link href="signup.css" rel="stylesheet">
+        <link href="all.css" rel="stylesheet">
+        <link href="assets/tetrisCatIcon.png" rel="shortcut icon" type="image/png">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    </head>
+    <body>
+        <button class="back-button" onclick="window.location.href='index.html';">&lt; Back</button>
+        <div class="login-card">
+            <h2>Sign Up</h2>
+
+            <input id="newUsername" placeholder="Choose a username" type="text"/>
+            <input id="email" placeholder="Your email" type="email"/>
+
+            <div class="password-wrapper">
+              <input id="newPassword" type="password" placeholder="Password" oninput="checkPasswordStrength()">
+              <span class="toggle-password" onclick="togglePassword('newPassword', this)">
+                <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.04 10.04 0 012.873-4.568M6.18 6.18a10.05 10.05 0 015.82-1.18c4.478 0 8.268 2.943 9.542 7a10.051 10.051 0 01-4.623 5.592M3 3l18 18"/>
+                </svg>
+              </span>
+            </div>
+            <div id="passwordStrength" class="strength"></div>
+
+            <div class="password-wrapper">
+              <input id="confirmPassword" type="password" placeholder="Confirm Password">
+              <span class="toggle-password" onclick="togglePassword('confirmPassword', this)">
+                <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.04 10.04 0 012.873-4.568M6.18 6.18a10.05 10.05 0 015.82-1.18c4.478 0 8.268 2.943 9.542 7a10.051 10.051 0 01-4.623 5.592M3 3l18 18"/>
+                </svg>
+              </span>
+            </div>
+
+            <label style="font-size: 0.9em; display: block; margin-top: 10px;">
+                <input id="termsCheckbox" type="checkbox"/> I agree to the <a href="#">terms and conditions</a>.
+            </label>
+
+            <button onclick="signup()">Create Account</button>
+            <div class="message" id="signupMessage"></div>
+
+            <div class="bottom-links">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </div>
+
+        <script src="signup.js"></script>
+    </body>
+</html>

@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class EncryptionAuthenticationTest {
-
-    @org.junit.Test
     @Test
     public void testEncryptionDriver_validInput() throws EncryptionFailedException {
         String input = "abcXYZ123";
@@ -18,7 +16,6 @@ public class EncryptionAuthenticationTest {
         assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
     }
 
-    @org.junit.Test
     @Test
     public void testDecryptionDriver_nullInput() {
         assertThrows(DecryptionFailedException.class, () -> {
@@ -26,11 +23,9 @@ public class EncryptionAuthenticationTest {
         });
     }
 
-    @org.junit.Test
     @Test
     public void testDecryptAccount_validEncryptedAccount() throws DecryptionFailedException {
         Account encrypted = new Account(
-                1,
                 "testuser",
                 "ghu#hadpso#frp",
                 "sdvv456"
@@ -42,8 +37,6 @@ public class EncryptionAuthenticationTest {
         assertNotEquals("sdvv456", decrypted.getPassword());
     }
 
-
-    @org.junit.Test
     @Test
     public void testDecryptAccount_nullFields() throws Exception {
         Account account = new Account(); // guest account
@@ -63,7 +56,6 @@ public class EncryptionAuthenticationTest {
         });
     }
 
-    @org.junit.Test
     @Test
     public void testEncryptionDriver_specialCharacters() throws EncryptionFailedException {
         String input = "!@#ABCxyz";
@@ -71,7 +63,6 @@ public class EncryptionAuthenticationTest {
         assertEquals(expected, EncryptionAuthentication.encryptionDriver(input));
     }
 
-    @org.junit.Test
     @Test
     public void testDecryptionDriver_specialCharacters() throws DecryptionFailedException {
         String input = "$C&DEF{|}";
