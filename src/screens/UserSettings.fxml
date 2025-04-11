@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -17,7 +19,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSettingsController">
     <children>
         <!-- Background Image -->
@@ -135,7 +136,7 @@
             <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#1e2a47" height="375.0" layoutX="37.0" layoutY="128.0" stroke="#FF8FB7" strokeWidth="3" width="249.0" />
             <Text fill="WHITE" text="Username" StackPane.alignment="TOP_CENTER">
                 <StackPane.margin>
-                    <Insets top="135.0"/>
+                    <Insets top="135.0" />
                 </StackPane.margin>
                 <font>
                     <Font size="16.0" />
@@ -146,5 +147,11 @@
         <Pane layoutX="40.0" layoutY="131.0" prefHeight="76.0" prefWidth="246.0" style="-fx-background-color: #169fd4; -fx-background-radius: 9 9 0 0;" />
         <Line endX="106.0" layoutX="179.0" layoutY="209.0" startX="-140.0" stroke="#ff8fb7" strokeWidth="3.0" />
         <Circle fill="#9803b2" layoutX="162.0" layoutY="209.0" radius="44.0" stroke="#ff8fb7" strokeType="INSIDE" strokeWidth="3.0" />
+        <ImageView fitHeight="51.0" fitWidth="53.0" layoutX="230.0" layoutY="290.0">
+            <image>
+                <Image url="@../images/sprites/pen.png" />
+            </image>
+        </ImageView>
+        <TextArea fx:id="bioTextArea" layoutX="54.0" layoutY="329.0" prefHeight="144.0" prefWidth="215.0" wrapText="true" text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐" style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-border-color: transparent;" />
     </children>
 </AnchorPane>
