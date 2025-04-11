@@ -46,7 +46,7 @@ public class AdminController extends Application {
     @FXML
     private TextField emailField;
     @FXML
-    private PasswordField passwordField;
+    private TextField passwordField;
 
     //private Admin adminUser = new Admin();
 
@@ -100,8 +100,15 @@ public class AdminController extends Application {
         Account player = DatabaseManager.queryAccountByID(userID);
         if(player != null) {
             userNameField.setText(player.getUsername());
-            passwordField.setText(player.getPassword());
-            emailField.setText(player.getEmail());
+
+            try {
+                String password = DecryptionAuthentication.decryptionDriver(player.getPassword());
+                passwordField.setText(password);
+                String email = DecryptionAuthentication.decryptionDriver(player.getEmail());
+                emailField.setText(email);
+            } catch (DecryptionFailedException e) {
+                System.out.println(e);
+            }
         }else{
             userNameField.setText("");
             passwordField.setText("");
