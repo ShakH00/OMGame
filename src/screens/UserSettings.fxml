@@ -14,7 +14,7 @@
     <!-- Background Image -->
     <ImageView fitWidth="950" fitHeight="600" preserveRatio="false">
         <image>
-            <Image url="file:/D:/seng300-project/src/images/adjustedstars.png"/>
+            <Image url="@../images/adjustedstars.png"/>
         </image>
     </ImageView>
 
@@ -30,11 +30,11 @@
 
             <ImageView fx:id="avatarImage" fitWidth="70" fitHeight="70">
                 <image>
-                    <Image url="file:/D:/seng300-project/src/images/sprites/tetrisCatIcon.png"/>
+                    <Image url="@../images/sprites/tetrisCatIcon.png"/>
                 </image>
             </ImageView>
 
-            <Label text="TetrisCat" textFill="WHITE">
+            <Label fx:id="nameDisplay" text="TetrisCat" textFill="WHITE">
                 <font>
                     <Font name="RetroGaming" size="20"/>
                 </font>
@@ -42,12 +42,12 @@
 
             <Rectangle width="120" height="5" arcWidth="10" arcHeight="10" fill="CYAN"/>
 
-            <Label text="I may be a cat,\nBut around these\nparts, they call\nme the GOAT 🐐🐐"
-                   textFill="LIGHTGRAY" alignment="CENTER">
-                <font>
-                    <Font name="Courier New" size="14"/>
-                </font>
-            </Label>
+            <!-- Editable TextArea for user bio -->
+            <TextArea fx:id="bioTextArea"
+                      wrapText="true"
+                      prefWidth="200" prefHeight="90"
+                      text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐"
+                      style="-fx-control-inner-background: #2b355e; -fx-text-fill: lightgray; -fx-font-family: 'Courier New'; -fx-font-size: 13px; -fx-background-color: transparent; -fx-border-width: 0;"/>
         </VBox>
 
         <!-- === RIGHT PANEL === -->
