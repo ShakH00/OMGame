@@ -115,8 +115,8 @@ public class MatchTypeController extends Application {
             MatchTypeController controller = loader.getController();
 
             Account guestAccount = new Account();
-            Account player1Account = new Account(-1, "Arwa", "arwa@gmail.com", "arwa123");
-            Account player2Account = new Account(-1, "Elijah", "elijah@gmail.com", "elijah123");
+            Account player1Account = new Account("Arwa", "arwa@gmail.com", "arwa123");
+            Account player2Account = new Account("Elijah", "elijah@gmail.com", "elijah123");
             DatabaseManager.saveAccount(player1Account);
             DatabaseManager.saveAccount(player2Account);
             player1Account = DatabaseManager.queryAccountByUsername("Arwa");

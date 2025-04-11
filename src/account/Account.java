@@ -77,16 +77,13 @@ public class Account {
 
     /**
      * Initialize an Account with a given id, username, email, and password
-     *
-     * @param id       int id for the account, unique in database
      * @param username String username for the account
      * @param email    String email for account
      * @param password String password for the account
      */
-    public Account(int id, String username, String email, String password) {
+    public Account(String username, String email, String password) {
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
-        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -104,7 +101,7 @@ public class Account {
 
     /**
      * Initialize an Account with all parameters. Only use when loading from database.
-     * @param id            int ID of the player
+     * @param id            int unique id (primary key)
      * @param username      String unique username
      * @param email         String unique email
      * @param password      String unique password (decrypted!)
@@ -121,8 +118,8 @@ public class Account {
             HashMap<GameType, AStatistics> statistics,
             String[][] matchHistory)
     {
-        this.isGuest = false;
         this.id = id;
+        this.isGuest = false;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -134,8 +131,6 @@ public class Account {
 
     /**
      * If the Player started with a guest Account, update it to form a permanent (i.e. non-guest) Account
-     *
-     * @param id       int id for the account, unique in database
      * @param username String username for the account
      * @param email    String email for account
      * @param password String password for the account

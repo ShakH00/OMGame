@@ -26,7 +26,6 @@ public class EncryptionAuthenticationTest {
     @Test
     public void testDecryptAccount_validEncryptedAccount() throws DecryptionFailedException {
         Account encrypted = new Account(
-                1,
                 "testuser",
                 "ghu#hadpso#frp",
                 "sdvv456"
