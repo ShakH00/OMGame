@@ -235,7 +235,8 @@ public class UserProfileController extends Application {
             }
             // getting overall stats
             String[] statistics = currentAccount.getCombinedStatistics(games, order);
-            gamesPlayedOverall.setText(statistics[0]); // set total games played
+            //TODO; every game is counted twice, doubling the # of games played IDK why
+            gamesPlayedOverall.setText(String.valueOf(Integer.parseInt(statistics[0])/2)); // set total games played
             gamesWonOverall.setText(statistics[1]); // set total games won
             this.bestGame.setText(bestGame); // set best game
 
