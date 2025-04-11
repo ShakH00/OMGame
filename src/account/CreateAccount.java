@@ -20,9 +20,9 @@ public class CreateAccount {
      * @param password the desired password
      * @return the new Account if account is created successfully; null otherwise
      */
-    public static boolean createAccount(String username, String email, String password) throws EncryptionFailedException {
+    public static Account createAccount(String username, String email, String password) throws EncryptionFailedException {
         Account newAccount = new Account(username, email, password);
-        newAccount = EncryptionAuthentication.encryptAccount(newAccount);
+        EncryptionAuthentication.encryptAccount(newAccount);
         DatabaseManager.saveAccount(newAccount);
         return newAccount;
     }

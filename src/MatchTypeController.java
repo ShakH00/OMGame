@@ -1,10 +1,7 @@
 import account.Account;
-<<<<<<< src/MatchTypeController.java
 import account.statistics.MatchOutcomeHandler;
-=======
 import account.LoggedInAccount;
 import com.mysql.cj.log.Log;
->>>>>>> src/MatchTypeController.java
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
@@ -157,26 +154,10 @@ public class MatchTypeController extends Application {
 
             primaryStage.setResizable(false);
 
-            MatchTypeController controller = loader.getController();
-
-            Account guestAccount = new Account();
-            Account player1Account = new Account("Arwa", "arwa@gmail.com", "arwa123");
-            Account player2Account = new Account("Elijah", "elijah@gmail.com", "elijah123");
-            DatabaseManager.saveAccount(player1Account);
-            DatabaseManager.saveAccount(player2Account);
-            player1Account = DatabaseManager.queryAccountByUsername("Arwa");
-            player2Account = DatabaseManager.queryAccountByUsername("Elijah");
-
-            // CHANGE THE ACCOUNT ARG HERE BEFORE RUNNING THE CONTROLLER TO START WITH A DIFFERENT ACCOUNT
-            controller.setAccount(player2Account);
-
             // Set up the primary stage
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
             primaryStage.show();
-
-            // TODO: remove temporary lines below
-            SceneManager.registerScenes("screens/Connect4.fxml", "screens/GameSelect.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -524,14 +505,8 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
-    
-        System.out.println("Trying to start GUI");
 
         // TODO: EVIL !!!!!!!
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-
-        // switch to that game screen
-        System.out.println("Trying to start GUI");
         Stage stage = (Stage) rootPane.getScene().getWindow();
         String gameScreenFXML = getGameScreenFXML(game);
         SceneManager.switchScene(stage, gameScreenFXML);
