@@ -62,12 +62,11 @@ public class MenuPopupController extends Application {
     @FXML
     private void closeButton(){
       UtilityManager.popupClose(rootPane);
-        System.out.println("Popup closed");
     }
 
     @FXML
     private void draw(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupOpen(mouseEvent, "screens/DrawRejected.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/DrawSent.fxml", rootPane);
         //UtilityManager.popupClose(rootPane);
     }
 

@@ -402,6 +402,7 @@ public class Account {
     public boolean setEmail(String email) {
         if(isValidEmail(email)){
             this.email = email;
+
             return true;
         }
         return false;
@@ -443,11 +444,11 @@ public class Account {
     private boolean isValidEmail(String email) {
         String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
         for(String character: disallowedChars){
-            if (username.contains(character)){
+            if (email.contains(character)){
                 return false;
             }
         }
-        if(username.length() > 64 || username.length() < 1){return false;}
+        if(email.length() > 64 || email.length() < 1){return false;}
         return true;
     }
 
@@ -552,17 +553,17 @@ public class Account {
         }
         return false;
     }
-    public boolean guestToPermanentAccount(String username, String email, String password) {
+    public Account guestToPermanentAccount(String username, String email, String password) {
         // Attempt to create the permanent account using the CreateAccount helper class
-        boolean success;
+        Account newAccount;
         try {
-            success = CreateAccount.createAccount(username, email, password);
+            newAccount = CreateAccount.createAccount(username, email, password);
         }catch(EncryptionFailedException e){
-            success = false;
+            newAccount = null;
         }
 
 
-        if (success) {
+        if (newAccount != null) {
             // If creation succeeded, pull the new account data from the DB
             Account createdAccount = DatabaseManager.queryAccountByUsername(username);
 
@@ -579,7 +580,7 @@ public class Account {
             }
         }
 
-        return success;
+        return newAccount;
     }
 
     public String getEmail() {

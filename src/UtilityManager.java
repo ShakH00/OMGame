@@ -62,7 +62,6 @@ public class UtilityManager {
             currentPopup.setVisible(false);
             rootPane.getChildren().remove(currentPopup);
         }
-        System.out.println("Popup closed");
     }
 
     /**
