@@ -32,7 +32,7 @@ public class Server {
             serverSocket = new ServerSocket(port);
             System.out.printf("[Server: %s] Server started on port %d", Networking.getTime(), port);
         } catch (IOException e) {
-            System.err.printf("[Server: %s] Error creating server: %d", Networking.getTime(), e.getMessage());
+            System.err.printf("[Server: %s] Error creating server: %s", Networking.getTime(), e.getMessage());
             e.printStackTrace();
         }
     }
@@ -69,7 +69,7 @@ public class Server {
     }
 
     /**
-     * Broadasts a chat message to all clients.
+     * Broadcasts a chat message to all clients.
      *
      * @param message The chat message to broadcast.
      * @param sender  The client that sent the message.
@@ -142,8 +142,8 @@ public class Server {
         public void start() {
             new Thread(() -> {
                 try {
-                    sendMessage("OMGAME: Welcome to the chat");
-                    broadcast("OMGAME: Client #" + clientId + " has joined the chat", this);
+                    sendMessage("OMG: Welcome to the chat");
+                    broadcast("OMG: Client #" + clientId + " has joined the chat", this);
                     while (isActive()) {
                         try {
                             Object objectIn = in.readObject();
@@ -162,7 +162,7 @@ public class Server {
                         }
                     }
                 } catch (Exception e) {
-                    System.err.printf("[Server: %s] Error handling client #%d: ", Networking.getTime(), clientId, e.getMessage());
+                    System.err.printf("[Server: %s] Error handling client #%d: %s", Networking.getTime(), clientId, e.getMessage());
                 } finally {
                     cleanupClient();
                 }
@@ -179,7 +179,7 @@ public class Server {
             String filteredContent = censored.filteredMessage();
 
             logChat(clientId, filteredContent);
-            System.out.printf("[Server: %s] Client #%d: ", Networking.getTime(), clientId, filteredContent);
+            System.out.printf("[Server: %s] Client #%d: %s", Networking.getTime(), clientId, filteredContent);
 
             sendMessage("Me: " + filteredContent);
             broadcast("Client #" + clientId + ": " + filteredContent, this);
@@ -206,7 +206,7 @@ public class Server {
                     socket.close();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: ", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
             }
 
             synchronized (clients) {
@@ -227,7 +227,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: ", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
                 active = false;
             }
         }
@@ -244,7 +244,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: ", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
                 active = false;
             }
         }
