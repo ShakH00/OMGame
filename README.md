@@ -1452,7 +1452,51 @@ This layout makes the interface clean and functional, with large, easily clickab
 
 ***
 ## Test Folder
+- **[Account](#account-test)**
+- **[Checkers](#checkers-test)**
+- **[Chess](#checkers-test)**
+- **[Connect 4](#connect-4-test)**
+- **[Database](#database-test)**
+- **[Leaderboard](#leaderboard-test)**
+- **[Match Making](#match-making-test)**
+- **[Match Outcome](#match-outcome-test)**
+- **[Networking](#networking-test)**
+- **[Statistics](#statistics-test)**
+- **[Tic Tac Toe](#tic-tac-toe-test)**
+***
 
+#### Account Test
+**Purpose:** The AccountTest class contains unit tests for the Account class, validating functionalities such as account initialization, account updates, friend management, and game statistics tracking. It tests methods like converting a guest account to a user account, updating user details, adding/removing friends, and updating Elo ratings. Additionally, it ensures the integrity of match history logging, queueing systems, and various other user account features, asserting correct behavior and error handling in different scenarios.
+***
+#### Checkers Test
+**Purpose:** The CheckersTest class is a suite of unit tests for the Checkers game implementation. It includes tests for various gameplay scenarios such as board setup, piece movement, valid and invalid captures, forced captures, king promotions, win conditions, and turn switching. Each test case ensures that the Checkers game logic correctly handles different aspects of gameplay and edge cases, such as multiple captures and player surrender.
+***
+#### Chess Test
+**Purpose:** The ChessTesting class contains unit tests for various methods in the Chess game. It includes tests for scenarios like checkmate detection, pinning pieces, castling attempts, and checking if the king is in check but not in checkmate. Each test validates specific game mechanics, such as verifying if the player is in check, handling piece movements, and ensuring the correct game outcomes based on the board state.
+***
+#### Connect 4 Test
+**Purpose:** The Connect4Testing class is a JUnit test suite that verifies the functionality of a Connect4 game. It contains multiple test methods, each focused on checking different win conditions, such as winning in a column, row, and diagonal directions. The tests ensure that the game's logic for detecting victories in various orientations is working correctly by simulating moves and asserting the expected outcomes.
+***
+#### Database Test
+**Purpose:** The DatabaseConnectionTest class tests the database connection, verifying successful connections, handling errors, and ensuring proper closure. The DatabaseManagerTest class checks the functionality of saving and retrieving user accounts, including account attributes like username and email. Both tests ensure a clean environment by resetting the database before each test.
+***
+#### Leaderboard Test
+**Purpose:** The LeaderboardTest class tests the Leaderboard class functionality by simulating mock accounts and verifying the correct sorting and pagination of global leaderboard data. It includes tests for sorting by Elo ratings and wins, ensuring the leaderboard displays correct rankings and player statistics. The class also checks for proper pagination by verifying that the correct number of accounts are displayed per page.
+***
+#### Match Making Test
+**Purpose:** The MatchmakingTest.java class tests the matchmaking system by verifying the functionality of queue joining, player compatibility, and Elo rating-based matching. It ensures that players are correctly added and removed from the queue and that matchmaking returns expected results. The PrivateMatchTest.java class tests the creation and management of private matches, including player joining, leaving, and the behavior when the host leaves the match.
+***
+#### Match Outcome Test
+**Purpose:** The MatchOutcomeHandlerTest.java class is a test file that sets up test data for simulating match outcomes between two players in a game. It includes the initialization of Account objects for both players and the associated statistics using a HashMap. The file is designed to test the handling of match outcomes, though specific test methods are not yet implemented.
+***
+#### Networking Test
+**Purpose:** These test classes cover a variety of game-related functionalities. They include tests for database connections, matchmaking, player actions, and chat systems, ensuring each part of the game operates correctly. Additionally, they verify that game outcomes, private matches, and leaderboards work as expected.
+***
+#### Statistics Test
+**Purpose:** The StatisticsTicTacToeTest class is a set of unit tests for the StatisticsTicTacToe class, focusing on verifying the correct behavior of game statistics. It includes tests for default constructor values, custom constructor overrides, updating Elo ratings, adding statistics, and calculating the win rate. Each test ensures that the StatisticsTicTacToe methods return the correct values and maintain consistency across different game states and statistics.
+***
+#### Tic Tac Toe Test
+**Purpose:** The TicTacToeTesting class tests the functionality of the Tic-Tac-Toe game, focusing on the moves and win conditions for both players. It includes multiple test methods to check valid and invalid placements, winning conditions for rows, columns, and diagonals, and game state changes such as draw or surrender scenarios. Additionally, it tests the game's turn progression using the nextTurn method, ensuring proper alternation between players and correct handling of game states.
 ***
 ## website
 - **[assets](#assets-)**
@@ -1587,3 +1631,5 @@ This layout makes the interface clean and functional, with large, easily clickab
 #### `team.md`
 **Purpose:** Everyone who worked on the project with the names and UCID.
 ***
+<img src="website/assets/tetrisCat1.GIF" alt="drawing" width= ""/>
+
