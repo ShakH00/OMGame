@@ -1,4 +1,5 @@
 import account.Account;
+import account.LoggedInAccount;
 import account.statistics.AStatistics;
 import game.GameType;
 import javafx.application.Application;
@@ -161,7 +162,7 @@ public class UserProfileController extends Application {
         UtilityManager.createScaleTransition(settingsButton);
         UtilityManager.createScaleTransition(backButton);
 
-        currentAccount = LoginController.getAccount();
+        currentAccount = LoggedInAccount.getAccount();
 
         if (currentAccount != null) {
             username.setText(currentAccount.getUsername());

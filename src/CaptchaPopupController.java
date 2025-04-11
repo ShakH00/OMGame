@@ -1,3 +1,4 @@
+import account.LoggedInAccount;
 import authentication.Authentication.CAPTCHAAuthentication;
 import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
 import database.DatabaseManager;
@@ -119,7 +120,7 @@ public class CaptchaPopupController extends Application  {
             SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
             System.out.println("Captcha failed");
-            DatabaseManager.deleteAccount(LoginController.getAccount().getEmail());
+            DatabaseManager.deleteAccount(LoggedInAccount.getAccount().getEmail());
             UtilityManager.popupClose(rootPane);
         }
 

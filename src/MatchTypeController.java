@@ -1,4 +1,6 @@
 import account.Account;
+import account.LoggedInAccount;
+import com.mysql.cj.log.Log;
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
@@ -268,7 +270,7 @@ public class MatchTypeController extends Application {
 
 
         // Get hosting details
-        activeAccount = LoginController.getAccount();
+        activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
         int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = handler.getUniqueRoomCode();
@@ -300,7 +302,7 @@ public class MatchTypeController extends Application {
     void handleMatchmakingButton(GameType selectedGame) throws IOException {
         System.out.println("Selected game: " + selectedGame);
         // Get matchmaking details
-        activeAccount = LoginController.getAccount();
+        activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
         int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String networkingInformation = "";      // TODO: Integrate w/ networking
@@ -429,7 +431,7 @@ public class MatchTypeController extends Application {
     @FXML
     private void onSubmitButtonClicked() {
 
-        activeAccount = LoginController.getAccount();
+        activeAccount = LoggedInAccount.getAccount();
         int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = roomCodeInput.getText();
         String networkingInformation = "";                  // TODO: Networking integration

@@ -1,4 +1,5 @@
 import account.Account;
+import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAPopupController;
@@ -23,11 +24,6 @@ import java.io.IOException;
 
 public class LoginController extends Application {
 
-    public static Account user;
-    public static Account getAccount(){
-        return user;
-    }
-    public static void setAccount(Account newUser){user = newUser;}
     @FXML
     AnchorPane rootPane;
     @FXML
@@ -103,6 +99,7 @@ public class LoginController extends Application {
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
+        Account user;
         user = DatabaseManager.queryAccountByEmail(username);
         if(user == null){
             // If the account wasn't found via email, try via username
@@ -136,7 +133,7 @@ public class LoginController extends Application {
 
     @FXML
     private void continueAsGuest(javafx.scene.input.MouseEvent mouseEvent) {
-        LoginController.setAccount(new Account());
+        LoggedInAccount.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
