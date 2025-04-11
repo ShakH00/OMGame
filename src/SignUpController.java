@@ -77,37 +77,37 @@ public class SignUpController extends Application {
         String password = passwordField.getText();
         //Check for empty text field
         if (email.isEmpty()){
-                notificationText.setText("Please enter an email address");
-                return;
+            notificationText.setText("Please enter an email address!");
+            return;
         }
         else if (username.isEmpty()){
-                notificationText.setText("Please enter a username");
-                return;
+            notificationText.setText("Please enter a username!");
+            return;
         }
-            else if (password.isEmpty()) {
-            notificationText.setText("Please enter a password");
+        else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password!");
             return;
         }
         // Check format for email, username and password
         if(!CreateAccount.isValidEmail(email)){
-            notificationText.setText("Invalid email address");
+            notificationText.setText("Invalid email address!");
             return;
         }
         else if (!CreateAccount.isValidUsername(username)){
-            notificationText.setText("Username must have at least 4 character (only letters, numbers, underscores)");
+            notificationText.setText("Username must have at least 4 characters! (only letters, numbers, underscores)");
             return;
         }
         else if (!CreateAccount.isValidPassword(password)){
-            notificationText.setText("Password must have at least 8 character (contains uppercase, lowercase, number, special character)");
+            notificationText.setText("Password must have at least 8 characters! (contains uppercase, lowercase, number, special character)");
             return;
         }
         // Check for existing email, username
         if (DatabaseManager.isUsernameExist(username)){
-            notificationText.setText("Username already exists");
+            notificationText.setText("Username already exists!");
             return;
         }
         else if (DatabaseManager.isEmailExist(email)){
-            notificationText.setText("Email already exists");
+            notificationText.setText("Email already exists!");
             return;
         }
 
