@@ -1,10 +1,15 @@
 //import authentication.Authentication.Admin;
 import account.Account;
+import account.statistics.StatisticsCheckers;
+import account.statistics.StatisticsChess;
+import account.statistics.StatisticsConnect4;
+import account.statistics.StatisticsTicTacToe;
 import authentication.Authentication.Admin;
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import database.DatabaseManager;
 import database.DecryptionAuthentication;
 import database.EncryptionAuthentication;
+import game.GameType;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 public class AdminController extends Application {
     @FXML
@@ -105,13 +111,15 @@ public class AdminController extends Application {
 
     @FXML
     private void clearStatsButton() {
-        //TODO: call up methods from profile
+        HashMap statistics = new HashMap<>();
+        statistics.put(GameType.CHESS, new StatisticsChess());
+        statistics.put(GameType.CHECKERS, new StatisticsCheckers());
+        statistics.put(GameType.CONNECT4, new StatisticsConnect4());
+        statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
+
         String userIDStr = IDField.getText();
         Integer userID = Integer.parseInt(userIDStr);
-        //Account player = database.queryAccountByID(userID);
-        //idk if this one is possible rn with the way stats work
-
-        System.out.println("Clear stats button pressed");
+        DatabaseManager.updateAccountStats(userID, statistics);
     }
 
     @FXML
