@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MatchTypeController">
-    <children>
-        <!-- Background -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
-        <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
-            <image>
-                <Image url="@../images/adjustedstars.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-739.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
-            <image>
-                <Image url="@../images/chessboard.png" />
-            </image>
-        </ImageView>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="21.0" layoutX="356.0" layoutY="158.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="92.0" />
-        <StackPane fx:id="backButtonLogin" layoutX="2.4000000953674316" layoutY="10.199999809265137" onMouseClicked="#switchToHome">
-            <children>
-                <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/yellow.png" />
-                    </image>
-                    <effect>
-                        <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
-                            <color>
-                                <Color opacity="0.6208207011222839" />
-                            </color>
-                        </DropShadow>
-                    </effect>
-                </ImageView>
-                <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="13.0" />
-                    </font>
-                </Text>
-            </children>
-        </StackPane>
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MatchTypeController">
+   <children>
+      <!-- Background -->
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
+      <ImageView fitHeight="1329.0" fitWidth="1850.0" layoutX="-514.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" AnchorPane.bottomAnchor="-345.5555419921875" AnchorPane.leftAnchor="-514.0" AnchorPane.rightAnchor="-536.0" AnchorPane.topAnchor="-400.0">
+         <image>
+            <Image url="@../images/adjustedstars.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-739.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+         <image>
+            <Image url="@../images/chessboard.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a39c90" height="38.0" layoutX="-514.0" layoutY="60.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" width="1850.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c3d5e" height="21.0" layoutX="356.0" layoutY="158.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="92.0" />
+      <StackPane fx:id="backButtonLogin" layoutX="2.4000000953674316" layoutY="10.199999809265137" onMouseClicked="#switchToHome">
+         <children>
+            <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/yellow.png" />
+               </image>
+               <effect>
+                  <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
+                     <color>
+                        <Color opacity="0.6208207011222839" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
+               <font>
+                  <Font name="Press Start 2P Regular" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
 
-        <StackPane fx:id="submitButton1" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
-        <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
-        <ImageView fitHeight="93.0" fitWidth="301.0" layoutX="258.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../images/match_text.png" />
-            </image>
-        </ImageView>
+      <StackPane fx:id="submitButton1" layoutX="530.0" layoutY="428.0" onMouseClicked="#switchToGameSelect" prefHeight="51.0" prefWidth="84.0" styleClass="loginHoverButton" />
+      <StackPane layoutX="157.0" layoutY="479.1298828125" onMouseClicked="#switchToGameSelect" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="11.0" layoutX="154.0" layoutY="83.0" opacity="0.22" stroke="TRANSPARENT" strokeType="INSIDE" width="514.0" />
+      <ImageView fitHeight="93.0" fitWidth="301.0" layoutX="258.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/match_text.png" />
+         </image>
+      </ImageView>
       <HBox fillHeight="false" layoutY="155.0" prefHeight="415.0" prefWidth="800.0" spacing="40.0">
          <children>
             <Pane fx:id="hostGamePane" onMouseClicked="#openHostGame" prefHeight="289.0" prefWidth="262.0">
@@ -122,14 +131,14 @@
             </Pane>
             <Pane fx:id="standardGamePane" onMouseClicked="#switchToGameSelect" prefHeight="289.0" prefWidth="262.0">
                <children>
-                    <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="288.0" strokeType="OUTSIDE" strokeWidth="5.0" width="229.0">
-                        <effect>
-                            <DropShadow>
-                                <color>
-                                    <Color opacity="0.48632219433784485" />
-                                </color>
-                            </DropShadow>
-                        </effect>
+                  <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="288.0" strokeType="OUTSIDE" strokeWidth="5.0" width="229.0">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color opacity="0.48632219433784485" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                      <stroke>
                         <LinearGradient endX="1.0" endY="1.0">
                            <stops>
@@ -151,7 +160,7 @@
                            </stops>
                         </LinearGradient>
                      </stroke>
-                    </Rectangle>
+                  </Rectangle>
                   <Text fill="#fa8cb0" layoutY="37.0" stroke="#fa8eb2" text="STANDARD" textAlignment="CENTER" wrappingWidth="229.0">
                      <font>
                         <Font name="Press Start 2P Regular" size="21.0" />
@@ -247,38 +256,38 @@
             <Insets bottom="30.0" left="30.0" right="40.0" top="30.0" />
          </padding>
       </HBox>
-       <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
-          <font>
-             <Font name="Press Start 2P Regular" size="15.0" />
-          </font>
-       </Text>
-       <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                   <Image url="@../images/leaderboard_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
-       <StackPane fx:id="profile" layoutX="736.0" layoutY="1.0" onMouseClicked="#switchToProfile">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                <image>
-                   <Image url="@../images/user_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
-       <StackPane fx:id="help" layoutX="618.0" layoutY="1.0" onMouseClicked="#openHelpPopup">
-          <children>
-             <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                <image>
-                   <Image url="@../images/help_circlebutton.png" />
-                </image>
-             </ImageView>
-          </children>
-       </StackPane>
+      <Text fill="#ffffffa7" layoutX="363.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select">
+         <font>
+            <Font name="Press Start 2P Regular" size="15.0" />
+         </font>
+      </Text>
+      <StackPane fx:id="leaderboard" layoutX="677.0" layoutY="1.0" onMouseClicked="#switchToLB">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/leaderboard_circlebutton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane fx:id="profile" layoutX="736.0" layoutY="1.0" onMouseClicked="#switchToProfile">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../images/user_circlebutton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane fx:id="help" layoutX="618.0" layoutY="1.0" onMouseClicked="#openHelpPopup">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../images/help_circlebutton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
       <Pane fx:id="hostPopup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
          <children>
             <Rectangle fill="#0f101b7a" height="598.0" layoutX="-14.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
@@ -679,12 +688,12 @@
                   </Text>
                </children>
             </StackPane>
-            <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-size: 22px;">
+            <TextField fx:id="roomCodeInput" alignment="CENTER" layoutX="270.0" layoutY="245.0" prefHeight="54.0" prefWidth="259.0" style="-fx-text-fill: #a0318e; -fx-font-family: &quot;Press Start 2P&quot;; -fx-font-size: 22px;">
                <font>
                   <Font name="Press Start 2P Regular" size="22.0" />
                </font>
             </TextField>
          </children>
       </Pane>
-    </children>
+   </children>
 </AnchorPane>
