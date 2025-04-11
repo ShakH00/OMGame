@@ -1,5 +1,9 @@
 import account.Account;
 import account.LoggedInAccount;
+import authentication.Authentication.Admin;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import database.DatabaseManager;
+import database.DecryptionAuthentication;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +26,12 @@ public class UserSettingsController extends Application {
     @FXML
     private TextField displayNameField;
     @FXML
+    private TextField emailField;
+    @FXML
+    private TextField passwordField;
+    @FXML
+    private TextField newPasswordField;
+    @FXML
     private TextArea bioTextArea;
     @FXML
     private AnchorPane rootPane;
@@ -31,6 +41,8 @@ public class UserSettingsController extends Application {
     private StackPane button1;
     @FXML
     private StackPane button2;
+    @FXML
+    private StackPane submitButton;
     @FXML
     private Label username;
 
@@ -74,6 +86,7 @@ public class UserSettingsController extends Application {
         UtilityManager.createScaleTransition(backButton);
         UtilityManager.createScaleTransition(button1);
         UtilityManager.createScaleTransition(button2);
+        UtilityManager.createScaleTransition(submitButton);
 
         // Bind display name field to label
         if (nameDisplay != null && displayNameField != null) {
@@ -95,6 +108,10 @@ public class UserSettingsController extends Application {
         Account currentAccount = LoggedInAccount.getAccount();
         if (currentAccount != null) {
             username.setText(currentAccount.getUsername());
+            displayNameField.setText(currentAccount.getUsername());
+            try {
+                emailField.setText(DecryptionAuthentication.decryptionDriver(currentAccount.getEmail()));
+            } catch (DecryptionFailedException e) {}
         }
     }
 
@@ -103,6 +120,28 @@ public class UserSettingsController extends Application {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/UserProfile.fxml");
     }
+
+    @FXML
+    public void onSubmitButton() {
+        Integer userID = account.LoggedInAccount.getAccount().getID();
+        if(account.LoggedInAccount.getAccount().getIsGuest()) {
+            String username = displayNameField.getText();
+            String userEmail = emailField.getText();
+            String userPassword = passwordField.getText();
+            String newPassword = newPasswordField.getText();
+            Admin.updateUsername(userID, username);
+            Admin.updateEmail(userID, userEmail);
+            System.out.println(LoggedInAccount.getAccount().getPassword());
+            try {
+                if (userPassword.equals(DecryptionAuthentication.decryptionDriver(LoggedInAccount.getAccount().getPassword()))) {
+                    if (newPassword != null) {
+                        Admin.updatePassword(userID, newPassword);
+                    }
+                }
+            } catch (DecryptionFailedException e) {}
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);

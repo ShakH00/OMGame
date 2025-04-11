@@ -126,6 +126,8 @@ public class LoginController extends Application {
                     openMFAPopup(user.getEmail());
                     SceneManager.switchScene(stage, "screens/MatchType.fxml");
                     return;
+                }else{
+                    notificationText.setText("Incorrect username or password!");
                 }
             } catch (DecryptionFailedException e) {
                 System.out.println(e);
