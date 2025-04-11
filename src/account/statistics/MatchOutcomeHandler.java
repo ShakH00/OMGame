@@ -1,5 +1,6 @@
 package account.statistics;
 
+import account.LoggedInAccount;
 import game.GameType;
 import account.Account;
 
@@ -25,7 +26,7 @@ public class MatchOutcomeHandler {
     public static void RecordMatchOutcome(GameType game, HashMap<StatisticType, Integer> thisAccountResults)
     {
         // Get this account
-        Account thisAccount = null; // TODO: FIIIIIX THIIIIIIS! GET CURRENT ACTIVE ACCOUNT !!!!!!!!!!!!!!!!!!!!!
+        Account thisAccount = LoggedInAccount.getAccount();
 
         // Update statistics for account
         thisAccount.updateStatistics(game, thisAccountResults);
