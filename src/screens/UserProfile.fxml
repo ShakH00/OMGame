@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserProfileController">
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserProfileController">
    <children>
       <ImageView fitHeight="593.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -357,25 +346,13 @@
       </TabPane>
       <Circle fill="WHITE" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" />
       <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
-      <StackPane fx:id="backButton" layoutX="2.4000000953674316" layoutY="10.199999809265137" onMouseClicked="#setBackButton">
+      <StackPane fx:id="backButton" layoutX="2.0" layoutY="2.0" onMouseClicked="#setBackButton">
          <children>
-            <ImageView fitHeight="49.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="45.0" fitWidth="45.0"  pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/yellow.png" />
+                  <Image url="@../images/back_circlebutton.png" />
                </image>
-               <effect>
-                  <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
-                     <color>
-                        <Color opacity="0.6208207011222839" />
-                     </color>
-                  </DropShadow>
-               </effect>
             </ImageView>
-            <Text fill="WHITE" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="13.0" />
-               </font>
-            </Text>
          </children>
       </StackPane>
    </children>
