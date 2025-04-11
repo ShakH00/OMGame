@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -72,7 +73,7 @@ public class LoginController extends Application {
         UtilityManager.createScaleTransition(backButtonLogin);
         UtilityManager.createScaleTransition(toSignUp);
         UtilityManager.createScaleTransition(submitButton);
-        UtilityManager.colourTransition(guestText);
+        UtilityManager.colourTransition(guestText, Color.color(0.6235, 0.5961, 0.549, 1.0));
     }
 
     @FXML

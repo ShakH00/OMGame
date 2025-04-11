@@ -350,6 +350,6 @@
          </cursor>
       </TabPane>
       <Circle fill="WHITE" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" />
-      <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
+      <Circle fill="#ff8fb7" layoutX="94.0" layoutY="70.0" onMouseClicked="#openPopup" radius="41.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" AnchorPane.bottomAnchor="459.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="29.0" />
    </children>
 </AnchorPane>

@@ -40,7 +40,6 @@ public class MFAAuthentication {
             EmailSender.sendEmail(email, code); // Ensure this sends the email
         } else {
             code = "123456"; // Test mode uses a fixed code
-            System.out.println("Test mode. Your code is: " + code);
         }
 
         // Show the MFA input pop-up
@@ -49,13 +48,12 @@ public class MFAAuthentication {
 
         // Handle cancellation or invalid input
         if (userInput == null) {
-            return "Verification canceled or invalid input.";
+            return "Verification was canceled or invalid input.";
         }
 
         // Verify the input
         if (userInput.equals(code)) {
-            System.out.println("Code verified successfully!");
-            return "Code verified";
+            return "Code verified successfully!";
         } else {
             throw new MFAAuthenticationFailedException("Code Entered is Invalid!");
         }

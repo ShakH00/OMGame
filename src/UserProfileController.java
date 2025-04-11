@@ -11,9 +11,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 //import player.Account;
-import javafx.animation.ScaleTransition;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 import java.awt.*;
 
@@ -133,7 +131,7 @@ public class UserProfileController extends Application {
 
     @FXML
     public void openPopup(javafx.scene.input.MouseEvent event) {
-        UtilityManager.popupControl(event,"screens/UserPopup.fxml", rootPane);
+        UtilityManager.popupOpen(event,"screens/UserPopup.fxml", rootPane);
 
     }
 

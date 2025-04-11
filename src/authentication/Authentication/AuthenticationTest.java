@@ -107,8 +107,8 @@ public class AuthenticationTest {
 
     @Test
     public void RandomImageTest() {
-        File img = CAPTCHAAuthentication.chooseImage();
-        System.out.printf(img.getName());
+        String img = CAPTCHAAuthentication.chooseImage();
+        System.out.printf(img);
     }
 
     @Test

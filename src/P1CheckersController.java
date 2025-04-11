@@ -211,7 +211,7 @@ public class P1CheckersController extends Application {
 
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
     @FXML
