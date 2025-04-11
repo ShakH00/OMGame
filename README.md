@@ -40,11 +40,20 @@ seng300-project is our recreation of an <ins> online multiplayer game</ins>, or 
   -  **[Resources.fonts](#resourcesfonts)**
   -  **[Screens](#screens)**
 
+
 * **[Tests Folder](#test-folder)**
   - WAITING UNTIL ALL TEAMS FINISH THERE TEST cases
+
+
+* **[website](#website)**
+  * **[assets](#assets-)**
+
+
 * **[Git Log & Git Link](#git-log--git-link)**
   - **[Git Log](#git_log_csv)**
   - **[Git Lab](#gitlab_linktxt)**
+
+
 * **[Team](#team)**
   - **[Team file](#teammd)**
 *** 
@@ -54,7 +63,7 @@ seng300-project is our recreation of an <ins> online multiplayer game</ins>, or 
 
 To launch OMG it would require an installation of javafx and the database our company as used.
 * Steps to install [JavaFx](#javafx-installation-instructions) 
-* Steps to install [Database](#step-1-download--install-xampp)
+* Steps to install [Database](#data-base-installation-instructions)
 * Steps to install [Jakarta](#jakarta-installation-instructions)
 
 ***
@@ -149,42 +158,88 @@ Thank you for choosing
 
 ***
 # Data Base Installation Instructions
-## Step 1: Download & Install XAMPP
-- Go to the official XAMPP website. https://www.apachefriends.org/download.html
-- Click Download for your operating system (Windows, macOS, or Linux).
-- Run the installer after downloading.
-- Follow the installation wizard:
-- Click Next on all steps (you can leave default options checked).
-- After installation, launch the XAMPP Control Panel.
 
-## Step 2: Start Apache and MySQL Servers
-- Open the XAMPP Control Panel. (Mac should be an app called managerosx(with gear logo))
-- Click Start next to:
-- Apache (your local web server)
-- MySQL (your local database server)
-- Make sure both have green indicators (running).
-    - Apache running = Your web server is active.
-    - MySQL running = Your database is ready.
+### Prerequisites
+- Update based on Nova's server or XAMPP
 
-## Step 3: Open phpMyadmin
-- Since mac is cool it makes you do less work
-- Open any browser.
-- Enter: http://localhost/phpmyadmin/
-- You should now see the phpMyAdmin dashboard!
+### Installation Steps
 
-## Step 4: Making it work with java
-- Download mysql connector from https://dev.mysql.com/downloads/connector/j/
-- Choose platform independent operating system.
-- Download the ZIP file, extract and you will see mysql-connector-j-<version>.jar, this is the file you'll use in your Java Project
-- Go to File > Project Structure > Libraries
-- Click “+” → Java, then select the JAR file.
-- Apply & OK.
+#### 1. Download and Install XAMPP
+
+1. Go to the official [XAMPP website](https://www.apachefriends.org/download.html).
+2. Download the version for your operating system (Windows, macOS, or Linux).
+3. Run the installer.
+4. Follow the installation wizard:
+  - Click **Next** on all prompts (you may leave all default components selected).
+5. Once installed, open the **XAMPP Control Panel**.
+  - On macOS, launch the `manager-osx` app.
+
+---
+
+#### 2. Start Apache and MySQL Servers
+
+1. In the XAMPP Control Panel, click **Start** next to:
+  - **Apache** – This launches your local web server.
+  - **MySQL** – This starts your local MySQL database.
+2. Ensure both services are running. A green status indicator should appear for each.
+
+---
+
+#### 3. Open phpMyAdmin
+
+1. Open your web browser.
+2. Navigate to: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+3. You should see the phpMyAdmin dashboard interface.
+
+---
+
+#### 4. Download and Add MySQL Connector
+
+1. Download the MySQL Connector J from the [official website](https://dev.mysql.com/downloads/connector/j/).
+2. Choose **Platform Independent** and download the `.zip` file.
+3. Extract the archive and locate the `mysql-connector-j-<version>.jar` file.
+4. In your Java project:
+  - Go to **File > Project Structure > Libraries**
+  - Click **+** → **Java**, then select the JAR file.
+  - Click **Apply** and then **OK**.
+
+---
+
+#### 5. Initialize the Database
+
+1. In phpMyAdmin, go to the **SQL** tab.
+2. Execute the following SQL statements **one at a time**:
+
+```sql
+CREATE DATABASE OMGAMEDB;
+
+CREATE TABLE Accounts (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  Username VARCHAR(255) NOT NULL UNIQUE,
+  Email VARCHAR(255) NOT NULL UNIQUE,
+  Password VARCHAR(255) NOT NULL,
+  Friends VARCHAR(1024) NOT NULL,
+  Statistics TEXT,
+  MatchHistory TEXT
+);
+
+CREATE TABLE Matchmaking (
+  ID INT PRIMARY KEY,
+  STATE VARCHAR(255),
+  GAME VARCHAR(255),
+  START_TIME FLOAT(32),
+  RECENT_TIME FLOAT(32),
+  ELO INT,
+  ELO_RANGE INT,
+  OPPONENT_ID INT,
+  NETWORKING_INFO VARCHAR(255),
+  ROOM_CODE VARCHAR(255)
+);
+```
 
 Thank you for choosing
 
 <img src="src/images/omg_title.png" alt="drawing" width="80"/>
-
-### I WILL UPDATE THIS DOCUMENTATION WITH STATETEMENTS TO CREATE OUR DATABASE AND TABLES ONCE ME AND ELIJAH MEET UP TMRW
 
 ***
 
@@ -219,7 +274,7 @@ If you're using an Integrated Development Environment (IDE) like IntelliJ IDEA, 
 
 Thank you for choosing
 
-<img src="src/images/omg_title.png" alt="drawing" width="80"/>
+<img src="src/images/omg_title.png" alt="drawing" width= "80"/>
 
 
 ***
@@ -235,7 +290,7 @@ Thank you for choosing
   - **[use_case_descriptions.pdf](#use_case_descriptionspdf)**
 
 
-- **[GUI](#gui-)**
+- **[GUI](#gui)**
   - **[gui_design_ideas.pdf](#gui_design_ideaspdf)**
   - **[gui_v1_designs.pdf](#gui_v1_designspdf)** 
 
@@ -352,7 +407,7 @@ Game logic documentation developed during the initial phase of the project.
   
 
 - **[Networking](#networking)**
-  - **[integration](#integation)**
+  - **[integration](#integration)**
     - **[auth_mm.png](#auth_mmpng)** 
     - **[gameLogic.png](#gamelogicpng)**
     - **[gui.png](#guipng)**
@@ -384,7 +439,7 @@ Game logic documentation developed during the initial phase of the project.
 **Purpose:** Game's logic use case diagrams.
 ***
 ###  GUI⠀ ⠀⠀           
-#### `assests`
+#### Assests
 **Purpose:** Screens and Sprites that will be used in the main game.
 - **[screens](#screens)**
 - **[sprites](#sprites)**
@@ -410,7 +465,7 @@ Game logic documentation developed during the initial phase of the project.
 - **[player_and_localhostSetup.png](#player_and_localsetuppng)**
 - **[tentativeGameStateTransitionDiagram.png](#tentativegamestatetransistiondiagarmpng)**
 ***
-#### `integration`
+#### Integration
 **Purpose:** Images on how to integrate each part
 - **[auth_mm.png](#auth_mmpng)**
 - **[gameLogic.png](#gamelogicpng)**
@@ -469,53 +524,655 @@ Game logic documentation developed during the initial phase of the project.
 ***
 
 ## Code Organization
+- **[account](#account)**
+  - **[statistics:](#statistics)**
+    - **[AStatistic.java](#astatisticsjava)**
+    - **[IStatistics.interface](#istatisticsinterface)**
+    - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+    - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+    - **[StatisticsCheckers.java](#statisticscheckersjava)**
+    - **[StatisticsChess.java](#statisticschessjava)**
+    - **[StatisticsCombined.java](#statisticscombinedjava)**
+    - **[StatisticsConnect4.java](#statisticsconnect4java)**
+    - **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+    - **[StatisticType.enum](#statisticstypeenum)**
+  - **[Account.java](#acccountjava)**
+  - **[AccountStorageUtility.java](#accountstorageutilityjava)**
+  - **[CreateAccount.java](#createaccountjava)**
+  - **[NoAccountError.exception](#noaccounterrorexecption)**
+
+
+- **[authentication:](#authentication)**
+  - **[Authentication:](#authentication-)**
+    - **[Admin.java](#adminjava)**
+    - **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+    - **[EmailSender.java](#emailsenderjava)**
+    - **[MFAAuthentication.java](#mfaauthenitcationjava)**
+    - **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+    - **[MFAInputPopUp.java](#mfainputpopupjava)**
+
+  - **[CAPTCHImages](#captchaimages)**
+
+  - **[ExceptionAuthentication:](#exceptionauthentications)**
+    - **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+    - **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+    - **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+    - **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+  - **[MFAPopUpController.java](#mfapopupcontrollerjava)**
+
+
+  - **[Com.Example](#comexample)**
+
+
+- **[database](#database)**
+  - **[DatabaseConnection.java](#databaseconnectionjava)**
+  - **[DatabaseManager.java](#databasemanagerjava)**
+  - **[DecryptionAuthentication.java](#decryptionauthenitactionjava)**
+  - **[EncryptionAuthentication.java](#encryptionauthenticationjava)**
+
+
+- **[game](#game)**
+  - **[checkers](#checkers)**
+    - **[Checkers.java](#checkersjava)**
+    - **[CheckersController.java](#checkerscontrollerjava)**
+    - **[CheckersPiece.java](#checkerspiecejava)**
+  - **[Chess](#chess)**
+    - **[Bishop.java](#bishopjava)**
+    - **[Chess.java](#chessjava)**
+    - **[King.java](#kingjava)**
+    - **[Pawn.java](#pawnjava)**
+    - **[Queen.java](#queenjava)**
+    - **[Rook.java](#rookjava)**
+  - **[connect4](#connect4)**
+    -  **[Connect4.java](#connect4java)**
+    - **[Connect4Piece](#connect4piecejava)**
+  - **[pieces](#pieces)**
+    - **[MovingPiece.java](#movingpiecejava)**
+    - **[Piece.java](#piecejava)**
+    - **[PieceType.enum](#piecetypeenum)**
+    - **[StationaryPiece.java](#sattionarypiecejava)**
+  - **[tictactoe](#tictactoe)**
+    - **[TicTacToe.java](#tictactoejava)**
+    - **[TicTacToePiece.java](#tictactoejava)**
+  - **[Board.java](#boardjava)**
+  - **[Game.java](#gamejava)**
+  - **[GameRules.java](#gamerulesjava)**
+  - **[GamesEnum.enum](#gamesenumenum)**
+  - **[GameState.enum](#gamestateenum)**
+  - **[GameType.enum](#gametypeenum)**
+  - **[Player.java](#playerjava)**
+
+
+- **[images](#images)**
+  - **[sprites](#sprites)**
+  - **[screen](#screens)**
+
+
+- **[leaderboard](#leaderboard)**
+  - **[Leaderboard.java](#leaderboardjava)**
+
+
+- **[Matchmaking](#matchmaking)**
+  - **[MatchmakingHandler](#matchmakinghandlerjava)**
+    - **[HostingThread.java](#hostingthreadjava)**
+    - **[MatchmakingHandler.java](#matchmakinghandlerjava-)**
+    - **[MatchmakingThread.java](#matchmakingthreadjava)**
+  - **[MatchmakingState.enum](#matchmakingstateenum)**
+
+
+- **[networking](#networking--1)**
+  - **[test](#test)**
+    - **[networkingObjectSending](#networkingobjectsending)**
+      - **[GameServer.java](#gameservertjava)**
+      - **[Message.java](#messagejava)**
+      - **[PlayerClient.java](#playerclientjava)**
+      - **[PracticeGameObj.java](#practicegameobjjava)**
+    - **[DockerFile-gameS.file](#dockerfile-gamesfile)**
+    - **[GameServerT.java](#gameservertjava)**
+    - **[PlayerData.java](#playerdatajava)**
+    - **[PlayerT.java](#playertjava)**
+    - **[stubs.java](#stubsjava)**
+  - **[badwords.txt](#badwordstxt)**
+  - **[Networking](#networkingjava)**
+
+
+- **[resources.fonts](#resourcesfonts)**
+  - **[Pixelite.ttf](#pixelitetff)**
+  - **[PressStart2P-Regular.ttf](#pressstart2p-regulartff)**
+  - **[RetroGaming.ttf](#retrogamingttf)**
+  
+
+- **[screen](#screens)**
+  - **[AdminScreen.fxml](#adminscreenfxml)**
+  - **[Connect4.fxml](#connect4fxml)**
+  - **[draw_styles.css](#draw_stylescss)**
+  - **[DrawScreen.fxml](#drawscreenfxml)**
+  - **[GameSelect.fxml](#gameselectfxml)**
+  - **[Help.fxml](#helpfxml)**
+  - **[LeaderboardScreen.fxml](#leaderboardscreenfxml)**
+  - **[LeaderboardStyle.css](#leaderboardstylecss)**
+  - **[Login.fxml](#loginfxml)**
+  - **[lose_styles.css](#lose_stylescss)**
+  - **[LoseScreen.fxml](#losescreenfxml)**
+  - **[MatchType.fxml](#matchtypefxml)**
+  - **[MenuPopup.fxml](#menupopupfxml)**
+  - **[MFAPopup.fxml](#mfapopupfxml)**
+  - **[P1Checkers.fxml](#p1checkersfxml)**
+  - **[P1Chess.fxml](#p1chessfxml)**
+  - **[P2Checker.fxml](#p2checkersfxml)**
+  - **[P2Chess.fxml](#p2chessfxml)**
+  - **[Signup.fxml](#signupfxml)**
+  - **[Start.fxml](#startfxml)**
+  - **[styles.css](#stylescss)**
+  - **[TicTacToe.fxml](#tictactoefxml)**
+  - **[Userpopup.fxml](#userpopupfxml)**
+  - **[UserProfile.fxml](#userprofilefxml)**
+  - **[UserSettings.fxml](#usersettingfxml)**
+  - **[WinScreen.fxml](#winscreenfxml)**
+
+  
+- **[AdminController.java](#admincontrollerjava)**
+- **[Connect4Controller.java](#connect4controllerjava)**
+- **[DrawScreenController.java](#drawscreencontrollerjava)**
+- **[GameSelectController.java](#gameselectcontrollerjava)**
+- **[HelpController.java](#helpscontrollerjava)**
+- **[LeaderboardController.java](#leaderboardcontrollerjava)**
+- **[LoginController.java](#logincontrollerjava)**
+- **[LoseScreenController.java](#losescreencontrollerjava)**
+- **[Main.java](#mainjava-1)**
+- **[MatchTypeController](#matchtypecontrollerjava)**
+  - **[MatchmakingHandlerWatcher.java](#matchmakinghandlerwatcherjava)**
+  - **[MatchTypeController.java](#matchtypecontrollerjava)**
+- **[MenuPopUpController.java](#menupopupcontrollerjava)**
+- **[P1CheckersController.java](#p1checkerscontrollerjava)**
+- **[P1ChessController.java](#p1chesscontrollerjava)**
+- **[P2CheckersController.java](#p2checkerscontrollerjava)**
+- **[P2ChessController.java](#p2checkerscontrollerjava)**
+- **[SceneManager.java](#scenemanagerjava)**
+- **[SignUpController.java](#signupcontrollerjava)**
+- **[StartController.java](#startcontrollerjava)**
+- **[styles.css](#stylescss-)**
+- **[TicTacToeController.java](#tictactoecontrollerjava)**
+- **[UserProfileController.java](#userprofilecontrollerjava)**
+- **[UserSettingsController.java](#usersettingscontrollerjava)**
+- **[UtilityManager.java](#utilitymanagerjava)**
+- **[WinScreenController.java](#winscreencontroller)**
+
 ***
 ### Account
+  - **[statistics](#statistics)**
+    - **[AStatistic.java](#astatisticsjava)**
+    - **[IStatistics.interface](#istatisticsinterface)**
+    - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+    - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+    - **[StatisticsCheckers.java](#statisticscheckersjava)**
+    - **[StatisticsChess.java](#statisticschessjava)**
+    - **[StatisticsCombined.java](#statisticscombinedjava)**
+    - **[StatisticsConnect4.java](#statisticsconnect4java)**
+    - **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+    - **[StatisticType.enum](#statisticstypeenum)**
+ 
+
+  - **[Account.java](#acccountjava)**
+  - **[AccountStorageUtility.java](#accountstorageutilityjava)**
+  - **[CreateAccount.java](#createaccountjava)**
+  - **[NoAccountError.exception](#noaccounterrorexecption)**
+***
+### statistics
+   - **[AStatistic.java](#astatisticsjava)**
+   - **[IStatistics.interface](#istatisticsinterface)**
+   - **[MatchOutcomeHandler.java](#matchoutcomehandlerjava)**
+   - **[MatchOutcomeInvalidError.exception](#matchoutcomeinvaliderrorexecption)**
+   - **[StatisticsCheckers.java](#statisticscheckersjava)**
+   - **[StatisticsChess.java](#statisticschessjava)**
+   - **[StatisticsCombined.java](#statisticscombinedjava)**
+   - **[StatisticsConnect4.java](#statisticsconnect4java)**
+- **[StatisticsTicTacToe.java](#statisticstictactoejava)**
+- **[StatisticType.enum](#statisticstypeenum)**
+- **[Account.java](#acccountjava)**
+
+***
+#### `AStatistics.java`
+
+***
+#### `IStatistics.interface`
+#### `MatchOutcomeHandler.java`
+#### `MatchOutcomeInvalidError.execption`
+#### `StatisticsCheckers.java`
+#### `StatisticsChess.java`
+#### `StatisticsCombined.java`
+#### `StatisticsConnect4.java`
+#### `StatisticsTicTacToe.java`
+#### `StatisticsType.enum`
+#### `Acccount.java`
+#### `AccountStorageUtility.java`
+#### `CreateAccount.java`
+#### `NoAccountError.execption`
+
 ***
 ### Authentication
+- **[Authentication](#authentication-)**
+  - **[Admin.java](#adminjava)**
+  - **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+  - **[EmailSender.java](#emailsenderjava)**
+  - **[MFAAuthentication.java](#mfaauthenitcationjava)**
+  - **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+  - **[MFAInputPopUp.java](#mfainputpopupjava)**
+
+
+- **[CAPTCHImages](#captchaimages)**
+
+
+- **[ExceptionAuthentication](#exceptionauthentications)**
+  - **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+  - **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+  - **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+  - **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+
+
+- **[MFAPopUpController](#mfapopupcontrollerjava)**
 ***
-_* CAPTCHAAuthentication.java_
-  * Simple CAPTCHA system to verify that a human is interacting with the application.
-    This helps support math, image, and text based CAPTCHA. This was integrated within the Authentication folder to prevent bots from entering the system.
+### Authentication 
+- **[Admin.java](#adminjava)**
+- **[CAPTCHAAuthentication.java](#captchaauthenticationjava)**
+- **[EmailSender.java](#emailsenderjava)**
+- **[MFAAuthentication.java](#mfaauthenitcationjava)**
+- **[MFAAuthenticationV2.java](#mfaauthenticationv2java)**
+- **[MFAInputPopUp.java](#mfainputpopupjava)**
+***
+#### `Admin.java`
+* This class provides backend functionality for managing and modifying a users account within our system
+  Users can update their email, passwords, usernames and more while interacting with the database
+
+***
+#### `CAPTCHAAuthentication.java`
+* Simple CAPTCHA system to verify that a human is interacting with the application.
+  This helps support math, image, and text based CAPTCHA. This was integrated within the Authentication folder to prevent bots from entering the system.
   _* MATH CAPTCHA:_
-    * A random equation is generated for the user to answer
-  _* TEXT CAPTCHA:_
-    * A random set of words are generated for the user to answer
-  _* IMAGE CAPTCHA:_
-    * A random image is chosen from one of the CAPTCHAImages folder to be output to user
-
-_* MFAAuthentication.java_
-  * Simple MFA is integrated within our system. A random 6-digit code is generated and sent to the users email, the user receives the email on our system, enters in the code to be verified.
-  * However, before a verification code is sent to the users email, the database checks if the email exists on file first. Then proceeds with further steps.
-
-_* MFAInputPopup.java_
-  * This class creates a JavaFX pop-up dialog for entering an MFA code. It verifies the input with the expected code, it displays a success or error a message, and returns the result. It will return null if the code is incorrect.
-
-_* EmailSender.java_
-  * This class sends a 6-digit verification code via email using the Jakarta Mail API. This class connects the Gmail's SMTP server with an app-specific
-    password and then sends the code to the users email. Used for MFA verification.
-
-_* Admin.java_
-  * This class provides backend functionality for managing and modifying a users account within our system
-    Users can update their email, passwords, usernames and more while interacting with the database
+  * A random equation is generated for the user to answer
+    _* TEXT CAPTCHA:_
+  * A random set of words are generated for the user to answer
+    _* IMAGE CAPTCHA:_
+  * A random image is chosen from one of the CAPTCHAImages folder to be output to user
+***
+#### `EmailSender.java`
+* This class sends a 6-digit verification code via email using the Jakarta Mail API. This class connects the Gmail's SMTP server with an app-specific
+  password and then sends the code to the users email. Used for MFA verification.
+***
+#### `MFAAuthenitcation.java`
+* Simple MFA is integrated within our system. A random 6-digit code is generated and sent to the users email, the user receives the email on our system, enters in the code to be verified.
+* However, before a verification code is sent to the users email, the database checks if the email exists on file first. Then proceeds with further steps.
+***
+#### `MFAAuthenticationV2.java`
+* Sends a code to user's email, user enters the code, if the code is incorrect an Exception is thrown
+***
+#### `MFAInputPopup.java`
+* This class creates a JavaFX pop-up dialog for entering an MFA code. It verifies the input with the expected code, it displays a success or error an message, and returns the result. It will return null if the code is incorrect.
+***
+### CAPTCHAImages
+***
+### ExceptionAuthentications
+- **[CAPTCHAuthenticationFailedException.exception](#captchaauthenticationfailedecpectionexception)**
+- **[DecryptionFailedException.exception](#decryptionfailedexceptionexception)**
+- **[EncryptionFailedException.exception](#encryptionfailedexceptionexception)**
+- **[MFAAuthenticationFailedException.exception](#mfaauthenticationfailedexceptionexception)**
+***
+#### `CAPTCHAAuthenticationFailedEcpection.exception`
+#### `DecryptionFailedException.exception`
+#### `EncryptionFailedException.exception`
+#### `MFAAuthenticationFailedException.exception`
+***
+#### `MFAPopupController.java`
+***
 ### Com.Example
+- **[Main.java](#mainjava)**
+***
+#### `Main.java`
 ***
 ### Database
+#### `DatabaseConnection.java`
+#### `DatabaseManager.java`
+#### `DecryptionAuthenitaction.java`
+#### `ENcryptionAuthentication.java`
 ***
 ### Game
+- **[checkers](#checkers)**
+  - **[Checkers.java](#checkersjava)**
+  - **[CheckersController.java](#checkerscontrollerjava)**
+  - **[CheckersPiece.java](#checkerspiecejava)**
+- **[Chess](#chess)**
+  - **[Bishop.java](#bishopjava)**
+  - **[Chess.java](#chessjava)**
+  - **[King.java](#kingjava)**
+  - **[Pawn.java](#pawnjava)**
+  - **[Queen.java](#queenjava)**
+  - **[Rook.java](#rookjava)**
+- **[connect4](#connect4)**
+  -  **[Connect4.java](#connect4java)**
+  - **[Connect4Piece](#connect4piecejava)**
+- **[pieces](#pieces)**
+  - **[MovingPiece.java](#movingpiecejava)**
+  - **[Piece.java](#piecejava)**
+  - **[PieceType.enum](#piecetypeenum)**
+  - **[StationaryPiece.java](#sattionarypiecejava)**
+- **[tictactoe](#tictactoe)**
+  - **[TicTacToe.java](#tictactoejava)**
+  - **[TicTacToePiece.java](#tictactoejava)**
+- **[Board.java](#boardjava)**
+- **[Game.java](#gamejava)**
+- **[GameRules.java](#gamerulesjava)**
+- **[GamesEnum.enum](#gamesenumenum)**
+- **[GameState.enum](#gamestateenum)**
+- **[GameType.enum](#gametypeenum)**
+- **[Player.java](#playerjava)**
+***
+### checkers
+- **[Checkers.java](#checkersjava)**
+- **[CheckersController.java](#checkerscontrollerjava)**
+- **[CheckersPiece.java](#checkerspiecejava)**
+***
+#### `Checkers.java`
+#### `CheckersController.java`
+#### `CheckersPiece.java`
+
+***
+### chess
+- **[Bishop.java](#bishopjava)**
+  - **[Chess.java](#chessjava)**
+  - **[King.java](#kingjava)**
+  - **[Pawn.java](#pawnjava)**
+  - **[Queen.java](#queenjava)**
+  - **[Rook.java](#rookjava)**
+  ***
+#### `Bishop.java`
+#### `Chess.java`
+#### `King.java`
+#### `Knight.java`
+#### `Pawn.java`
+#### `Queen.java`
+#### `Rook.java`
+***
+### connect4
+-  **[Connect4.java](#connect4java)**
+- **[Connect4Piece](#connect4piecejava)**
+***
+#### `Connect4.java`
+#### `Connect4Piece.java`
+***
+### pieces
+- **[MovingPiece.java](#movingpiecejava)**
+- **[Piece.java](#piecejava)**
+- **[PieceType.enum](#piecetypeenum)**
+- **[StationaryPiece.java](#sattionarypiecejava)**
+***
+#### `MovingPiece.java`
+#### `Piece.java`
+#### `PieceType.enum`
+#### `SattionaryPiece.java`
+***
+### tictactoe
+- **[TicTacToe.java](#tictactoejava)**
+- **[TicTacToePiece.java](#tictactoejava)**
+***
+#### `TicTacToe.java`
+#### `TicTacToePiece`
+end of tictactoe
+#### `Board.java`
+#### `Game.java`
+#### `GameRules.java`
+#### `GamesEnum.enum`
+#### `GameState.enum`
+#### `GameType.enum`
+#### `Player.java`
+
 ***
 ### Images
+- **[sprites](#sprites)**
+- **[screen](#screens)**
+***
+### sprite
+#### `sprites`
+end of folder sprites
+#### `screens` 
+All the png that is not in the sprites folder is being used as a screen in the game.
 ***
 ### Leaderboard
+- **[Leaderboard.java](#leaderboardjava)**
+***
+#### `Leaderboard.java`
 ***
 ### Matchmaking
+- **[MatchmakingHandler](#matchmakinghandlerjava)**
+  - **[HostingThread.java](#hostingthreadjava)**
+  - **[MatchmakingHandler.java](#matchmakinghandlerjava-)**
+  - **[MatchmakingThread.java](#matchmakingthreadjava)**
+- **[MatchmakingState.enum](#matchmakingstateenum)**
 ***
-### Networking
+### MatchmakingHandler.java
+- **[HostingThread.java](#hostingthreadjava)**
+- **[MatchmakingHandler.java](#matchmakinghandlerjava-)**
+- **[MatchmakingThread.java](#matchmakingthreadjava)**
+***
+#### `MatchmakingHandler.java`    
+#### `MatchmakingThread.java`
+#### `HostingThread.java`
+end of folder matchmakinghandlertest
+#### `MatchmakingState.enum`
+***
+### Networking                    
+- **[test](#test)**
+  - **[networkingObjectSending](#networkingobjectsending)**
+    - **[GameServer.java](#gameservertjava)**
+    - **[Message.java](#messagejava)**
+    - **[PlayerClient.java](#playerclientjava)**
+    - **[PracticeGameObj.java](#practicegameobjjava)**
+  - **[DockerFile-gameS.file](#dockerfile-gamesfile)**
+  - **[GameServerT.java](#gameservertjava)**
+  - **[PlayerData.java](#playerdatajava)**
+  - **[PlayerT.java](#playertjava)**
+  - **[stubs.java](#stubsjava)**
+- **[badwords.txt](#badwordstxt)**
+- **[Networking](#networkingjava)**
+***
+### test
+- **[networkingObjectSending](#networkingobjectsending)**
+  - **[GameServer.java](#gameservertjava)**
+  - **[Message.java](#messagejava)**
+  - **[PlayerClient.java](#playerclientjava)**
+  - **[PracticeGameObj.java](#practicegameobjjava)**
+- **[DockerFile-gameS.file](#dockerfile-gamesfile)**
+- **[GameServerT.java](#gameservertjava)**
+- **[PlayerData.java](#playerdatajava)**
+- **[PlayerT.java](#playertjava)**
+- **[stubs.java](#stubsjava)**
+***
+### networkingObjectSending
+- **[GameServer.java](#gameservertjava)**
+- **[Message.java](#messagejava)**
+- **[PlayerClient.java](#playerclientjava)**
+- **[PracticeGameObj.java](#practicegameobjjava)**
+***
+#### `GameServer.java`
+#### `Message.java`
+#### `PlayerClient.java`
+#### `PracticeGameObj.java`
+
+#### `Dockerfile-gameS.file`
+#### `GameServerT.java`
+#### `PlayerData.java`
+#### `PlayerDatabase.java`
+#### `PlayerT.java`
+#### `stubs.java`
+
+#### `badwords.txt`
+#### `Networking.java`
 ***
 ### Resources.Fonts
+- **[Pixelite.ttf](#pixelitetff)**
+- **[PressStart2P-Regular.ttf](#pressstart2p-regulartff)**
+- **[RetroGaming.ttf](#retrogamingttf)**
+
+
+#### `Pixelite.tff`
+#### `PressStart2P-Regular.tff`
+#### `RetroGaming.ttf`
 ***
 ### Screens
+- **[AdminScreen.fxml](#adminscreenfxml)**
+- **[Connect4.fxml](#connect4fxml)**
+- **[draw_styles.css](#draw_stylescss)**
+- **[DrawScreen.fxml](#drawscreenfxml)**
+- **[GameSelect.fxml](#gameselectfxml)**
+- **[Help.fxml](#helpfxml)**
+- **[LeaderboardScreen.fxml](#leaderboardscreenfxml)**
+- **[LeaderboardStyle.css](#leaderboardstylecss)**
+- **[Login.fxml](#loginfxml)**
+- **[lose_styles.css](#lose_stylescss)**
+- **[LoseScreen.fxml](#losescreenfxml)**
+- **[MatchType.fxml](#matchtypefxml)**
+- **[MenuPopup.fxml](#menupopupfxml)**
+- **[MFAPopup.fxml](#mfapopupfxml)**
+- **[P1Checkers.fxml](#p1checkersfxml)**
+- **[P1Chess.fxml](#p1chessfxml)**
+- **[P2Checker.fxml](#p2checkersfxml)**
+- **[P2Chess.fxml](#p2chessfxml)**
+- **[Signup.fxml](#signupfxml)**
+- **[Start.fxml](#startfxml)**
+- **[styles.css](#stylescss)**
+- **[TicTacToe.fxml](#tictactoefxml)**
+- **[Userpopup.fxml](#userpopupfxml)**
+- **[UserProfile.fxml](#userprofilefxml)**
+- **[UserSettings.fxml](#usersettingfxml)**
+- **[WinScreen.fxml](#winscreenfxml)**
+***
+#### `AdminScreen.fxml`
+#### `Checkers.fxml`
+#### `Chess.fxml`
+#### `Connect4.fxml`
+#### `draw_styles.css`
+#### `DrawScreen.fxml`
+#### `GameSelect.fxml`
+#### `Help.fxml`
+#### `LeaderboardScreen.fxml`
+#### `LeaderboardStyle.css`
+#### `Login.fxml`
+#### `lose_styles.css`
+#### `LoseScreen.fxml`
+#### `MatchType.fxml`
+#### `MenuPopup.fxml`
+#### `MFAPopup.fxml`
+#### `P1Checkers.fxml`
+#### `P1Chess.fxml`
+#### `P2Checkers.fxml`
+#### `P2Chess.fxml`
+#### `Signup.fxml`
+#### `Start.fxml`
+#### `styles.css`
+#### `TicTacToe.fxml`
+#### `Userpopup.fxml`
+#### `UserProfile.fxml`
+#### `UserSetting.fxml`
+#### `WinScreen.fxml`
+***
+
+#### `AdminController.java`
+#### `Connect4Controller.java`
+#### `DrawScreenController.java`
+#### `GameSelectController.java`
+#### `HelpScontroller.java`
+#### `LeaderboardController.java`
+#### `LoginController.java`
+#### `LoseScreenController.java`
+#### `Main.java`
+***
+### MatchTypeController.java
+- **[MatchmakingHandlerWatcher.java](#matchmakinghandlerwatcherjava)**
+- **[MatchTypeController.java](#matchtypecontrollerjava)**
+***
+#### `MatchmakingHandlerWatcher.java`
+#### `MatchTypeController.java`
+***
+#### `MenuPopupController.java`
+#### `P1CheckersController.java`
+#### `P1ChessController.java`
+#### `P2CheckersController.java`
+#### `P2ChessController.java`
+#### `SceneManager.java`
+#### `SignUpController.java`
+#### `StartController.java`
+#### `styles.css`          
+#### `TicTacToeController.java`
+#### `UserProfileController.java`
+#### `UserSettingsController.java`
+#### `UtilityManager.java`
+#### `WinScreenController`
+
+
+***
 ## Test Folder
+
+## website
+- **[assets](#assets-)**
+- **[all.css](#allcss)**
+- **[checker.css](#checkerscss)**
+- **[checkers.html](#checkershtml)**
+- **[checkers.js](#checkersjs)**
+- **[chess.css](#chesscss)**
+- **[chess.html](#chesshtml)**
+- **[chess.js](#chessjs)**
+- **[connect4.css](#connect4css)**
+- **[connect4.html](#connect4html)**
+- **[connect4.js](#connect4js)**
+- **[help.css](#helpcss-)**
+- **[help.html](#helphtml)**
+- **[index.css](#indexcss)**
+- **[index.html](#indexhtml)**
+- **[login.css](#logincss)**
+- **[login.html](#loginhtml)**
+- **[login.js](#loginjs)**
+- **[scripts.js](#scriptsjs)**
+- **[signup.css](#signupcss)**
+- **[signup.html](#signuphtml)**
+- **[signup.js](#signupjs)**
+- **[store.css](#storecss)**
+- **[store.html](#storehtml)**
+- **[store.js](#storejs)**
+- **[tictactoe.css](#tictactoecss)**
+- **[tictactoe.html](#tictactoehtml)**
+- **[tictactoe.js](#tictactoejs)**
+
+### assets     
+All sprites and Screen used for the website. **[omgame.club](https://omgame.club/)** 
+
+#### `all.css`
+#### `checkers.css`
+#### `checkers.html`
+#### `checkers.js`
+#### `chess.css`
+#### `chess.html`
+#### `chess.js`
+#### `connect4.css`
+#### `connect4.html`
+#### `connect4.js`
+#### `help.css`      
+#### `help.html`
+#### `index.css`
+#### `index.html`
+#### `login.css`
+#### `login.html`
+#### `login.js`
+#### `scripts.js`
+#### `signup.css`
+#### `signup.html`
+#### `signup.js`
+#### `store.css`
+#### `store.html`
+#### `store.js`
+#### `tictactoe.css`
+#### `tictactoe.html`
+#### `tictactoe.js`
+
+
 
 ## Git Log & Git link
 - **[git_log_.csv](#git_log_csv)**
