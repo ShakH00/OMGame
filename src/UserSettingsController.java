@@ -7,6 +7,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -19,7 +21,14 @@ public class UserSettingsController extends Application {
     private TextField displayNameField;
     @FXML
     private TextArea bioTextArea;
-
+    @FXML
+    private AnchorPane rootPane;
+    @FXML
+    private StackPane backButton;
+    @FXML
+    private StackPane button1;
+    @FXML
+    private StackPane button2;
 
     @FXML private RadioButton hideStatsYes;
     @FXML private RadioButton hideStatsFriends;
@@ -33,7 +42,7 @@ public class UserSettingsController extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("screens/UserSettings.fxml"));
-            Scene scene = new Scene(loader.load(), 950, 600);
+            Scene scene = new Scene(loader.load(), 800, 570);
 
             // Load custom fonts
             String pressStartFont = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -58,6 +67,10 @@ public class UserSettingsController extends Application {
 
     @FXML
     public void initialize() {
+        UtilityManager.createScaleTransition(backButton);
+        UtilityManager.createScaleTransition(button1);
+        UtilityManager.createScaleTransition(button2);
+
         // Bind display name field to label
         if (nameDisplay != null && displayNameField != null) {
             nameDisplay.textProperty().bind(displayNameField.textProperty());
@@ -73,6 +86,12 @@ public class UserSettingsController extends Application {
         friendVisYes.setToggleGroup(friendVisGroup);
         friendVisFriends.setToggleGroup(friendVisGroup);
         friendVisNo.setToggleGroup(friendVisGroup);
+    }
+
+    @FXML
+    public void backButton() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/UserProfile.fxml");
     }
 
     public static void main(String[] args) {
