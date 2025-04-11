@@ -14,7 +14,7 @@
     <!-- Background Image -->
     <ImageView fitWidth="950" fitHeight="600" preserveRatio="false">
         <image>
-            <Image url="file:/D:/seng300-project/src/images/adjustedstars.png"/>
+            <Image url="@../images/adjustedstars.png"/>
         </image>
     </ImageView>
 
@@ -30,7 +30,7 @@
 
             <ImageView fx:id="avatarImage" fitWidth="70" fitHeight="70">
                 <image>
-                    <Image url="file:/D:/seng300-project/src/images/sprites/tetrisCatIcon.png"/>
+                    <Image url="@../images/sprites/tetrisCatIcon.png"/>
                 </image>
             </ImageView>
 
