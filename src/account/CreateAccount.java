@@ -18,13 +18,13 @@ public class CreateAccount {
      * @param username the desired username
      * @param email the user's email
      * @param password the desired password
-     * @return true if account is created successfully; false otherwise
+     * @return the new Account if account is created successfully; null otherwise
      */
-    public static boolean createAccount(String username, String email, String password) throws EncryptionFailedException {
+    public static Account createAccount(String username, String email, String password) throws EncryptionFailedException {
         Account newAccount = new Account(-1, username, email, password);
         newAccount = EncryptionAuthentication.encryptAccount(newAccount);
         DatabaseManager.saveAccount(newAccount);
-        return true;
+        return newAccount;
     }
 
     public static boolean isValidUsername(String username) {
