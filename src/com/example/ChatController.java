@@ -200,7 +200,7 @@ public class ChatController {
             try {
 
                 TextCensorship.CensorResult censorResult = TextCensorship.censorChat(message);
-                String filteredMessage = censorResult.getFilteredMessage();
+                String filteredMessage = censorResult.filteredMessage();
 
 
                 String currentLog = chatLogs.getOrDefault(playerID, "");

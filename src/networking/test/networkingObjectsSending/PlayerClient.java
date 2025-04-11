@@ -194,7 +194,7 @@ public class PlayerClient extends Application {
         sendchat.setOnAction(e -> {
             String msg = chatInput.getText().trim();
             TextCensorship.CensorResult temp = censorChat(msg);
-            msg = temp.getFilteredMessage();
+            msg = temp.filteredMessage();
             if (!msg.isEmpty()) {
                 String formatted = "player" + playerID + ": " + msg + "\n";
                 chatArea.appendText(formatted);

@@ -129,7 +129,7 @@ public class ImprovedChatServer {
         private void processChatMessage(String message) {
 
             TextCensorship.CensorResult censored = TextCensorship.censorChat(message);
-            String filteredContent = censored.getFilteredMessage();
+            String filteredContent = censored.filteredMessage();
 
 
             logChat(clientId, filteredContent);

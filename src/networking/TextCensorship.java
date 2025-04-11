@@ -18,9 +18,9 @@ public class TextCensorship {
 
     /**
      * Censors words from a list in CensoredWordList.txt, including spaced/dotted variations.
-     * Based on Stack Overflow file reading: https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
-     * Bypass regex based on: https://stackoverflow.com/questions/19605150/regex-to-match-characters-separated-by-non-characters
-     * Censored Wordlist: https://github.com/coffee-and-fun/google-profanity-words
+     * Based on Stack Overflow file reading: <a href="https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java">...</a>
+     * Bypass regex based on: <a href="https://stackoverflow.com/questions/19605150/regex-to-match-characters-separated-by-non-characters">...</a>
+     * Censored Wordlist: <a href="https://github.com/coffee-and-fun/google-profanity-words">...</a>
      *
      * @author Hatem Chehade
      */
@@ -69,12 +69,8 @@ public class TextCensorship {
      */
     public static String generateCensor(String word) {
         if (word.length() <= 1) return "*";
-        StringBuilder censored = new StringBuilder();
-        censored.append(word.charAt(0));
-        for (int i = 1; i < word.length(); i++) {
-            censored.append("*");
-        }
-        return censored.toString();
+        return word.charAt(0) +
+                "*".repeat(word.length() - 1);
     }
 
     /**
@@ -93,31 +89,20 @@ public class TextCensorship {
     }
 
     /**
-     * CensorResult class to hold the filtered message.
-     *
-     * @author Hatem Chehade
-     */
-    public static class CensorResult {
-        private final String filteredMessage;
-
-        /**
-         * Constructor for CensorResult.
+         * CensorResult class to hold the filtered message.
          *
-         * @param filteredMessage string after censorship
          * @author Hatem Chehade
          */
-        public CensorResult(String filteredMessage) {
-            this.filteredMessage = filteredMessage;
+        public record CensorResult(String filteredMessage) {
+            /**
+             * Gets the filtered message.
+             *
+             * @return filteredMessage message after censorship
+             * @author Hatem Chehade
+             */
+            @Override
+            public String filteredMessage() {
+                return filteredMessage;
+            }
         }
-
-        /**
-         * Gets the filtered message.
-         *
-         * @return filteredMessage message after censorship
-         * @author Hatem Chehade
-         */
-        public String getFilteredMessage() {
-            return filteredMessage;
-        }
-    }
 }
