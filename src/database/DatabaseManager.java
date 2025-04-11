@@ -366,6 +366,96 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Edits an account from the database based on the userID.
+     *
+     * @param userID the ID of the account to be edited
+     * @return true if an account was edited, false otherwise
+     */
+    public static Boolean updateAccountEmail(Integer userID, String newEmail) {
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
+        try {
+            String sql = "UPDATE Accounts SET email = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, newEmail);
+                stmt.setInt(2, userID);
+                stmt.executeUpdate();
+                System.out.println("Account with ID " + userID + " updated successfully.");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
+        }
+    }
+
+    /**
+     * Edits an account from the database based on the userID.
+     *
+     * @param userID the ID of the account to be edited
+     * @return true if an account was edited, false otherwise
+     */
+    public static Boolean updateAccountUsername(Integer userID, String newUsername) {
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
+        try {
+            String sql = "UPDATE Accounts SET username = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, newUsername);
+                stmt.setInt(2, userID);
+                stmt.executeUpdate();
+                System.out.println("Account with ID " + userID + " updated successfully.");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
+        }
+    }
+
+    /**
+     * Edits an account from the database based on the userID.
+     *
+     * @param userID the ID of the account to be edited
+     * @return true if an account was edited, false otherwise
+     */
+    public static Boolean updateAccountPassword(Integer userID, String newPassword) {
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
+        try {
+            String sql = "UPDATE Accounts SET password = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
+                stmt.setString(1, newPassword);
+                stmt.setInt(2, userID);
+                stmt.executeUpdate();
+                System.out.println("Account with ID " + userID + " updated successfully.");
+                return true;
+            }catch (EncryptionFailedException e){
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
+        }
+    }
+
 
     /**
      * Get a temporary ID for storing a guest Account in the matchmaking table
