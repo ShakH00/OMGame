@@ -193,14 +193,14 @@ public class Networking {
         }
     }
 
-    public void handleCloseChat() {
+    public void disconnect() {
         try {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
             }
             isConnected = false;
         } catch (IOException e) {
-            System.out.println("Error closing chat: " + e.getMessage());
+            System.out.println("Error closing server: " + e.getMessage());
         }
 
 
