@@ -48,7 +48,7 @@ public class MatchmakingHandler {
 
     public boolean tryJoinHost(int selfID, Account account, String roomCode, String networkingInformation) {
         System.out.println("Trying to join room with code: " + roomCode);
-        if (queryRoomCodeInTable(roomCode)) {
+        if (queryRoomCodeInTable(roomCode) && queryHostIDByRoomCode(roomCode) != selfID) {
             System.out.println("Success!");
             // Get opponent details
             int opponentID = queryHostIDByRoomCode(roomCode);
@@ -209,7 +209,7 @@ public class MatchmakingHandler {
         String roomCode = "";
         int playerNo = -1;
 
-        String sql = "INSERT INTO " +
+        String sql = "REPLACE INTO " +
                 "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
@@ -249,7 +249,7 @@ public class MatchmakingHandler {
         int opponentID = -1;
         int playerNo = -1;
 
-        String sql = "INSERT INTO " +
+        String sql = "REPLACE INTO " +
                 "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
@@ -290,7 +290,7 @@ public class MatchmakingHandler {
         String roomCode = "";
         int playerNo = -1;
 
-        String sql = "INSERT INTO " +
+        String sql = "REPLACE INTO " +
                 "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
