@@ -11,11 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.swing.text.html.ImageView;
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Random;
 
 public class CaptchaPopupController extends Application  {
@@ -71,7 +66,7 @@ public class CaptchaPopupController extends Application  {
 
 
 
-    // TODO; Ethan
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -100,7 +95,6 @@ public class CaptchaPopupController extends Application  {
         }
     }
 
-//TODO; Put in the checks before closing
     @FXML
     private void submitButton(){
         try {
