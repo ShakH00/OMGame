@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSelectController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #169fd4; -fx-background-color: linear-gradient(to bottom,  #169fd4,  #0174aa);;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameSelectController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a7a093" height="1691.0" layoutX="-646.0" layoutY="-557.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbcbb4" height="1691.0" layoutX="-646.0" layoutY="-570.0" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="2114.0" />
@@ -18,7 +23,7 @@
             <Image url="@../images/twinklingstars.gif" />
          </image>
       </ImageView>
-      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1031.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
+      <ImageView fitHeight="2048.0" fitWidth="2880.0" layoutX="-1029.0" layoutY="-740.0" pickOnBounds="true" preserveRatio="true" scaleX="0.277778" scaleY="0.277778" scaleZ="0.277778">
          <image>
             <Image url="@../images/chessboard.png" />
          </image>
@@ -38,7 +43,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" prefHeight="35.0" prefWidth="134.0" onMouseClicked="#switchToCheckers">
+      <StackPane fx:id="purpleCartridge" layoutX="530.0" layoutY="273.0" onMouseClicked="#switchToCheckers" prefHeight="35.0" prefWidth="134.0">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
                <image>
@@ -91,25 +96,118 @@
                </font></Text>
          </children>
       </StackPane>
-      <StackPane fx:id="backButton" layoutX="153.0" layoutY="97.0" onMouseClicked="#switchToHome">
+
+      <StackPane fx:id="backButton" layoutX="11.0" layoutY="14.0" onMouseClicked="#switchToHome">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="49.0" fitWidth="114.0" layoutX="2.4000000953674316" layoutY="10.199999809265137" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/pink.png" />
+                  <Image url="@../images/yellow.png" />
                </image>
+               <effect>
+                  <DropShadow height="5.84" offsetX="1.0" offsetY="1.0" radius="0.96" width="0.0">
+                     <color>
+                        <Color opacity="0.6208207011222839" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </ImageView>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Back">
+            <Text fill="WHITE" layoutX="19.0" layoutY="36.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="&lt; BACK" textAlignment="CENTER" wrappingWidth="78.0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Text>
          </children>
       </StackPane>
-      <ImageView fx:id="profile" fitHeight="58.0" fitWidth="46.0" layoutX="621.0" layoutY="92.0" onMouseClicked="#switchToProfile" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-         <image>
-            <Image url="@../images/pink_circlebutton.png" />
-         </image>
-      </ImageView>
       <Text fx:id="errorMessage" fill="RED" layoutX="152.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Message:" visible="false" wrappingWidth="514.1670780000001" />
+      <Pane fx:id="joinPopup" prefHeight="569.0" prefWidth="800.0" visible="false">
+         <children>
+            <Rectangle fill="#0f101b7a" height="598.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.48632219433784485" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.057999998331069946" green="0.05939999967813492" blue="0.10000000149011612" opacity="0.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </stroke>
+            </Rectangle>
+            <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="254.0" layoutX="199.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="5.0" width="423.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.48632219433784485" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9882352948188782" green="0.5960784554481506" blue="0.7372549176216125" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.9882352948188782" green="0.5960784554481506" blue="0.7372549176216125" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.3921568691730499" blue="0.6196078658103943" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </stroke>
+            </Rectangle>
+            <Label fx:id="gameSelectedLabel" layoutX="94.0" layoutY="338.0" prefHeight="19.0" prefWidth="640.0" style="-fx-alignment: center;" text="You selected: Chess" textAlignment="CENTER" textFill="#254663">
+               <font>
+                  <Font name="Press Start 2P Regular" size="17.0" />
+               </font>
+            </Label>
+
+            <StackPane fx:id="backButton1" layoutX="202.0" layoutY="160.0">
+               <children>
+                  <ImageView fitHeight="66.0" fitWidth="54.0" onMouseClicked="#onCancelButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/cancel_circlebutton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="335.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/sprites/tetrisCat2.GIF" />
+               </image>
+            </ImageView>
+            <Label fx:id="waitingLabel" layoutX="202.0" layoutY="369.0" prefHeight="19.0" prefWidth="423.0" style="-fx-alignment: center;" text="Meoww" textAlignment="CENTER" textFill="#254663">
+               <font>
+                  <Font name="Press Start 2P Regular" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

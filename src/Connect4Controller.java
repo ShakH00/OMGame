@@ -1,10 +1,14 @@
+import account.Account;
 import game.GameState;
+import game.GameType;
 import game.connect4.Connect4;
 import game.pieces.Piece;
 import javafx.application.Application;
+import javafx.css.Match;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +35,17 @@ public class Connect4Controller extends Application {
     private StackPane chatButton;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Label p1Label;
+    @FXML
+    private Label p2Label;
+
+    Account activeAccount;
+
+    private String selfUsername;
+    private String opponentUsername;
+
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -105,6 +120,7 @@ public class Connect4Controller extends Application {
             System.out.println("It’s a draw!");
         } else {
             game.nextTurn(); // Switch turn
+            updatePlayerLabels();
         }
     }
 
@@ -129,6 +145,7 @@ public class Connect4Controller extends Application {
                         imageView.setImage(new Image(ASSETS_PATH + "blueChecker.png"));
                     //    System.out.println("Piece color: " + piece.getColor());
                     }
+
                 }
             }
         }
@@ -156,8 +173,15 @@ public class Connect4Controller extends Application {
         return null;
     }
 
+    public void setAccount(Account account) {
+        this.activeAccount = account;
+    }
+
 
         public void initialize() {
+
+//        p1Label.setText(opponentUsername);
+//        p2Label.setText(selfUsername);
             // game.start to push game out of setup mode
             game.start();
 
@@ -168,10 +192,10 @@ public class Connect4Controller extends Application {
             UtilityManager.createScaleTransition(menuButton);
             UtilityManager.createScaleTransition(chatButton);
         }
-// TODO; get popup done
+
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
     @FXML
@@ -226,6 +250,19 @@ public class Connect4Controller extends Application {
         private void handleMouseExited(MouseEvent event) {
             handImageView.setVisible(false);
         }
+
+
+    private void updatePlayerLabels() {
+        if (game.getGameState() == GameState.P2_TURN) {
+            p1Label.setOpacity(.5);
+            p2Label.setOpacity(1);
+        } else if (game.getGameState() == GameState.P1_TURN || game.getGameState() == GameState.SETUP) {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(.5);
+        }
+
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
