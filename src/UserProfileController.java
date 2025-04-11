@@ -1,3 +1,6 @@
+import account.Account;
+import account.statistics.AStatistics;
+import game.GameType;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class UserProfileController extends Application {
     @FXML
@@ -91,6 +96,10 @@ public class UserProfileController extends Application {
     @FXML
     private StackPane backButton;
 
+    private Account currentAccount;
+
+
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -151,6 +160,14 @@ public class UserProfileController extends Application {
         UtilityManager.addHoverEffect(friendsPane);
         UtilityManager.createScaleTransition(settingsButton);
         UtilityManager.createScaleTransition(backButton);
+
+        currentAccount = LoginController.getAccount();
+
+        if (currentAccount != null) {
+            username.setText(currentAccount.getUsername());
+            System.out.println(Arrays.toString(currentAccount.getGameStatistics(GameType.TICTACTOE)));
+        }
+
     }
 
     @FXML

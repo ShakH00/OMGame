@@ -124,7 +124,7 @@ public class LoginController extends Application {
     }
 
     @FXML
-    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+    private void continueAsGuest(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
