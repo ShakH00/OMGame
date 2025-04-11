@@ -1,33 +1,11 @@
-package networking.test;
+package networking;
 
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CensorshipTest {
-
-    public static void main(String[] args) {
-        String[] testMessages = {
-                "you are stupid",
-                "you are s t u p i d",
-                "you are s.t.u.p.i.d",
-                "you are s_t_u_p_i_d",
-                "you are stupid, dumb, and an idiot!",
-                "StUpId",
-                "what a stupid stupid person",
-                "",
-                "this is fine"
-        };
-
-        for (String msg : testMessages) {
-            CensorResult result = censorChat(msg);
-            System.out.println("Before: " + msg);
-            System.out.println("After:  " + result.getFilteredMessage());
-            System.out.println("Censored Words: " + result.getCensorCount());
-            System.out.println();
-        }
-    }
+public class TextCensorship {
 
     /**
      * Censors words from a list in badwords.txt, including spaced/dotted variations.
@@ -38,7 +16,8 @@ public class CensorshipTest {
         List<String> badWords = new ArrayList<>();
         int censorCount = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/networking/badwords.txt"))) {
+        // Censored Wordlist: https://github.com/coffee-and-fun/google-profanity-words
+        try (BufferedReader br = new BufferedReader(new FileReader("src/networking/CensoredWordList.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 badWords.add(line.trim());

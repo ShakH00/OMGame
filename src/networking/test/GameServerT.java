@@ -1,4 +1,4 @@
-package networking.test;
+/* package networking.test;
 
 import game.Game;
 
@@ -247,4 +247,4 @@ public class GameServerT {
         gs.acceptConnections();
 
     }
-}
+}*/

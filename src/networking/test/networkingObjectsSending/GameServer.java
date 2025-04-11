@@ -1,4 +1,4 @@
-package networking.test.networkingObjectsSending;
+/* package networking.test.networkingObjectsSending;
 
 import game.Game;
 
@@ -246,4 +246,4 @@ public class GameServer {
         }
 
     }
-}
+}*/

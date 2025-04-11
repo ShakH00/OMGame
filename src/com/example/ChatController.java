@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import networking.test.CensorshipTest;
+import networking.TextCensorship;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -199,7 +199,7 @@ public class ChatController {
         if (!message.isEmpty()) {
             try {
 
-                CensorshipTest.CensorResult censorResult = CensorshipTest.censorChat(message);
+                TextCensorship.CensorResult censorResult = TextCensorship.censorChat(message);
                 String filteredMessage = censorResult.getFilteredMessage();
 
 

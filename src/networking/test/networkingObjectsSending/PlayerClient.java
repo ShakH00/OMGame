@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import networking.test.CensorshipTest;
+import networking.TextCensorship;
 
 import java.io.*;
 
@@ -21,7 +21,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
-import static networking.test.CensorshipTest.censorChat;
+import static networking.TextCensorship.censorChat;
 
 
 public class PlayerClient extends Application {
@@ -193,7 +193,7 @@ public class PlayerClient extends Application {
 
         sendchat.setOnAction(e -> {
             String msg = chatInput.getText().trim();
-            CensorshipTest.CensorResult temp = censorChat(msg);
+            TextCensorship.CensorResult temp = censorChat(msg);
             msg = temp.getFilteredMessage();
             if (!msg.isEmpty()) {
                 String formatted = "player" + playerID + ": " + msg + "\n";
