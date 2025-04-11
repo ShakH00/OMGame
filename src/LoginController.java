@@ -1,4 +1,5 @@
 import account.Account;
+import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
 import authentication.MFAPopupController;
@@ -32,13 +33,13 @@ public class LoginController extends Application {
     @FXML
     private StackPane submitButton;
     @FXML
-    private StackPane guestButton;
-    @FXML
     private Text guestText;
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Text notificationText;
 
 
     @Override
@@ -98,7 +99,8 @@ public class LoginController extends Application {
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user = DatabaseManager.queryAccountByEmail(username);
+        Account user;
+        user = DatabaseManager.queryAccountByEmail(username);
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
@@ -111,18 +113,29 @@ public class LoginController extends Application {
             if(user.getPassword().equals(password)){
                 // If the password matches the username/email, log them in
                 openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+                SceneManager.switchScene(stage, "screens/MatchType.fxml");
                 return;
             }
         }
-        // TODO: Print system error message
-        System.out.println("Incorrect username or password");
+
+        if (username.isEmpty()){
+            notificationText.setText("Please enter a username!");
+            return;
+        }
+        else if (password.isEmpty()) {
+            notificationText.setText("Please enter a password!");
+            return;
+        } else {
+            notificationText.setText("Incorrect username or password!");
+            return;
+        }
     }
 
     @FXML
-    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
+    private void continueAsGuest(javafx.scene.input.MouseEvent mouseEvent) {
+        LoggedInAccount.setAccount(new Account());
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
 

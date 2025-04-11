@@ -1,5 +1,7 @@
+import account.LoggedInAccount;
 import authentication.Authentication.CAPTCHAAuthentication;
 import authentication.ExceptionsAuthentication.CAPTCHAAuthenticationFailedException;
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.swing.text.html.ImageView;
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Random;
 
 public class CaptchaPopupController extends Application  {
@@ -63,11 +60,13 @@ public class CaptchaPopupController extends Application  {
             textBased.setText(cap.getInstructions());
             prompt.setText(cap.getPrompt());
         }
+
+        UtilityManager.createScaleTransition(submitButton);
     }
 
 
 
-    // TODO; Ethan
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -96,7 +95,6 @@ public class CaptchaPopupController extends Application  {
         }
     }
 
-//TODO; Put in the checks before closing
     @FXML
     private void submitButton(){
         try {
@@ -113,9 +111,10 @@ public class CaptchaPopupController extends Application  {
             }
             UtilityManager.popupClose(rootPane);
             Stage stage = (Stage) rootPane.getScene().getWindow();
-            SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+            SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
             System.out.println("Captcha failed");
+            DatabaseManager.deleteAccount(LoggedInAccount.getAccount().getEmail());
             UtilityManager.popupClose(rootPane);
         }
 

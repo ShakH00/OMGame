@@ -1,13 +1,22 @@
 import account.Account;
+<<<<<<< src/MatchTypeController.java
 import account.statistics.MatchOutcomeHandler;
+=======
+import account.LoggedInAccount;
+import com.mysql.cj.log.Log;
+>>>>>>> src/MatchTypeController.java
 import database.DatabaseManager;
+import game.Game;
 import game.GameType;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,18 +25,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import matchmaking.MatchmakingHandler;
 import matchmaking.MatchmakingState;
 
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class MatchTypeController extends Application {
 
     @FXML
     AnchorPane rootPane;
+
     @FXML
     private Pane hostGamePane;
     @FXML
@@ -67,6 +79,34 @@ public class MatchTypeController extends Application {
 
     @FXML
     private TextField roomCodeInput;
+    @FXML
+    AnchorPane GameSelectPane;
+    @FXML
+    AnchorPane MatchTypePane;
+    @FXML
+    StackPane greenCartridge;
+    @FXML
+    StackPane orangeCartridge;
+    @FXML
+    StackPane pinkCartridge;
+    @FXML
+    StackPane purpleCartridge;
+    @FXML
+    StackPane GameSelectbackButton;
+    @FXML
+    Text errorMessage;
+    @FXML
+    Pane joinPopup;
+    @FXML
+    Label GameSelectwaitingLabel;
+    @FXML
+    Label GameSelectgameSelectedLabel;
+    @FXML
+    private StackPane GameSelectbackButton1;
+
+    public  MatchTypeController controller;
+    public  MatchTypeController MatchTypeController;
+    Account activeAccount;
 
     @FXML
     private Label waitingLabel;
@@ -85,14 +125,19 @@ public class MatchTypeController extends Application {
     @FXML
     private Pane codePopup;
 
+    @FXML
+    private StackPane profile;
+    @FXML
+    private StackPane leaderboard;
+    @FXML
+    private StackPane help;
+
     private final GameType[] gameTypes = new GameType[]{
             GameType.CHESS,
             GameType.CHECKERS,
             GameType.TICTACTOE,
             GameType.CONNECT4
     };
-
-    Account activeAccount;
 
     @Override
     public void start(Stage primaryStage) {
@@ -131,7 +176,7 @@ public class MatchTypeController extends Application {
             primaryStage.show();
 
             // TODO: remove temporary lines below
-            SceneManager.registerScenes("screens/Connect4.fxml");
+            SceneManager.registerScenes("screens/Connect4.fxml", "screens/GameSelect.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,22 +205,54 @@ public class MatchTypeController extends Application {
         UtilityManager.createScaleTransition(submitButton2);
         UtilityManager.createScaleTransition(selectButton);
 
-        System.out.println("Chess: " + chess);
-        System.out.println("Checkers: " + checkers);
-        System.out.println("TicTacToe: " + tictactoe);
-        System.out.println("Connect4: " + connect4);
+
+        UtilityManager.createScaleTransition(leaderboard);
+        UtilityManager.createScaleTransition(profile);
+        UtilityManager.createScaleTransition(help);
+
+        UtilityManager.createScaleTransition(GameSelectbackButton);
+        UtilityManager.createTranslationTransition(greenCartridge);
+        UtilityManager.createTranslationTransition(pinkCartridge);
+        UtilityManager.createTranslationTransition(purpleCartridge);
+        UtilityManager.createTranslationTransition(orangeCartridge);
+        UtilityManager.createScaleTransition(GameSelectbackButton1);
+
         gameFrames = new Pane[] {chess, checkers, tictactoe, connect4};
 
         Rectangle clip = new Rectangle();
-        clip.widthProperty().bind(gamesPane.widthProperty());  // Bind the clip width to the StackPane width
-        clip.heightProperty().bind(gamesPane.heightProperty()); // Bind the clip height to the StackPane height
-        gamesPane.setClip(clip);  // Apply the clip to the StackPane
+        clip.widthProperty().bind(gamesPane.widthProperty());
+        clip.heightProperty().bind(gamesPane.heightProperty());
+        gamesPane.setClip(clip); // clip stackpane to stay within bounds
 
         startDotAnimation();
 
 
     }
 
+    @FXML
+    private void switchToLB(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/LeaderboardScreen.fxml");
+    }
+
+    @FXML
+    private void switchToProfile(javafx.scene.input.MouseEvent mouseEvent) {
+
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/UserProfile.fxml");
+    }
+
+    @FXML
+    private void openHelpPopup(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/Help.fxml", rootPane);
+    }
+
+
+    @FXML
+    private void GameSelectSwitchToHome(javafx.scene.input.MouseEvent mouseEvent) {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
+    }
 
     @FXML
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
@@ -184,9 +261,25 @@ public class MatchTypeController extends Application {
     }
 
     @FXML
-    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/GameSelect.fxml");
+    private void switchToGameSelect(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
+        // transition effect ?
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), MatchTypePane);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished(e -> {
+            MatchTypePane.setVisible(false);
+
+            // Prepare the new pane
+            GameSelectPane.setOpacity(0.0);
+            GameSelectPane.setVisible(true);
+
+            // Fade in the new pane
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), GameSelectPane);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+        fadeOut.play();
     }
 
 
@@ -214,7 +307,7 @@ public class MatchTypeController extends Application {
         slideIn.play();
 
         // update frame index
-        currentFrameIndex = (currentFrameIndex + 1) % gameFrames.length; // Move to the next frame
+        currentFrameIndex = (currentFrameIndex + 1) % gameFrames.length; // move to the next frame
     }
 
     // to swipe left
@@ -239,18 +332,22 @@ public class MatchTypeController extends Application {
         slideIn.play();
 
         // update frame index
-        currentFrameIndex = (currentFrameIndex - 1 + gameFrames.length) % gameFrames.length; // Move to the previous frame
+        currentFrameIndex = (currentFrameIndex - 1 + gameFrames.length) % gameFrames.length; // move to the previous frame
     }
 
     public void setAccount(Account account) {
         this.activeAccount = account;
     }
 
+
+    // private matchmaking: hosting and joining games
     @FXML
-    private void handleSelectButton() {
+    private void handleSelectButton() throws IOException {
         GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
 
+
         // Get hosting details
+        activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
         int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = handler.getUniqueRoomCode();
@@ -276,18 +373,47 @@ public class MatchTypeController extends Application {
         }
     }
 
+
+    @FXML
+    private void switchToConnect4() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Connect 4");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CONNECT4);
+    }
+
+    @FXML
+    private void switchToTicTacToe() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: TicTacToe");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.TICTACTOE);
+    }
+
+    @FXML
+    private void switchToChess() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Chess");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CHESS);
+    }
+
+    @FXML
+    private void switchToCheckers() throws IOException {
+        GameSelectgameSelectedLabel.setText("You selected: Checkers");
+        joinPopup.setVisible(true);
+        handleMatchmakingButton(GameType.CHECKERS);
+    }
+
+
+
+
     // TODO: YOU NEED TO USE THE FUNCTIONS IN HERE FOR MATCHMAKING !!!
     @FXML
-    private void handleMatchmakingButton() {
-        GameType selectedGame = gameTypes[currentFrameIndex]; // get gametype based on frame index
-
+    void handleMatchmakingButton(GameType selectedGame) throws IOException {
+        System.out.println("Selected game: " + selectedGame);
         // Get matchmaking details
+        activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
-        int accountID = activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String networkingInformation = "";      // TODO: Integrate w/ networking
-
-        // Show matchmaking popup
-        // TODO: Start matchmaking ("waiting ...") UI
 
         // Wait for someone to join
         try {
@@ -304,8 +430,8 @@ public class MatchTypeController extends Application {
     }
 
     @FXML
-    private void handleStopMatchmakingButton() {
-        // TODO: Disable matchmaking ("waiting ...") UI
+    void handleStopMatchmakingButton() throws IOException {
+        activeAccount = LoggedInAccount.getAccount();
         activeAccount.getMatchmakingHandler().stopMatchmaking();
     }
 
@@ -314,15 +440,18 @@ public class MatchTypeController extends Application {
         swipeToNext();
     }
 
+
     @FXML
     private void onSwipeBackButtonClicked() {
         swipeBack();
     }
 
     @FXML
-    private void onCancelButtonClicked() {
+    private void onCancelButtonClicked() throws IOException {
         hostPopup.setVisible(false);
+        joinPopup.setVisible(false);
         joinCodePopup.setVisible(false);
+        handleStopMatchmakingButton();
     }
 
     @FXML
@@ -355,9 +484,11 @@ public class MatchTypeController extends Application {
         // add dots one by one to the waitingLabel
         if (dotCount < 3) {
             waitingLabel.setText(baseText + ".".repeat(dotCount + 1));
+            GameSelectwaitingLabel.setText(baseText + ".".repeat(dotCount + 1));
             dotCount++;
         } else {
             waitingLabel.setText(baseText);  // reset back to base
+            GameSelectwaitingLabel.setText(baseText + ".".repeat(dotCount + 1));
             dotCount = 0;
         }
     }
@@ -386,13 +517,18 @@ public class MatchTypeController extends Application {
                            String opponentUsername,
                            int opponentElo,
                            String opponentNetworkingInformation,
-                           int opponentPlayerNo){
-
+                           int opponentPlayerNo)
+    {
         // Prepare the MatchOutcomeHandler variables
         MatchOutcomeHandler.affectElo = affectsElo;
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
+    
+        System.out.println("Trying to start GUI");
+
+        // TODO: EVIL !!!!!!!
+        Stage stage = (Stage) rootPane.getScene().getWindow();
 
         // switch to that game screen
         System.out.println("Trying to start GUI");
@@ -406,15 +542,17 @@ public class MatchTypeController extends Application {
     // Helper method to map selected game type to corresponding FXML screen
     private static String getGameScreenFXML(GameType selectedGame) {
         return switch (selectedGame) {
-            case CHESS -> "screens/Chess.fxml";         // Replace with actual screen path for Chess
-            case CHECKERS -> "screens/Checkers.fxml";   // Replace with actual screen path for Checkers
-            case TICTACTOE -> "screens/TicTacToe.fxml"; // Replace with actual screen path for TicTacToe
-            case CONNECT4 -> "screens/Connect4.fxml";   // Replace with actual screen path for Connect4
+            case CHESS -> "screens/P1Chess.fxml";
+            case CHECKERS -> "screens/P1Checkers.fxml";
+            case TICTACTOE -> "screens/TicTacToe.fxml";
+            case CONNECT4 -> "screens/Connect4.fxml";
         };
     }
 
     @FXML
     private void onSubmitButtonClicked() {
+
+        activeAccount = LoggedInAccount.getAccount();
         int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = roomCodeInput.getText();
         String networkingInformation = "";                  // TODO: Networking integration
@@ -423,8 +561,7 @@ public class MatchTypeController extends Application {
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
         boolean success = handler.tryJoinHost(accountID, activeAccount, roomCode, networkingInformation);
         if (success){
-            // Start another thread called "watcher" which watches the matchmaking handler
-            // Once the watcher finds a match, it will call startMatch() in this class with match-related parameters.
+            // Start the GUI
             MatchmakingHandlerWatcher watcher = new MatchmakingHandlerWatcher(this, handler);
             watcher.start();
         }
@@ -440,6 +577,7 @@ public class MatchTypeController extends Application {
         launch(args);
     }
 }
+
 
 class MatchmakingHandlerWatcher extends Thread {
     private final MatchTypeController guiController;
@@ -467,6 +605,7 @@ class MatchmakingHandlerWatcher extends Thread {
                 int opponentPlayerNo = handler.m_opponentPlayerNo;
 
                 guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation, opponentPlayerNo);
+                
                 break;
             }
 
@@ -479,4 +618,6 @@ class MatchmakingHandlerWatcher extends Thread {
         }
         handler.startGame = false;
     }
+
+
 }
