@@ -22,10 +22,12 @@ public class MatchmakingHandler {
     public String m_selfUsername;
     public int m_selfElo;
     public String m_selfNetworkingInformation;
+    public int m_selfPlayerNo;
     public int m_opponentID;
     public String m_opponentUsername;
     public int m_opponentElo;
     public String m_opponentNetworkingInformation;
+    public int m_opponentPlayerNo;
 
 
 
@@ -46,16 +48,24 @@ public class MatchmakingHandler {
 
     public boolean tryJoinHost(int selfID, Account account, String roomCode, String networkingInformation) {
         System.out.println("Trying to join room with code: " + roomCode);
-        if (queryRoomCodeInTable(roomCode)) {
+        if (queryRoomCodeInTable(roomCode) && queryHostIDByRoomCode(roomCode) != selfID) {
             System.out.println("Success!");
             // Get opponent details
             int opponentID = queryHostIDByRoomCode(roomCode);
             GameType game = queryGame(opponentID);
 
+            // Decide player number
+            int playerNo = MatchmakingHandler.getRandomPlayerNo();
+
             // Tell opponent that you are ready to match
             setState(opponentID, MatchmakingState.FOUND_MATCH);
             setOpponentID(opponentID, selfID);
+            int opponentPlayerNo = playerNo == 1 ? 2 : 1;
+            setPlayerNo(opponentID, opponentPlayerNo);
+
+            // Add self to table so opponent can reference self if necessary
             addToTable(selfID, game, account.getElo(game), MatchmakingState.PLAYING, networkingInformation);
+            setPlayerNo(selfID, playerNo);
 
             // Start match (GUI will read variables set by this function)
             startMatch(selfID, game, false, opponentID);
@@ -89,7 +99,7 @@ public class MatchmakingHandler {
     public void startMatch(int id, GameType game, boolean affectsElo, int opponentID){
         // Update self state (both locally and in matchmaking table)
         state = MatchmakingState.PLAYING;
-        setState(id, MatchmakingState.PLAYING); // update state in database, preventing others from matching with this
+        setState(id, MatchmakingState.PLAYING); // update state in database, preventing others from matching with this one
 
         // Set variables for GUI to read
         startGame = true;   // flag tells the MatchTypeController (matching GUI) that a match is found
@@ -99,12 +109,14 @@ public class MatchmakingHandler {
         m_selfUsername = DatabaseManager.queryAccountByID(id) != null ? DatabaseManager.queryAccountByID(id).getUsername() : "Guest";
         m_selfElo = queryElo(id);
         m_selfNetworkingInformation = queryNetworkingInfo(id);
+        m_selfPlayerNo = queryPlayerNo(id);
         m_opponentID = opponentID;
         m_opponentUsername = DatabaseManager.queryAccountByID(opponentID) != null ? DatabaseManager.queryAccountByID(opponentID).getUsername() : "Guest";
         m_opponentElo = queryElo(opponentID);
         m_opponentNetworkingInformation = queryNetworkingInfo(opponentID);
+        m_opponentPlayerNo = queryPlayerNo(opponentID);
 
-        System.out.printf("Match found: You (ID %s) vs. %s (ID %s)\n", id, m_opponentUsername, opponentID);
+        System.out.printf("Match found: You (ID %s) as P%d vs. %s (ID %s) as P%d\n", id, m_selfPlayerNo, m_opponentUsername, opponentID, m_opponentPlayerNo);
     }
 
     /**
@@ -172,11 +184,18 @@ public class MatchmakingHandler {
         StringBuilder roomCodeString = new StringBuilder ();
         Random rand = new Random();
         for (int i = 0; i < 6; i++) {
-            String possibleIDCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            String possibleIDCharacters = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
             int randIndex = rand.nextInt(possibleIDCharacters.length());
             roomCodeString.append(possibleIDCharacters.charAt(randIndex));
         }
         return roomCodeString.toString();
+    }
+
+    /**
+     * Returns either 1 or 2 randomly
+     */
+    public static int getRandomPlayerNo() {
+        return Math.random() < 0.5 ? 1 : 2;
     }
 
     // Player starts matchmaking
@@ -188,10 +207,11 @@ public class MatchmakingHandler {
         int eloRange = getNewMatchmakingRange(gameType, startTime);
         int opponentID = -1;
         String roomCode = "";
+        int playerNo = -1;
 
-        String sql = "INSERT INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "REPLACE INTO " +
+                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -206,6 +226,7 @@ public class MatchmakingHandler {
                 stmt.setInt(8, opponentID);
                 stmt.setString(9, networkingInfo);
                 stmt.setString(10, roomCode);
+                stmt.setInt(11, playerNo);
 
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -226,10 +247,11 @@ public class MatchmakingHandler {
         double recentTime = System.currentTimeMillis();
         int eloRange = -1;
         int opponentID = -1;
+        int playerNo = -1;
 
-        String sql = "INSERT INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "REPLACE INTO " +
+                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -244,6 +266,7 @@ public class MatchmakingHandler {
                 stmt.setInt(8, opponentID);
                 stmt.setString(9, networkingInfo);
                 stmt.setString(10, roomCode);
+                stmt.setInt(11, playerNo);
 
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -265,10 +288,11 @@ public class MatchmakingHandler {
         int eloRange = -1;
         int opponentID = -1;
         String roomCode = "";
+        int playerNo = -1;
 
-        String sql = "INSERT INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "REPLACE INTO " +
+                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -283,6 +307,7 @@ public class MatchmakingHandler {
                 stmt.setInt(8, opponentID);
                 stmt.setString(9, networkingInfo);
                 stmt.setString(10, roomCode);
+                stmt.setInt(11, playerNo);
 
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -404,6 +429,25 @@ public class MatchmakingHandler {
         if (conn != null) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, newOpponentID);
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("Connection failed");
+        }
+    }
+
+    protected void setPlayerNo(int id, int newPlayerNo){ //
+        String sql = "UPDATE matchmaking SET player_no = ? WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn != null) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, newPlayerNo);
                 stmt.setInt(2, id);
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -650,6 +694,28 @@ public class MatchmakingHandler {
         }
         return -1;
     }
+
+    protected int queryPlayerNo(int id){
+        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        Connection conn = DatabaseConnection.getConnection();
+
+        if (conn != null) {
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("player_no");
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.closeConnection(conn);
+            }
+        } else {
+            System.out.println("No connection available");
+        }
+        return -1;
+    }
 }
 
 class HostingThread extends Thread {
@@ -737,17 +803,22 @@ class MatchmakingThread extends Thread {
 
             // Search for other players who this can match with
             if (!handler.queryAllOtherIDs(selfID).isEmpty()) {
-                System.out.println("ID: " + handler.queryAllOtherIDs(selfID).getFirst());
                 for (int opponentID : handler.queryAllOtherIDs(selfID)) {
                     double msSinceLastCommunicated = (System.currentTimeMillis() - handler.queryRecentTime(opponentID));
                     if (msSinceLastCommunicated > 5000) {
                         System.out.printf("Disconnecting account with id %s because they have been inactive for >5 seconds\n", opponentID);
                         handler.removeFromMatchmakingTable(opponentID);
                     } else if (handler.canMatch(selfID, opponentID)) {
+                        // Decide which player you are.
+                        int thisPlayerNo = MatchmakingHandler.getRandomPlayerNo();
+                        handler.setPlayerNo(selfID, thisPlayerNo);
+
                         // Notify the other that they are going to match with you
                         System.out.printf("Found acceptable match with id %s. Updating their information...\n", opponentID);
-                        handler.setState(opponentID, MatchmakingState.FOUND_MATCH);
-                        handler.setOpponentID(opponentID, selfID);
+                        handler.setState(opponentID, MatchmakingState.FOUND_MATCH); // Set FOUND_MATCH
+                        handler.setOpponentID(opponentID, selfID);                  // Set their opponent as your ID
+                        int opponentPlayerNo = thisPlayerNo == 1 ? 2 : 1;
+                        handler.setPlayerNo(opponentID, opponentPlayerNo);          // Set their player no. as the opposite of yours
 
                         // Start the match on your client
                         handler.startMatch(selfID, game, true, opponentID);

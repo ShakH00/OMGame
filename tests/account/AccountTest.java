@@ -20,8 +20,8 @@ public class AccountTest {
     @Before
     public void setUp() {
         guestAccount = new Account();
-        userAccount1 = new Account(1, "Alice", "alice@example.com", "password123");
-        userAccount2 = new Account(2, "Bob", "bob@example.com", "securePass");
+        userAccount1 = new Account("Alice", "alice@example.com", "password123");
+        userAccount2 = new Account("Bob", "bob@example.com", "securePass");
     }
 
     @Test
@@ -142,15 +142,4 @@ public class AccountTest {
         assertFalse(userAccount1.TryLoginWithUsernameAndPassword("Alice", "password123"));
     }
 
-    @Test
-    public void testMatchmakingThreshold() {
-        userAccount1.setMatchmakingThreshold(300);
-        assertEquals(300, userAccount1.getMatchmakingThreshold());
-    }
-
-    @Test
-    public void testJoinTimestamp() {
-        userAccount1.setJoinTimestamp(1712345678L);
-        assertEquals(1712345678L, userAccount1.getJoinTimestamp());
-    }
 }

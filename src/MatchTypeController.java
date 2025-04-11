@@ -1,6 +1,10 @@
 import account.Account;
+<<<<<<< src/MatchTypeController.java
+import account.statistics.MatchOutcomeHandler;
+=======
 import account.LoggedInAccount;
 import com.mysql.cj.log.Log;
+>>>>>>> src/MatchTypeController.java
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
@@ -152,6 +156,19 @@ public class MatchTypeController extends Application {
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
             primaryStage.setResizable(false);
+
+            MatchTypeController controller = loader.getController();
+
+            Account guestAccount = new Account();
+            Account player1Account = new Account("Arwa", "arwa@gmail.com", "arwa123");
+            Account player2Account = new Account("Elijah", "elijah@gmail.com", "elijah123");
+            DatabaseManager.saveAccount(player1Account);
+            DatabaseManager.saveAccount(player2Account);
+            player1Account = DatabaseManager.queryAccountByUsername("Arwa");
+            player2Account = DatabaseManager.queryAccountByUsername("Elijah");
+
+            // CHANGE THE ACCOUNT ARG HERE BEFORE RUNNING THE CONTROLLER TO START WITH A DIFFERENT ACCOUNT
+            controller.setAccount(player2Account);
 
             // Set up the primary stage
             primaryStage.setTitle("OMG!");
@@ -495,20 +512,29 @@ public class MatchTypeController extends Application {
                            String selfUsername,
                            int selfElo,
                            String selfNetworkingInformation,
+                           int selfPlayerNo,
                            int opponentID,
                            String opponentUsername,
                            int opponentElo,
-                           String opponentNetworkingInformation) {
+                           String opponentNetworkingInformation,
+                           int opponentPlayerNo)
+    {
+        // Prepare the MatchOutcomeHandler variables
+        MatchOutcomeHandler.affectElo = affectsElo;
+        MatchOutcomeHandler.opponentElo = opponentElo;
+        MatchOutcomeHandler.opponentID = opponentID;
+        MatchOutcomeHandler.opponentUsername = opponentUsername;
+    
         System.out.println("Trying to start GUI");
 
         // TODO: EVIL !!!!!!!
         Stage stage = (Stage) rootPane.getScene().getWindow();
 
         // switch to that game screen
+        System.out.println("Trying to start GUI");
+        Stage stage = (Stage) rootPane.getScene().getWindow();
         String gameScreenFXML = getGameScreenFXML(game);
         SceneManager.switchScene(stage, gameScreenFXML);
-
-
     }
 
 
@@ -571,13 +597,15 @@ class MatchmakingHandlerWatcher extends Thread {
                 String selfUsername = handler.m_selfUsername;
                 int selfElo = handler.m_selfElo;
                 String selfNetworkingInformation = handler.m_selfNetworkingInformation;
+                int selfPlayerNo = handler.m_selfPlayerNo;
                 int opponentID = handler.m_opponentID;
                 String opponentUsername = handler.m_opponentUsername;
                 int opponentElo = handler.m_opponentElo;
                 String opponentNetworkingInformation = handler.m_opponentNetworkingInformation;
+                int opponentPlayerNo = handler.m_opponentPlayerNo;
 
-
-                guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation);
+                guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation, opponentPlayerNo);
+                
                 break;
             }
 
