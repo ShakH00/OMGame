@@ -11,19 +11,23 @@
 
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="UserSettingsController" prefWidth="950" prefHeight="600">
 
+    <!-- Background Image -->
     <ImageView fitWidth="950" fitHeight="600" preserveRatio="false">
         <image>
             <Image url="file:/D:/seng300-project/src/images/adjustedstars.png"/>
         </image>
     </ImageView>
 
+    <!-- Main Content Layout -->
     <HBox alignment="TOP_CENTER" spacing="50">
         <padding>
             <Insets top="30" right="30" bottom="30" left="30"/>
         </padding>
 
+        <!-- === LEFT PANEL === -->
         <VBox alignment="TOP_CENTER" spacing="18" prefWidth="250" maxHeight="320"
               style="-fx-background-color: #2b355e; -fx-border-color: #fda4ba; -fx-border-width: 3px; -fx-border-radius: 20px; -fx-background-radius: 20px;">
+
             <ImageView fx:id="avatarImage" fitWidth="70" fitHeight="70">
                 <image>
                     <Image url="file:/D:/seng300-project/src/images/sprites/tetrisCatIcon.png"/>
@@ -38,21 +42,24 @@
 
             <Rectangle width="120" height="5" arcWidth="10" arcHeight="10" fill="CYAN"/>
 
-            <Label text="I may be a cat,\nBut around these\nparts, they call\nme the GOAT 🐐🐐"
-                   textFill="LIGHTGRAY" alignment="CENTER">
-                <font>
-                    <Font name="Courier New" size="14"/>
-                </font>
-            </Label>
+            <!-- Editable TextArea for user bio -->
+            <TextArea fx:id="bioTextArea"
+                      wrapText="true"
+                      prefWidth="200" prefHeight="90"
+                      text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐"
+                      style="-fx-control-inner-background: #2b355e; -fx-text-fill: lightgray; -fx-font-family: 'Courier New'; -fx-font-size: 13px; -fx-background-color: transparent; -fx-border-width: 0;"/>
         </VBox>
 
+        <!-- === RIGHT PANEL === -->
         <VBox alignment="TOP_LEFT" spacing="25">
+
             <Text text="EDIT PROFILE" fill="WHITE">
                 <font>
                     <Font name="RetroGaming" size="26"/>
                 </font>
             </Text>
 
+            <!-- === Form Fields === -->
             <VBox spacing="20">
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <Label text="Display name:" textFill="WHITE">
@@ -89,6 +96,7 @@
                 </HBox>
             </VBox>
 
+            <!-- === Privacy Toggles === -->
             <VBox spacing="15">
                 <Text text="Privacy" fill="WHITE">
                     <font>
@@ -103,11 +111,11 @@
                         </font>
                     </Label>
                     <RadioButton fx:id="hideStatsYes" text="yes"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                     <RadioButton fx:id="hideStatsFriends" text="friends"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                     <RadioButton fx:id="hideStatsNo" text="no"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                 </HBox>
 
                 <HBox spacing="10" alignment="CENTER_LEFT">
@@ -117,11 +125,11 @@
                         </font>
                     </Label>
                     <RadioButton fx:id="friendVisYes" text="yes"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                     <RadioButton fx:id="friendVisFriends" text="friends"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                     <RadioButton fx:id="friendVisNo" text="no"
-                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px;"/>
+                                 style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';"/>
                 </HBox>
             </VBox>
         </VBox>
