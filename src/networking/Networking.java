@@ -85,7 +85,7 @@ public class Networking {
      * @return Returns current time in the format: yy.mm.dd hh:mm:ss.ms
      * @author Nova Driscoll
      */
-    private static String getTime() {
+    public static String getTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat(timeFormatting);
         return format.format(cal.getTime());

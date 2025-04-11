@@ -1,6 +1,6 @@
 /* package networking.test;
 
-import game.tictactoe.TicTacToe_Logic;
+import game.Game;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -18,62 +18,26 @@ import java.util.Map;
 
 public class GameServerT {
     private Map<Integer, ServerSideConnection> disconnectedPlayers;
-    private boolean gameInProgress;
     private ServerSocket ss;
     private int numPlayers;
+
     private ServerSideConnection player1;
-    // these a the server side equilivant to the package drop off pouints i think
     private ServerSideConnection player2;
-    private int turnsMade;
-    private int maxTurns;
+
     private int[] values;
     private char[][] server2dChar;
-    private HashMap<Integer, String> chatlogs;
-
-
-    // store  the button num that the player clicked on, befroe being sent to the other player
-    // don in the run method while loop, for each turns
-    private String player1ButtonNum;
-    private String player2ButtonNum;
-
 
     //GAME LOGIC UHHH
-    private TicTacToe_Logic ticTacToeGame = new TicTacToe_Logic();
+    private Game cachedGame;
 
     public GameServerT() {
-        System.out.println("--game server--");
+        System.out.println("--Game Server--");
         numPlayers = 0;
-        turnsMade = 0;
-        maxTurns = 90;
-        values = new int[4];
-        server2dChar = new char[3][3];
         disconnectedPlayers = new HashMap<>();
-        gameInProgress = false;
-
-
-
-        for (int i = 0; i < 4; i++) { //Ading the values fromt he server not
-            values[i] = i;
-        }
-
-        //
-        for (int i = 0; i < server2dChar.length; i++) {
-            for (int j = 0; j < server2dChar[i].length; j++) {
-                server2dChar[i][j] = ' ';
-            }
-        }
-
-        for (int i = 0; i < server2dChar.length; i++) {
-            for (int j = 0; j < server2dChar[i].length; j++) {
-                System.out.print("["+ server2dChar[i][j] + "]");
-            }
-            System.out.println();
-        }
-
         try{
             ss = new ServerSocket(30000);
         } catch(IOException e){
-            System.out.println("IOException from game server constructor");
+            System.out.println("IOException from GameServer constructor");
             e.printStackTrace();
         }
     }
@@ -84,20 +48,19 @@ public class GameServerT {
             while (numPlayers < 2) {
                 Socket s = ss.accept();
                 numPlayers++;
-                System.out.println("webSocketNotes.Player #" + numPlayers + " has joined the game");
+                System.out.println("Player #" + numPlayers + " has joined the game.");
                 ServerSideConnection ssc = new ServerSideConnection(s, numPlayers);
                 if (numPlayers == 1) {
                     player1 = ssc;
                 } else {
                     player2 = ssc;
                 }
-
                 Thread t = new Thread(ssc); //what ever is the in the ssc run in the new "THREAD"
                 t.start();
             }
-            System.out.println("2 player reach, no more looking for players");
+            System.out.println("2 players reached, no longer looking for players.");
         }catch(IOException e){
-            System.out.println("IOException from game server acceptConnections");
+            System.out.println("IOException: acceptConnections");
         }
     }
 
@@ -142,11 +105,6 @@ public class GameServerT {
         }
     }
 
-
-    private boolean isValidMove(String move, int playerID) {
-        return true;
-    }
-
     private class ServerSideConnection implements Runnable{
         private Socket socket;
         private DataInputStream dataIn;
@@ -169,23 +127,12 @@ public class GameServerT {
         public void run(){ // insctruction we want to run on a NEW thread
             try {
                 dataOut.writeInt(playerID);
-                dataOut.writeInt(maxTurns);
-
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        dataOut.writeChar(server2dChar[i][j]);
-                    }
-                }
                 dataOut.flush();
-                TicTacToe_Logic game = new TicTacToe_Logic();
 
                 while (true) {
                     if(playerID == 1){
                         player1ButtonNum = String.valueOf(dataIn.readChar());  // Reads one char and converts to String // read it from player 1
-                        System.out.println("Payer 1 clicked button #" + player1ButtonNum);
-                        // Update array
-                        //processGameLogicP1(player1ButtonNum);
-                        processGameLogic(1,player1ButtonNum);
+                        System.out.println("Player 1 clicked button #" + player1ButtonNum);
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
                         }
@@ -195,23 +142,13 @@ public class GameServerT {
                     }
                     else{
                         player2ButtonNum = String.valueOf(dataIn.readChar());
-                        System.out.println("Payer 2 clicked button #" + player2ButtonNum);
+                        System.out.println("Player 2 clicked button #" + player2ButtonNum);
                         System.out.println("input before p2" + player2ButtonNum);
-                        //processGameLogicP2(player2ButtonNum);
-                        processGameLogic(2,player2ButtonNum);
-
-
                         for (char[] row : server2dChar) {
                             System.out.println(Arrays.toString(row));
                         }
                         player1.sendButtonNum(player2ButtonNum);
                         player1.send2dCharArray();
-                    }
-                    turnsMade++;
-
-                    if(endGame()){
-                        System.out.println("Max turns reached");
-                        break; // break from the game and end
                     }
                 }
             } catch (IOException e) {
@@ -242,9 +179,7 @@ public class GameServerT {
             }
         }
 
-        public boolean endGame(){
-            return turnsMade >= maxTurns;
-        }
+
 
         public void processMove(String input, int playerID) {
             try {
@@ -268,18 +203,6 @@ public class GameServerT {
             } catch (Exception e) {
                 System.out.println("Error processing move for player " + playerID + ": " + e.getMessage());
             }
-        }
-
-        public void processGameLogic(int playerNum, String input){
-
-            if(playerNum == 1 ){
-                ticTacToeGame.play(playerNum, input);
-                server2dChar = ticTacToeGame.getBoard();
-            }else {
-                ticTacToeGame.play(playerNum, input);
-                server2dChar = ticTacToeGame.getBoard();
-            }
-
         }
             // I ASKED chatgtp to give be a better fromat instead of 2 sets fo 9 if statments
         public void processGameLogicP1(String input) {
@@ -324,5 +247,4 @@ public class GameServerT {
         gs.acceptConnections();
 
     }
-}
-*/
+}*/
