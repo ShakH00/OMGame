@@ -24,7 +24,7 @@ public class DatabaseManager {
 
 
     public static ArrayList<Account> queryAllAccounts() {
-        String sql = "SELECT * FROM accounts";
+        String sql = "SELECT * FROM Accounts";
         Connection conn = DatabaseConnection.getConnection();
         ArrayList<Account> accounts = new ArrayList<>();
 
@@ -86,7 +86,7 @@ public class DatabaseManager {
      * get account returns an account from the database
      */
     public static Account queryAccountByID(Integer id) {
-        String sql = "SELECT * FROM accounts WHERE id = ?";
+        String sql = "SELECT * FROM Accounts WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Account account = null;
 
@@ -486,7 +486,7 @@ public class DatabaseManager {
      * @return  int unique ID which should be overwritten if the guest is converted to an Account
      */
     public static int getTempID(){
-        String sql = "SELECT GREATEST(COALESCE((SELECT MAX(id) FROM accounts), 0), COALESCE((SELECT MAX(id) FROM matchmaking), 0)) + 100 AS temp_id";
+        String sql = "SELECT GREATEST(COALESCE((SELECT MAX(id) FROM Accounts), 0), COALESCE((SELECT MAX(id) FROM matchmaking), 0)) + 100 AS temp_id";
         Connection conn = DatabaseConnection.getConnection();
         int tempID = -1;
 

@@ -121,8 +121,7 @@ public class LoginController extends Application {
         }
         if(accountExists){
             try {
-                String enteredPas = EncryptionAuthentication.encryptionDriver(password);
-                if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(enteredPas)){
+                if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(password)) {
                     // If the password matches the username/email, log them in
                     openMFAPopup(user.getEmail());
                     SceneManager.switchScene(stage, "screens/MatchType.fxml");
@@ -130,14 +129,11 @@ public class LoginController extends Application {
                 }
             } catch (DecryptionFailedException e) {
                 System.out.println(e);
-            }catch (EncryptionFailedException e) {
-                System.out.println(e);
             }
-        }else if (username.isEmpty()){
+        } else if (username.isEmpty()){
             notificationText.setText("Please enter a username!");
             return;
-        }
-        else if (password.isEmpty()) {
+        } else if (password.isEmpty()) {
             notificationText.setText("Please enter a password!");
             return;
         } else {
