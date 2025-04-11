@@ -1631,3 +1631,5 @@ This layout makes the interface clean and functional, with large, easily clickab
 #### `team.md`
 **Purpose:** Everyone who worked on the project with the names and UCID.
 ***
+<img src="website/assets/tetrisCat1.GIF" alt="drawing" width= ""/>
+
