@@ -45,7 +45,6 @@ public class TextCensorship {
             Matcher exactMatcher = exactPattern.matcher(filteredMessage);
             while (exactMatcher.find()) {
                 filteredMessage = exactMatcher.replaceFirst(censor);
-
                 exactMatcher = exactPattern.matcher(filteredMessage); // reset matcher
             }
 
@@ -54,7 +53,6 @@ public class TextCensorship {
             Matcher bypassMatcher = bypassPattern.matcher(filteredMessage);
             while (bypassMatcher.find()) {
                 filteredMessage = bypassMatcher.replaceFirst(censor);
-
                 bypassMatcher = bypassPattern.matcher(filteredMessage); // reset matcher
             }
         }
@@ -89,20 +87,20 @@ public class TextCensorship {
     }
 
     /**
-         * CensorResult class to hold the filtered message.
+     * CensorResult record to hold the filtered message.
+     *
+     * @author Hatem Chehade
+     */
+    public record CensorResult(String filteredMessage) {
+        /**
+         * Gets the filtered message.
          *
+         * @return filteredMessage message after censorship
          * @author Hatem Chehade
          */
-        public record CensorResult(String filteredMessage) {
-            /**
-             * Gets the filtered message.
-             *
-             * @return filteredMessage message after censorship
-             * @author Hatem Chehade
-             */
-            @Override
-            public String filteredMessage() {
-                return filteredMessage;
-            }
+        @Override
+        public String filteredMessage() {
+            return filteredMessage;
         }
+    }
 }
