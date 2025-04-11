@@ -106,7 +106,6 @@ public class LoginController extends Application {
         }
         Account user = null;
         try {
-            System.out.println(username);
             user = DatabaseManager.queryAccountByEmail(EncryptionAuthentication.encryptionDriver(username));
         } catch (EncryptionFailedException e) {
 
