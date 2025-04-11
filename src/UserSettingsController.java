@@ -3,7 +3,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -14,6 +16,14 @@ public class UserSettingsController extends Application {
 
     @FXML
     private TextField displayNameField;
+
+    @FXML private RadioButton hideStatsYes;
+    @FXML private RadioButton hideStatsFriends;
+    @FXML private RadioButton hideStatsNo;
+
+    @FXML private RadioButton friendVisYes;
+    @FXML private RadioButton friendVisFriends;
+    @FXML private RadioButton friendVisNo;
 
     @Override
     public void start(Stage primaryStage) {
@@ -44,13 +54,26 @@ public class UserSettingsController extends Application {
 
     @FXML
     public void initialize() {
+        // Bind display name field to label
         if (nameDisplay != null && displayNameField != null) {
             nameDisplay.textProperty().bind(displayNameField.textProperty());
         }
+
+        // Set up exclusive toggle groups for privacy sections
+        ToggleGroup hideStatsGroup = new ToggleGroup();
+        hideStatsYes.setToggleGroup(hideStatsGroup);
+        hideStatsFriends.setToggleGroup(hideStatsGroup);
+        hideStatsNo.setToggleGroup(hideStatsGroup);
+
+        ToggleGroup friendVisGroup = new ToggleGroup();
+        friendVisYes.setToggleGroup(friendVisGroup);
+        friendVisFriends.setToggleGroup(friendVisGroup);
+        friendVisNo.setToggleGroup(friendVisGroup);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+
 
