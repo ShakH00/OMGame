@@ -91,7 +91,7 @@ public class GameSelectController extends Application {
     @FXML
     private void switchToHome(javafx.scene.input.MouseEvent mouseEvent) {
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        SceneManager.switchScene(stage, "screens/Start.fxml");
+        SceneManager.switchScene(stage, "screens/MatchType.fxml");
     }
 
 
