@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import matchmaking.MatchData;
 
 
 /**
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
  *
  * @author Shakil Hussain and Arwa A, modified by Adam Chan
  */
-public class P1ChessController extends Application {
+public class P1ChessController extends Application implements DataInitializable<MatchData>{
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -60,12 +61,27 @@ public class P1ChessController extends Application {
     @FXML
     private StackPane queenButton;
 
+    private String selfUsername;
+    private String opponentUsername;
+    private int selfPlayerNo;
+    private int opponentPlayerNo;
+
 
     private int selectedRow = -1;
     private int selectedCol = -1;
     private MovingPiece promotionPawn; // temporarily store the pawn
 
+    @Override
+    public void initializeData(MatchData data) {
+        // now we SHOULD be able to get info from matchData
+        this.selfUsername = data.getSelfUsername();
+        this.opponentUsername = data.getOpponentUsername();
+        this.selfPlayerNo = data.getSelfPlayerNo();
+        this.opponentPlayerNo = data.getOpponentPlayerNo();
 
+        updatePlayerLabels();
+
+    }
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -197,6 +213,16 @@ public class P1ChessController extends Application {
     }
 
     private void updatePlayerLabels() {
+        if (selfPlayerNo == 1) {
+            // you are p1, and opponent is p2
+            p1Label.setText(selfUsername);
+            p2Label.setText(opponentUsername);
+
+        } else {
+            // otherwise, you are p2, and opponent is p1
+            p1Label.setText(opponentUsername);
+            p2Label.setText(selfUsername);
+        }
         if (game.getState() == GameState.P2_TURN) {
             p1Label.setOpacity(.5);
             p2Label.setOpacity(1);

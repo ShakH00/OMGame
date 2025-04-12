@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TicTacToeController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TicTacToeController">
    <children>
       <ImageView fitHeight="590.0" fitWidth="830.0" layoutX="-28.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -82,12 +87,12 @@
             </ImageView>
          </children>
       </GridPane>
-      <Label fx:id="p1Label" layoutX="549.0" layoutY="31.0" prefHeight="26.0" prefWidth="188.0" text="Username" textFill="#42b0da">
+      <Label fx:id="p1Label" layoutX="549.0" layoutY="31.0" prefHeight="26.0" prefWidth="188.0" text="user" textFill="#42b0da">
          <font>
             <Font name="Press Start 2P Regular" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="p2Label" layoutX="597.0" layoutY="106.0" prefHeight="26.0" prefWidth="184.0" text="Username" textFill="#fe8fb7">
+      <Label fx:id="p2Label" layoutX="597.0" layoutY="106.0" prefHeight="26.0" prefWidth="184.0" text="user" textAlignment="RIGHT" textFill="#fe8fb7">
          <font>
             <Font name="Press Start 2P Regular" size="23.0" />
          </font>
@@ -116,7 +121,7 @@
          </children>
       </StackPane>
 
-      <StackPane onMouseClicked="#goToChat" fx:id="chatButton" layoutX="721.0" layoutY="494.0">
+      <StackPane fx:id="chatButton" layoutX="721.0" layoutY="494.0" onMouseClicked="#goToChat">
          <children>
             <ImageView fitHeight="75.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -391,12 +391,12 @@
           </children>
        </StackPane>
 
-      <Label fx:id="p1Label" layoutX="200.0" layoutY="528.0" prefHeight="27.0" prefWidth="152.0" text="Player 1" textFill="#b04da9">
+       <Label fx:id="p1Label" layoutX="200.0" layoutY="528.0" prefHeight="27.0" prefWidth="199.0" text="Player 1" textFill="#b04da9">
          <font>
             <Font name="Press Start 2P Regular" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="p2Label" layoutX="469.0" layoutY="528.0" prefHeight="27.0" prefWidth="152.0" text="Player 2" textFill="#ff8fb7">
+       <Label fx:id="p2Label" layoutX="422.0" layoutY="528.0" prefHeight="27.0" prefWidth="199.0" style="-fx-alignment: CENTER_RIGHT;" text="Player 2" textFill="#ff8fb7">
          <font>
             <Font name="Press Start 2P Regular" size="18.0" />
          </font>

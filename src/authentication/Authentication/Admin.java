@@ -33,12 +33,12 @@ public class Admin {
      * @param newPassword the new password to set
      */
     public static void updatePassword(Integer id, String newPassword){
-        try {
-            newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
+//        try {
+//            newPassword = EncryptionAuthentication.encryptionDriver(newPassword);
             DatabaseManager.updateAccountPassword(id, newPassword);
-        }catch (EncryptionFailedException e){
-            System.out.println(e);
-        }
+//        }catch (EncryptionFailedException e){
+//            System.out.println(e);
+//        }
     }
 
     /**
