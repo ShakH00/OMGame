@@ -8,6 +8,7 @@
  */
 package game.chess;
 
+import account.statistics.StatisticType;
 import game.*;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
@@ -357,11 +358,8 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
-            matchOutcome();
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
-            matchOutcome();
-
         }
     }
 
@@ -441,15 +439,60 @@ public class Chess extends Game {
     /**
      * updates gameState based on the match outcome
      */
-    public void matchOutcome() {
-        // Incomplete, still needs to check for stalemate and surrender.
-        if (gameState.equals(GameState.P2_WIN)){
-            System.out.println("Player 2 wins!");
-            getStats();
-        } else if (gameState.equals(GameState.P1_WIN)){
-            System.out.println("Player 1 wins!");
-            getStats();
+    public HashMap<StatisticType, Integer> matchOutcomeP1() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
         }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP1Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP1Captures());
+
+        return matchOutcome;
+    }
+
+    public HashMap<StatisticType, Integer> matchOutcomeP2() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
+        }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
+
+        return matchOutcome;
     }
 
     public void drawGame()

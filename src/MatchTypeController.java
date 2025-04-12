@@ -331,7 +331,7 @@ public class MatchTypeController extends Application {
         // Get hosting details
         activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
-        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = handler.getUniqueRoomCode();
         String networkingInformation = "";      // TODO: Integrate w/ networking
 
@@ -506,6 +506,7 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
+        MatchOutcomeHandler.playerNo = selfPlayerNo;
 
 
         MatchData matchData = new MatchData(
@@ -515,17 +516,17 @@ public class MatchTypeController extends Application {
 
         // TODO: EVIL !!!!!!!
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        String gameScreenFXML = getGameScreenFXML(game);
+        String gameScreenFXML = getGameScreenFXML(game, selfPlayerNo);
         SceneManager.switchSceneWithData(stage, gameScreenFXML, matchData);
     }
 
 
 
     // Helper method to map selected game type to corresponding FXML screen
-    static String getGameScreenFXML(GameType selectedGame) {
+    static String getGameScreenFXML(GameType selectedGame, int playerNo) {
         return switch (selectedGame) {
-            case CHESS -> "screens/P1Chess.fxml";
-            case CHECKERS -> "screens/P1Checkers.fxml";
+            case CHESS -> playerNo == 1 ? "screens/P1Chess.fxml" : "screens/P2Chess.fxml" ;
+            case CHECKERS -> playerNo == 1 ? "screens/P1Checkers.fxml" : "screens/P2Checkers.fxml" ;
             case TICTACTOE -> "screens/TicTacToe.fxml";
             case CONNECT4 -> "screens/Connect4.fxml";
         };
@@ -533,9 +534,8 @@ public class MatchTypeController extends Application {
 
     @FXML
     private void onSubmitButtonClicked() {
-
         activeAccount = LoggedInAccount.getAccount();
-        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = roomCodeInput.getText();
         String networkingInformation = "";                  // TODO: Networking integration
 
@@ -588,7 +588,7 @@ class MatchmakingHandlerWatcher extends Thread {
                 int opponentPlayerNo = handler.m_opponentPlayerNo;
 
 
-                String fxmlFile = MatchTypeController.getGameScreenFXML(game);
+                String fxmlFile = MatchTypeController.getGameScreenFXML(game, selfPlayerNo);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
                 try {
                     Parent root = loader.load();
