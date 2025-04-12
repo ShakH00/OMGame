@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 public class Pawn extends MovingPiece {
     private boolean doneFirstMove; //used to determine if pawn can move two forward if its on its first move
     private boolean doneSecondMove; //used to check if this pawn can be en pessant-ed
+    private boolean enPassantPerformed;
 
     /**
      * Normal piece attributes that are superclass sent to MovingPiece which supers it to Piece
@@ -29,6 +30,22 @@ public class Pawn extends MovingPiece {
         super(x, y, color, pieceType, ownedBy, 1);
         doneFirstMove = false;
         doneSecondMove = false;
+        enPassantPerformed = false;
+    }
+
+    /**
+     * Used in determining pawn capture values in Chess.java
+     * @return enPassantPerformed: boolean
+     */
+    public boolean getEnPassantPerformed(){
+        return this.enPassantPerformed;
+    }
+
+    /**
+     * Used to reset the value of enPassantPerformed
+     */
+    public void resetEnPassantPerformed() {
+        this.enPassantPerformed = false;
     }
 
     /**
@@ -71,6 +88,7 @@ public class Pawn extends MovingPiece {
 
                 //murder the enemy pawn >:)
                 board[enemyX][enemyY] = null;
+                this.enPassantPerformed = true;
             }
 
             //update accordingly as they are important for en passant checks
