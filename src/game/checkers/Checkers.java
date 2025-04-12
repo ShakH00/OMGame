@@ -124,6 +124,7 @@ public class Checkers extends Game {
                 switchTurn();
 
             }
+            checkWinCondition();
 
       }
     }
