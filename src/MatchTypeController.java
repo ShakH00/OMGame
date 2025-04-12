@@ -506,6 +506,7 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
+        MatchOutcomeHandler.playerNo = selfPlayerNo;
 
 
         MatchData matchData = new MatchData(
@@ -515,17 +516,17 @@ public class MatchTypeController extends Application {
 
         // TODO: EVIL !!!!!!!
         Stage stage = (Stage) rootPane.getScene().getWindow();
-        String gameScreenFXML = getGameScreenFXML(game);
+        String gameScreenFXML = getGameScreenFXML(game, selfPlayerNo);
         SceneManager.switchSceneWithData(stage, gameScreenFXML, matchData);
     }
 
 
 
     // Helper method to map selected game type to corresponding FXML screen
-    static String getGameScreenFXML(GameType selectedGame) {
+    static String getGameScreenFXML(GameType selectedGame, int playerNo) {
         return switch (selectedGame) {
-            case CHESS -> "screens/P1Chess.fxml";
-            case CHECKERS -> "screens/P1Checkers.fxml";
+            case CHESS -> playerNo == 1 ? "screens/P1Chess.fxml" : "screens/P2Chess.fxml" ;
+            case CHECKERS -> playerNo == 1 ? "screens/P1Checkers.fxml" : "screens/P2Checkers.fxml" ;
             case TICTACTOE -> "screens/TicTacToe.fxml";
             case CONNECT4 -> "screens/Connect4.fxml";
         };
