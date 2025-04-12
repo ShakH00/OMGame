@@ -1,3 +1,5 @@
+import com.example.ImprovedChatServer;
+import com.example.RunTheChat;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -26,6 +28,10 @@ public class UtilityManager {
 
     private static Parent currentPopup;
 
+
+    public static void main(String[] args) {
+        chatControl();
+    }
     /**
      * Method to open up the resignation/offer draw popup
      *
@@ -74,7 +80,21 @@ public class UtilityManager {
     @FXML
     public static void chatControl() {
         // TODO; Create logic for chat
-        System.out.println("Chat initialized");
+        // Start the server in a background thread
+        new Thread(() -> {
+            ImprovedChatServer server = new ImprovedChatServer(30001);
+            server.start();
+        }).start();
+
+        // Give the server a moment to start up
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Launch the chat client
+        RunTheChat.main(new String[0]);
     }
 
     /**
