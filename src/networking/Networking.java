@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class Networking {
     private static final String timeFormatting = "yy.MM.dd HH:mm:ss.SSS"; // Template used for time stamp formatting
     private final int MAX_RECONNECT_ATTEMPTS = 3;
-    private final String IP = "localhost";
+    private final String IP = "database.omgame.club";
     private final int port = 30001;
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
     public boolean isConnected = false; // Connection status, initialize without connection
@@ -78,7 +78,7 @@ public class Networking {
             outObj.writeObject(game);
             outObj.flush(); 
             System.out.printf("[Net: %s] Message sent successfully%n", getTime());
-            listenMode(); // Switch to listening mode after sending
+            listenMode();
         } catch (IOException e) {
             System.err.printf("[Net: %s] Send failed: %s%n", getTime(), e.getMessage());
             handleDisconnection();
@@ -121,19 +121,8 @@ public class Networking {
     private void updateGame(Game receivedGame) {
         cachedGame = receivedGame;
         gameRecieved = true;
-        System.out.println("Game updated with new state");
+        System.out.printf("[Net: %s] Game updated with new state", getTime());
     }
-
-    public void initialize(int playerID, String playerName) {
-        System.out.println("Status: Connected to server.");
-
-        try {
-            connectToServer();
-        } catch (Exception e) {
-            System.err.println("Failed to connect to server: " + e.getMessage());
-        }
-    }
-
 
     public void connectToServer() {
         try {
@@ -167,7 +156,7 @@ public class Networking {
             listenMode();
 
         } catch (IOException e) {
-            System.out.printf("[Net: %s] Connection failed: %s%n", getTime(), e.getMessage());
+            System.err.printf("[Net: %s] Connection failed: %s%n", getTime(), e.getMessage());
             e.printStackTrace();
 
             isConnected = false;
@@ -177,7 +166,7 @@ public class Networking {
                 System.out.printf("[Net: %s] SYSTEM: Server is offline.%n%n", getTime());
             });
         } catch (Exception e) {
-            System.out.printf("[Net: %s] error: %s%n", getTime(), e.getMessage());
+            System.err.printf("[Net: %s] error: %s%n", getTime(), e.getMessage());
             e.printStackTrace();
         }
     }
@@ -198,22 +187,7 @@ public class Networking {
                 }
             }).start();
         } else {
-            System.out.printf("[Net: %s] Failed to reconnect after multiple attempts.%n", getTime());
-        }
-    }
-
-    public void disconnect() {
-        shouldListen = false;
-        if (listenerThread != null) {
-            listenerThread.interrupt();
-        }
-        try {
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-            }
-            isConnected = false;
-        } catch (IOException e) {
-            System.out.printf("[Net: %s] Error closing server: %s%n", getTime(), e.getMessage());
+            System.err.printf("[Net: %s] Failed to reconnect after multiple attempts.%n", getTime());
         }
     }
 

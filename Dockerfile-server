@@ -12,7 +12,13 @@ COPY ./lib ./lib/.
 EXPOSE 30001
 
 # Compile with JavaFX
-RUN mkdir build && javac --module-path ./lib --add-modules javafx.controls,javafx.fxml -d build networking/Server.java
+RUN mkdir build && \
+    javac --module-path ./lib \
+    --add-modules javafx.controls,javafx.fxml \
+    -d build \
+    networking/*.java \
+    game/*.java \
+    game/chess/*.java
 
 # Run with JavaFX
 ENTRYPOINT ["java", "--module-path", "./lib", "--add-modules", "javafx.controls,javafx.fxml", "-cp", "build", "networking.Server"]

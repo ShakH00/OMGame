@@ -236,7 +236,7 @@ public class Server {
             synchronized (clients) {
                 clients.remove(this);
             }
-            broadcast("SYSTEM: Client #" + clientId + " has left the chat", null);
+            broadcast("SYSTEM: Client #" + clientId + " has left the server", null);
         }
 
         /**
