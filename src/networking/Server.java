@@ -100,6 +100,28 @@ public class Server {
         }
     }
 
+    private void broadcast(Object object, ClientHandler sender) {
+        if (object instanceof String message) {
+            System.out.printf("[Server: %s] Broadcasting message: %s%n", Networking.getTime(), message);
+        } else if (object instanceof Game game) {
+            System.out.printf("[Server: %s] Broadcasting game object to %d clients%n", Networking.getTime(), clients.size() - 1);
+        }
+        
+        for (ClientHandler client : clients) {
+            if (client != sender) {
+                try {
+                    client.out.writeObject(object);
+                    client.out.flush();
+                    if (object instanceof Game) {
+                        System.out.printf("[Server: %s] Successfully sent game object to client #%d%n", Networking.getTime(), client.clientId);
+                    }
+                } catch (IOException e) {
+                    System.err.printf("[Server: %s] Failed to send object to client #%d: %s%n", Networking.getTime(), client.clientId, e.getMessage());
+                }
+            }
+        }
+    }
+
     /**
      * ClientHandler class, responsible for handling individual client connections.
      */

@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import networking.Networking;
 
 
 public class Connect4Controller extends Application {
@@ -41,6 +42,8 @@ public class Connect4Controller extends Application {
     private Label p2Label;
 
     Account activeAccount;
+
+    private networking.Networking networking = new networking.Networking();
 
     private String selfUsername;
     private String opponentUsername;
@@ -68,6 +71,7 @@ public class Connect4Controller extends Application {
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
             primaryStage.show();
+            networking.connectToServer();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,6 +125,7 @@ public class Connect4Controller extends Application {
         } else {
             game.nextTurn(); // Switch turn
             updatePlayerLabels();
+            networking.sendGame(game);
         }
     }
 

@@ -1,8 +1,9 @@
 package game;
 
 import game.pieces.Piece;
+import java.io.Serializable;
 
-public abstract class Game {
+public abstract class Game implements Serializable {
     public Player player1;
     protected Player player2;
     protected int score1;
