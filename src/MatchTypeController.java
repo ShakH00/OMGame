@@ -506,8 +506,6 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
-        MatchOutcomeHandler.playerNo = selfPlayerNo;
-
 
         MatchData matchData = new MatchData(
                 game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo,
