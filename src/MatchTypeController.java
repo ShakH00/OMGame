@@ -331,7 +331,7 @@ public class MatchTypeController extends Application {
         // Get hosting details
         activeAccount = LoggedInAccount.getAccount();
         MatchmakingHandler handler = activeAccount.getMatchmakingHandler();
-        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = handler.getUniqueRoomCode();
         String networkingInformation = "";      // TODO: Integrate w/ networking
 
@@ -534,9 +534,8 @@ public class MatchTypeController extends Application {
 
     @FXML
     private void onSubmitButtonClicked() {
-
         activeAccount = LoggedInAccount.getAccount();
-        int accountID = activeAccount.getID() != -1 ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
+        int accountID = !activeAccount.getIsGuest() ? activeAccount.getID() : DatabaseManager.getTempID(); // if guest, use temp ID
         String roomCode = roomCodeInput.getText();
         String networkingInformation = "";                  // TODO: Networking integration
 
@@ -589,7 +588,7 @@ class MatchmakingHandlerWatcher extends Thread {
                 int opponentPlayerNo = handler.m_opponentPlayerNo;
 
 
-                String fxmlFile = MatchTypeController.getGameScreenFXML(game);
+                String fxmlFile = MatchTypeController.getGameScreenFXML(game, selfPlayerNo);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
                 try {
                     Parent root = loader.load();
