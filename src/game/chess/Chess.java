@@ -24,7 +24,6 @@ public class Chess extends Game {
     private Board board;
     private int score1;
     private int score2;
-    private networking.Networking networking = new networking.Networking();
     // Leaderboard Statistics
     private int p1Turns = 0;
     private int p2Turns = 0;
@@ -75,13 +74,9 @@ public class Chess extends Game {
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
         else if (gameState == GameState.P2_TURN){
             gameState = GameState.P1_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
     }
 
@@ -484,13 +479,5 @@ public class Chess extends Game {
 
     public void setGameState(int score2){
         this.score2 = score2;
-    }
-
-    private void netUpdateGame(){
-        Chess temp = (Chess) networking.recieveGame();
-        this.board = temp.board;
-        this.gameState = temp.gameState;
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
     }
 }
