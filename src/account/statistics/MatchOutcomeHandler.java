@@ -17,6 +17,7 @@ public class MatchOutcomeHandler {
     public static int opponentElo = -1;
     public static String opponentUsername = "Not Found";
     public static boolean affectElo = false;
+    public static int playerNo = 1;
 
     /**
      * Given an account and their opponent's details, update the account's statistics.
