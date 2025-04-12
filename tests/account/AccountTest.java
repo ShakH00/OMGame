@@ -1,13 +1,10 @@
 package account;
 
 
-import account.statistics.StatisticType;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import game.GameType;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -18,10 +15,10 @@ public class AccountTest {
     private Account userAccount2;
 
     @Before
-    public void setUp() {
+    public void setUp() throws EncryptionFailedException {
         guestAccount = new Account();
-        userAccount1 = new Account("Alice", "alice@example.com", "password123");
-        userAccount2 = new Account("Bob", "bob@example.com", "securePass");
+        userAccount1 = CreateAccount.createAccount("Alice", "alice@example.com", "password123");
+        userAccount2 = CreateAccount.createAccount("Bob", "bob@example.com", "securePass");
     }
 
     @Test
@@ -96,12 +93,12 @@ public class AccountTest {
 
     @Test
     public void testMatchHistoryLogging() {
-        String[] match1 = {"Win", "Chess", "Bob", "1400", "2", "12345"};
+        String[] match1 = {"Win", "game/chess", "Bob", "1400", "2", "12345"};
         userAccount1.logMatch(match1);
 
         String[][] history = userAccount1.getMatchHistory();
         assertEquals("Win", history[0][0]);
-        assertEquals("Chess", history[0][1]);
+        assertEquals("game/chess", history[0][1]);
     }
 
 //    @Test

@@ -26,7 +26,7 @@ public abstract class AStatistics implements IStatistics {
     /**
      * Initialize all values in the statistics hashmap to 0, except for Elo which starts at 1000
      */
-    void initializeHashMap(){
+    protected void initializeHashMap(){
         for (StatisticType statisticType : acceptedStatistics){
             if (statisticType == StatisticType.ELO){
                 statistics.put(statisticType, (Integer) 1000);

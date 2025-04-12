@@ -24,6 +24,7 @@ public class CreateAccount {
         Account newAccount = new Account(username, email, password);
         EncryptionAuthentication.encryptAccount(newAccount);
         DatabaseManager.saveAccount(newAccount);
+        newAccount = DatabaseManager.queryAccountByUsername(username);
         return newAccount;
     }
 

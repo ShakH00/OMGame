@@ -1,4 +1,4 @@
-package TicTacToe;
+package game.ticTacToe;
 
 import game.tictactoe.TicTacToe;
 import game.pieces.PieceType;

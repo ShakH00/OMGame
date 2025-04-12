@@ -97,10 +97,6 @@ public class Account {
         statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
         this.queuedFor = null;
-
-        // Save account to database, then load again to get ID
-        DatabaseManager.saveAccount(this);
-        id = DatabaseManager.queryAccountByUsername(username).getID();
     }
 
     /**

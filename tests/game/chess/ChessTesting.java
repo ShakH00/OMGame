@@ -1,11 +1,9 @@
-package Chess;
+package game.chess;
 import game.*;
-import game.chess.*;
 import game.pieces.*;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,5 @@
-package Checkers;
+package game.checkers;
 import game.*;
-import game.checkers.Checkers;
-import game.checkers.CheckersPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;

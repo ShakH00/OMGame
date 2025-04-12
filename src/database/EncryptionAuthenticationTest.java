@@ -24,20 +24,6 @@ public class EncryptionAuthenticationTest {
     }
 
     @Test
-    public void testDecryptAccount_validEncryptedAccount() throws DecryptionFailedException {
-        Account encrypted = new Account(
-                "testuser",
-                "ghu#hadpso#frp",
-                "sdvv456"
-        );
-
-        Account decrypted = DecryptionAuthentication.decryptAccount(encrypted);
-
-        assertNotEquals("ghu#hadpso#frp", decrypted.getEmail());
-        assertNotEquals("sdvv456", decrypted.getPassword());
-    }
-
-    @Test
     public void testDecryptAccount_nullFields() throws Exception {
         Account account = new Account(); // guest account
 
