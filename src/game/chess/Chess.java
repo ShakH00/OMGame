@@ -138,9 +138,9 @@ public class Chess extends Game {
         // Actually perform the move
 
         Piece potentialEnemy = board.getBoardState()[x][y];
-        if(piece instanceof King){
-            if(isKingInCheck(player) && ((King) piece).isTryingToCastle(oldX, oldY, x, y, this.board)) return;
-        }
+
+        if(piece instanceof King && isKingInCheck(player) && ((King) piece).isTryingToCastle(oldX, oldY, x, y, this.board)) return;
+
         if (piece.move(x, y, board)) {
             if(piece.getOwnedBy() == this.player1){
                 addp1Turn();
