@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import account.LoggedInAccount;
-import networking.test.CensorshipTest;
+import networking.TextCensorship;
 
 public class ImprovedChatServer {
     private ServerSocket chatServerSocket;
@@ -131,8 +131,8 @@ public class ImprovedChatServer {
 
         private void processChatMessage(String message) {
 
-            CensorshipTest.CensorResult censored = CensorshipTest.censorChat(message);
-            String filteredContent = censored.getFilteredMessage();
+            TextCensorship.CensorResult censored = TextCensorship.censorChat(message);
+            String filteredContent = censored.filteredMessage();
 
 
             logChat(clientId, filteredContent);
