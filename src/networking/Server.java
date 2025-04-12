@@ -30,9 +30,9 @@ public class Server {
     public Server(int port) {
         try {
             serverSocket = new ServerSocket(port);
-            System.out.printf("[Server: %s] Server started on port %d", Networking.getTime(), port);
+            System.out.printf("[Server: %s] Server started on port %d%n", Networking.getTime(), port);
         } catch (IOException e) {
-            System.err.printf("[Server: %s] Error creating server: %s", Networking.getTime(), e.getMessage());
+            System.err.printf("[Server: %s] Error creating server: %s%n", Networking.getTime(), e.getMessage());
             e.printStackTrace();
         }
     }
@@ -43,7 +43,7 @@ public class Server {
     public static void main(String[] args) {
         Server server = new Server(30001);
         server.start();
-        System.out.printf("[Server: %s] Game/Chat server is running", Networking.getTime());
+        System.out.printf("[Server: %s] Game/Chat server is running%n", Networking.getTime());
     }
 
     /**
@@ -55,14 +55,14 @@ public class Server {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    System.out.printf("[Server: %s] New client connected: %s", Networking.getTime(), clientSocket.getInetAddress());
+                    System.out.printf("[Server: %s] New client connected: %s%n", Networking.getTime(), clientSocket.getInetAddress());
                     ClientHandler handler = new ClientHandler(clientSocket);
                     synchronized (clients) {
                         clients.add(handler);
                     }
                     handler.start();
                 } catch (IOException e) {
-                    System.err.printf("[Server: %s] Error accepting client: %s", Networking.getTime(), e.getMessage());
+                    System.err.printf("[Server: %s] Error accepting client: %s%n", Networking.getTime(), e.getMessage());
                 }
             }
         }).start();
@@ -124,7 +124,7 @@ public class Server {
             this.out.flush(); // DO NOT REMOVE THIS WHATSOEVER THIS RUINED MY LIFE
             this.in = new ObjectInputStream(socket.getInputStream());
 
-            System.out.println("Client #" + clientId + " handler created");
+            System.out.printf("[Server: %s] Client #%d handler created%n", Networking.getTime(), clientId);
         }
 
         /**
@@ -152,17 +152,17 @@ public class Server {
                             } else if (objectIn instanceof Game game) {
                                 broadcast(game, this);
                             } else {
-                                System.err.printf("[Server: %s] Received non-string/game object: %s", Networking.getTime(), objectIn.getClass().getName());
+                                System.err.printf("[Server: %s] Received non-string/game object: %s%n", Networking.getTime(), objectIn.getClass().getName());
                             }
                         } catch (ClassNotFoundException e) {
-                            System.err.printf("[Server: %s] Unknown object type received", Networking.getTime());
+                            System.err.printf("[Server: %s] Unknown object type received%n", Networking.getTime());
                         } catch (IOException e) {
-                            System.err.printf("[Server: %s] Client #%d disconnected: %s", Networking.getTime(), clientId, e.getMessage());
+                            System.err.printf("[Server: %s] Client #%d disconnected: %s%n", Networking.getTime(), clientId, e.getMessage());
                             break;
                         }
                     }
                 } catch (Exception e) {
-                    System.err.printf("[Server: %s] Error handling client #%d: %s", Networking.getTime(), clientId, e.getMessage());
+                    System.err.printf("[Server: %s] Error handling client #%d: %s%n", Networking.getTime(), clientId, e.getMessage());
                 } finally {
                     cleanupClient();
                 }
@@ -179,7 +179,7 @@ public class Server {
             String filteredContent = censored.filteredMessage();
 
             logChat(clientId, filteredContent);
-            System.out.printf("[Server: %s] Client #%d: %s", Networking.getTime(), clientId, filteredContent);
+            System.out.printf("[Server: %s] Client #%d: %s%n", Networking.getTime(), clientId, filteredContent);
 
             sendMessage("Me: " + filteredContent);
             broadcast("Client #" + clientId + ": " + filteredContent, this);
@@ -206,7 +206,7 @@ public class Server {
                     socket.close();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s%n", Networking.getTime(), clientId, e.getMessage());
             }
 
             synchronized (clients) {
@@ -227,7 +227,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s%n", Networking.getTime(), clientId, e.getMessage());
                 active = false;
             }
         }
@@ -244,7 +244,7 @@ public class Server {
                     out.flush();
                 }
             } catch (IOException e) {
-                System.err.printf("[Server: %s] Error sending to client #%d: %s", Networking.getTime(), clientId, e.getMessage());
+                System.err.printf("[Server: %s] Error sending to client #%d: %s%n", Networking.getTime(), clientId, e.getMessage());
                 active = false;
             }
         }

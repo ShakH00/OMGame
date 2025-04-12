@@ -51,7 +51,7 @@ public class Networking {
      * @author Nova Driscoll
      */
     public Game recieveGame() {
-        System.out.printf("[Net: %s] Receiving Game from: %s:%d\n", getTime(), IP, port);
+        System.out.printf("[Net: %s] Receiving Game from: %s:%d%n", getTime(), IP, port);
         gameRecieved = false;
         return cachedGame;
     }
@@ -63,7 +63,7 @@ public class Networking {
      * @author Nova Driscoll
      */
     public void sendGame(Game game) {
-        System.out.printf("[Net: %s] Sending Game to: %s:%d\n", getTime(), IP, port);
+        System.out.printf("[Net: %s] Sending Game to: %s:%d%n", getTime(), IP, port);
         if (isConnected) {
             try {
                 outObj.writeObject(game);
@@ -71,7 +71,7 @@ public class Networking {
                 System.out.println("Message sent successfully");
                 listenMode(); // Switch to listening mode after sending
             } catch (IOException e) {
-                System.err.println("Send failed: " + e.getMessage());
+                System.err.printf("[Net: %s] Send failed: %s%n", getTime(), e.getMessage());
                 handleDisconnection();
             }
         }
@@ -121,64 +121,57 @@ public class Networking {
 
     private void connectToServer() {
         try {
-            System.out.println("Attempting to connect to chat server...");
+            System.out.printf("[Net: %s] Attempting to connect to chat server...%n", getTime());
 
             if (socket != null && !socket.isClosed()) {
                 try {
                     socket.close();
                 } catch (IOException ex) {
-                    System.err.println("Error closing previous socket: " + ex.getMessage());
+                    System.err.printf("[Net: %s] Error closing previous socket: %s%n", getTime(), ex.getMessage());
                 }
             }
 
-
             socket = new Socket();
             socket.connect(new InetSocketAddress(IP, port), 5000);
-            System.out.println("Socket connected!");
-
+            System.out.printf("[Net: %s] Socket connected!%n", getTime());
 
             outObj = new ObjectOutputStream(socket.getOutputStream());
             outObj.flush();
-            System.out.println("Output stream created");
+            System.out.printf("[Net: %s] Output stream created%n", getTime());
 
             inObj = new ObjectInputStream(socket.getInputStream());
-            System.out.println("Input stream created");
+            System.out.printf("[Net: %s] Input stream created%n", getTime());
 
             isConnected = true;
             reconnectAttempts = 0;
-            System.out.println("Connection established successfully");
+            System.out.printf("[Net: %s] Connection established successfully%n", getTime());
 
-
-            System.out.println("Connected to chat server");
-
+            System.out.printf("[Net: %s] Connected to chat server%n", getTime());
 
             listenMode();
 
         } catch (IOException e) {
-            System.out.println("Connection failed: " + e.getMessage());
+            System.out.printf("[Net: %s] Connection failed: %s%n", getTime(), e.getMessage());
             e.printStackTrace();
 
             isConnected = false;
-            System.err.println("Failed to connect: " + e.getMessage());
-
+            System.err.printf("[Net: %s] Failed to connect: %s%n", getTime(), e.getMessage());
 
             Platform.runLater(() -> {
-                System.out.println("SYSTEM: Chat server is offline.\n");
+                System.out.printf("[Net: %s] SYSTEM: Chat server is offline.%n%n", getTime());
             });
         } catch (Exception e) {
-            System.out.println(" error: " + e.getMessage());
+            System.out.printf("[Net: %s] error: %s%n", getTime(), e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void handleDisconnection() {
         isConnected = false;
-        System.out.println("Disconnected. Attempting to reconnect...");
-
+        System.out.printf("[Net: %s] Disconnected. Attempting to reconnect...%n", getTime());
 
         if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
             reconnectAttempts++;
-
 
             new Thread(() -> {
                 try {
@@ -189,7 +182,7 @@ public class Networking {
                 }
             }).start();
         } else {
-            System.out.println("Failed to reconnect after multiple attempts.");
+            System.out.printf("[Net: %s] Failed to reconnect after multiple attempts.%n", getTime());
         }
     }
 
@@ -200,10 +193,8 @@ public class Networking {
             }
             isConnected = false;
         } catch (IOException e) {
-            System.out.println("Error closing server: " + e.getMessage());
+            System.out.printf("[Net: %s] Error closing server: %s%n", getTime(), e.getMessage());
         }
-
-
     }
 
 }
