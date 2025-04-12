@@ -153,11 +153,13 @@
             </image>
         </ImageView>
         <TextArea fx:id="bioTextArea" layoutX="54.0" layoutY="329.0" prefHeight="144.0" prefWidth="215.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-border-color: transparent;" text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐" wrapText="true" />
-      <StackPane fx:id="submitButton" layoutX="596.0" layoutY="437.0" onMouseClicked="#onSubmitButton" />
-      <Label layoutX="582.0" layoutY="408.0" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #00FF00; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;" text="Save Changes" textAlignment="CENTER">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
+      <StackPane fx:id="submitButton" layoutX="596.0" layoutY="437.0" onMouseClicked="#onSubmitButton">
+         <children>
+            <Label prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #00FF00; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;" text="Save Changes" textAlignment="CENTER">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+         </children></StackPane>
     </children>
 </AnchorPane>

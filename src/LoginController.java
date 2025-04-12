@@ -117,6 +117,7 @@ public class LoginController extends Application {
         boolean accountExists = false;
         if(user != null) {
             accountExists = true;
+            user.setIsGuest(false);
             LoggedInAccount.setAccount(user);
         }
         if(accountExists){
