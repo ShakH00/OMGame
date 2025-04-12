@@ -11,7 +11,9 @@ import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class Checkers extends Game {
@@ -476,5 +478,47 @@ public class Checkers extends Game {
         System.out.println("Player 2 Turns: " + getP2Turns() + ", Captures: " + getP2Captures() + ", Multi-Captures: " + getP2MultiCaptures());
     }
 
+
+    /**
+     * Get a list of legal moves to be performed by a selected piece
+     * @param piece: CheckersPiece that legal moves are being checked for
+     * @return int[] list of coordinates of legal moves
+     * @author Yousif Bedair
+     */
+    public List<int[]> getLegalMoves(CheckersPiece piece) {
+        List<int[]> legalMoves = new ArrayList<>();
+
+        if (piece == null) return legalMoves;
+
+        int x = piece.getX();
+        int y = piece.getY();
+
+        // Diagonal directions: for regular move (1 space) and capture (2 spaces)
+        int[][] directions = {
+                {-1, -1}, {-1, 1},  // top-left, top-right
+                {1, -1}, {1, 1}     // bottom-left, bottom-right
+        };
+
+        for (int[] dir : directions) {
+            int dx = dir[0];
+            int dy = dir[1];
+
+            // Regular move
+            int newX = x + dx;
+            int newY = y + dy;
+            if (isValidMove(x, y, newX, newY, board)) {
+                legalMoves.add(new int[]{newX, newY});
+            }
+            // Capture move (2 tiles over)
+            newX = x + 2 * dx;
+            newY = y + 2 * dy;
+
+            if (isValidMove(x, y, newX, newY, board)) {
+                legalMoves.add(new int[]{newX, newY});
+            }
+        }
+
+        return legalMoves;
+    }
 
 }
