@@ -125,11 +125,13 @@ public class UserSettingsController extends Application {
     public void onSubmitButton() {
         Integer userID = account.LoggedInAccount.getAccount().getID();
         if(!account.LoggedInAccount.getAccount().getIsGuest()) {
-            String username = displayNameField.getText();
+            String userName = displayNameField.getText();
             String userEmail = emailField.getText();
             String userPassword = passwordField.getText();
             String newPassword = newPasswordField.getText();
-            Admin.updateUsername(userID, username);
+            Admin.updateUsername(userID, userName);
+
+            username.setText(userName);
             Admin.updateEmail(userID, userEmail);
             try {
                 if (userPassword.equals(DecryptionAuthentication.decryptionDriver(LoggedInAccount.getAccount().getPassword()))) {

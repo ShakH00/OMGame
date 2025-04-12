@@ -119,7 +119,24 @@
             </children>
         </StackPane>
 
-
+        <StackPane fx:id="submitButton" layoutX="582.0" layoutY="408.0" onMouseClicked="#onSubmitButton" prefHeight="51.0" prefWidth="84.0">
+            <children>
+                <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/green.png" />
+                    </image>
+                    <effect>
+                        <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                            <color>
+                                <Color opacity="0.5813069939613342" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </ImageView>
+                <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="Save Changes" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+                </Text>
+            </children>
+        </StackPane>
 
         <!-- Back Button -->
         <StackPane fx:id="backButton" layoutX="2.0" layoutY="2.0">
@@ -153,13 +170,5 @@
             </image>
         </ImageView>
         <TextArea fx:id="bioTextArea" layoutX="54.0" layoutY="329.0" prefHeight="144.0" prefWidth="215.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-border-color: transparent;" text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐" wrapText="true" />
-      <StackPane fx:id="submitButton" layoutX="596.0" layoutY="437.0" onMouseClicked="#onSubmitButton">
-         <children>
-            <Label prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #00FF00; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;" text="Save Changes" textAlignment="CENTER">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children></StackPane>
     </children>
 </AnchorPane>
