@@ -2,10 +2,11 @@ package game;
 
 import account.statistics.StatisticType;
 import game.pieces.Piece;
-
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class Game {
+public abstract class Game implements Serializable {
+
     public Player player1;
     public Player player2;
     protected int score1;

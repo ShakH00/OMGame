@@ -6,9 +6,12 @@ import java.util.HashSet;
 
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
+import database.EncryptionAuthentication;
 import game.GameType;
 import account.statistics.*;
 import matchmaking.MatchmakingHandler;
+
+import static database.EncryptionAuthentication.encryptionDriver;
 
 public class Account {
     /**
@@ -537,9 +540,10 @@ public class Account {
      * @param password              String password to try to log in with
      * @return                      true only if the username and password match an existing Account in the database
      */
-    public boolean TryLoginWithUsernameAndPassword(String username, String password){
+    public boolean TryLoginWithUsernameAndPassword(String username, String password) throws EncryptionFailedException {
         Account accountFromDB = DatabaseManager.queryAccountByUsername(username);
-        if (accountFromDB != null && accountFromDB.password.equals(password)) {
+        String encrypted_pass = encryptionDriver(password);
+        if (accountFromDB != null && accountFromDB.password.equals(encrypted_pass)) {
             // Update current account object with data from DB
             this.isGuest = false;
             this.id = accountFromDB.id;

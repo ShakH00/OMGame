@@ -16,11 +16,10 @@ public class DatabaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-//     Connection through Nova's server
+    // Connection through Nova's server
 //    private static final String URL = "jdbc:mysql://database.omgame.club:3307/OMGAMEDB";
 //    private static final String USER = "tetriscat";
 //    private static final String PASSWORD = "ellendusk";
-
 
     /**
      * Establishes a connection to the database.

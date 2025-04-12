@@ -95,6 +95,9 @@ public class CaptchaPopupController extends Application  {
         }
     }
 
+    /*
+    when the submit button is pressed, check the captcha test, grant access if correct
+     */
     @FXML
     private void submitButton(){
         try {
@@ -113,7 +116,7 @@ public class CaptchaPopupController extends Application  {
             Stage stage = (Stage) rootPane.getScene().getWindow();
             SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
-            System.out.println("Captcha failed");
+            // If captcha test was failed, do not grant access to the account
             DatabaseManager.deleteAccount(LoggedInAccount.getAccount().getEmail());
             UtilityManager.popupClose(rootPane);
         }
