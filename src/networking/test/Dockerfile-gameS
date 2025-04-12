@@ -1,8 +1,0 @@
-FROM openjdk:23
-# this is linux i believe
-WORKDIR /app/src
-COPY ./src/ .
-EXPOSE 30000
-RUN mkdir ../build && javac -d ../build GameServerT.java
-ENTRYPOINT ["java", "-cp", "../build", "GameServerT"]
-# DOCKER FILE STUB for a real implimentable online networking game

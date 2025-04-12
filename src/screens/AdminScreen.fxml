@@ -49,11 +49,11 @@
 <!--                                        <Font name="Press Start 2P Regular" size="10.0" />-->
 <!--                                    </font>-->
                                 </TextField>
-                                <PasswordField fx:id="passwordField" layoutX="294.0" layoutY="343.0" prefHeight="38.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
+                                <TextField fx:id="passwordField" layoutX="294.0" layoutY="343.0" prefHeight="38.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
 <!--                                    <font>-->
 <!--                                        <Font size="10.0" />-->
 <!--                                    </font>-->
-                                </PasswordField>
+                                </TextField>
                                 <TextField fx:id="emailField" layoutX="294.0" layoutY="243.0" prefHeight="38.0" prefWidth="216.0" promptText="Email" style="-fx-background-color: #D9D9D9; -fx-padding: 0 20 0 18; -fx-background-radius: 50px; -fx-border-color: transparent;">
 <!--                                    <font>-->
 <!--                                        <Font name="Press Start 2P Regular" size="10.0" />-->

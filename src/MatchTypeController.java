@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import matchmaking.MatchData;
 import matchmaking.MatchmakingHandler;
 import matchmaking.MatchmakingState;
 
@@ -507,16 +508,22 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentUsername = opponentUsername;
         MatchOutcomeHandler.playerNo = selfPlayerNo;
 
+
+        MatchData matchData = new MatchData(
+                game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo,
+                opponentID, opponentUsername, opponentElo, opponentNetworkingInformation, opponentPlayerNo
+        );
+
         // TODO: EVIL !!!!!!!
         Stage stage = (Stage) rootPane.getScene().getWindow();
         String gameScreenFXML = getGameScreenFXML(game, selfPlayerNo);
-        SceneManager.switchScene(stage, gameScreenFXML);
+        SceneManager.switchSceneWithData(stage, gameScreenFXML, matchData);
     }
 
 
 
     // Helper method to map selected game type to corresponding FXML screen
-    private static String getGameScreenFXML(GameType selectedGame, int playerNo) {
+    static String getGameScreenFXML(GameType selectedGame, int playerNo) {
         return switch (selectedGame) {
             case CHESS -> playerNo == 1 ? "screens/P1Chess.fxml" : "screens/P2Chess.fxml" ;
             case CHECKERS -> playerNo == 1 ? "screens/P1Checkers.fxml" : "screens/P2Checkers.fxml" ;
@@ -563,6 +570,7 @@ class MatchmakingHandlerWatcher extends Thread {
         this.handler = handler;
     }
 
+
     public void run(){
         while (handler.getState() != MatchmakingState.ONLINE){  // stop early if they stop matchmaking
             // Check if the handler has found a match. If it has, start the game UI
@@ -580,8 +588,18 @@ class MatchmakingHandlerWatcher extends Thread {
                 String opponentNetworkingInformation = handler.m_opponentNetworkingInformation;
                 int opponentPlayerNo = handler.m_opponentPlayerNo;
 
+
+                String fxmlFile = MatchTypeController.getGameScreenFXML(game);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+                try {
+                    Parent root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+
                 guiController.startMatch(game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo, opponentID, opponentUsername, opponentElo, opponentNetworkingInformation, opponentPlayerNo);
-                
+
                 break;
             }
 

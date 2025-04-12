@@ -210,7 +210,7 @@ public class MatchmakingHandler {
         int playerNo = -1;
 
         String sql = "REPLACE INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "Matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
@@ -250,7 +250,7 @@ public class MatchmakingHandler {
         int playerNo = -1;
 
         String sql = "REPLACE INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "Matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
@@ -291,7 +291,7 @@ public class MatchmakingHandler {
         int playerNo = -1;
 
         String sql = "REPLACE INTO " +
-                "matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
+                "Matchmaking (id, state, game, start_time, recent_time, elo, elo_range, opponent_id, networking_info, room_code, player_no) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseConnection.getConnection();
 
@@ -322,7 +322,7 @@ public class MatchmakingHandler {
 
 
     protected Integer queryOpponentID(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Integer opponentID = null;
 
@@ -346,7 +346,7 @@ public class MatchmakingHandler {
     }
 
     protected void setState(int id, MatchmakingState newState){
-        String sql = "UPDATE matchmaking SET state = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET state = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         String newStateString = newState.toString();
 
@@ -366,7 +366,7 @@ public class MatchmakingHandler {
     }
 
     protected void setNetworkingInfo(int id, String newNetworkingInfo){
-        String sql = "UPDATE matchmaking SET networking_info = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET networking_info = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -385,7 +385,7 @@ public class MatchmakingHandler {
     }
 
     protected void setRecentTime(int id, double newRecentTime){
-        String sql = "UPDATE matchmaking SET recent_time = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET recent_time = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -404,7 +404,7 @@ public class MatchmakingHandler {
     }
 
     protected void setEloRange(int id, int newRange){
-        String sql = "UPDATE matchmaking SET elo_range = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET elo_range = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -423,7 +423,7 @@ public class MatchmakingHandler {
     }
 
     protected void setOpponentID(int id, int newOpponentID){ //
-        String sql = "UPDATE matchmaking SET opponent_ID = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET opponent_ID = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -442,7 +442,7 @@ public class MatchmakingHandler {
     }
 
     protected void setPlayerNo(int id, int newPlayerNo){ //
-        String sql = "UPDATE matchmaking SET player_no = ? WHERE id = ?";
+        String sql = "UPDATE Matchmaking SET player_no = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -461,7 +461,7 @@ public class MatchmakingHandler {
     }
 
     protected void removeFromMatchmakingTable(int id){
-        String sql = "DELETE FROM matchmaking WHERE id = ?";
+        String sql = "DELETE FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -480,7 +480,7 @@ public class MatchmakingHandler {
 
     // QUERY OTHERS
     protected ArrayList<Integer> queryAllOtherIDs(int id){
-        String sql = "SELECT * FROM matchmaking";
+        String sql = "SELECT * FROM Matchmaking";
         Connection conn = DatabaseConnection.getConnection();
         ArrayList<Integer> ids = new ArrayList<>();
 
@@ -506,7 +506,7 @@ public class MatchmakingHandler {
     }
 
     protected MatchmakingState queryState(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         MatchmakingState state = null;
 
@@ -530,7 +530,7 @@ public class MatchmakingHandler {
     }
 
     protected GameType queryGame(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         GameType game = null;
 
@@ -554,7 +554,7 @@ public class MatchmakingHandler {
     }
 
     protected Double queryRecentTime(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Double recentTime = null;
 
@@ -579,7 +579,7 @@ public class MatchmakingHandler {
     }
 
     protected Integer queryElo(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Integer elo = null;
 
@@ -604,7 +604,7 @@ public class MatchmakingHandler {
     }
 
     protected Integer queryEloRange(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         Integer eloRange = null;
 
@@ -628,7 +628,7 @@ public class MatchmakingHandler {
     }
 
     protected String queryNetworkingInfo(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
         String networkingInfo = null;
 
@@ -652,7 +652,7 @@ public class MatchmakingHandler {
     }
 
     protected boolean queryRoomCodeInTable(String roomCode){
-        String sql = "SELECT * FROM matchmaking WHERE room_code = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE room_code = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -674,7 +674,7 @@ public class MatchmakingHandler {
     }
 
     protected int queryHostIDByRoomCode(String roomCode){
-        String sql = "SELECT * FROM matchmaking WHERE room_code = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE room_code = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {
@@ -696,7 +696,7 @@ public class MatchmakingHandler {
     }
 
     protected int queryPlayerNo(int id){
-        String sql = "SELECT * FROM matchmaking WHERE id = ?";
+        String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         if (conn != null) {

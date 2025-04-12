@@ -42,7 +42,6 @@ seng300-project is our recreation of an <ins> online multiplayer game</ins>, or 
 
 
 * **[Tests Folder](#test-folder)**
-  - WAITING UNTIL ALL TEAMS FINISH THERE TEST cases
 
 
 * **[website](#website)**

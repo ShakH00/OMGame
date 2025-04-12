@@ -1,4 +1,6 @@
 import account.Account;
+import account.LoggedInAccount;
+import account.statistics.MatchOutcomeHandler;
 import game.GameState;
 import game.GameType;
 import game.connect4.Connect4;
@@ -18,9 +20,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import matchmaking.MatchData;
 
 
-public class Connect4Controller extends Application {
+public class Connect4Controller extends Application implements DataInitializable<MatchData> {
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -44,8 +47,20 @@ public class Connect4Controller extends Application {
 
     private String selfUsername;
     private String opponentUsername;
+    private int selfPlayerNo;
+    private int opponentPlayerNo;
 
+    @Override
+    public void initializeData(MatchData data) {
+        // now we SHOULD be able to get info from matchData
+        this.selfUsername = data.getSelfUsername();
+        this.opponentUsername = data.getOpponentUsername();
+        this.selfPlayerNo = data.getSelfPlayerNo();
+        this.opponentPlayerNo = data.getOpponentPlayerNo();
 
+        updatePlayerLabels();
+
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,6 +87,15 @@ public class Connect4Controller extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setUserData(int selfID, String selfUsername, int selfElo, String selfNetworkingInfo, int selfPlayerNo,
+                            int opponentID, String opponentUsername, int opponentElo, String opponentNetworkingInfo, int opponentPlayerNo,
+                            boolean affectsElo) {
+        this.selfUsername = selfUsername;
+        MatchOutcomeHandler.opponentUsername = opponentUsername;
+        this.selfPlayerNo = selfPlayerNo;
+        this.opponentPlayerNo = opponentPlayerNo;
     }
 
     @FXML
@@ -179,9 +203,6 @@ public class Connect4Controller extends Application {
 
 
         public void initialize() {
-
-//        p1Label.setText(opponentUsername);
-//        p2Label.setText(selfUsername);
             // game.start to push game out of setup mode
             game.start();
 
@@ -202,7 +223,6 @@ public class Connect4Controller extends Application {
     public void goToChat() {
         UtilityManager.chatControl();
     }
-
 
 
         // method used to make tetriscat hand appear when hovering over columns !
@@ -253,6 +273,17 @@ public class Connect4Controller extends Application {
 
 
     private void updatePlayerLabels() {
+        if (selfPlayerNo == 1) {
+            // you are p1, and opponent is p2
+            p1Label.setText(selfUsername);
+            p2Label.setText(opponentUsername);
+
+        } else {
+            // otherwise, you are p2, and opponent is p1
+            p1Label.setText(opponentUsername);
+            p2Label.setText(selfUsername);
+        }
+
         if (game.getGameState() == GameState.P2_TURN) {
             p1Label.setOpacity(.5);
             p2Label.setOpacity(1);
