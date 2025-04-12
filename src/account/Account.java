@@ -97,6 +97,10 @@ public class Account {
         statistics.put(GameType.TICTACTOE, new StatisticsTicTacToe());
         this.matchHistory = new String[10][6];  // Store information about the past 10 matches, each with 6 fields.
         this.queuedFor = null;
+
+        // Save account to database, then load again to get ID
+        DatabaseManager.saveAccount(this);
+        id = DatabaseManager.queryAccountByUsername(username).getID();
     }
 
     /**
@@ -443,8 +447,13 @@ public class Account {
                 return false;
             }
         }
-        if(email.length() > 64 || email.length() < 1){return false;}
-        return true;
+        String[] requiredChars = {"@", "."};
+        for (String character : requiredChars){
+            if (!email.contains(character)){
+                return false;
+            }
+        }
+        return email.length() <= 64 && email.length() >= 1;
     }
 
     /**
@@ -500,7 +509,7 @@ public class Account {
      */
     public boolean removeFriend(int friend) {
         if (this.friends.contains(friend)){
-            this.friends.remove(friend);
+            this.friends.remove((Integer) friend);
             return true;
         }
         return false;

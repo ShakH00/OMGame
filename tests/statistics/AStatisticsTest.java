@@ -22,7 +22,6 @@ public class AStatisticsTest {
                     StatisticType.ELO,
                     StatisticType.WIN_RATE
             };
-            initializeHashMap();
         }
     }
 

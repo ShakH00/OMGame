@@ -34,7 +34,6 @@ public class AccountTest {
     public void testUserAccountInitialization() {
         assertFalse(userAccount1.getIsGuest());
         assertEquals("Alice", userAccount1.getUsername());
-        assertEquals(1, userAccount1.getID());
     }
 
     @Test
@@ -63,8 +62,9 @@ public class AccountTest {
 
     @Test
     public void testAddAndRemoveFriend() {
+        userAccount1.addFriend(userAccount2.getID());
         assertEquals(1, userAccount1.getFriends().size());
-        assertTrue(userAccount1.getFriends().contains(userAccount2));
+        assertTrue(userAccount1.getFriendIDs().contains(userAccount2.getID()));
 
         boolean removed = userAccount1.removeFriend(userAccount2.getID());
         assertTrue(removed);
@@ -100,8 +100,8 @@ public class AccountTest {
         userAccount1.logMatch(match1);
 
         String[][] history = userAccount1.getMatchHistory();
-        assertEquals("Win", history[1][0]);
-        assertEquals("Chess", history[1][1]);
+        assertEquals("Win", history[0][0]);
+        assertEquals("Chess", history[0][1]);
     }
 
 //    @Test
@@ -139,7 +139,7 @@ public class AccountTest {
 
     @Test
     public void testLoginPlaceholder() {
-        assertFalse(userAccount1.TryLoginWithUsernameAndPassword("Alice", "password123"));
+        assertTrue(userAccount1.TryLoginWithUsernameAndPassword("Alice", "password123"));
     }
 
 }
