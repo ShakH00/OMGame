@@ -77,11 +77,12 @@ public class P2ChessController extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/P2Chess.fxml"));
+            loader.setController(this); // Set the controller to this instance
             Scene scene = new Scene(loader.load(), 800, 570);
 
-            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
-            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
+            String fontPath = getClass().getResource("/resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String retroGamingPath = getClass().getResource("/resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("/resources/fonts/Pixelite.ttf").toExternalForm();
 
             Font pressStartFont = Font.loadFont(fontPath, 40);
             Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
@@ -140,6 +141,7 @@ public class P2ChessController extends Application {
             // clear selection only after a valid move or promotion
                 selectedRow = -1;
                 selectedCol = -1;
+                networking.sendGame(game);
             updateBoard();
         }
     }

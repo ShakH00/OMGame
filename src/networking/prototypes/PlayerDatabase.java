@@ -1,4 +1,4 @@
-package networking.test;
+package networking.prototypes;
 
 import java.util.ArrayList;
 import java.util.Comparator;

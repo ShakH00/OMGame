@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class Networking {
     private static final String timeFormatting = "yy.MM.dd HH:mm:ss.SSS"; // Template used for time stamp formatting
     private final int MAX_RECONNECT_ATTEMPTS = 3;
-    private final String IP = "localhost";
+    private final String IP = "database.omgame.club";
     private final int port = 30001;
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
     public boolean isConnected = false; // Connection status, initialize without connection
@@ -54,7 +54,6 @@ public class Networking {
      */
     public Game recieveGame() {
         System.out.printf("[Net: %s] Receiving Game from: %s:%d%n", getTime(), IP, port);
-        gameRecieved = false;
         return cachedGame;
     }
 
@@ -102,10 +101,8 @@ public class Networking {
                     Object receivedObj = inObj.readObject();
                     if (receivedObj instanceof Game) {
                         Game receivedGame = (Game) receivedObj;
-                        if (!receivedGame.equals(cachedGame)) {
-                            gameRecieved = true;
-                            updateGame(receivedGame);
-                        }
+                        updateGame(receivedGame);
+                        System.out.printf("[Net: %s] Game state updated%n", getTime());
                     } else if (receivedObj instanceof String) {
                         // Handle chat messages if needed
                         System.out.printf("[Net: %s] Received message: %s%n", getTime(), receivedObj);

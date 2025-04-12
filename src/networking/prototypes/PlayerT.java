@@ -1,4 +1,4 @@
-package networking.test;
+package networking.prototypes;
 
 import javax.swing.*;
 import java.awt.*;
