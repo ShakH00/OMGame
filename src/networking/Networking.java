@@ -22,12 +22,14 @@ public class Networking {
     private final String IP = "localhost";
     private final int port = 30001;
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
-    private boolean isConnected = false; // Connection status, initialize without connection
+    public boolean isConnected = false; // Connection status, initialize without connection
     private Socket socket;
     private ObjectOutputStream outObj;
     private ObjectInputStream inObj;
     private int reconnectAttempts = 0;
     public boolean gameRecieved = false; // Flag to indicate if game has been received
+    private Thread listenerThread;
+    public volatile boolean shouldListen = true;
     
 
 
@@ -90,28 +92,38 @@ public class Networking {
      * @author Nova Driscoll
      */
     private void listenMode() {
-        new Thread(() -> {
+        if (listenerThread != null && listenerThread.isAlive()) {
+            return; // Listener thread already running
+        }
+
+        listenerThread = new Thread(() -> {
             try {
-                while (isConnected && !Thread.currentThread().isInterrupted()) {
+                while (isConnected && shouldListen && !Thread.currentThread().isInterrupted()) {
                     Object receivedObj = inObj.readObject();
-                    Game receivedGame;
                     if (receivedObj instanceof Game) {
-                        receivedGame = (Game) receivedObj;
+                        Game receivedGame = (Game) receivedObj;
                         if (!receivedGame.equals(cachedGame)) {
                             gameRecieved = true;
                             updateGame(receivedGame);
                         }
+                    } else if (receivedObj instanceof String) {
+                        // Handle chat messages if needed
+                        System.out.printf("[Net: %s] Received message: %s%n", getTime(), receivedObj);
+                    } else {
+                        System.err.printf("[Net: %s] Received unknown object type: %s%n", getTime(), receivedObj.getClass().getName());
                     }
                 }
-                System.out.println("Chat listener thread ending");
             } catch (Exception e) {
-                System.err.println("Listener thread exception: " + e.getMessage());
+                System.err.printf("[Net: %s] Listener thread exception: %s%n", getTime(), e.getMessage());
+                handleDisconnection();
             }
-        }).start();
+        });
+        listenerThread.start();
     }
 
     private void updateGame(Game receivedGame) {
         cachedGame = receivedGame;
+        gameRecieved = true;
         System.out.println("Game updated with new state");
     }
 
@@ -194,6 +206,10 @@ public class Networking {
     }
 
     public void disconnect() {
+        shouldListen = false;
+        if (listenerThread != null) {
+            listenerThread.interrupt();
+        }
         try {
             if (socket != null && !socket.isClosed()) {
                 socket.close();

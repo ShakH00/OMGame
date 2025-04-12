@@ -1,10 +1,9 @@
 import account.Account;
+import game.Game;
 import game.GameState;
-import game.GameType;
 import game.connect4.Connect4;
 import game.pieces.Piece;
 import javafx.application.Application;
-import javafx.css.Match;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import networking.Networking;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class Connect4Controller extends Application {
@@ -72,6 +73,8 @@ public class Connect4Controller extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
             networking.connectToServer();
+            Connect4Watcher watcher = new Connect4Watcher(networking, this);
+            watcher.start();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -271,4 +274,40 @@ public class Connect4Controller extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public void netUpdate(Game game){
+        if (gameBoard == null) {
+            return; // Skip update if FXML hasn't been loaded yet
+        }
+        this.game = (Connect4) game;
+        javafx.application.Platform.runLater(() -> updateBoard());
+    }
+}
+
+class Connect4Watcher extends Thread {
+    private final Networking networking;
+    private final Connect4Controller gui;
+    public Connect4Watcher(Networking networking, Connect4Controller gui) {
+        this.networking = networking;
+        this.gui = gui;
+    }
+
+    public void run(){
+        while (networking.isConnected && networking.shouldListen){  // stop early if they stop matchmaking
+            // Check if the handler has found a match. If it has, start the game UI
+            if (networking.gameRecieved) {
+                gui.netUpdate(networking.recieveGame());
+                networking.gameRecieved = false; // Reset the flag after processing
+            }
+
+            // Sleep 1 sec before repeating
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
 }
