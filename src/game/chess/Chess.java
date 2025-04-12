@@ -302,7 +302,7 @@ public class Chess extends Game {
         int originalY= piece.getY();
         for (int x = 0; x < board.getRows(); x++) {
             for (int y = 0; y < board.getCols(); y++) {
-               if (piece.isValidMove(x,y,board) && !isPiecePinned(piece)){
+               if (piece.isValidMove(x,y,board)){
                    legalMoves.add(new int[]{x,y});
                    piece.move(originalX,originalY,board);
                }
