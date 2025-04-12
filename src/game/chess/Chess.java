@@ -189,8 +189,9 @@ public class Chess extends Game {
                             addP2PawnCaptures();
                             ((Pawn) piece).resetEnPassantPerformed();
                         }
+                        if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
                     }
-                    if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
+
                 }
             }
             switchTurn();
