@@ -5,11 +5,13 @@
  * */
 package game.checkers;
 
+import account.statistics.StatisticType;
 import game.*;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class Checkers extends Game {
@@ -339,22 +341,62 @@ public class Checkers extends Game {
     /**
      * matchOutcome method checks the state of the game and sends out a string to inform the status of the game.
      */
-    public void matchOutcome(){
-        if(gameState == GameState.P1_WIN){
-            System.out.println("Player 1 has won the game!");
-            displayMatchStatistics();
+    public HashMap<StatisticType, Integer> matchOutcomeP1(){
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
         }
-        else if(gameState == GameState.P2_WIN) {
-            System.out.println("Player 2 has won the game!");
-            displayMatchStatistics();
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
         }
-        else if (gameState == GameState.DRAW) {
-            System.out.println("Both players have agreed to a draw!");
-            displayMatchStatistics();
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
         }
-        else{
-            System.out.println("The game is ongoing");
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP1Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP1Captures());
+        matchOutcome.put(StatisticType.MULTI_CAPTURES, getP1MultiCaptures());
+
+        return matchOutcome;
+    }
+
+    public HashMap<StatisticType, Integer> matchOutcomeP2(){
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
         }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
+        matchOutcome.put(StatisticType.MULTI_CAPTURES, getP2MultiCaptures());
+
+        return matchOutcome;
     }
 
     public Board getBoard() {

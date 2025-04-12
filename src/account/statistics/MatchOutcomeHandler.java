@@ -1,6 +1,7 @@
 package account.statistics;
 
 import account.LoggedInAccount;
+import database.DatabaseManager;
 import game.GameType;
 import account.Account;
 
@@ -41,6 +42,11 @@ public class MatchOutcomeHandler {
             int eloChange = (int) Math.round(kFactor * (score - expectedScore));
             int newElo = previousElo + eloChange;
             thisAccount.updateElo(game, newElo);
+        }
+
+        // If the account is not a Guest, update it in database.
+        if (!thisAccount.getIsGuest()) {
+            DatabaseManager.saveAccount(thisAccount);
         }
     }
 

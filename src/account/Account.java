@@ -594,4 +594,6 @@ public class Account {
     public matchmaking.MatchmakingHandler getMatchmakingHandler(){
         return matchmakingHandler;
     }
+
+    public void setIsGuest(boolean isGuest) {this.isGuest = isGuest;}
 }

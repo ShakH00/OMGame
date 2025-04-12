@@ -3,7 +3,6 @@ import game.Game;
 import game.GameState;
 import game.GameType;
 import game.chess.*;
-import game.connect4.Connect4;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
@@ -25,6 +24,7 @@ import javafx.stage.Stage;
 import networking.Networking;
 
 import java.util.concurrent.TimeUnit;
+import matchmaking.MatchData;
 
 
 /**
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Shakil Hussain and Arwa A, modified by Adam Chan
  */
-public class P1ChessController extends Application {
+public class P1ChessController extends Application implements DataInitializable<MatchData>{
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -66,13 +66,28 @@ public class P1ChessController extends Application {
     private StackPane queenButton;
 
     private networking.Networking networking = new networking.Networking();
+    private String selfUsername;
+    private String opponentUsername;
+    private int selfPlayerNo;
+    private int opponentPlayerNo;
+
 
     private int selectedRow = -1;
     private int selectedCol = -1;
     private MovingPiece promotionPawn; // temporarily store the pawn
 
     private chess1Watcher watcher;
+    @Override
+    public void initializeData(MatchData data) {
+        // now we SHOULD be able to get info from matchData
+        this.selfUsername = data.getSelfUsername();
+        this.opponentUsername = data.getOpponentUsername();
+        this.selfPlayerNo = data.getSelfPlayerNo();
+        this.opponentPlayerNo = data.getOpponentPlayerNo();
 
+        updatePlayerLabels();
+
+    }
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -80,9 +95,9 @@ public class P1ChessController extends Application {
             loader.setController(this); // Set the controller to this instance
             Scene scene = new Scene(loader.load(), 800, 570);
 
-            String fontPath = getClass().getResource("/resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
-            String retroGamingPath = getClass().getResource("/resources/fonts/RetroGaming.ttf").toExternalForm();
-            String pixelitePath = getClass().getResource("/resources/fonts/Pixelite.ttf").toExternalForm();
+            String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
+            String retroGamingPath = getClass().getResource("resources/fonts/RetroGaming.ttf").toExternalForm();
+            String pixelitePath = getClass().getResource("resources/fonts/Pixelite.ttf").toExternalForm();
 
             Font pressStartFont = Font.loadFont(fontPath, 40);
             Font retroGamingFont = Font.loadFont(retroGamingPath, 40);
@@ -209,6 +224,16 @@ public class P1ChessController extends Application {
     }
 
     private void updatePlayerLabels() {
+        if (selfPlayerNo == 1) {
+            // you are p1, and opponent is p2
+            p1Label.setText(selfUsername);
+            p2Label.setText(opponentUsername);
+
+        } else {
+            // otherwise, you are p2, and opponent is p1
+            p1Label.setText(opponentUsername);
+            p2Label.setText(selfUsername);
+        }
         if (game.getState() == GameState.P2_TURN) {
             p1Label.setOpacity(.5);
             p2Label.setOpacity(1);
@@ -256,7 +281,6 @@ public class P1ChessController extends Application {
 
     private void handleResign() {
         game.surrender();
-        game.matchOutcome();
     }
 
     @FXML
@@ -332,6 +356,4 @@ class chess1Watcher extends Thread {
             }
         }
     }
-
-
 }

@@ -1,11 +1,13 @@
 import account.Account;
 import account.LoggedInAccount;
 import authentication.Authentication.MFAAuthentication;
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import authentication.MFAPopupController;
 import database.DatabaseManager;
+import database.DecryptionAuthentication;
+import database.EncryptionAuthentication;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class LoginController extends Application {
@@ -95,12 +96,17 @@ public class LoginController extends Application {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
         if(username.equals("admin") && password.equals("admin")){
             SceneManager.switchScene(stage, "screens/AdminScreen.fxml");
             return;
         }
-        Account user;
-        user = DatabaseManager.queryAccountByEmail(username);
+        Account user = null;
+        try {
+            user = DatabaseManager.queryAccountByEmail(EncryptionAuthentication.encryptionDriver(username));
+        } catch (EncryptionFailedException e) {
+
+        }
         if(user == null){
             // If the account wasn't found via email, try via username
             user = DatabaseManager.queryAccountByUsername(username);
@@ -108,21 +114,27 @@ public class LoginController extends Application {
         boolean accountExists = false;
         if(user != null) {
             accountExists = true;
+            user.setIsGuest(false);
+            LoggedInAccount.setAccount(user);
         }
         if(accountExists){
-            if(user.getPassword().equals(password)){
-                // If the password matches the username/email, log them in
-                openMFAPopup(user.getEmail());
-                SceneManager.switchScene(stage, "screens/MatchType.fxml");
-                return;
+            try {
+                if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(password)) {
+                    // If the password matches the username/email, log them in
+                    openMFAPopup(user.getEmail());
+                    // TODO: remove to use mfa properly
+                    SceneManager.switchScene(stage, "screens/MatchType.fxml");
+                    return;
+                }else{
+                    notificationText.setText("Incorrect username or password!");
+                }
+            } catch (DecryptionFailedException e) {
+                System.out.println(e);
             }
-        }
-
-        if (username.isEmpty()){
+        } else if (username.isEmpty()){
             notificationText.setText("Please enter a username!");
             return;
-        }
-        else if (password.isEmpty()) {
+        } else if (password.isEmpty()) {
             notificationText.setText("Please enter a password!");
             return;
         } else {

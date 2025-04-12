@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="authentication.MFAPopupController"
+      fx:controller="MFAPopupController"
       spacing="10" alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 20;">
     <Label text="Enter MFA Code" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
     <TextField fx:id="codeField" promptText="Enter code here" maxWidth="200"/>

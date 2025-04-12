@@ -1,6 +1,8 @@
 package authentication.Authentication;
 
+import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
+import database.DecryptionAuthentication;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,7 +39,11 @@ public class MFAAuthentication {
         if (!testMode) {
             code = generateRandomCode();
             // Simulate sending the code via email
-            EmailSender.sendEmail(email, code); // Ensure this sends the email
+            try {
+                EmailSender.sendEmail(DecryptionAuthentication.decryptionDriver(email), code); // Ensure this sends the email
+            } catch (DecryptionFailedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             code = "123456"; // Test mode uses a fixed code
         }

@@ -1,5 +1,3 @@
-package authentication;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -31,6 +29,8 @@ public class MFAPopupController {
             // Close the pop-up
             Stage stage = (Stage) codeField.getScene().getWindow();
             stage.close();
+            //TODO: uncomment for proper mfa
+            //SceneManager.switchScene(stage, "screens/MatchType.fxml");
         } else {
             // Show error message
             Alert alert = new Alert(Alert.AlertType.ERROR);
