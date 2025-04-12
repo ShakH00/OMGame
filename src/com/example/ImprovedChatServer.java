@@ -143,7 +143,7 @@ public class ImprovedChatServer {
             sendMessage("Me: " + filteredContent);
 
             String name = "saqib";
-            broadcast("Client #" + name + ": " + filteredContent, this);
+            broadcast("Client #" + clientId + ": " + filteredContent, this);
         }
 
         private void logChat(int playerId, String message) {

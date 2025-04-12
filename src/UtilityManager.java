@@ -1,3 +1,4 @@
+import com.example.ChatLauncher;
 import com.example.ImprovedChatServer;
 import com.example.RunTheChat;
 import javafx.animation.ScaleTransition;
@@ -32,13 +33,13 @@ public class UtilityManager {
     public static void main(String[] args) {
         chatControl();
     }
+
     /**
      * Method to open up the resignation/offer draw popup
      *
      * @param mouseEvent
-     * @param path Path to page
-     * @param rootPane Pane that the popup is added to
-     *
+     * @param path       Path to page
+     * @param rootPane   Pane that the popup is added to
      * @author Emily M & Arwa
      */
     // TODO: Implement separately from main screen help popup
@@ -62,6 +63,7 @@ public class UtilityManager {
             e.printStackTrace();
         }
     }
+
     @FXML
     public static void popupClose(AnchorPane rootPane) {
         if (currentPopup != null) {
@@ -74,28 +76,77 @@ public class UtilityManager {
      * Method to open up the chat window
      *
      * @param
-     *
      * @author
      */
+//    @FXML
+//    public static void chatControl() {
+//        // TODO; Create logic for chat
+//        // Start the server in a background thread
+//        new Thread(() -> {
+//            ImprovedChatServer server = new ImprovedChatServer(30002);
+//            server.start();
+//        }).start();
+//
+//        // Give the server a moment to start up
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//        }
+//
+//        // Launch the chat client
+//        RunTheChat.main(new String[0]);
+//    }
+
     @FXML
     public static void chatControl() {
-        // TODO; Create logic for chat
-        // Start the server in a background thread
+        // Start the server in a background thread with error handling
         new Thread(() -> {
-            ImprovedChatServer server = new ImprovedChatServer(30001);
-            server.start();
+            try {
+                // Try a different port if the default one is in use
+                int port = 30002;
+                ImprovedChatServer server = null;
+
+                // Try up to 5 different ports
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        server = new ImprovedChatServer(port + i);
+                        System.out.println("Chat server started on port " + (port + i));
+                        // Store the successful port for the client to use
+                        final int successPort = port + i;
+
+                        // Start the server
+                        ImprovedChatServer finalServer = server;
+                        finalServer.start();
+
+                        // Now launch the chat client on the JavaFX thread with the correct port
+                        javafx.application.Platform.runLater(() -> {
+                            try {
+                                // Give server time to initialize
+                                Thread.sleep(500);
+
+                                // Make sure ChatController uses the same port as the server
+                                System.out.println("Connecting client to port: " + successPort);
+
+                                // You need to modify your ChatController to accept a port parameter
+                                ChatLauncher.launchChatWindow(null, 1, "Player1", 225, 300, successPort);
+                            } catch (Exception e) {
+                                System.err.println("Error launching chat client: " + e.getMessage());
+                            }
+                        });
+
+                        // If we get here, we successfully started the server
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Port " + (port + i) + " in use, trying next port...");
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to start chat server: " + e.getMessage());
+            }
         }).start();
-
-        // Give the server a moment to start up
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        // Launch the chat client
-        RunTheChat.main(new String[0]);
     }
+
 
     /**
      * Method to scale a button when hovered over

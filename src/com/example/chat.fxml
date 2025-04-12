@@ -16,7 +16,7 @@
 <StackPane prefHeight="300.0" prefWidth="225.0" stylesheets="@chat_styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ChatController">
     <!-- Background image -->
     <ImageView fitWidth="225" fitHeight="300" preserveRatio="false">
-        <Image url="@images/ChatBG.png" />
+        <Image url="@/images/ChatBG.png" />
     </ImageView>
 
     <BorderPane prefHeight="300.0" prefWidth="225.0">

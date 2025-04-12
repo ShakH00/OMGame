@@ -39,57 +39,59 @@ public class ChatController {
     private boolean isConnected = false;
     private int reconnectAttempts = 0;
     private final int MAX_RECONNECT_ATTEMPTS = 3;
+    private int port;
 
 
     private boolean expectingEchoMessage = false;
     private String lastSentMessage = "";
 
 
-    @FXML
-    public void initialize() {
-        chatLogs = new HashMap<>();
+//    public void initializeChat(int playerID, String playerName, int port) {
+//        this.playerID = playerID;
+//        this.playerName = playerName;
+//        this.port = port; // Add this field to your class
+//        statusLabel.setText("Status: Connecting as Player " + playerID);
+//
+//        try {
+//            connectToServer(port); // Modify this method to accept the port
+//        } catch (Exception e) {
+//            updateStatus("Failed to connect to chat server: " + e.getMessage());
+//        }
+//    }
 
 
-        chatArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            chatArea.setScrollTop(Double.MAX_VALUE);
-        });
-
-
-        messageInput.setOnAction(e -> handleSendMessage());
-    }
-
-
-    public void initializeChat(int playerID, String playerName) {
+    public void initializeChat(int playerID, String playerName, int port) {
         this.playerID = playerID;
         this.playerName = playerName;
+        this.chatLogs = new HashMap<>();  // Initialize chatLogs
         statusLabel.setText("Status: Connected as Player " + playerID);
 
         try {
-            connectToServer();
+            connectToServer(port);
         } catch (Exception e) {
             updateStatus("Failed to connect to chat server: " + e.getMessage());
         }
     }
 
+    // Add an overloaded method for backward compatibility
 
-    private void connectToServer() {
+
+
+    private void connectToServer(int port) {
         try {
-            System.out.println("Attempting to connect to chat server...");
-
+            System.out.println("Attempting to connect to chat server on port " + port + "...");
 
             if (chatSocket != null && !chatSocket.isClosed()) {
                 try {
                     chatSocket.close();
                 } catch (IOException ex) {
-
+                    // Silently ignore close exceptions
                 }
             }
 
-
             chatSocket = new Socket();
-            chatSocket.connect(new InetSocketAddress("localhost", 30001), 5000);
+            chatSocket.connect(new InetSocketAddress("localhost", port), 5000);
             System.out.println("Socket connected!");
-
 
             chatOutObj = new ObjectOutputStream(chatSocket.getOutputStream());
             chatOutObj.flush();
@@ -102,9 +104,7 @@ public class ChatController {
             reconnectAttempts = 0;
             System.out.println("Connection established successfully");
 
-
             updateStatus("Connected to chat server");
-
 
             startChatListener();
 
@@ -115,14 +115,19 @@ public class ChatController {
             isConnected = false;
             updateStatus("Failed to connect: " + e.getMessage());
 
-
             Platform.runLater(() -> {
-                chatArea.appendText("SYSTEM: Chat server is offlinE\n");
+                chatArea.appendText("SYSTEM: Chat server is offline\n");
             });
         } catch (Exception e) {
-            System.out.println(" error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    // Also add an overloaded method for backward compatibility
+    private void connectToServer() {
+        // Default to port 30001 for backward compatibility
+        connectToServer(30001);
     }
 
 
