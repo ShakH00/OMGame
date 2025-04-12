@@ -45,7 +45,8 @@ public class Chess extends Game {
     private int p2PawnsPromoted = 0;
     private int p1ChecksPerformed = 0;
     private int p2ChecksPerformed = 0;
-
+    private int p1Checkmate = 0;
+    private int p2Checkmate = 0;
 
     /**
      * Constructor to initiate a chess game
@@ -421,9 +422,29 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
+            p2Checkmate += 1;
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
+            p1Checkmate += 1;
         }
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 1
+     * @return p1Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1Checkmate(){
+        return p1Checkmate;
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 2
+     * @return p2Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2Checkmate(){
+        return p2Checkmate;
     }
 
     /**
