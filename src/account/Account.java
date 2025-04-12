@@ -557,6 +557,14 @@ public class Account {
         }
         return false;
     }
+
+    /**
+     * Convert this Account from a guest account to a real one (with username, etc.)
+     * @param username
+     * @param email
+     * @param password
+     * @return
+     */
     public Account guestToPermanentAccount(String username, String email, String password) {
         // Attempt to create the permanent account using the CreateAccount helper class
         Account newAccount;
@@ -604,5 +612,9 @@ public class Account {
         return matchmakingHandler;
     }
 
+    /**
+     * Change isGuest value.
+     * @param isGuest   boolean value for isGuest flag
+     */
     public void setIsGuest(boolean isGuest) {this.isGuest = isGuest;}
 }
