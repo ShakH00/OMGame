@@ -41,6 +41,10 @@ public class Chess extends Game {
     private int p2QueenCaptures = 0;
     private int p1RookCaptures = 0;
     private int p2RookCaptures = 0;
+    private int p1PawnsPromoted = 0;
+    private int p2PawnsPromoted = 0;
+    private int p1ChecksPerformed = 0;
+    private int p2ChecksPerformed = 0;
 
 
     /**
@@ -138,7 +142,7 @@ public class Chess extends Game {
         // Actually perform the move
 
         Piece potentialEnemy = board.getBoardState()[x][y];
-        //need to account for en passant somehow
+
         if (piece.move(x, y, board)) {
             if(piece.getOwnedBy() == this.player1){
                 addp1Turn();
@@ -155,7 +159,7 @@ public class Chess extends Game {
                     } else if(potentialEnemy instanceof Queen){
                         addP1QueenCaptures();
                     }
-                //account for en passant
+                //account for en passant and promotion tracking
                 } else{
                     if(piece instanceof Pawn){
                         if(((Pawn) piece).getEnPassantPerformed()){
@@ -163,6 +167,7 @@ public class Chess extends Game {
                             addP1PawnCaptures();
                             ((Pawn) piece).resetEnPassantPerformed();
                         }
+                        if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
                     }
                 }
             } else if(piece.getOwnedBy() == this.player2){
@@ -180,7 +185,7 @@ public class Chess extends Game {
                     } else if(potentialEnemy instanceof Queen){
                         addP2QueenCaptures();
                     }
-                //account for en passant
+                //account for en passant and promotion tracking
                 } else{
                     if(piece instanceof Pawn){
                         if(((Pawn) piece).getEnPassantPerformed()){
@@ -189,6 +194,7 @@ public class Chess extends Game {
                             ((Pawn) piece).resetEnPassantPerformed();
                         }
                     }
+                    if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
                 }
             }
             switchTurn();
@@ -397,6 +403,8 @@ public class Chess extends Game {
                     MovingPiece mp = (MovingPiece) p;
                     if (mp.isValidMove(kingX, kingY, board)) {
                         // Check if the piece can attack the king directly
+                        if(player.equals(player1)) addP2ChecksPerformed();
+                        if(player.equals(player2)) addP1ChecksPerformed();
                         return true;
                     }
                 }
@@ -760,5 +768,73 @@ public class Chess extends Game {
      */
     public void addP2RookCaptures() {
         this.p2RookCaptures += 1;
+    }
+
+    /**
+     * Get number of times that player 1 promoted pawns
+     * @return p1PawnsPromoted: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1PawnsPromoted() {
+        return p1PawnsPromoted;
+    }
+
+    /**
+     * Add 1 to value of pawns promoted by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1PawnsPromoted() {
+        this.p1PawnsPromoted += 1;
+    }
+
+    /**
+     * Get number of times that player 2 promoted pawns
+     * @return p2PawnsPromoted: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2PawnsPromoted() {
+        return p2PawnsPromoted;
+    }
+
+    /**
+     * Add 1 to value of pawns promoted by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2PawnsPromoted() {
+        this.p2PawnsPromoted += 1;
+    }
+
+    /**
+     * Get number of times that player 1 checked player 2
+     * @return p1ChecksPerformed: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1ChecksPerformed() {
+        return p1ChecksPerformed;
+    }
+
+    /**
+     * Add 1 to value of checks that player 1 performed on player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1ChecksPerformed() {
+        this.p1ChecksPerformed += 1;
+    }
+
+    /**
+     * Get number of times that player 2 checked player 1
+     * @return p2ChecksPerformed: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2ChecksPerformed() {
+        return p2ChecksPerformed;
+    }
+
+    /**
+     * Add 1 to value of checks that player 2 performed on player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2ChecksPerformed() {
+        this.p2ChecksPerformed += 1;
     }
 }
