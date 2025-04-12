@@ -117,7 +117,7 @@ public class CaptchaPopupController extends Application  {
             SceneManager.switchScene(stage, "screens/MatchType.fxml");
         }catch (CAPTCHAAuthenticationFailedException e){
             // If captcha test was failed, do not grant access to the account
-            DatabaseManager.deleteAccount(LoggedInAccount.getAccount().getEmail());
+            DatabaseManager.deleteAccountByEmail(LoggedInAccount.getAccount().getEmail());
             UtilityManager.popupClose(rootPane);
         }
 
