@@ -1,7 +1,6 @@
 import account.Account;
 import account.statistics.MatchOutcomeHandler;
 import account.LoggedInAccount;
-import com.mysql.cj.log.Log;
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
