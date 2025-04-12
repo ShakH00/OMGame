@@ -403,214 +403,214 @@
                 <Font name="Press Start 2P Regular" size="18.0" />
             </font>
         </Label>
-      <Pane fx:id="pawnPromotion" layoutX="141.0" layoutY="42.0" prefHeight="533.0" prefWidth="528.0" visible="false">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="603.0" layoutX="-144.0" layoutY="-52.0" stroke="BLACK" strokeType="INSIDE" width="819.0" />
-            <ImageView fitHeight="148.0" fitWidth="148.0" layoutX="74.0" layoutY="-55.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../images/sprites/tetrisCat1.GIF" />
-               </image>
-            </ImageView>
-                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbf8f3" height="382.0" layoutX="103.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="7.0" width="327.0">
-                        <stroke>
-                            <LinearGradient endX="1.0" endY="0.6113744075829384" startX="0.2037914691943128">
-                                <stops>
-                                    <Stop>
-                                        <color>
-                                            <Color red="1.0" green="0.5647059082984924" blue="0.7058823704719543" />
-                                        </color>
-                                    </Stop>
-                                    <Stop offset="0.265898674087412">
-                                        <color>
-                                            <Color red="0.9411764740943909" green="0.6745098233222961" blue="0.30980393290519714" />
-                                        </color>
-                                    </Stop>
-                                    <Stop offset="0.5275208708462923">
-                                        <color>
-                                            <Color red="0.43921568989753723" green="0.7019608020782471" blue="0.21960784494876862" />
-                                        </color>
-                                    </Stop>
-                                    <Stop offset="0.7601489605500081">
-                                        <color>
-                                            <Color red="0.15294118225574493" green="0.6549019813537598" blue="0.5764706134796143" />
-                                        </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                        <color>
-                                            <Color red="0.572549045085907" green="0.3607843220233917" blue="0.6980392336845398" />
-                                        </color>
-                                    </Stop>
-                                </stops>
-                            </LinearGradient>
-                        </stroke>
-                    </Rectangle>
-                      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#8c468b" height="30.0" layoutX="74.0" layoutY="68.0" rotate="-18.4" stroke="TRANSPARENT" strokeType="INSIDE" width="76.0" />
-                      <Text fill="WHITE" layoutX="87.0" layoutY="90.0" rotate="-18.4" strokeType="OUTSIDE" strokeWidth="0.0" text="YAY!">
-                          <font>
-                              <Font name="Press Start 2P Regular" size="13.0" />
-                          </font>
-                      </Text>
-                      <StackPane fx:id="knightButton" layoutX="157.0" layoutY="191.0" onMouseClicked="#handleKnight" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
-                          <children>
-                              <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
-                                  <image>
-                                      <Image url="@../images/pink.png" />
-                                  </image>
-                              </ImageView>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Knight" textAlignment="CENTER" wrappingWidth="178.5">
-                                  <font>
-                                      <Font name="Press Start 2P Regular" size="14.0" />
-                                  </font>
-                              </Text>
-                          </children>
-                      </StackPane>
-            <Text fill="#4e5861" layoutX="127.0" layoutY="136.0" lineSpacing="3.5" stroke="#4e5861" strokeWidth="0.5" text="Congratulations! Your Pawn has been promoted. What would you like to promote it to?" textAlignment="CENTER" wrappingWidth="280.263671875">
-               <font>
-                  <Font name="Press Start 2P Regular" size="12.0" />
-               </font>
-            </Text>
-            <StackPane fx:id="bishopButton" layoutX="157.0" layoutY="250.0" onMouseClicked="#handleBishop" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
-               <children>
-                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/yellow.png" />
-                     </image>
-                  </ImageView>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Bishop" textAlignment="CENTER" wrappingWidth="178.5">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-            <StackPane fx:id="rookButton" layoutX="157.0" layoutY="309.0" onMouseClicked="#handleRook" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
-               <children>
-                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/green.png" />
-                     </image>
-                  </ImageView>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Rook" textAlignment="CENTER" wrappingWidth="178.5">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-            <StackPane fx:id="queenButton" layoutX="157.0" layoutY="366.0" onMouseClicked="#handleQueen" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
-               <children>
-                  <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/blue.png" />
-                     </image>
-                  </ImageView>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Queen" textAlignment="CENTER" wrappingWidth="167.5">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-         </children>
-      </Pane>
-      <Pane fx:id="gameOver" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
-         <children>
-            <Rectangle fill="#0f101b7a" height="598.0" layoutX="-14.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color opacity="0.48632219433784485" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <stroke>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.006711409395973154">
-                           <color>
-                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.057999998331069946" green="0.05939999967813492" blue="0.10000000149011612" opacity="0.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </stroke>
-            </Rectangle>
-            <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="456.0" layoutX="185.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="5.0" width="432.0">
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color opacity="0.48632219433784485" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <stroke>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
-                           </color>
-                        </Stop>
-                        <Stop offset="0.006711409395973154">
-                           <color>
-                              <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.843137264251709" green="0.3607843220233917" blue="0.5254902243614197" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </stroke>
-            </Rectangle>
-            <Text fx:id="playerWonLabel" fill="#254663" layoutX="181.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[player] won!" textAlignment="CENTER" wrappingWidth="442.0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="17.0" />
-               </font>
-            </Text>
-            <Text fill="#254663" layoutX="190.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Pixelite&quot;;" text="GAME OVER!" textAlignment="CENTER" wrappingWidth="426.0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="34.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="247.0" fitWidth="422.0" layoutX="279.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/tetrisCat6.gif" />
-               </image>
-            </ImageView>
-            <StackPane fx:id="mainMenuButton" layoutX="251.0" layoutY="425.0" onMouseClicked="#goToMainMenu" prefHeight="57.0" prefWidth="302.0">
-               <children>
-                  <ImageView fitHeight="57.0" fitWidth="243.0" layoutY="3.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/pink_noborder.png" />
-                     </image>
-                  </ImageView>
-                  <Text fill="#ffd3e5" layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="main menu" textAlignment="CENTER" wrappingWidth="196.83331298828125">
-                     <font>
+        <Pane fx:id="pawnPromotion" layoutX="141.0" layoutY="42.0" prefHeight="533.0" prefWidth="528.0" visible="false">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000054" height="603.0" layoutX="-144.0" layoutY="-52.0" stroke="BLACK" strokeType="INSIDE" width="819.0" />
+                <ImageView fitHeight="148.0" fitWidth="148.0" layoutX="74.0" layoutY="-55.0" pickOnBounds="true">
+                    <image>
+                        <Image url="@../images/sprites/tetrisCat1.GIF" />
+                    </image>
+                </ImageView>
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#fbf8f3" height="382.0" layoutX="103.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="7.0" width="327.0">
+                    <stroke>
+                        <LinearGradient endX="1.0" endY="0.6113744075829384" startX="0.2037914691943128">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color red="1.0" green="0.5647059082984924" blue="0.7058823704719543" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.265898674087412">
+                                    <color>
+                                        <Color red="0.9411764740943909" green="0.6745098233222961" blue="0.30980393290519714" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.5275208708462923">
+                                    <color>
+                                        <Color red="0.43921568989753723" green="0.7019608020782471" blue="0.21960784494876862" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.7601489605500081">
+                                    <color>
+                                        <Color red="0.15294118225574493" green="0.6549019813537598" blue="0.5764706134796143" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="0.572549045085907" green="0.3607843220233917" blue="0.6980392336845398" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </stroke>
+                </Rectangle>
+                <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#8c468b" height="30.0" layoutX="74.0" layoutY="68.0" rotate="-18.4" stroke="TRANSPARENT" strokeType="INSIDE" width="76.0" />
+                <Text fill="WHITE" layoutX="87.0" layoutY="90.0" rotate="-18.4" strokeType="OUTSIDE" strokeWidth="0.0" text="YAY!">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="13.0" />
+                    </font>
+                </Text>
+                <StackPane fx:id="knightButton" layoutX="157.0" layoutY="191.0" onMouseClicked="#handleKnight" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+                    <children>
+                        <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/pink.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Knight" textAlignment="CENTER" wrappingWidth="178.5">
+                            <font>
+                                <Font name="Press Start 2P Regular" size="14.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </StackPane>
+                <Text fill="#4e5861" layoutX="127.0" layoutY="136.0" lineSpacing="3.5" stroke="#4e5861" strokeWidth="0.5" text="Congratulations! Your Pawn has been promoted. What would you like to promote it to?" textAlignment="CENTER" wrappingWidth="280.263671875">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="12.0" />
+                    </font>
+                </Text>
+                <StackPane fx:id="bishopButton" layoutX="157.0" layoutY="250.0" onMouseClicked="#handleBishop" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+                    <children>
+                        <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/yellow.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Bishop" textAlignment="CENTER" wrappingWidth="178.5">
+                            <font>
+                                <Font name="Press Start 2P Regular" size="14.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </StackPane>
+                <StackPane fx:id="rookButton" layoutX="157.0" layoutY="309.0" onMouseClicked="#handleRook" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+                    <children>
+                        <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/green.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Rook" textAlignment="CENTER" wrappingWidth="178.5">
+                            <font>
+                                <Font name="Press Start 2P Regular" size="14.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </StackPane>
+                <StackPane fx:id="queenButton" layoutX="157.0" layoutY="366.0" onMouseClicked="#handleQueen" prefHeight="56.0" prefWidth="212.0" styleClass=".text">
+                    <children>
+                        <ImageView fitHeight="56.0" fitWidth="200.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/blue.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Queen" textAlignment="CENTER" wrappingWidth="167.5">
+                            <font>
+                                <Font name="Press Start 2P Regular" size="14.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </StackPane>
+            </children>
+        </Pane>
+        <Pane fx:id="gameOver" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
+            <children>
+                <Rectangle fill="#0f101b7a" height="598.0" layoutX="-14.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
+                    <effect>
+                        <DropShadow>
+                            <color>
+                                <Color opacity="0.48632219433784485" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                    <stroke>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.006711409395973154">
+                                    <color>
+                                        <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="0.057999998331069946" green="0.05939999967813492" blue="0.10000000149011612" opacity="0.0" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </stroke>
+                </Rectangle>
+                <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="456.0" layoutX="185.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="5.0" width="432.0">
+                    <effect>
+                        <DropShadow>
+                            <color>
+                                <Color opacity="0.48632219433784485" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                    <stroke>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.006711409395973154">
+                                    <color>
+                                        <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="0.843137264251709" green="0.3607843220233917" blue="0.5254902243614197" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </stroke>
+                </Rectangle>
+                <Text fx:id="playerWonLabel" fill="#254663" layoutX="181.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[player] won!" textAlignment="CENTER" wrappingWidth="442.0">
+                    <font>
                         <Font name="Press Start 2P Regular" size="17.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-            <Text fx:id="playerWonLabel1" fill="#254663" layoutX="190.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="thanks for playing!" textAlignment="CENTER" wrappingWidth="426.0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="17.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
+                    </font>
+                </Text>
+                <Text fill="#254663" layoutX="190.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Pixelite&quot;;" text="GAME OVER!" textAlignment="CENTER" wrappingWidth="426.0">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="34.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="247.0" fitWidth="422.0" layoutX="279.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/tetrisCat6.gif" />
+                    </image>
+                </ImageView>
+                <StackPane fx:id="mainMenuButton" layoutX="251.0" layoutY="425.0" onMouseClicked="#goToMainMenu" prefHeight="57.0" prefWidth="302.0">
+                    <children>
+                        <ImageView fitHeight="57.0" fitWidth="243.0" layoutY="3.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../images/pink_noborder.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="#ffd3e5" layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="main menu" textAlignment="CENTER" wrappingWidth="196.83331298828125">
+                            <font>
+                                <Font name="Press Start 2P Regular" size="17.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </StackPane>
+                <Text fx:id="playerWonLabel1" fill="#254663" layoutX="190.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="thanks for playing!" textAlignment="CENTER" wrappingWidth="426.0">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="17.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
 
     </children>
 </AnchorPane>
