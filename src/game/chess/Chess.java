@@ -44,7 +44,8 @@ public class Chess extends Game {
     private int p2PawnsPromoted = 0;
     private int p1ChecksPerformed = 0;
     private int p2ChecksPerformed = 0;
-
+    private int p1Checkmate = 0;
+    private int p2Checkmate = 0;
 
     /**
      * Constructor to initiate a chess game
@@ -416,9 +417,29 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
+            p2Checkmate += 1;
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
+            p1Checkmate += 1;
         }
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 1
+     * @return p1Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1Checkmate(){
+        return p1Checkmate;
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 2
+     * @return p2Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2Checkmate(){
+        return p2Checkmate;
     }
 
     /**
@@ -549,7 +570,13 @@ public class Chess extends Game {
         matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
         matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
         matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
-
+        matchOutcome.put(StatisticType.PAWNS_CAPTURED, getP2PawnCaptures());
+        matchOutcome.put(StatisticType.ROOKS_CAPTURED, getP2RookCaptures());
+        matchOutcome.put(StatisticType.BISHOPS_CAPTURED, getP2BishopCaptures());
+        matchOutcome.put(StatisticType.KNIGHTS_CAPTURED, getP2KnightCaptures());
+        matchOutcome.put(StatisticType.QUEENS_CAPTURED, getP2QueenCaptures());
+        matchOutcome.put(StatisticType.CHECKS, getP2ChecksPerformed());
+        matchOutcome.put(StatisticType.PIECES_PROMOTED, getP2PawnsPromoted());
         return matchOutcome;
     }
 

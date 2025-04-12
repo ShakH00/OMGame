@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import networking.Networking;
 
@@ -70,6 +71,14 @@ public class P1ChessController extends Application implements DataInitializable<
     private String opponentUsername;
     private int selfPlayerNo;
     private int opponentPlayerNo;
+
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
 
 
     private int selectedRow = -1;
@@ -158,6 +167,30 @@ public class P1ChessController extends Application implements DataInitializable<
                 selectedCol = -1;
                 networking.sendGame(game);
             updateBoard();
+        }
+
+        GameState state = game.getState();
+        if (state == GameState.P1_WIN) {
+            System.out.println("Player 1 wins!");
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+
+        } else if (state == GameState.P2_WIN) {
+            System.out.println("Player 2 wins!");
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+        } else if (state == GameState.DRAW) {
+            System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         }
     }
 
@@ -263,11 +296,16 @@ public class P1ChessController extends Application implements DataInitializable<
 
         UtilityManager.createScaleTransition(menuButton);
         UtilityManager.createScaleTransition(chatButton);
+        UtilityManager.createScaleTransition(mainMenuButton);
     }
 
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
         UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
     }
 
     @FXML

@@ -151,7 +151,7 @@
 
         <StackPane layoutX="37.0" layoutY="128.0">
             <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#1e2a47" height="375.0" layoutX="37.0" layoutY="128.0" stroke="#FF8FB7" strokeWidth="3" width="249.0" />
-            <Label fx:id="username" text="Username" textFill="WHITE" StackPane.alignment="TOP_CENTER">
+            <Label fx:id="nameDisplay" text="Username" textFill="WHITE" StackPane.alignment="TOP_CENTER">
                 <StackPane.margin>
                     <Insets top="135.0" />
                 </StackPane.margin>

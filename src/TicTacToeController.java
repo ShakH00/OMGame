@@ -13,8 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import matchmaking.MatchData;
 
@@ -41,6 +43,13 @@ public class TicTacToeController extends Application implements DataInitializabl
     private StackPane chatButton;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
 
     private String selfUsername;
     private String opponentUsername;
@@ -122,8 +131,6 @@ public class TicTacToeController extends Application implements DataInitializabl
             return; // game over
         }
 
-        updatePlayerLabels();
-
         // who's turn is it?
         Piece currentPiece = game.getGameState() == GameState.P1_TURN ? game.piece1 : game.piece2;
         Piece[][] board = game.getBoard().getBoardState();
@@ -147,10 +154,24 @@ public class TicTacToeController extends Application implements DataInitializabl
 
         if (currentState == GameState.P1_WIN) {
             System.out.println("Player 1 wins!");
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (currentState == GameState.P2_WIN) {
             System.out.println("Player 2 wins!");
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (currentState == GameState.DRAW) {
             System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         }
     }
 
@@ -175,11 +196,11 @@ public class TicTacToeController extends Application implements DataInitializabl
             p2Label.setTextAlignment(RIGHT);
 
             if (game.getGameState() == GameState.P2_TURN) {
-                p1Label.setOpacity(.5);
-                p2Label.setOpacity(1);
-            } else if (game.getGameState() == GameState.P1_TURN || currentState == GameState.SETUP) {
                 p1Label.setOpacity(1);
                 p2Label.setOpacity(.5);
+            } else if (game.getGameState() == GameState.P1_TURN || currentState == GameState.SETUP) {
+                p1Label.setOpacity(.5);
+                p2Label.setOpacity(1);
             }
 
         } else {
@@ -251,6 +272,7 @@ public class TicTacToeController extends Application implements DataInitializabl
         updateBoard(); // Ensure the board is updated once everything is initialized
         UtilityManager.createScaleTransition(menuButton);
         UtilityManager.createScaleTransition(chatButton);
+        UtilityManager.createScaleTransition(mainMenuButton);
     }
 
     @FXML
@@ -258,6 +280,10 @@ public class TicTacToeController extends Application implements DataInitializabl
         UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
+
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
+    }
     @FXML
     public void goToChat() {
         UtilityManager.chatControl();
