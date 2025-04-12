@@ -1,6 +1,8 @@
 package game;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String team;
 
     public Player() {
@@ -8,22 +10,18 @@ public class Player {
     }
 
     public int getWinCount() {
-
         return 0;
     }
 
     public int getLoseCount() {
-
         return 0;
     }
 
     public String getTeam() {
-
         return team;
     }
 
     public boolean isTurn() {
-
         return false;
     }
 

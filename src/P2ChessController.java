@@ -1,4 +1,5 @@
 import game.Board;
+import game.Game;
 import game.GameState;
 import game.GameType;
 import game.chess.*;
@@ -20,6 +21,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import networking.Networking;
+
+import java.util.concurrent.TimeUnit;
 import matchmaking.MatchData;
 
 
@@ -70,6 +74,9 @@ public class P2ChessController extends Application implements DataInitializable<
     private int selectedCol = -1;
     private MovingPiece promotionPawn; // temporarily store the pawn
 
+    private chess2Watcher watcher;
+
+    private networking.Networking networking = new networking.Networking();
     @Override
     public void initializeData(MatchData data) {
         // now we SHOULD be able to get info from matchData
@@ -86,6 +93,7 @@ public class P2ChessController extends Application implements DataInitializable<
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/P2Chess.fxml"));
+            loader.setController(this); // Set the controller to this instance
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -102,6 +110,9 @@ public class P2ChessController extends Application implements DataInitializable<
             // set up the primary stage
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
+            networking.connectToServer();
+            watcher = new chess2Watcher(networking, this);
+            watcher.start(); // start the thread to listen for game updates
             primaryStage.show();
 
         } catch (Exception e) {
@@ -146,6 +157,7 @@ public class P2ChessController extends Application implements DataInitializable<
             // clear selection only after a valid move or promotion
                 selectedRow = -1;
                 selectedCol = -1;
+                networking.sendGame(game);
             updateBoard();
         }
     }
@@ -312,5 +324,42 @@ public class P2ChessController extends Application implements DataInitializable<
         launch(args);
     }
 
+    public void netUpdate(Game game){
+
+        System.out.println("NetUpdate");
+        this.game = (Chess) game;
+        System.out.println("Game state updated" );
+        javafx.application.Platform.runLater(() -> updateBoard());
+    }
 }
+
+class chess2Watcher extends Thread {
+    private final Networking networking;
+    private final P2ChessController gui;
+    public chess2Watcher(Networking networking, P2ChessController gui) {
+        this.networking = networking;
+        this.gui = gui;
+    }
+
+    public void run(){
+        while (networking.isConnected && networking.shouldListen){  // stop early if they stop matchmaking
+            // Check if the handler has found a match. If it has, start the game UI
+            if (networking.gameRecieved) {
+                System.out.println("Game received from network");
+                networking.gameRecieved = false; // Reset the flag after processing
+                gui.netUpdate(networking.recieveGame());
+            }
+
+            // Sleep 1 sec before repeating
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    }
+
+
+
 

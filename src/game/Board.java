@@ -5,8 +5,9 @@ import game.pieces.Piece;
 import game.checkers.CheckersPiece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
+import java.io.Serializable;
 
-public class Board{
+public class Board implements Serializable {
     private Piece[][] board;
     private int rows;
     private int cols;

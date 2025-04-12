@@ -3,6 +3,7 @@ package game.pieces;
 import game.Board;
 import game.Player;
 import javafx.scene.paint.Color;
+import java.io.Serializable;
 
 /**
  * Abstract game.pieces.MovingPiece class which is inherited by game.checkers.CheckersPiece and every game.chess.Chess piece object
@@ -15,7 +16,7 @@ import javafx.scene.paint.Color;
  *
  * @author Abdulrahman
  */
-public abstract class MovingPiece extends Piece{
+public abstract class MovingPiece extends Piece implements Serializable {
     private int x;
     private int y;
     public MovingPiece(int x, int y, Color color, PieceType pieceType, Player ownedBy, int score){

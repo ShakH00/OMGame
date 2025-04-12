@@ -1,4 +1,4 @@
-package networking.test;
+package networking.prototypes;
 
 import java.net.ServerSocket;
 import java.util.*;
