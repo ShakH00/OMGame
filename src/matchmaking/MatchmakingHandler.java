@@ -35,17 +35,45 @@ public class MatchmakingHandler {
         this.state = MatchmakingState.ONLINE;
     }
 
+    /**
+     * @param selfID                    Id of the player swapping their status to matchmaking
+     * @param game                      Game the player is matchmaking for
+     * @param elo                       Elo rating of the player for the game they are matchmaking for
+     * @param networkingInfo            Networking status of the player
+     * @throws InterruptedException     If interrupted while managing the players data throws exception
+     *
+     * startMatchmaking is a function that when called, changes the status of the account that did so to matchmaking
+     */
     public void startMatchmaking(int selfID, GameType game, int elo, String networkingInfo) throws InterruptedException {
         MatchmakingThread matchmakingThread = new MatchmakingThread(this, selfID, game, elo, networkingInfo);
         matchmakingThread.start();
     }
 
+    /**
+     * @param selfID                    Id of the player swapping their status to matchmaking
+     * @param game                      Game the player is matchmaking for
+     * @param elo                       Elo rating of the player for the game they are matchmaking for
+     * @param roomCode                  Room code the players private match
+     * @param networkingInfo            Networking status of the player
+     * @throws InterruptedException     If interrupted while managing the players data throws exception
+     *
+     * startHosting is a function that when called, changes the status of the account that did so to hosting
+     */
     public void startHosting(int selfID, GameType game, int elo, String roomCode, String networkingInfo) throws InterruptedException {
         System.out.println("ID " + selfID + " is now hosting.");
         HostingThread hostingThread = new HostingThread(this, selfID, game, elo, roomCode, networkingInfo);
         hostingThread.start();
     }
 
+    /**
+     * @param selfID                    ID of player trying to join
+     * @param account                   account of joining player
+     * @param roomCode                  Room code the players private match
+     * @param networkingInformation     Networking status of the player
+     * @return                          returns true if the room is found, otherwise return false
+     *
+     * tryJoinHost is a function that attempts to join a private match based on the input
+     */
     public boolean tryJoinHost(int selfID, Account account, String roomCode, String networkingInformation) {
         System.out.println("Trying to join room with code: " + roomCode);
         if (queryRoomCodeInTable(roomCode) && queryHostIDByRoomCode(roomCode) != selfID) {
@@ -76,14 +104,14 @@ public class MatchmakingHandler {
     }
 
     /**
-     *
+     * stopMatchmaking changes the players state to online
      */
     public void stopMatchmaking(){
         state = MatchmakingState.ONLINE;
     }
 
     /**
-     *
+     * stopHosting changes the players state to online
      */
     public void stopHosting(){
         state = MatchmakingState.ONLINE;
@@ -91,10 +119,11 @@ public class MatchmakingHandler {
 
 
     /**
+     * @param game                  gameType of which type of game to start
+     * @param affectsElo            boolean value of if a match effects the players elo values
+     * @param opponentID            ID value of player matched against
      *
-     * @param game
-     * @param affectsElo
-     * @param opponentID
+     * startMatch takes a player out of matchmaking and into a match
      */
     public void startMatch(int id, GameType game, boolean affectsElo, int opponentID){
         // Update self state (both locally and in matchmaking table)
@@ -120,10 +149,11 @@ public class MatchmakingHandler {
     }
 
     /**
+     * @param game              Game the player is matchmaking for
+     * @param startTime         time that the player started matchmaking
+     * @return                  returns the  (+-) amount of elo the player can be matched with
      *
-     * @param game
-     * @param startTime
-     * @return
+     * getNewMatchmakingRange increases the range of elo they can be matched with, increasing at certain time intervals
      */
     protected static int getNewMatchmakingRange(GameType game, double startTime) {
         // Get time (in ms) that the account has been waiting
@@ -151,6 +181,13 @@ public class MatchmakingHandler {
         return new_range;
     }
 
+    /**
+     * @param id1       id of the player
+     * @param id2       id of the player they are trying to match with
+     * @return          returns boolean value of if the other player falls in their elo range, and they fall in the other players elo range
+     *
+     * canMatch is a method that takes two players and returns whether or not they are able to match with eachother
+     */
     protected boolean canMatch(int id1, int id2){
         return  (
                 queryState(id1) == MatchmakingState.MATCHMAKING                  // Self is matchmaking
@@ -161,6 +198,11 @@ public class MatchmakingHandler {
         );
     }
 
+    /**
+     * @return  returns the matchmaking state of the player
+     *
+     * getter method for the players matchmaking state
+     */
     public MatchmakingState getState() {
         return state;
     }
@@ -192,7 +234,7 @@ public class MatchmakingHandler {
     }
 
     /**
-     * Returns either 1 or 2 randomly
+     * Returns either 1 or 2 randomly, signifies if the player is player 1 or 2
      */
     public static int getRandomPlayerNo() {
         return Math.random() < 0.5 ? 1 : 2;
@@ -239,7 +281,15 @@ public class MatchmakingHandler {
         }
     }
 
-    // Player starts hosting
+    /**
+     * @param id                the player's account id number
+     * @param gameType          game type the player is matchmaking for
+     * @param elo               elo rating for the player for the game they are matchmaking for
+     * @param roomCode          room code of the hosting player
+     * @param networkingInfo    Networking status of the player
+     *
+     * Adds a player into the matchmaking database as a player who is hosting
+     */
     protected void addToTable(int id, GameType gameType, int elo, String roomCode, String networkingInfo){
         String stateString = MatchmakingState.HOSTING.toString();
         String gameTypeString = gameType.toString();
@@ -279,7 +329,15 @@ public class MatchmakingHandler {
         }
     }
 
-    // Player joins a host
+    /**
+     * @param id                the player's account id number
+     * @param gameType          game type the player is matchmaking for
+     * @param elo               elo rating for the player for the game they are matchmaking for
+     * @param state             matchmaking state of the player
+     * @param networkingInfo    Networking status of the player
+     *
+     * Adds a player into the matchmaking database as a player who is matchmaking
+     */
     protected void addToTable(int id, GameType gameType, int elo, MatchmakingState state, String networkingInfo){
         String stateString = state.toString();
         String gameTypeString = gameType.toString();
@@ -321,6 +379,9 @@ public class MatchmakingHandler {
     }
 
 
+    /**
+     * @return      returns the id of the opponent player if found
+     */
     protected Integer queryOpponentID(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -345,6 +406,12 @@ public class MatchmakingHandler {
         return opponentID;
     }
 
+    /**
+     * @param id            id of player whose state is being changed
+     * @param newState      state the player is being changed to
+     *
+     * Updates the matchmaking state of the player
+     */
     protected void setState(int id, MatchmakingState newState){
         String sql = "UPDATE Matchmaking SET state = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -365,6 +432,12 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id                    id of the player whose info is being updated/changed
+     * @param newNetworkingInfo     networking info the player is being updated to have
+     *
+     * Updates the players networking information
+     */
     protected void setNetworkingInfo(int id, String newNetworkingInfo){
         String sql = "UPDATE Matchmaking SET networking_info = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -384,6 +457,12 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id                id of the player whose time is being updated
+     * @param newRecentTime     time that the player most recently interacted with the server
+     *
+     * Sets the most recent time the player has made an interaction with the server
+     */
     protected void setRecentTime(int id, double newRecentTime){
         String sql = "UPDATE Matchmaking SET recent_time = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -403,6 +482,12 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id            id of the player whose elo range is being changed
+     * @param newRange      amount (+-) elo the player can match with
+     *
+     * Updates the elo range of the player
+     */
     protected void setEloRange(int id, int newRange){
         String sql = "UPDATE Matchmaking SET elo_range = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -422,6 +507,12 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id                id of the player whose opponent id is being changed
+     * @param newOpponentID     id of the opponent
+     *
+     * Updates the opponent ID of the player
+     */
     protected void setOpponentID(int id, int newOpponentID){ //
         String sql = "UPDATE Matchmaking SET opponent_ID = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -441,6 +532,12 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id                id of the player whose player number is being updated
+     * @param newPlayerNo       new player number of the player
+     *
+     * Updates the player number of the player
+     */
     protected void setPlayerNo(int id, int newPlayerNo){ //
         String sql = "UPDATE Matchmaking SET player_no = ? WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -460,6 +557,11 @@ public class MatchmakingHandler {
         }
     }
 
+    /**
+     * @param id    id of the account being removed from the matchmaking table
+     *
+     * removes the specified player from the matchmaking table in the database
+     */
     protected void removeFromMatchmakingTable(int id){
         String sql = "DELETE FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -478,7 +580,12 @@ public class MatchmakingHandler {
         }
     }
 
-    // QUERY OTHERS
+    /**
+     * @param id        id of the player querying for other ids
+     * @return          returns all other player ids
+     *
+     * returns the id of all other players
+     */
     protected ArrayList<Integer> queryAllOtherIDs(int id){
         String sql = "SELECT * FROM Matchmaking";
         Connection conn = DatabaseConnection.getConnection();
@@ -505,6 +612,12 @@ public class MatchmakingHandler {
         return ids;
     }
 
+    /**
+     * @param id        input id value to check the state of the account corresponding to it
+     * @return          returns the current matchmaking state of the account
+     *
+     * returns the state of the account corresponding to the input id
+     */
     protected MatchmakingState queryState(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -529,6 +642,12 @@ public class MatchmakingHandler {
         return state;
     }
 
+    /**
+     * @param id        input id value to check the gameType of the account corresponding to it
+     * @return          returns the current gameType of the account
+     *
+     * returns the gameType of the account corresponding to the input id
+     */
     protected GameType queryGame(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -553,6 +672,12 @@ public class MatchmakingHandler {
         return game;
     }
 
+    /**
+     * @param id        input id value to check the most recent server interaction of the account corresponding to it
+     * @return          returns the most recent server interaction of the account
+     *
+     * returns the time of the most recent server interaction of the account corresponding to the input id
+     */
     protected Double queryRecentTime(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -578,6 +703,12 @@ public class MatchmakingHandler {
         return recentTime;
     }
 
+    /**
+     * @param id        input id value to check the elo of the account corresponding to it
+     * @return          returns the current elo of the account for the game being queued for
+     *
+     * returns the elo of the account corresponding to the input id for the game being matchmaked for
+     */
     protected Integer queryElo(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -603,6 +734,12 @@ public class MatchmakingHandler {
         return elo;
     }
 
+    /**
+     * @param id        input id value to check the elo range of the account corresponding to it
+     * @return          returns the current elo range of the account
+     *
+     * returns the elo range of the account corresponding to the input id
+     */
     protected Integer queryEloRange(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -627,6 +764,12 @@ public class MatchmakingHandler {
         return eloRange;
     }
 
+    /**
+     * @param id        input id value to check the networking information of the account corresponding to it
+     * @return          returns the current networking information of the account
+     *
+     * gets the networking information of the account corresponding to the input id
+     */
     protected String queryNetworkingInfo(int id){
         String sql = "SELECT * FROM Matchmaking WHERE id = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -651,6 +794,10 @@ public class MatchmakingHandler {
         return networkingInfo;
     }
 
+    /**
+     * @param roomCode  input room code value to check if it exists in the matchmaking database
+     * @return          returns boolean of if the room code exists or not
+     */
     protected boolean queryRoomCodeInTable(String roomCode){
         String sql = "SELECT * FROM Matchmaking WHERE room_code = ?";
         Connection conn = DatabaseConnection.getConnection();
@@ -673,6 +820,10 @@ public class MatchmakingHandler {
         return false;
     }
 
+    /**
+     * @param roomCode  input room code value to check use to look for the host of the room
+     * @return          returns host id if found from input room code
+     */
     protected int queryHostIDByRoomCode(String roomCode){
         String sql = "SELECT * FROM Matchmaking WHERE room_code = ?";
         Connection conn = DatabaseConnection.getConnection();
