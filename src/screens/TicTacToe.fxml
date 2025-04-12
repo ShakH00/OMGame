@@ -7,9 +7,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TicTacToeController">
    <children>
@@ -130,5 +136,103 @@
             </ImageView>
          </children>
       </StackPane>
+      <Pane fx:id="gameOver" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="800.0" visible="false">
+         <children>
+            <Rectangle fill="#0f101b7a" height="598.0" layoutX="-14.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" width="828.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.48632219433784485" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.32156863808631897" green="0.7058823704719543" blue="0.26274511218070984" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.057999998331069946" green="0.05939999967813492" blue="0.10000000149011612" opacity="0.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </stroke>
+            </Rectangle>
+            <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#faf7f2" height="456.0" layoutX="185.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="5.0" width="432.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.48632219433784485" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <stroke>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color red="0.9333333373069763" green="0.572549045085907" blue="0.7019608020782471" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.843137264251709" green="0.3607843220233917" blue="0.5254902243614197" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </stroke>
+            </Rectangle>
+            <Text fx:id="playerWonLabel" fill="#254663" layoutX="181.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[player] won!" textAlignment="CENTER" wrappingWidth="442.0">
+               <font>
+                  <Font name="Press Start 2P Regular" size="17.0" />
+               </font>
+            </Text>
+            <Text fill="#254663" layoutX="190.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Pixelite&quot;;" text="GAME OVER!" textAlignment="CENTER" wrappingWidth="426.0">
+               <font>
+                  <Font name="Press Start 2P Regular" size="34.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="247.0" fitWidth="422.0" layoutX="279.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/tetrisCat6.gif" />
+               </image>
+            </ImageView>
+            <StackPane fx:id="mainMenuButton" layoutX="251.0" layoutY="425.0" onMouseClicked="#goToMainMenu" prefHeight="57.0" prefWidth="302.0">
+               <children>
+                  <ImageView fitHeight="57.0" fitWidth="243.0" layoutY="3.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/pink_noborder.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#ffd3e5" layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Press Start 2P&quot;;" text="main menu" textAlignment="CENTER" wrappingWidth="196.83331298828125">
+                     <font>
+                        <Font name="Press Start 2P Regular" size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <Text fx:id="playerWonLabel1" fill="#254663" layoutX="190.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="thanks for playing!" textAlignment="CENTER" wrappingWidth="426.0">
+               <font>
+                  <Font name="Press Start 2P Regular" size="17.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

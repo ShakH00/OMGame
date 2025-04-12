@@ -105,12 +105,14 @@ public class AuthenticationTest {
 
     /** IMAGE BASED CAPTCHA TEST CASES */
 
+    // Test for random function to choose random image
     @Test
     public void RandomImageTest() {
         String img = CAPTCHAAuthentication.chooseImage();
         System.out.printf(img);
     }
 
+    // Test for captcha verification using an image
     @Test
     public void verifyCaptchaTest1() {
         File img = new File("authentication/CAPTCHAImages/4f8yp.png");
@@ -118,6 +120,7 @@ public class AuthenticationTest {
         assertEquals(true, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
     }
 
+    // Test for captcha verification using an image - case-insensitive
     @Test
     public void verifyCaptchaTest2() {
         File img = new File("authentication/CAPTCHAImages/4f8yp.png");
@@ -125,6 +128,7 @@ public class AuthenticationTest {
         assertEquals(true, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
     }
 
+    // Test for captcha verification using an image - wrong input
     @Test
     public void verifyCaptchaTest3() {
         File img = new File("authentication/CAPTCHAImages/4f8yp.png");
@@ -132,6 +136,7 @@ public class AuthenticationTest {
         assertEquals(false, CAPTCHAAuthentication.verifyCAPTCHA(input, img));
     }
 
+    // Test for captcha verification using an image - incorrect input
     @Test
     public void verifyCaptchaTest4() {
         File img = new File("authentication/CAPTCHAImages/4f8yp.png");
