@@ -65,7 +65,7 @@ public class Account {
         this.username = null;
         this.email = null;
         this.password = null;
-        this.friends = null;
+        this.friends = new ArrayList<>();
 
         // Properties possessed by both guest and permanent Accounts
         this.statistics = new HashMap<>();
@@ -520,8 +520,10 @@ public class Account {
      */
     public ArrayList<Account> getFriends(){
         ArrayList<Account> friendsList = new ArrayList<>();
-        for (int friendID : friends){
-            friendsList.add(DatabaseManager.queryAccountByID(friendID));
+        if (!friends.isEmpty()){
+            for (int friendID : friends){
+                friendsList.add(DatabaseManager.queryAccountByID(friendID));
+            }
         }
         return friendsList;
     }
