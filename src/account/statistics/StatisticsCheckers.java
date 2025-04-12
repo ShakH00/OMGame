@@ -1,6 +1,8 @@
 package account.statistics;
 import java.util.HashMap;
 
+import java.util.HashMap;
+
 public class StatisticsCheckers extends AStatistics implements IStatistics {
     final StatisticType[] acceptedStatistics = new StatisticType[]{
             StatisticType.ELO,

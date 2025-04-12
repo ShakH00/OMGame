@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import database.DatabaseManager;
 import game.GameType;
 import account.statistics.*;
+import matchmaking.MatchmakingHandler;
 
 public class Account {
     /**
@@ -37,16 +39,18 @@ public class Account {
     /**
      * String for the password associated with this Account
      */
-    private String password;    // TODO: Handle encryption/decryption in Account class
+    private String password;
 
     /**
      * Accounts ArrayList for other Accounts on the friends list of this Account
      */
     private ArrayList<Integer> friends;
 
-    private final HashMap<GameType, AStatistics> statistics;
+    public HashMap<GameType, AStatistics> statistics;
 
-    private final String[][] matchHistory;
+    private String[][] matchHistory;
+
+    private final MatchmakingHandler matchmakingHandler = new matchmaking.MatchmakingHandler();
 
     /**
      * Initialize a guest Account
@@ -73,17 +77,13 @@ public class Account {
 
     /**
      * Initialize an Account with a given id, username, email, and password
-     *
-     * @param id       int id for the account, unique in database
      * @param username String username for the account
      * @param email    String email for account
      * @param password String password for the account
      */
-    public Account(int id, String username, String email, String password) {
-
+    public Account(String username, String email, String password) {
         // Properties only possessed by permanent Accounts
         this.isGuest = false;
-        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -101,7 +101,7 @@ public class Account {
 
     /**
      * Initialize an Account with all parameters. Only use when loading from database.
-     * @param id            int ID of the player
+     * @param id            int unique id (primary key)
      * @param username      String unique username
      * @param email         String unique email
      * @param password      String unique password (decrypted!)
@@ -118,8 +118,8 @@ public class Account {
             HashMap<GameType, AStatistics> statistics,
             String[][] matchHistory)
     {
-        this.isGuest = false;
         this.id = id;
+        this.isGuest = false;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -127,18 +127,10 @@ public class Account {
         this.statistics = statistics;
         this.matchHistory = matchHistory;
         this.queuedFor = null;
-
-        this.statistics.put(GameType.CHESS, statistics.getOrDefault(GameType.CHESS, new StatisticsChess()));
-        this.statistics.put(GameType.CHECKERS, statistics.getOrDefault(GameType.CHECKERS, new StatisticsCheckers()));
-        this.statistics.put(GameType.CONNECT4, statistics.getOrDefault(GameType.CONNECT4, new StatisticsConnect4()));
-        this.statistics.put(GameType.TICTACTOE, statistics.getOrDefault(GameType.TICTACTOE, new StatisticsTicTacToe()));
-
     }
 
     /**
      * If the Player started with a guest Account, update it to form a permanent (i.e. non-guest) Account
-     *
-     * @param id       int id for the account, unique in database
      * @param username String username for the account
      * @param email    String email for account
      * @param password String password for the account
@@ -244,7 +236,7 @@ public class Account {
         String[][] matchHistoryOutput = new String[1 + matchHistory.length][6];
 
         // Add header to the output array
-        matchHistoryOutput[0] = new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Match ID"};
+        matchHistoryOutput[0] = new String[]{"Result", "Game", "Opponent Name", "Opponent Elo", "Opponent ID", "Date"};
 
         // Add rows to the output array
         System.arraycopy(matchHistory, 0, matchHistoryOutput, 1, matchHistory.length);
@@ -335,6 +327,12 @@ public class Account {
         return output;
     }
 
+    /**
+     * Checks to see if user is either guest or not.
+     *
+     * @return Boolean if guest is valid or not.
+     */
+
     public boolean getIsGuest() {
         return isGuest;
     }
@@ -379,9 +377,16 @@ public class Account {
      * Sets the username (display name) for the account.
      *
      * @param username the new username to set
+     * username must be 1-64 characters and may not contain any characters
+     * from the disallowed characters list
+     * @return boolean if the username change was successful or not
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public boolean setUsername(String username) {
+        if(isValidUsername(username)) {
+            this.username = username;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -389,20 +394,29 @@ public class Account {
      *
      * @param email the new email address to set
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public boolean setEmail(String email) {
+        if(isValidEmail(email)){
+            this.email = email;
+
+            return true;
+        }
+        return false;
     }
 
     /**
      * Sets the password for the account.
      *
      * @param password the new password to set
+     * @return boolean, true if the password change was successful
      */
 
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean setPassword(String password) {
+        if(isValidPassword(password)){
+            this.password = password;
+            return true;
+        }
+        return false;
     }
-
 
     /**
      * Checks whether the given username is valid (not null or empty).
@@ -423,7 +437,14 @@ public class Account {
      */
 
     private boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".");
+        String[] disallowedChars = {" ", "#", ",", "!", "=", "+"};
+        for(String character: disallowedChars){
+            if (email.contains(character)){
+                return false;
+            }
+        }
+        if(email.length() > 64 || email.length() < 1){return false;}
+        return true;
     }
 
     /**
@@ -434,7 +455,10 @@ public class Account {
      */
 
     private boolean isValidPassword(String password) {
-        return password != null && password.length() >= 6;
+        if(password.contains(" ")){return false;}
+        if(password == null){return false;}
+        if(password.length() < 6 || password.length() > 64){return false;}
+        return true;
     }
 
 
@@ -509,7 +533,7 @@ public class Account {
      * @return                      true only if the username and password match an existing Account in the database
      */
     public boolean TryLoginWithUsernameAndPassword(String username, String password){
-        /*Account accountFromDB = Database.getAccountByUsername(username);         // Waiting for database
+        Account accountFromDB = DatabaseManager.queryAccountByUsername(username);
         if (accountFromDB != null && accountFromDB.password.equals(password)) {
             // Update current account object with data from DB
             this.isGuest = false;
@@ -518,33 +542,58 @@ public class Account {
             this.email = accountFromDB.email;
             this.password = accountFromDB.password;
             this.friends = accountFromDB.friends;
-            this.statistics.putAll(accountFromDB.statistics);
+            this.statistics = accountFromDB.statistics;
+            this.matchHistory = accountFromDB.matchHistory;
             return true;
-        }*/
-        return false; // TODO: add login functionality here
+        }
+        return false;
     }
+    public Account guestToPermanentAccount(String username, String email, String password) {
+        // Attempt to create the permanent account using the CreateAccount helper class
+        Account newAccount;
+        try {
+            newAccount = CreateAccount.createAccount(username, email, password);
+        }catch(EncryptionFailedException e){
+            newAccount = null;
+        }
 
-    private long joinTimestamp;
 
-    public void setJoinTimestamp(long timestamp) {
-        this.joinTimestamp = timestamp;
-    }
+        if (newAccount != null) {
+            // If creation succeeded, pull the new account data from the DB
+            Account createdAccount = DatabaseManager.queryAccountByUsername(username);
 
-    public long getJoinTimestamp() {
-        return this.joinTimestamp;
-    }
+            if (createdAccount != null) {
+                // Update the current Account object with the new permanent data
+                this.id = createdAccount.getID();
+                this.username = createdAccount.getUsername();
+                this.email = createdAccount.getEmail();
+                this.password = createdAccount.getPassword();
+                this.isGuest = false; // Mark this as a permanent account
+                this.friends = createdAccount.getFriendIDs();
+                this.matchHistory = createdAccount.getMatchHistory();
+                this.statistics = createdAccount.getStatisticsHashMap();
+            }
+        }
 
-    private int matchmakingThreshold;
-
-    public void setMatchmakingThreshold(int matchmakingThreshold){
-        this.matchmakingThreshold = matchmakingThreshold;
-    }
-
-    public int getMatchmakingThreshold(){
-        return matchmakingThreshold;
+        return newAccount;
     }
 
     public String getEmail() {
         return  email;
     }
+
+    // Setter for id
+    public void setID(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * Get the object that is in charge of matchmaking for this Account.
+     * @return
+     */
+    public matchmaking.MatchmakingHandler getMatchmakingHandler(){
+        return matchmakingHandler;
+    }
+
+    public void setIsGuest(boolean isGuest) {this.isGuest = isGuest;}
 }

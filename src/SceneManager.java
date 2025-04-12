@@ -18,11 +18,16 @@ public class SceneManager {
         }
     }
 
-    // Switch scene and handle fade transitions
+
+    // switch scene with data inshallah
     public static void switchScene(Stage stage, String fxmlPath) {
+        switchSceneWithData(stage, fxmlPath, null);
+    }
+
+    public static <T> Object switchSceneWithData(Stage stage, String fxmlPath, T data) {
         if (!scenePaths.containsKey(fxmlPath)) {
             System.err.println("Scene not registered: " + fxmlPath);
-            return;
+            return null;
         }
 
         try {
@@ -30,10 +35,18 @@ public class SceneManager {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
             Parent newRoot = loader.load();
 
+            // Get the controller
+            Object controller = loader.getController();
+
+            // If data is provided and if it is a Game Controller (implements DataInitializable
+            if (data != null && controller instanceof DataInitializable) {
+                ((DataInitializable<T>) controller).initializeData(data);
+            }
+
             Scene currentScene = stage.getScene();
             if (currentScene == null) {
                 stage.setScene(new Scene(newRoot, 800, 570));
-                return;
+                return controller;
             }
 
             // Create a fade-out transition for the current scene
@@ -53,8 +66,12 @@ public class SceneManager {
             });
             fadeOut.play();
 
+            return controller;
+
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
+
 }

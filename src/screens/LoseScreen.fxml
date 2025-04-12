@@ -19,6 +19,6 @@
 
     <HBox spacing="10" alignment="CENTER">
         <Button text="Main Menu" onAction="#handleMainMenu" styleClass="game-button"/>
-        <Button text="Start Over" onAction="#handleStartOver" styleClass="game-button"/>
+<!--        <Button text="Start Over" onAction="#handleStartOver" styleClass="game-button"/>-->
     </HBox>
 </VBox>

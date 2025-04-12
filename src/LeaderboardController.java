@@ -90,7 +90,6 @@ public class LeaderboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("works");
         leaderboard = new Leaderboard();
 
 
@@ -111,8 +110,6 @@ public class LeaderboardController implements Initializable {
         // Set default values
         sortStatComboBox.setValue(currentSortStat);
         additionalStatComboBox.setValue(currentAdditionalStat);
-
-        System.out.println("works 2");
     }
 
     @FXML
@@ -132,15 +129,11 @@ public class LeaderboardController implements Initializable {
 
     @FXML
     private void onBackButtonClicked(ActionEvent event) {
-
-        System.out.println("Back button clicked");
-        // SceneManager.goBack();
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //
-        SceneManager.registerScenes("/screens/Start.fxml");
+        SceneManager.registerScenes("/screens/MatchType.fxml");
 
-        SceneManager.switchScene(stage, "/screens/Start.fxml");
+        SceneManager.switchScene(stage, "/screens/MatchType.fxml");
     }
 
     @FXML

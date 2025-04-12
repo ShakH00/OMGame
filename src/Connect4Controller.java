@@ -1,22 +1,31 @@
+import account.Account;
+import account.LoggedInAccount;
+import account.statistics.MatchOutcomeHandler;
 import game.GameState;
+import game.GameType;
 import game.connect4.Connect4;
 import game.pieces.Piece;
 import javafx.application.Application;
+import javafx.css.Match;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import matchmaking.MatchData;
 
 
-public class Connect4Controller extends Application {
+public class Connect4Controller extends Application implements DataInitializable<MatchData> {
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -31,6 +40,37 @@ public class Connect4Controller extends Application {
     private StackPane chatButton;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Label p1Label;
+    @FXML
+    private Label p2Label;
+
+    Account activeAccount;
+
+    private String selfUsername;
+    private String opponentUsername;
+    private int selfPlayerNo;
+    private int opponentPlayerNo;
+
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
+
+    @Override
+    public void initializeData(MatchData data) {
+        // now we SHOULD be able to get info from matchData
+        this.selfUsername = data.getSelfUsername();
+        this.opponentUsername = data.getOpponentUsername();
+        this.selfPlayerNo = data.getSelfPlayerNo();
+        this.opponentPlayerNo = data.getOpponentPlayerNo();
+
+        updatePlayerLabels();
+
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -57,6 +97,15 @@ public class Connect4Controller extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setUserData(int selfID, String selfUsername, int selfElo, String selfNetworkingInfo, int selfPlayerNo,
+                            int opponentID, String opponentUsername, int opponentElo, String opponentNetworkingInfo, int opponentPlayerNo,
+                            boolean affectsElo) {
+        this.selfUsername = selfUsername;
+        MatchOutcomeHandler.opponentUsername = opponentUsername;
+        this.selfPlayerNo = selfPlayerNo;
+        this.opponentPlayerNo = opponentPlayerNo;
     }
 
     @FXML
@@ -96,15 +145,33 @@ public class Connect4Controller extends Application {
         game.move(currentPiece, column);
         updateBoard();
 
+
+
         GameState state = game.getGameState();
         if (state == GameState.P1_WIN) {
             System.out.println("Player 1 (Pink) wins!");
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+
         } else if (state == GameState.P2_WIN) {
             System.out.println("Player 2 (Blue) wins!");
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (state == GameState.DRAW) {
             System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         } else {
             game.nextTurn(); // Switch turn
+            updatePlayerLabels();
         }
     }
 
@@ -129,6 +196,7 @@ public class Connect4Controller extends Application {
                         imageView.setImage(new Image(ASSETS_PATH + "blueChecker.png"));
                     //    System.out.println("Piece color: " + piece.getColor());
                     }
+
                 }
             }
         }
@@ -156,6 +224,10 @@ public class Connect4Controller extends Application {
         return null;
     }
 
+    public void setAccount(Account account) {
+        this.activeAccount = account;
+    }
+
 
         public void initialize() {
             // game.start to push game out of setup mode
@@ -167,18 +239,22 @@ public class Connect4Controller extends Application {
             handImageView.setVisible(false); // set hand to invisible by default
             UtilityManager.createScaleTransition(menuButton);
             UtilityManager.createScaleTransition(chatButton);
+            UtilityManager.createScaleTransition(mainMenuButton);
         }
-// TODO; get popup done
+
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
     }
 
     @FXML
     public void goToChat() {
         UtilityManager.chatControl();
     }
-
 
 
         // method used to make tetriscat hand appear when hovering over columns !
@@ -226,6 +302,30 @@ public class Connect4Controller extends Application {
         private void handleMouseExited(MouseEvent event) {
             handImageView.setVisible(false);
         }
+
+
+    private void updatePlayerLabels() {
+        if (selfPlayerNo == 1) {
+            // you are p1, and opponent is p2
+            p1Label.setText(selfUsername);
+            p2Label.setText(opponentUsername);
+
+        } else {
+            // otherwise, you are p2, and opponent is p1
+            p1Label.setText(opponentUsername);
+            p2Label.setText(selfUsername);
+        }
+
+        if (game.getGameState() == GameState.P2_TURN) {
+            p1Label.setOpacity(.5);
+            p2Label.setOpacity(1);
+        } else if (game.getGameState() == GameState.P1_TURN || game.getGameState() == GameState.SETUP) {
+            p1Label.setOpacity(1);
+            p2Label.setOpacity(.5);
+        }
+
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

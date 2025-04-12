@@ -1,3 +1,4 @@
+import game.Game;
 import game.GameState;
 import game.pieces.Piece;
 import game.pieces.PieceType;
@@ -12,12 +13,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import matchmaking.MatchData;
+
+import static javafx.scene.text.TextAlignment.RIGHT;
 
 
-public class TicTacToeController extends Application {
+public class TicTacToeController extends Application implements DataInitializable<MatchData> {
 
     private static final String ASSETS_PATH = "file:diagrams/gui/assets/sprites/";
 
@@ -37,6 +43,30 @@ public class TicTacToeController extends Application {
     private StackPane chatButton;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
+
+    private String selfUsername;
+    private String opponentUsername;
+    private int selfPlayerNo;
+    private int opponentPlayerNo;
+
+    @Override
+    public void initializeData(MatchData data) {
+        // now we SHOULD be able to get info from matchData
+        this.selfUsername = data.getSelfUsername();
+        this.opponentUsername = data.getOpponentUsername();
+        this.selfPlayerNo = data.getSelfPlayerNo();
+        this.opponentPlayerNo = data.getOpponentPlayerNo();
+
+        updatePlayerLabels();
+
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -101,8 +131,6 @@ public class TicTacToeController extends Application {
             return; // game over
         }
 
-        updatePlayerLabels();
-
         // who's turn is it?
         Piece currentPiece = game.getGameState() == GameState.P1_TURN ? game.piece1 : game.piece2;
         Piece[][] board = game.getBoard().getBoardState();
@@ -126,28 +154,52 @@ public class TicTacToeController extends Application {
 
         if (currentState == GameState.P1_WIN) {
             System.out.println("Player 1 wins!");
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (currentState == GameState.P2_WIN) {
             System.out.println("Player 2 wins!");
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (currentState == GameState.DRAW) {
             System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         }
     }
 
     // update the player labels based on the pieces (and make the active player's name stand out!)
     private void updatePlayerLabels() {
+
+        if (selfPlayerNo == 1) {
+            // you are p1, and opponent is p2
+            p1Label.setText(selfUsername);
+            p2Label.setText(opponentUsername);
+
+        } else {
+            // otherwise, you are p2, and opponent is p1
+            p1Label.setText(opponentUsername);
+            p2Label.setText(selfUsername);
+        }
+
         if (game.piece1.getPieceType() == PieceType.LIGHT) {
             // player 1 is X (blue)
             p1Label.setStyle("-fx-text-fill: #42b0da;");
             p2Label.setStyle("-fx-text-fill: #fe8fb7;");
+            p2Label.setTextAlignment(RIGHT);
 
-            if (currentState == GameState.P1_TURN || currentState == GameState.SETUP) {
-                p1Label.setOpacity(.5);
-                p2Label.setOpacity(1);
-            } else if (currentState == GameState.P2_TURN) {
+            if (game.getGameState() == GameState.P2_TURN) {
                 p1Label.setOpacity(1);
                 p2Label.setOpacity(.5);
-            } else {
-                p1Label.setOpacity(1);
+            } else if (game.getGameState() == GameState.P1_TURN || currentState == GameState.SETUP) {
+                p1Label.setOpacity(.5);
                 p2Label.setOpacity(1);
             }
 
@@ -155,16 +207,14 @@ public class TicTacToeController extends Application {
             // player 1 is O (pink)
             p1Label.setStyle("-fx-text-fill: #fe8fb7;");
             p2Label.setStyle("-fx-text-fill: #42b0da;");
+            p2Label.setTextAlignment(RIGHT);
 
-            if (currentState == GameState.P1_TURN) {
+            if (currentState == GameState.P1_TURN || currentState == GameState.SETUP) {
                 p1Label.setOpacity(0.5);
                 p2Label.setOpacity(1);
             } else if (currentState == GameState.P2_TURN) {
                 p1Label.setOpacity(1);
                 p2Label.setOpacity(0.5);
-            } else {
-                p1Label.setOpacity(1);
-                p2Label.setOpacity(1);
             }
 
         }
@@ -173,6 +223,14 @@ public class TicTacToeController extends Application {
     // edits the null image in gameboard to reflect the piece the player has put down.
     private void updateBoard() {
         Piece[][] board = game.getBoard().getBoardState();
+
+        if (game.getGameState() == GameState.P1_TURN) {
+            System.out.println("Player 1's turn!");
+            updatePlayerLabels();
+        } else if (game.getGameState() == GameState.P2_TURN){
+            System.out.println("Player 2's turn!");
+            updatePlayerLabels();
+        }
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -210,16 +268,22 @@ public class TicTacToeController extends Application {
 
     public void initialize() {
         game.start(); // push game out of setup mode
+        updatePlayerLabels();
         updateBoard(); // Ensure the board is updated once everything is initialized
         UtilityManager.createScaleTransition(menuButton);
         UtilityManager.createScaleTransition(chatButton);
+        UtilityManager.createScaleTransition(mainMenuButton);
     }
 
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
-        UtilityManager.popupControl(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+        UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
+
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
+    }
     @FXML
     public void goToChat() {
         UtilityManager.chatControl();

@@ -1,11 +1,18 @@
 package game.connect4;
 
+import account.statistics.StatisticType;
 import game.*;
+import game.checkers.Checkers;
 import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
+
 public class Connect4 extends Game {
+    private int p1Turns = 0;
+    private int p2Turns = 0;
+
     public Connect4() {
         super.player1 = new Player();
         super.player2 = new Player();
@@ -19,6 +26,7 @@ public class Connect4 extends Game {
 
     public Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
     public Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
+    private networking.Networking networking = new networking.Networking();
 
     public void move(Piece piece, int col) {
         if (col >= 0 && col < board.getCols()) {
@@ -27,6 +35,12 @@ public class Connect4 extends Game {
                 if (board.getBoardState()[row][col] == null) {
                     board.place(piece, row, col);
                     checkWinCondition();
+                    if(piece.getOwnedBy() == player1) {
+                        p1Turns++;
+                    }
+                    else if(piece.getOwnedBy() == player2) {
+                        p2Turns++;
+                    }
                     break;
                 }
             }
@@ -106,9 +120,12 @@ public class Connect4 extends Game {
         }
 
         // Check for draw
-        if(board.isFull())
+        if(gameState != GameState.P1_WIN && gameState != GameState.P2_WIN && gameState != GameState.DRAW)
         {
-            gameState = GameState.DRAW;
+            if(board.isFull())
+            {
+                gameState = GameState.DRAW;
+            }
         }
     }
 
@@ -222,9 +239,69 @@ public class Connect4 extends Game {
             gameState = GameState.P1_WIN;
         }
     }
-    @Override
-    protected void matchOutcome() {
 
+    protected HashMap<StatisticType, Integer> matchOutcomeP1() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
+        }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP1Turns());
+
+        return matchOutcome;
+    }
+
+    protected HashMap<StatisticType, Integer> matchOutcomeP2() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
+        }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
+
+        return matchOutcome;
+    }
+
+    public int getP1Turns()
+    {
+        return p1Turns;
+    }
+
+    public int getP2Turns()
+    {
+        return p2Turns;
     }
 
     public GameState getGameState()
@@ -247,12 +324,39 @@ public class Connect4 extends Game {
         if(gameState.equals(GameState.P1_TURN))
         {
             gameState = GameState.P2_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
 
         else if(gameState.equals(GameState.P2_TURN))
         {
             gameState = GameState.P1_TURN;
+            networking.sendGame(this);
+            netUpdateGame();
         }
+    }
+
+    public void drawGame()
+    {
+        gameState = GameState.DRAW;
+    }
+
+    public Player getPlayer1(){
+        return this.player1;
+    }
+
+    public Player getPlayer2(){
+        return this.player2;
+    }
+
+    private void netUpdateGame(){
+        Connect4 temp = (Connect4) networking.recieveGame();
+        this.board = temp.board;
+        this.gameState = temp.gameState;
+        this.score1 = temp.score1;
+        this.score2 = temp.score2;
+        this.player1 = temp.getPlayer1();
+        this.player2 = temp.getPlayer2();
     }
 }
 

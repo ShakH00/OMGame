@@ -1,0 +1,112 @@
+GUI Test Case 1: Start Page Load
+Objective: Verify that the start page loads correctly with all essential components.
+Steps: 
+	1. Launch the application.
+	2. Observe the layout and UI elements on the start page.
+Expected Result:
+	1. The start page should display:
+		- OMG logo on the top
+		- Start button which goes to login
+		- Ranking button which goes to the leaderboard
+		- Help button which opens the help popup.
+			- Link to website should work and lead to https://omgame.club/
+	2. Buttons should enlarge on hover, be clickable redirect appropriately.
+Pass/Fail: PASS
+Notes: Check responsiveness and loading speed as well.
+
+
+
+GUI Test Case 2: Login Functionality
+Objective: Verify that the login page accepts user credentials and logs the user in.
+Steps:
+	1. Navigate to the login page.
+	2. Enter valid username and password.
+	3. Click the "submit" button.
+Expected Result:
+	1. User should be redirected to the match type selection page.
+	2. Error message should appear if credentials are invalid or missing.
+Pass/Fail: PASS
+Notes: Try both valid and invalid credentials to check behavior.
+
+
+
+GUI Test Case 3: Signup Functionality
+Objective: Verify that the signup page accepts user credentials and registers the user.
+Steps:
+	1. Navigate to the signup page.
+	2. Enter valid email, username and password.
+	3. Click the "submit" button.
+Expected Result:
+	1. User should be redirected to the match type selection page.
+	2. Error message should appear if credentials are invalid or missing.
+Pass/Fail: PASS
+Notes: Try both valid, invalid and in use credentials to check behavior.
+
+
+
+GUI Test Case 4: Guest user Functionality
+Objective: Test to see if guest users can play games.
+Steps:
+	1. Navigate to the login or signup page.
+	2. Press "continue as guest" in the bottom left corner.
+	3. Choose a match type and game.
+Expected Result:
+	1. User should be redirected to the matchmaking popup and then a game.
+Pass/Fail: PASS
+Notes: Try both private and public matches
+
+
+
+GUI Test Case 5: Match Type Selection
+Objective: Ensure the user can select between public and private matches.
+Steps:
+	1. Navigate to match type selection.
+	2. Click on "Public Match" and wait for a match.
+	3. Return back to the match type after the game
+	4. Click on "Private Match" and send the code to someone.
+Expected Result:
+	1. Clicking either option redirects to the game selection screen.
+	2. Game loads after match is found.
+Pass/Fail: PASS
+Notes: May take a while to find a match if no one is playing. Open a second window to test.
+
+
+
+GUI Test Case 6: Game Selection Page
+Objective: Verify that all available games are displayed and can be selected.
+Steps:
+	1. Navigate to the game selection page.
+	2. Confirm that Chess, Checkers, Connect4, and TicTacToe are all listed.
+	3. Click on each game and check for matchmaking popup to appear.
+Expected Result: 
+	1. All games are listed and are clickable.
+	2. Selecting a game initiates matchmaking process.
+Pass/Fail: PASS
+Notes: Ensure that game thumbnails/icons are properly loaded and correctly labeled.
+
+
+
+GUI Test Case 7: User Profile Page
+Objective: Verify that the user profile page loads and displays correct user info.
+Steps:
+	1. Log in and navigate to the user profile via match type page.
+	2. Check for username, user data, match history, friends list, and overall stats.
+Expected Result:
+	1. All user data is correctly displayed.
+	2. Page layout is responsive.
+Pass/Fail: PASS
+Notes: Make sure that all data is loaded and if there is none it says 0.0% or none
+
+
+
+GUI Test Case 8: User Settings Page
+Objective: Verify that the user settings page works and data can be edited.
+Steps:
+	1. Press settings in the top right corner of user profile.
+	2. Edit username, email, or password.
+Expected Result:
+	1. User info should be edited in the database.
+	2. Info should be edited on the screen.
+	3. Login should work with new credentials.
+Pass/Fail: PASS
+Notes: Test each one separately or at the same time.
