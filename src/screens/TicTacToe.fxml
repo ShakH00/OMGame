@@ -92,7 +92,7 @@
             <Font name="Press Start 2P Regular" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="p2Label" layoutX="597.0" layoutY="106.0" prefHeight="26.0" prefWidth="184.0" text="user" textAlignment="RIGHT" textFill="#fe8fb7">
+      <Label fx:id="p2Label" layoutX="638.0" layoutY="106.0" prefHeight="26.0" prefWidth="143.0" text="user" textAlignment="RIGHT" textFill="#fe8fb7">
          <font>
             <Font name="Press Start 2P Regular" size="23.0" />
          </font>

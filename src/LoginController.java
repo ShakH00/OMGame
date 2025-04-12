@@ -4,12 +4,10 @@ import authentication.Authentication.MFAAuthentication;
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import authentication.ExceptionsAuthentication.MFAAuthenticationFailedException;
-import authentication.MFAPopupController;
 import database.DatabaseManager;
 import database.DecryptionAuthentication;
 import database.EncryptionAuthentication;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class LoginController extends Application {
@@ -117,6 +114,7 @@ public class LoginController extends Application {
         boolean accountExists = false;
         if(user != null) {
             accountExists = true;
+            user.setIsGuest(false);
             LoggedInAccount.setAccount(user);
         }
         if(accountExists){
@@ -124,6 +122,7 @@ public class LoginController extends Application {
                 if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(password)) {
                     // If the password matches the username/email, log them in
                     openMFAPopup(user.getEmail());
+                    // TODO: remove to use mfa properly
                     SceneManager.switchScene(stage, "screens/MatchType.fxml");
                     return;
                 }else{

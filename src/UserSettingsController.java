@@ -124,14 +124,15 @@ public class UserSettingsController extends Application {
     @FXML
     public void onSubmitButton() {
         Integer userID = account.LoggedInAccount.getAccount().getID();
-        if(account.LoggedInAccount.getAccount().getIsGuest()) {
-            String username = displayNameField.getText();
+        if(!account.LoggedInAccount.getAccount().getIsGuest()) {
+            String userName = displayNameField.getText();
             String userEmail = emailField.getText();
             String userPassword = passwordField.getText();
             String newPassword = newPasswordField.getText();
-            Admin.updateUsername(userID, username);
+            Admin.updateUsername(userID, userName);
+
+            username.setText(userName);
             Admin.updateEmail(userID, userEmail);
-            System.out.println(LoggedInAccount.getAccount().getPassword());
             try {
                 if (userPassword.equals(DecryptionAuthentication.decryptionDriver(LoggedInAccount.getAccount().getPassword()))) {
                     if (newPassword != null) {
