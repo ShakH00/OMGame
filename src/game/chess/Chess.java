@@ -8,6 +8,7 @@
  */
 package game.chess;
 
+import account.statistics.StatisticType;
 import game.*;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
@@ -30,6 +31,17 @@ public class Chess extends Game {
     private int p2Turns = 0;
     private int p1Captures = 0;
     private int p2Captures = 0;
+    private int p1PawnCaptures = 0;
+    private int p2PawnCaptures = 0;
+    private int p1KnightCaptures = 0;
+    private int p2KnightCaptures = 0;
+    private int p1BishopCaptures = 0;
+    private int p2BishopCaptures = 0;
+    private int p1QueenCaptures = 0;
+    private int p2QueenCaptures = 0;
+    private int p1RookCaptures = 0;
+    private int p2RookCaptures = 0;
+
 
     /**
      * Constructor to initiate a chess game
@@ -130,10 +142,54 @@ public class Chess extends Game {
         if (piece.move(x, y, board)) {
             if(piece.getOwnedBy() == this.player1){
                 addp1Turn();
-                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece) addp1Score(potentialEnemy.getScore());
+                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece){
+                    addp1Score(potentialEnemy.getScore());
+                    if(potentialEnemy instanceof Pawn){
+                        addP1PawnCaptures();
+                    } else if(potentialEnemy instanceof Bishop){
+                        addP1BishopCaptures();
+                    } else if(potentialEnemy instanceof Knight){
+                        addP1KnightCaptures();
+                    } else if(potentialEnemy instanceof Rook){
+                        addP1RookCaptures();
+                    } else if(potentialEnemy instanceof Queen){
+                        addP1QueenCaptures();
+                    }
+                //account for en passant
+                } else{
+                    if(piece instanceof Pawn){
+                        if(((Pawn) piece).getEnPassantPerformed()){
+                            addp1Score(1);
+                            addP1PawnCaptures();
+                            ((Pawn) piece).resetEnPassantPerformed();
+                        }
+                    }
+                }
             } else if(piece.getOwnedBy() == this.player2){
                 addp2Turn();
-                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece) addp1Score(potentialEnemy.getScore());
+                if(potentialEnemy != null && potentialEnemy instanceof MovingPiece) {
+                    addp2Score(potentialEnemy.getScore());
+                    if(potentialEnemy instanceof Pawn){
+                        addP2PawnCaptures();
+                    } else if(potentialEnemy instanceof Bishop){
+                        addP2BishopCaptures();
+                    } else if(potentialEnemy instanceof Knight){
+                        addP2KnightCaptures();
+                    } else if(potentialEnemy instanceof Rook){
+                        addP2RookCaptures();
+                    } else if(potentialEnemy instanceof Queen){
+                        addP2QueenCaptures();
+                    }
+                //account for en passant
+                } else{
+                    if(piece instanceof Pawn){
+                        if(((Pawn) piece).getEnPassantPerformed()){
+                            addp2Score(1);
+                            addP2PawnCaptures();
+                            ((Pawn) piece).resetEnPassantPerformed();
+                        }
+                    }
+                }
             }
             switchTurn();
             checkWinCondition();
@@ -357,11 +413,8 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
-            matchOutcome();
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
-            matchOutcome();
-
         }
     }
 
@@ -441,15 +494,60 @@ public class Chess extends Game {
     /**
      * updates gameState based on the match outcome
      */
-    public void matchOutcome() {
-        // Incomplete, still needs to check for stalemate and surrender.
-        if (gameState.equals(GameState.P2_WIN)){
-            System.out.println("Player 2 wins!");
-            getStats();
-        } else if (gameState.equals(GameState.P1_WIN)){
-            System.out.println("Player 1 wins!");
-            getStats();
+    public HashMap<StatisticType, Integer> matchOutcomeP1() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
         }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP1Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP1Captures());
+
+        return matchOutcome;
+    }
+
+    public HashMap<StatisticType, Integer> matchOutcomeP2() {
+        HashMap<StatisticType, Integer> matchOutcome = new HashMap<>();
+        if(gameState == GameState.P1_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 1);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+
+        }
+        else if(gameState == GameState.P2_WIN)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 1);
+            matchOutcome.put(StatisticType.DRAWS, 0);
+        }
+        else if (gameState == GameState.DRAW)
+        {
+            matchOutcome.put(StatisticType.WINS, 0);
+            matchOutcome.put(StatisticType.LOSSES, 0);
+            matchOutcome.put(StatisticType.DRAWS, 1);
+        }
+        matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
+        matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
+        matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
+
+        return matchOutcome;
     }
 
     public void drawGame()
@@ -492,5 +590,175 @@ public class Chess extends Game {
         this.gameState = temp.gameState;
         this.player1 = temp.getPlayer1();
         this.player2 = temp.getPlayer2();
+    }
+
+    /**
+     * get number of Pawns captured by player 1
+     * @return p1PawnCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1PawnCaptures() {
+        return p1PawnCaptures;
+    }
+
+    /**
+     * Add 1 pawn to number of captures by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1PawnCaptures() {
+        this.p1PawnCaptures += 1;
+    }
+
+    /**
+     * get number of Pawns captured by player 2
+     * @return p2PawnCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2PawnCaptures() {
+        return p2PawnCaptures;
+    }
+
+    /**
+     * Add 1 pawn to number of captures by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2PawnCaptures() {
+        this.p2PawnCaptures += 1;
+    }
+
+    /**
+     * get number of Knights captured by player 1
+     * @return p1KnightCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1KnightCaptures() {
+        return p1KnightCaptures;
+    }
+
+    /**
+     * Add 1 knight to number of captures by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1KnightCaptures() {
+        this.p1KnightCaptures += 1;
+    }
+
+    /**
+     * get number of Knights captured by player 2
+     * @return p2KnightCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2KnightCaptures() {
+        return p2KnightCaptures;
+    }
+
+    /**
+     * Add 1 knight to number of captures by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2KnightCaptures() {
+        this.p2KnightCaptures += 1;
+    }
+
+    /**
+     * get number of bishops captured by player 1
+     * @return p1BishopCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1BishopCaptures() {
+        return p1BishopCaptures;
+    }
+
+    /**
+     * Add 1 bishop to number of captures by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1BishopCaptures() {
+        this.p1BishopCaptures += 1;
+    }
+
+    /**
+     * get number of bishops captured by player 2
+     * @return p2BishopCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2BishopCaptures() {
+        return p2BishopCaptures;
+    }
+
+    /**
+     * Add 1 bishop to number of captures by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2BishopCaptures() {
+        this.p2BishopCaptures += 1;
+    }
+
+    /**
+     * get number of queens captured by player 1
+     * @return p1QueenCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1QueenCaptures() {
+        return p1QueenCaptures;
+    }
+
+    /**
+     * Add 1 queen to number of captures by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1QueenCaptures() {
+        this.p1QueenCaptures += 1;
+    }
+
+    /**
+     * Get number of queen captures for player 2
+     * @return p2QueenCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2QueenCaptures() {
+        return p2QueenCaptures;
+    }
+
+    /**
+     * Add 1 queen to queen captures by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2QueenCaptures() {
+        this.p2QueenCaptures += 1;
+    }
+
+    /**
+     * Get number of rook captures for player 1
+     * @return p1RookCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1RookCaptures() {
+        return p1RookCaptures;
+    }
+
+    /**
+     * Add 1 more rook captures to player 1 stats
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1RookCaptures() {
+        this.p1RookCaptures += 1;
+    }
+
+    /**
+     * Get number of rook captures for player 2
+     * @return p2RookCaptures
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2RookCaptures() {
+        return p2RookCaptures;
+    }
+
+    /**
+     * Add 1 more rook captures to player 2 stats
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2RookCaptures() {
+        this.p2RookCaptures += 1;
     }
 }
