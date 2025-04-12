@@ -270,7 +270,6 @@ public class P2ChessController extends Application implements DataInitializable<
 
     private void handleResign() {
         game.surrender();
-        game.matchOutcome();
     }
 
     @FXML

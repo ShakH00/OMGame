@@ -1,6 +1,9 @@
 package game;
 
+import account.statistics.StatisticType;
 import game.pieces.Piece;
+
+import java.util.HashMap;
 
 public abstract class Game {
     public Player player1;
@@ -17,5 +20,7 @@ public abstract class Game {
 
     protected abstract void surrender();
 
-    protected abstract void matchOutcome();
+    protected abstract HashMap<StatisticType, Integer> matchOutcomeP1();
+
+    protected abstract HashMap<StatisticType, Integer> matchOutcomeP2();
 }

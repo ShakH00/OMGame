@@ -252,7 +252,6 @@ public class P1CheckersController extends Application implements DataInitializab
 
     private void handleResign() {
         game.surrender();
-        game.matchOutcome();
     }
 
 
