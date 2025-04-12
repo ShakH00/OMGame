@@ -10,7 +10,7 @@ import static account.CreateAccount.createAccount;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SignUpTest {
-
+    //Make sure the database is running for test if the duplicate email, username to work
     @BeforeAll
     public static void setUp() throws EncryptionFailedException {
         // Create an account to simulate an already existing username/email in the database
