@@ -554,7 +554,13 @@ public class Chess extends Game {
         matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
         matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
         matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
-
+        matchOutcome.put(StatisticType.PAWNS_CAPTURED, getP2PawnCaptures());
+        matchOutcome.put(StatisticType.ROOKS_CAPTURED, getP2RookCaptures());
+        matchOutcome.put(StatisticType.BISHOPS_CAPTURED, getP2BishopCaptures());
+        matchOutcome.put(StatisticType.KNIGHTS_CAPTURED, getP2KnightCaptures());
+        matchOutcome.put(StatisticType.QUEENS_CAPTURED, getP2QueenCaptures());
+        matchOutcome.put(StatisticType.CHECKS, getP2ChecksPerformed());
+        matchOutcome.put(StatisticType.PIECES_PROMOTED, getP2PawnsPromoted());
         return matchOutcome;
     }
 
