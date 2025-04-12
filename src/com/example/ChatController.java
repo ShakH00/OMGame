@@ -1,5 +1,6 @@
 package com.example;
 
+import game.Game;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -117,7 +118,7 @@ public class ChatController {
 
 
             Platform.runLater(() -> {
-                chatArea.appendText("SYSTEM: Chat server is offlinE\n");
+                chatArea.appendText("SYSTEM: Chat server is offline\n");
             });
         } catch (Exception e) {
             System.out.println(" error: " + e.getMessage());
@@ -141,7 +142,10 @@ public class ChatController {
                             if (expectingEchoMessage && receivedMsg.equals("Me: " + lastSentMessage)) {
 
                                 expectingEchoMessage = false;
-                            } else {
+                            } if (receivedObj instanceof Game){
+                                displayMessage("Game was updated");
+                            }
+                            else {
                                 displayMessage(receivedMsg);
                             }
                         }

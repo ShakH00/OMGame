@@ -2,6 +2,8 @@ package game.pieces;
 
 import game.Player;
 import javafx.scene.paint.Color;
+import java.io.Serializable;
+import java.io.IOException;
 
 /**
  * An Abstract game.pieces.Piece class which is inherited by ALL game.pieces whether they are moving or stationary game.pieces
@@ -12,8 +14,14 @@ import javafx.scene.paint.Color;
  *
  * @author Abdulrahman
  */
-public abstract class Piece {
-    private Color color;
+public abstract class Piece implements Serializable {
+    // Make Piece class serializable, so it can be used for networking
+    // Used: Cursor AI IDE
+    private transient Color color; // Mark as transient to prevent serialization
+    private double red;
+    private double green;
+    private double blue;
+    private double opacity;
     private Player ownedBy;
     private int score;
     private PieceType pieceType;
@@ -26,9 +34,28 @@ public abstract class Piece {
      */
     public Piece(Color color, PieceType pieceType, Player ownedBy, int score){
         this.color = color;
+        this.red = color.getRed();
+        this.green = color.getGreen();
+        this.blue = color.getBlue();
+        this.opacity = color.getOpacity();
         this.pieceType = pieceType;
         this.ownedBy = ownedBy;
         this.score = score;
+    }
+
+    /**
+     * Custom serialization method
+     */
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+    /**
+     * Custom deserialization method
+     */
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.color = new Color(red, green, blue, opacity);
     }
 
     /**
@@ -44,7 +71,10 @@ public abstract class Piece {
      * @return colour: String
      */
     public Color getColor(){
-        return this.color;
+        if (color == null) {
+            color = new Color(red, green, blue, opacity);
+        }
+        return color;
     }
 
     /**

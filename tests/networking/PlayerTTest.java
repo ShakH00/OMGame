@@ -1,6 +1,6 @@
 package networking;
 
-import networking.test.PlayerT;
+import networking.prototypes.PlayerT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
