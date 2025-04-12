@@ -450,6 +450,13 @@ public class Checkers extends Game {
         this.player1 = temp.getPlayer1();
         this.player2 = temp.getPlayer2();
     }
+
+    /**
+     * Get a list of legal moves to be performed by a selected piece
+     * @param piece: CheckersPiece that legal moves are being checked for
+     * @return int[] list of coordinates of legal moves
+     * @author Yousif Bedair
+     */
     public List<int[]> getLegalMoves(CheckersPiece piece) {
         List<int[]> legalMoves = new ArrayList<>();
 
