@@ -43,7 +43,7 @@ public class Server {
     public static void main(String[] args) {
         Server server = new Server(30001);
         server.start();
-        System.out.printf("[Server: %s] Game/Chat server is running%n", Networking.getTime());
+        System.out.printf("[Server: %s] Game server is running%n", Networking.getTime());
     }
 
     /**
@@ -150,12 +150,14 @@ public class Server {
                             if (objectIn instanceof String message) {
                                 processChatMessage(message);
                             } else if (objectIn instanceof Game game) {
+                                System.out.printf("[Server: %s] Received game object from client #%d%n", Networking.getTime(), clientId);
                                 broadcast(game, this);
+                                System.out.printf("[Server: %s] Broadcasted game object to other clients%n", Networking.getTime());
                             } else {
                                 System.err.printf("[Server: %s] Received non-string/game object: %s%n", Networking.getTime(), objectIn.getClass().getName());
                             }
                         } catch (ClassNotFoundException e) {
-                            System.err.printf("[Server: %s] Unknown object type received%n", Networking.getTime());
+                            System.err.printf("[Server: %s] Unknown object type received: %s%n", Networking.getTime(), e.getMessage());
                         } catch (IOException e) {
                             System.err.printf("[Server: %s] Client #%d disconnected: %s%n", Networking.getTime(), clientId, e.getMessage());
                             break;

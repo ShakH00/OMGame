@@ -64,16 +64,23 @@ public class Networking {
      */
     public void sendGame(Game game) {
         System.out.printf("[Net: %s] Sending Game to: %s:%d%n", getTime(), IP, port);
-        if (isConnected) {
-            try {
-                outObj.writeObject(game);
-                outObj.flush(); 
-                System.out.println("Message sent successfully");
-                listenMode(); // Switch to listening mode after sending
-            } catch (IOException e) {
-                System.err.printf("[Net: %s] Send failed: %s%n", getTime(), e.getMessage());
-                handleDisconnection();
+
+        try {
+            if (outObj == null || !isConnected) {
+                System.out.printf("[Net: %s] Attempting to establish connection...%n", getTime());
+                connectToServer();
+                if (outObj == null) {
+                    System.err.printf("[Net: %s] Failed to establish connection - cannot send game%n", getTime());
+                    return;
+                }
             }
+            outObj.writeObject(game);
+            outObj.flush(); 
+            System.out.printf("[Net: %s] Message sent successfully%n", getTime());
+            listenMode(); // Switch to listening mode after sending
+        } catch (IOException e) {
+            System.err.printf("[Net: %s] Send failed: %s%n", getTime(), e.getMessage());
+            handleDisconnection();
         }
     }
 
@@ -119,9 +126,9 @@ public class Networking {
     }
 
 
-    private void connectToServer() {
+    public void connectToServer() {
         try {
-            System.out.printf("[Net: %s] Attempting to connect to chat server...%n", getTime());
+            System.out.printf("[Net: %s] Attempting to connect to server...%n", getTime());
 
             if (socket != null && !socket.isClosed()) {
                 try {
@@ -146,7 +153,7 @@ public class Networking {
             reconnectAttempts = 0;
             System.out.printf("[Net: %s] Connection established successfully%n", getTime());
 
-            System.out.printf("[Net: %s] Connected to chat server%n", getTime());
+            System.out.printf("[Net: %s] Connected to server%n", getTime());
 
             listenMode();
 
@@ -158,7 +165,7 @@ public class Networking {
             System.err.printf("[Net: %s] Failed to connect: %s%n", getTime(), e.getMessage());
 
             Platform.runLater(() -> {
-                System.out.printf("[Net: %s] SYSTEM: Chat server is offline.%n%n", getTime());
+                System.out.printf("[Net: %s] SYSTEM: Server is offline.%n%n", getTime());
             });
         } catch (Exception e) {
             System.out.printf("[Net: %s] error: %s%n", getTime(), e.getMessage());
