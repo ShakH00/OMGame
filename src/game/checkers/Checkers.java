@@ -11,7 +11,9 @@ import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class Checkers extends Game {
@@ -33,8 +35,6 @@ public class Checkers extends Game {
     private int p2Captures = 0;
     private int p1MultiCaptures = 0;
     private int p2MultiCaptures = 0;
-
-    private networking.Networking networking = new networking.Networking();
 
     // Set Board for checkers game and fill it
     public void setBoard(Board board){
@@ -278,7 +278,6 @@ public class Checkers extends Game {
      */
     public void start(){
         gameState = GameState.P1_TURN;
-        networking.sendGame(this);
     }
 
     /**
@@ -287,15 +286,9 @@ public class Checkers extends Game {
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_TURN;
-            // Stack Overflow Reference: https://stackoverflow.com/questions/29861376/how-to-send-objects-over-a-network-in-java
-            // Send updated game state to opponent after the player's move
-            networking.sendGame(this); // 'this' refers to the current Checkers game
-            netUpdateGame();
         }
         else if (gameState == GameState.P2_TURN){
             gameState = GameState.P1_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
     }
 
@@ -484,12 +477,48 @@ public class Checkers extends Game {
         System.out.println("Player 1 Turns: " + getP1Turns() + ", Captures: " + getP1Captures() + ", Multi-Captures: " + getP1MultiCaptures());
         System.out.println("Player 2 Turns: " + getP2Turns() + ", Captures: " + getP2Captures() + ", Multi-Captures: " + getP2MultiCaptures());
     }
-    private void netUpdateGame(){
-        Checkers temp = (Checkers) networking.recieveGame();
-        this.board = temp.board;
-        this.gameState = temp.gameState;
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
+
+
+    /**
+     * Get a list of legal moves to be performed by a selected piece
+     * @param piece: CheckersPiece that legal moves are being checked for
+     * @return int[] list of coordinates of legal moves
+     * @author Yousif Bedair
+     */
+    public List<int[]> getLegalMoves(CheckersPiece piece) {
+        List<int[]> legalMoves = new ArrayList<>();
+
+        if (piece == null) return legalMoves;
+
+        int x = piece.getX();
+        int y = piece.getY();
+
+        // Diagonal directions: for regular move (1 space) and capture (2 spaces)
+        int[][] directions = {
+                {-1, -1}, {-1, 1},  // top-left, top-right
+                {1, -1}, {1, 1}     // bottom-left, bottom-right
+        };
+
+        for (int[] dir : directions) {
+            int dx = dir[0];
+            int dy = dir[1];
+
+            // Regular move
+            int newX = x + dx;
+            int newY = y + dy;
+            if (isValidMove(x, y, newX, newY, board)) {
+                legalMoves.add(new int[]{newX, newY});
+            }
+            // Capture move (2 tiles over)
+            newX = x + 2 * dx;
+            newY = y + 2 * dy;
+
+            if (isValidMove(x, y, newX, newY, board)) {
+                legalMoves.add(new int[]{newX, newY});
+            }
+        }
+
+        return legalMoves;
     }
 
 }

@@ -21,7 +21,6 @@ public class DatabaseConnection {
 //    private static final String USER = "tetriscat";
 //    private static final String PASSWORD = "ellendusk";
 
-
     /**
      * Establishes a connection to the database.
      *

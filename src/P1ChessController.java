@@ -1,4 +1,5 @@
 import game.Board;
+import game.Game;
 import game.GameState;
 import game.GameType;
 import game.chess.*;
@@ -21,7 +22,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import networking.Networking;
+
+import java.util.concurrent.TimeUnit;
 import matchmaking.MatchData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -62,6 +69,7 @@ public class P1ChessController extends Application implements DataInitializable<
     @FXML
     private StackPane queenButton;
 
+    private networking.Networking networking = new networking.Networking();
     private String selfUsername;
     private String opponentUsername;
     private int selfPlayerNo;
@@ -74,12 +82,14 @@ public class P1ChessController extends Application implements DataInitializable<
     @FXML
     private StackPane mainMenuButton;
 
+    private List<ImageView> moveHighlights = new ArrayList<>();
 
 
     private int selectedRow = -1;
     private int selectedCol = -1;
     private MovingPiece promotionPawn; // temporarily store the pawn
 
+    private chess1Watcher watcher;
     @Override
     public void initializeData(MatchData data) {
         // now we SHOULD be able to get info from matchData
@@ -95,6 +105,7 @@ public class P1ChessController extends Application implements DataInitializable<
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/P1Chess.fxml"));
+            loader.setController(this); // Set the controller to this instance
             Scene scene = new Scene(loader.load(), 800, 570);
 
             String fontPath = getClass().getResource("resources/fonts/PressStart2P-Regular.ttf").toExternalForm();
@@ -111,6 +122,9 @@ public class P1ChessController extends Application implements DataInitializable<
             // set up the primary stage
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
+            networking.connectToServer();
+            watcher = new chess1Watcher(networking, this);
+            watcher.start(); // start the thread to listen for game updates
             primaryStage.show();
 
         } catch (Exception e) {
@@ -123,6 +137,9 @@ public class P1ChessController extends Application implements DataInitializable<
         Piece[][] boardState = game.getBoard().getBoardState();
         Piece clicked = boardState[row][col];
 
+        // clear previous highlights from last move
+        clearMoveHighlights();
+
         // no selection yet
         if (selectedRow == -1 && clicked instanceof MovingPiece moving) {
             // check if it's the current player's turn
@@ -130,6 +147,9 @@ public class P1ChessController extends Application implements DataInitializable<
             if (moving.getPieceType() == currentTurn) {
                 selectedRow = row;
                 selectedCol = col;
+
+                // show legal moves
+                showLegalMoves(clicked);
             }
             return;
         }
@@ -151,10 +171,10 @@ public class P1ChessController extends Application implements DataInitializable<
                 }
             }
 
-
             // clear selection only after a valid move or promotion
                 selectedRow = -1;
                 selectedCol = -1;
+                networking.sendGame(game);
             updateBoard();
         }
 
@@ -182,6 +202,7 @@ public class P1ChessController extends Application implements DataInitializable<
             gameOver.setVisible(true);
         }
     }
+
 
     // edits the null image in gameboard to reflect the piece the player has put down.
     private void updateBoard() {
@@ -228,6 +249,54 @@ public class P1ChessController extends Application implements DataInitializable<
                 }
             }
         }
+    }
+
+    private void showLegalMoves(Piece selectedPiece) {
+        // clear previous moves shown
+        clearMoveHighlights();
+
+        if (selectedPiece == null) return;
+
+        // get legal moves
+        List<int[]> legalMoves = game.getLegalMoves((MovingPiece) selectedPiece);
+
+        for (int[] move : legalMoves) {
+            int row = move[0];
+            int col = move[1];
+
+            // get the gridpane cell at this position
+            ImageView moveMarker = getNodeByRowColumnIndex(row, col, gameBoard);
+
+            if (moveMarker != null) {
+                // create a new imageview to overlay on top
+                ImageView dotOverlay = new ImageView(new Image(ASSETS_PATH + "moveDot.png"));
+
+                // so it won't intercept clicks
+                dotOverlay.setMouseTransparent(true);
+
+                // position the dot over the cell
+                dotOverlay.setFitWidth(moveMarker.getFitWidth());
+                dotOverlay.setFitHeight(moveMarker.getFitHeight());
+                dotOverlay.setPreserveRatio(true);
+
+                // add dot to the board
+                GridPane.setRowIndex(dotOverlay, row);
+                GridPane.setColumnIndex(dotOverlay, col);
+                GridPane.setHalignment(dotOverlay, javafx.geometry.HPos.CENTER);
+                GridPane.setValignment(dotOverlay, javafx.geometry.VPos.CENTER);
+                gameBoard.getChildren().add(dotOverlay);
+
+                // add dots to moveHighlights to be cleared later
+                moveHighlights.add(dotOverlay);
+            }
+        }
+    }
+
+    // clears all move dots after a turn
+    private void clearMoveHighlights() {
+        // remove highlight dots from board
+        gameBoard.getChildren().removeAll(moveHighlights);
+        moveHighlights.clear();
     }
 
     // used to find the appropriate node on the gameboard that we need to adjust
@@ -350,5 +419,37 @@ public class P1ChessController extends Application implements DataInitializable<
         launch(args);
     }
 
+    public void netUpdate(Game game){
+        System.out.println("NetUpdate");
+        this.game = (Chess) game;
+        System.out.println("Game state updated" );
+        javafx.application.Platform.runLater(() -> updateBoard());
+    }
 }
 
+class chess1Watcher extends Thread {
+    private final Networking networking;
+    private final P1ChessController gui;
+    public chess1Watcher(Networking networking, P1ChessController gui) {
+        this.networking = networking;
+        this.gui = gui;
+    }
+
+    public void run(){
+        while (networking.isConnected && networking.shouldListen){  // stop early if they stop matchmaking
+            // Check if the handler has found a match. If it has, start the game UI
+            if (networking.gameRecieved) {
+                System.out.println("Asadasd");
+                networking.gameRecieved = false; // Reset the flag after processing
+                gui.netUpdate(networking.recieveGame());
+            }
+
+            // Sleep 1 sec before repeating
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}

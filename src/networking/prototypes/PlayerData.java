@@ -1,4 +1,4 @@
-package networking.test;
+package networking.prototypes;
 
 import java.io.Serializable; // for ObjectOutputStream to not have any class version mismatch
 import java.util.HashMap;

@@ -1,7 +1,6 @@
 import account.Account;
 import account.statistics.MatchOutcomeHandler;
 import account.LoggedInAccount;
-import com.mysql.cj.log.Log;
 import database.DatabaseManager;
 import game.Game;
 import game.GameType;
@@ -506,8 +505,6 @@ public class MatchTypeController extends Application {
         MatchOutcomeHandler.opponentElo = opponentElo;
         MatchOutcomeHandler.opponentID = opponentID;
         MatchOutcomeHandler.opponentUsername = opponentUsername;
-        MatchOutcomeHandler.playerNo = selfPlayerNo;
-
 
         MatchData matchData = new MatchData(
                 game, affectsElo, selfID, selfUsername, selfElo, selfNetworkingInformation, selfPlayerNo,
