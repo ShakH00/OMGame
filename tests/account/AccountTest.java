@@ -135,7 +135,7 @@ public class AccountTest {
     }
 
     @Test
-    public void testLoginPlaceholder() {
+    public void testLoginPlaceholder() throws EncryptionFailedException {
         assertTrue(userAccount1.TryLoginWithUsernameAndPassword("Alice", "password123"));
     }
 

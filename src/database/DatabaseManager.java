@@ -3,8 +3,6 @@ package database;
 import account.Account;
 import account.AccountStorageUtility;
 import account.statistics.AStatistics;
-import account.statistics.StatisticType;
-import account.statistics.StatisticsCheckers;
 import authentication.ExceptionsAuthentication.DecryptionFailedException;
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
 import game.GameType;
@@ -21,8 +19,6 @@ public class DatabaseManager {
      * queryAllAccounts returns all account in the database
      * NOTE: the return value can be anything but for stubs I just made it return a list of account
      */
-
-
     public static ArrayList<Account> queryAllAccounts() {
         String sql = "SELECT * FROM Accounts";
         Connection conn = DatabaseConnection.getConnection();
@@ -61,24 +57,15 @@ public class DatabaseManager {
     }
 
     /**
-     * @param game which GameType the returned accounts are queued for
-     * @return Returns all players that are currently queueing for a match of a certain game
-     * <p>
-     * queryPlayerPool returns a list of all players that are currently queued for a match of a specific game
-     * @author Logan Olszak
+     * Delete all accounts in the database.
      */
-    public static ArrayList<Account> queryAccountPool(GameType game) {
-        ArrayList<Account> gameQueue = new ArrayList<Account>();
-        ArrayList<Account> allAccounts = queryAllAccounts();
-        for (Account current : allAccounts) {
-            if (current.getQueuedFor() != null) {
-                if (current.getQueuedFor() == game) {
-                    gameQueue.add(current);
-                }
-            }
+    public static void deleteAllAccounts() {
+        ArrayList<Account> accounts = queryAllAccounts();
+        for (Account account : accounts){
+            deleteAccount(account.getID());
         }
-        return gameQueue;
     }
+
 
 
     /**
@@ -304,7 +291,7 @@ public class DatabaseManager {
      * @param email the email of the account to be deleted
      * @return true if an account was deleted, false otherwise
      */
-    public static Boolean deleteAccount(String email) {
+    public static Boolean deleteAccountByEmail(String email) {
         Connection conn = DatabaseConnection.getConnection();
         if (conn == null) {
             System.out.println("Connection failed.");
@@ -330,6 +317,40 @@ public class DatabaseManager {
             DatabaseConnection.closeConnection(conn);
         }
     }
+
+    /**
+     * Deletes an account from the database based on the username.
+     *
+     * @param username the username of the account to be deleted
+     * @return true if an account was deleted, false otherwise
+     */
+    public static Boolean deleteAccountByUsername(String username) {
+        Connection conn = DatabaseConnection.getConnection();
+        if (conn == null) {
+            System.out.println("Connection failed.");
+            return false;
+        }
+        try {
+            String sql = "DELETE FROM Accounts WHERE username = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                int rowsDeleted = stmt.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("Account with username " + username + " deleted successfully.");
+                    return true;
+                } else {
+                    System.out.println("No account found with username " + username + ".");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DatabaseConnection.closeConnection(conn);
+        }
+    }
+
 
     /**
      * Deletes an account from the database based on the userID.
