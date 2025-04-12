@@ -1,7 +1,9 @@
 import game.Board;
+import game.Game;
 import game.GameState;
 import game.GameType;
 import game.chess.*;
+import game.connect4.Connect4;
 import game.pieces.MovingPiece;
 import game.pieces.Piece;
 import game.pieces.PieceType;
@@ -20,6 +22,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import networking.Networking;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -60,11 +65,13 @@ public class P1ChessController extends Application {
     @FXML
     private StackPane queenButton;
 
+    private networking.Networking networking = new networking.Networking();
 
     private int selectedRow = -1;
     private int selectedCol = -1;
     private MovingPiece promotionPawn; // temporarily store the pawn
 
+    private chess1Watcher watcher;
 
     @Override
     public void start(Stage primaryStage) {
@@ -86,6 +93,9 @@ public class P1ChessController extends Application {
             // set up the primary stage
             primaryStage.setTitle("OMG!");
             primaryStage.setScene(scene);
+            networking.connectToServer();
+            watcher = new chess1Watcher(networking, this);
+            watcher.start(); // start the thread to listen for game updates
             primaryStage.show();
 
         } catch (Exception e) {
@@ -130,6 +140,7 @@ public class P1ChessController extends Application {
             // clear selection only after a valid move or promotion
                 selectedRow = -1;
                 selectedCol = -1;
+                networking.sendGame(game);
             updateBoard();
         }
     }
@@ -141,10 +152,10 @@ public class P1ChessController extends Application {
 
         if (game.getState() == GameState.P1_TURN) {
             System.out.println("Player 1 (Pink)'s turn!");
-            updatePlayerLabels();
+            //updatePlayerLabels();
         } else if (game.getState() == GameState.P2_TURN){
             System.out.println("Player 2 (Blue)'s turn!");
-            updatePlayerLabels();
+            //updatePlayerLabels();
         }
 
         for (int row = 0; row < 8; row++) {
@@ -195,7 +206,7 @@ public class P1ChessController extends Application {
         }
         return null;
     }
-
+/*
     private void updatePlayerLabels() {
         if (game.getState() == GameState.P2_TURN) {
             p1Label.setOpacity(.5);
@@ -209,7 +220,7 @@ public class P1ChessController extends Application {
         }
 
     }
-
+*/
     public void initialize() {
         Board board = new Board(GameType.CHECKERS);
         game.setBoard(board);
@@ -287,5 +298,39 @@ public class P1ChessController extends Application {
         launch(args);
     }
 
+    public void netUpdate(Game game){
+        System.out.println("NetUpdate");
+        this.game = (Chess) game;
+        System.out.println("Game state updated" );
+        javafx.application.Platform.runLater(() -> updateBoard());
+    }
 }
 
+class chess1Watcher extends Thread {
+    private final Networking networking;
+    private final P1ChessController gui;
+    public chess1Watcher(Networking networking, P1ChessController gui) {
+        this.networking = networking;
+        this.gui = gui;
+    }
+
+    public void run(){
+        while (networking.isConnected && networking.shouldListen){  // stop early if they stop matchmaking
+            // Check if the handler has found a match. If it has, start the game UI
+            if (networking.gameRecieved) {
+                System.out.println("Asadasd");
+                networking.gameRecieved = false; // Reset the flag after processing
+                gui.netUpdate(networking.recieveGame());
+            }
+
+            // Sleep 1 sec before repeating
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+}
