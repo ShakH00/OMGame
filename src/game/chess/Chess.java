@@ -360,18 +360,38 @@ public class Chess extends Game {
         if (piece == null) return legalMoves;
 
         int originalX = piece.getX();
-        int originalY= piece.getY();
+        int originalY = piece.getY();
+        Player owner = piece.getOwnedBy();
+        Piece[][] state = board.getBoardState();
+
         for (int x = 0; x < board.getRows(); x++) {
             for (int y = 0; y < board.getCols(); y++) {
-               if (piece.isValidMove(x,y,board) && !isPiecePinned(piece)){
-                   legalMoves.add(new int[]{x,y});
-                   piece.move(originalX,originalY,board);
-               }
+                if (!piece.isValidMove(x, y, board)) continue;
+
+                // simulate move
+                Piece captured = state[x][y];
+                state[originalX][originalY] = null;
+                state[x][y] = piece;
+                piece.setX(x);
+                piece.setY(y);
+                // is king safe?
+                boolean kingStillInCheck = isKingInCheck(owner);
+
+                // undo move
+                state[originalX][originalY] = piece;
+                state[x][y] = captured;
+                piece.setX(originalX);
+                piece.setY(originalY);
+
+                if (!kingStillInCheck) {
+                    legalMoves.add(new int[]{x, y});
+                }
             }
         }
 
         return legalMoves;
     }
+
 
     /**
      * search the board to check if the king is placed in check or not

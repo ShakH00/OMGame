@@ -27,6 +27,9 @@ import networking.Networking;
 import java.util.concurrent.TimeUnit;
 import matchmaking.MatchData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Displays a chess board and pieces on the board.
@@ -79,6 +82,7 @@ public class P1ChessController extends Application implements DataInitializable<
     @FXML
     private StackPane mainMenuButton;
 
+    private List<ImageView> moveHighlights = new ArrayList<>();
 
 
     private int selectedRow = -1;
@@ -133,6 +137,9 @@ public class P1ChessController extends Application implements DataInitializable<
         Piece[][] boardState = game.getBoard().getBoardState();
         Piece clicked = boardState[row][col];
 
+        // clear previous highlights from last move
+        clearMoveHighlights();
+
         // no selection yet
         if (selectedRow == -1 && clicked instanceof MovingPiece moving) {
             // check if it's the current player's turn
@@ -140,6 +147,9 @@ public class P1ChessController extends Application implements DataInitializable<
             if (moving.getPieceType() == currentTurn) {
                 selectedRow = row;
                 selectedCol = col;
+
+                // show legal moves
+                showLegalMoves(clicked);
             }
             return;
         }
@@ -160,7 +170,6 @@ public class P1ChessController extends Application implements DataInitializable<
                     return; // pause until promotion gets chosen
                 }
             }
-
 
             // clear selection only after a valid move or promotion
                 selectedRow = -1;
@@ -193,6 +202,7 @@ public class P1ChessController extends Application implements DataInitializable<
             gameOver.setVisible(true);
         }
     }
+
 
     // edits the null image in gameboard to reflect the piece the player has put down.
     private void updateBoard() {
@@ -239,6 +249,54 @@ public class P1ChessController extends Application implements DataInitializable<
                 }
             }
         }
+    }
+
+    private void showLegalMoves(Piece selectedPiece) {
+        // clear previous moves shown
+        clearMoveHighlights();
+
+        if (selectedPiece == null) return;
+
+        // get legal moves
+        List<int[]> legalMoves = game.getLegalMoves((MovingPiece) selectedPiece);
+
+        for (int[] move : legalMoves) {
+            int row = move[0];
+            int col = move[1];
+
+            // get the gridpane cell at this position
+            ImageView moveMarker = getNodeByRowColumnIndex(row, col, gameBoard);
+
+            if (moveMarker != null) {
+                // create a new imageview to overlay on top
+                ImageView dotOverlay = new ImageView(new Image(ASSETS_PATH + "moveDot.png"));
+
+                // so it won't intercept clicks
+                dotOverlay.setMouseTransparent(true);
+
+                // position the dot over the cell
+                dotOverlay.setFitWidth(moveMarker.getFitWidth());
+                dotOverlay.setFitHeight(moveMarker.getFitHeight());
+                dotOverlay.setPreserveRatio(true);
+
+                // add dot to the board
+                GridPane.setRowIndex(dotOverlay, row);
+                GridPane.setColumnIndex(dotOverlay, col);
+                GridPane.setHalignment(dotOverlay, javafx.geometry.HPos.CENTER);
+                GridPane.setValignment(dotOverlay, javafx.geometry.VPos.CENTER);
+                gameBoard.getChildren().add(dotOverlay);
+
+                // add dots to moveHighlights to be cleared later
+                moveHighlights.add(dotOverlay);
+            }
+        }
+    }
+
+    // clears all move dots after a turn
+    private void clearMoveHighlights() {
+        // remove highlight dots from board
+        gameBoard.getChildren().removeAll(moveHighlights);
+        moveHighlights.clear();
     }
 
     // used to find the appropriate node on the gameboard that we need to adjust
