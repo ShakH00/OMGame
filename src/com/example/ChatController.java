@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import networking.test.CensorshipTest;
+import networking.TextCensorship;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -132,7 +132,7 @@ public class ChatController {
                 while (isConnected && !Thread.currentThread().isInterrupted()) {
                     try {
                         Object receivedObj = chatInObj.readObject();
-                        System.out.println("Received  message: " + receivedObj);
+                        System.out.println("Received message: " + receivedObj);
 
                         if (receivedObj instanceof String) {
                             String receivedMsg = (String) receivedObj;
@@ -199,8 +199,8 @@ public class ChatController {
         if (!message.isEmpty()) {
             try {
 
-                CensorshipTest.CensorResult censorResult = CensorshipTest.censorChat(message);
-                String filteredMessage = censorResult.getFilteredMessage();
+                TextCensorship.CensorResult censorResult = TextCensorship.censorChat(message);
+                String filteredMessage = censorResult.filteredMessage();
 
 
                 String currentLog = chatLogs.getOrDefault(playerID, "");

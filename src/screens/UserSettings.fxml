@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootPane" prefHeight="570.0" prefWidth="800.0" style="-fx-background-color: #0a1c2f;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSettingsController">
+    <children>
+        <!-- Background Image -->
+        <ImageView fitHeight="593.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/adjustedstars.png" />
+            </image>
+        </ImageView>
+
+        <!-- LEFT PANEL -->
+
+
+
+        <!-- EDIT PROFILE TEXT -->
+        <Text fill="WHITE" layoutX="246.0" layoutY="75.0" text="EDIT PROFILE" AnchorPane.bottomAnchor="488.474609375" AnchorPane.leftAnchor="246.0" AnchorPane.rightAnchor="400.234375" AnchorPane.topAnchor="46.943359375">
+            <font>
+                <Font name="RetroGaming" size="26" />
+            </font>
+        </Text>
+
+        <Rectangle arcHeight="16.0" arcWidth="16.0" fill="#fbf8f3" height="375.0" layoutX="340.0" layoutY="128.0" stroke="TRANSPARENT" strokeType="INSIDE" width="421.0">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color opacity="0.48632219433784485" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </Rectangle>
+
+        <!-- Form Fields -->
+        <Label layoutX="348.0" layoutY="140.0" prefHeight="15.0" prefWidth="154.0" text="Display name:" textFill="BLACK">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <TextField fx:id="displayNameField" layoutX="348.0" layoutY="155.0" prefWidth="160" promptText="TetrisCat" style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';" />
+
+        <Label layoutX="348.0" layoutY="189.0" prefHeight="15.0" prefWidth="160.0" text="Change Email:" textFill="BLACK">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <TextField fx:id="emailField" layoutX="348.0" layoutY="204.0" prefWidth="160" promptText="Enter New Email!" style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';" />
+
+        <Label layoutX="551.0" layoutY="140.0" prefHeight="15.0" prefWidth="140.0" text="Old Password:" textFill="BLACK">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="passwordField" layoutX="551.0" layoutY="155.0" prefWidth="160" promptText="Enter Old Password!" style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';" />
+
+        <Label layoutX="553.0" layoutY="189.0" prefHeight="15.0" prefWidth="160.0" text="New Password:" textFill="BLACK">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <PasswordField fx:id="newPasswordField" layoutX="553.0" layoutY="204.0" prefWidth="160" promptText="Enter New Password!" style="-fx-background-color: #dddddd; -fx-background-radius: 12px; -fx-border-radius: 12px; -fx-padding: 6 10; -fx-font-family: 'Courier New';" />
+
+
+        <!-- Privacy Section -->
+        <Text layoutX="348.0" layoutY="274.0" text="Privacy:" wrappingWidth="239.212890625">
+            <font>
+                <Font name="RetroGaming" size="20" />
+            </font>
+        </Text>
+
+        <!-- Hide Stats -->
+        <Label layoutX="349.0" layoutY="290.0" prefHeight="17.0" prefWidth="223.0" text="Hide stats profile" textFill="BLACK" />
+        <RadioButton fx:id="hideStatsYes" layoutX="355.0" layoutY="307.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="yes" />
+        <RadioButton fx:id="hideStatsFriends" layoutX="434.0" layoutY="307.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="friends" />
+        <RadioButton fx:id="hideStatsNo" layoutX="541.0" layoutY="307.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="no" />
+
+        <!-- Friend Visibility -->
+        <Label layoutX="351.0" layoutY="338.0" text="Friend visibility" textFill="BLACK" />
+        <RadioButton fx:id="friendVisYes" layoutX="355.0" layoutY="355.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="yes" />
+        <RadioButton fx:id="friendVisFriends" layoutX="434.0" layoutY="355.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="friends" />
+        <RadioButton fx:id="friendVisNo" layoutX="541.0" layoutY="355.0" style="-fx-background-color: #dddddd; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-padding: 4 8; -fx-font-family: 'Courier New';" text="no" />
+
+
+        <StackPane fx:id="button1" layoutX="354.0" layoutY="412.0">
+            <children>
+                <Label style="-fx-background-color: #00bcd4; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;" text="Change Banner">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Label>
+            </children>
+        </StackPane>
+
+        <StackPane fx:id="button2" layoutX="354.0" layoutY="456.0">
+            <children>
+                <Label style="-fx-background-color: #f4b400; -fx-background-radius: 12px; -fx-padding: 6 12; -fx-text-fill: black;" text="Change Avatar">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Label>
+            </children>
+        </StackPane>
+
+        <StackPane fx:id="submitButton" layoutX="582.0" layoutY="408.0" onMouseClicked="#onSubmitButton" prefHeight="51.0" prefWidth="84.0">
+            <children>
+                <ImageView fitHeight="111.0" fitWidth="147.0" layoutX="526.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/green.png" />
+                    </image>
+                    <effect>
+                        <DropShadow height="11.67" offsetX="1.0" offsetY="1.0" radius="2.4175" width="0.0">
+                            <color>
+                                <Color opacity="0.5813069939613342" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </ImageView>
+                <Text fill="WHITE" layoutX="540.0" layoutY="481.0" stroke="#1d2d39" strokeType="OUTSIDE" strokeWidth="1.5" text="Save Changes" textAlignment="CENTER" wrappingWidth="118.7403564453125">
+                </Text>
+            </children>
+        </StackPane>
+
+        <!-- Back Button -->
+        <StackPane fx:id="backButton" layoutX="2.0" layoutY="2.0">
+            <children>
+                <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#backButton" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/back_circlebutton.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+
+        <StackPane layoutX="37.0" layoutY="128.0">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#1e2a47" height="375.0" layoutX="37.0" layoutY="128.0" stroke="#FF8FB7" strokeWidth="3" width="249.0" />
+            <Label fx:id="nameDisplay" text="Username" textFill="WHITE" StackPane.alignment="TOP_CENTER">
+                <StackPane.margin>
+                    <Insets top="135.0" />
+                </StackPane.margin>
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+        </StackPane>
+
+        <Pane layoutX="40.0" layoutY="131.0" prefHeight="76.0" prefWidth="246.0" style="-fx-background-color: #169fd4; -fx-background-radius: 9 9 0 0;" />
+        <Line endX="106.0" layoutX="179.0" layoutY="209.0" startX="-140.0" stroke="#ff8fb7" strokeWidth="3.0" />
+        <Circle fill="#9803b2" layoutX="162.0" layoutY="209.0" radius="44.0" stroke="#ff8fb7" strokeType="INSIDE" strokeWidth="3.0" />
+        <ImageView fitHeight="51.0" fitWidth="53.0" layoutX="230.0" layoutY="290.0">
+            <image>
+                <Image url="@../images/sprites/pen.png" />
+            </image>
+        </ImageView>
+        <TextArea fx:id="bioTextArea" layoutX="54.0" layoutY="329.0" prefHeight="144.0" prefWidth="215.0" style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-border-color: transparent;" text="I may be a cat, but around these parts, they call me the GOAT 🐐🐐" wrapText="true" />
+    </children>
+</AnchorPane>

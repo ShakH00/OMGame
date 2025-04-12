@@ -1,6 +1,9 @@
 package account;
 
-import java.security.SecureRandom;
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.DatabaseManager;
+import database.EncryptionAuthentication;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -9,137 +12,45 @@ import java.util.regex.Pattern;
  */
 public class CreateAccount {
 
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final int ID_LENGTH = 9; // Temporary change to fit within int range
-
     /**
-     * Initiates the account creation process.
      *
-     * @return A new Account object with a unique ID, valid username, email, and password.
+     *
+     * @param username the desired username
+     * @param email the user's email
+     * @param password the desired password
+     * @return the new Account if account is created successfully; null otherwise
      */
-    public static Account createAccount() {
-        System.out.println("\n=== Account Creation ===");
-
-        int id = generateAccountId();
-        String username = getValidUsername();
-        String email = getValidEmail();
-        String password = getValidPassword();
-
-        Account newAccount = new Account(id, username, email, password);
-        System.out.println("\nAccount created successfully!");
-        System.out.println("Welcome, " + newAccount.getUsername() + "!");
-
+    public static Account createAccount(String username, String email, String password) throws EncryptionFailedException {
+        Account newAccount = new Account(username, email, password);
+        EncryptionAuthentication.encryptAccount(newAccount);
+        DatabaseManager.saveAccount(newAccount);
         return newAccount;
     }
 
-    /**
-     * Generates a unique numeric account ID within int range.
-     *
-     * @return A randomly generated numeric int.
-     */
-    private static int generateAccountId() {
-        SecureRandom random = new SecureRandom();
-        int id = random.nextInt(900000000) + 100000000; // Generates a 9-digit ID
-        return id;
+    public static boolean isValidUsername(String username) {
+        // Regular expression for validating username (at least 4 characters,
+        // only alphanumeric and underscores are allowed)
+        String usernameRegex = "^[a-zA-Z0-9_]{4,}$";
+
+        // Return true if username matches the regex, else false
+        return Pattern.matches(usernameRegex, username);
     }
 
-    /**
-     * Prompts the user to enter a valid username and validates the input.
-     *
-     * @return A valid username.
-     */
-    private static String getValidUsername() {
-        while (true) {
-            System.out.print("Enter username (4-20 alphanumeric characters): ");
-            String username = scanner.nextLine().trim();
+    public static boolean isValidEmail(String email) {
+        // Regular expression for validating email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-            if (isValidUsername(username)) {
-                return username;
-            }
-            showError("Invalid username. Must be 4-20 alphanumeric characters.");
-        }
+        // Return true if email matches the regex, else false
+        return Pattern.matches(emailRegex, email);
     }
 
-    /**
-     * Prompts the user to enter a valid email address and validates the input.
-     *
-     * @return A valid email address.
-     */
-    private static String getValidEmail() {
-        while (true) {
-            System.out.print("Enter email: ");
-            String email = scanner.nextLine().trim();
+    public static boolean isValidPassword(String password) {
+        // Regular expression for validating password (minimum 8 characters,
+        // at least one uppercase letter, one lowercase letter, one number, one special character)
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,}$";
 
-            if (isValidEmail(email)) {
-                return email;
-            }
-            showError("Invalid email format. Please try again.");
-        }
+        // Return true if password matches the regex, else false
+        return Pattern.matches(passwordRegex, password);
     }
 
-    /**
-     * Prompts the user to enter and confirm a valid password.
-     * The password must be at least 8 characters long and contain a mix of uppercase and lowercase letters, numbers, and special characters.
-     *
-     * @return A valid password.
-     */
-    private static String getValidPassword() {
-        while (true) {
-            System.out.print("Enter password (min 8 chars with uppercase, lowercase, number, and special character): ");
-            String password = scanner.nextLine();
-
-            System.out.print("Confirm password: ");
-            String confirmPassword = scanner.nextLine();
-
-            if (!password.equals(confirmPassword)) {
-                showError("Passwords do not match. Please try again.");
-                continue;
-            }
-
-            if (isValidPassword(password)) {
-                return password;
-            }
-            showError("Password must be at least 8 characters long and include a mix of uppercase and lowercase letters, numbers, and special characters.");
-        }
-    }
-
-    /**
-     * Validates a username based on predefined criteria.
-     *
-     * @param username The username to validate.
-     * @return True if the username is valid, otherwise false.
-     */
-    private static boolean isValidUsername(String username) {
-        return Pattern.matches("^[a-zA-Z0-9]{4,20}$", username);
-    }
-
-    /**
-     * Validates an email address based on predefined criteria.
-     *
-     * @param email The email to validate.
-     * @return True if the email is valid, otherwise false.
-     */
-    private static boolean isValidEmail(String email) {
-        return Pattern.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$", email);
-    }
-
-    /**
-     * Validates a password based on predefined criteria.
-     * The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.
-     *
-     * @param password The password to validate.
-     * @return True if the password is valid, otherwise false.
-     */
-    private static boolean isValidPassword(String password) {
-        return Pattern.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$", password);
-    }
-
-    /**
-     * Displays an error message to the user.
-     *
-     * @param message The error message to display.
-     */
-    private static void showError(String message) {
-        System.out.println("❌ " + message);
-    }
 }
