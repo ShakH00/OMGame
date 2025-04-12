@@ -13,8 +13,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // Load the win screen
-        Parent root = FXMLLoader.load(getClass().getResource("/screens/WinScreen.fxml"));
-        primaryStage.setTitle("You Win!");
+//        Parent root = FXMLLoader.load(getClass().getResource("/screens/WinScreen.fxml"));
+//        primaryStage.setTitle("You Win!");
 
 //        Parent root = FXMLLoader.load(getClass().getResource("/screens/DrawScreen.fxml"));
 //        primaryStage.setTitle("You Have Drawn");
@@ -22,10 +22,10 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(getClass().getResource("/screens/LoseScreen.fxml"));
 //        primaryStage.setTitle("You Have Lost");
 
-//        Parent root = FXMLLoader.load(getClass().getResource("/screens/LeaderboardScreen.fxml"));
-//        primaryStage.setTitle("Leaderboard");
+        Parent root = FXMLLoader.load(getClass().getResource("/screens/LeaderboardScreen.fxml"));
+        primaryStage.setTitle("Leaderboard");
 
-        primaryStage.setScene(new Scene(root, 300, 150));
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 

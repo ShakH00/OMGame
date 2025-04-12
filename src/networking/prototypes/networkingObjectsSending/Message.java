@@ -1,4 +1,4 @@
-package networking.test.networkingObjectsSending;
+package networking.prototypes.networkingObjectsSending;
 
 public class Message {
     int playerNum;

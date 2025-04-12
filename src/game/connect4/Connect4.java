@@ -26,7 +26,6 @@ public class Connect4 extends Game {
 
     public Connect4Piece piece1 = new Connect4Piece(Color.RED, PieceType.LIGHT, super.player1);
     public Connect4Piece piece2 = new Connect4Piece(Color.GOLD, PieceType.DARK, super.player2);
-    private networking.Networking networking = new networking.Networking();
 
     public void move(Piece piece, int col) {
         if (col >= 0 && col < board.getCols()) {
@@ -324,15 +323,11 @@ public class Connect4 extends Game {
         if(gameState.equals(GameState.P1_TURN))
         {
             gameState = GameState.P2_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
 
         else if(gameState.equals(GameState.P2_TURN))
         {
             gameState = GameState.P1_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
     }
 
@@ -349,15 +344,6 @@ public class Connect4 extends Game {
         return this.player2;
     }
 
-    private void netUpdateGame(){
-        Connect4 temp = (Connect4) networking.recieveGame();
-        this.board = temp.board;
-        this.gameState = temp.gameState;
-        this.score1 = temp.score1;
-        this.score2 = temp.score2;
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
-    }
 }
 
 

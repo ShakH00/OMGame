@@ -1,4 +1,6 @@
 package game;
 
-public class GameRules {
+import java.io.Serializable;
+
+public class GameRules implements Serializable {
 }

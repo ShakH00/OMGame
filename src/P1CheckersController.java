@@ -15,9 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import matchmaking.MatchData;
 
@@ -52,6 +54,13 @@ public class P1CheckersController extends Application implements DataInitializab
     private String opponentUsername;
     private int selfPlayerNo;
     private int opponentPlayerNo;
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
 
     @Override
     public void initializeData(MatchData data) {
@@ -120,14 +129,28 @@ public class P1CheckersController extends Application implements DataInitializab
 
 
         // check game state
-        currentState = game.getGameState();
-
-        if (currentState == GameState.P1_WIN) {
+        GameState state = game.getGameState();
+        if (state == GameState.P1_WIN) {
             System.out.println("Player 1 wins!");
-        } else if (currentState == GameState.P2_WIN) {
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+
+        } else if (state == GameState.P2_WIN) {
             System.out.println("Player 2 wins!");
-        } else if (currentState == GameState.DRAW) {
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+        } else if (state == GameState.DRAW) {
             System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         }
     }
 
@@ -234,6 +257,7 @@ public class P1CheckersController extends Application implements DataInitializab
         updateBoard();
         UtilityManager.createScaleTransition(menuButton);
         UtilityManager.createScaleTransition(chatButton);
+        UtilityManager.createScaleTransition(mainMenuButton);
     }
 
     @FXML
@@ -241,6 +265,10 @@ public class P1CheckersController extends Application implements DataInitializab
         UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
     }
 
+    @FXML
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
+    }
     @FXML
     public void goToChat() {
         UtilityManager.chatControl();

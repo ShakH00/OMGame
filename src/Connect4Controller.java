@@ -16,8 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import matchmaking.MatchData;
@@ -49,6 +51,14 @@ public class Connect4Controller extends Application implements DataInitializable
     private String opponentUsername;
     private int selfPlayerNo;
     private int opponentPlayerNo;
+
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Text playerWonLabel;
+    @FXML
+    private StackPane mainMenuButton;
+
 
     @Override
     public void initializeData(MatchData data) {
@@ -135,13 +145,30 @@ public class Connect4Controller extends Application implements DataInitializable
         game.move(currentPiece, column);
         updateBoard();
 
+
+
         GameState state = game.getGameState();
         if (state == GameState.P1_WIN) {
             System.out.println("Player 1 (Pink) wins!");
+            if (selfPlayerNo == 1) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
+
         } else if (state == GameState.P2_WIN) {
             System.out.println("Player 2 (Blue) wins!");
+            if (selfPlayerNo == 2) {
+                playerWonLabel.setText(selfUsername + " won!");
+            } else {
+                playerWonLabel.setText(opponentUsername + " won!");
+            }
+            gameOver.setVisible(true);
         } else if (state == GameState.DRAW) {
             System.out.println("It’s a draw!");
+            playerWonLabel.setText("It's a draw!");
+            gameOver.setVisible(true);
         } else {
             game.nextTurn(); // Switch turn
             updatePlayerLabels();
@@ -212,11 +239,16 @@ public class Connect4Controller extends Application implements DataInitializable
             handImageView.setVisible(false); // set hand to invisible by default
             UtilityManager.createScaleTransition(menuButton);
             UtilityManager.createScaleTransition(chatButton);
+            UtilityManager.createScaleTransition(mainMenuButton);
         }
 
     @FXML
     public void goToPopup(javafx.scene.input.MouseEvent mouseEvent) {
         UtilityManager.popupOpen(mouseEvent, "screens/MenuPopup.fxml", rootPane);
+    }
+
+    public void goToMainMenu(javafx.scene.input.MouseEvent mouseEvent) {
+        UtilityManager.popupOpen(mouseEvent, "screens/MatchType.fxml", rootPane);
     }
 
     @FXML

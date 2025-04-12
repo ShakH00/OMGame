@@ -25,7 +25,6 @@ public class Chess extends Game {
     private Board board;
     private int score1;
     private int score2;
-    private networking.Networking networking = new networking.Networking();
     // Leaderboard Statistics
     private int p1Turns = 0;
     private int p2Turns = 0;
@@ -41,7 +40,12 @@ public class Chess extends Game {
     private int p2QueenCaptures = 0;
     private int p1RookCaptures = 0;
     private int p2RookCaptures = 0;
-
+    private int p1PawnsPromoted = 0;
+    private int p2PawnsPromoted = 0;
+    private int p1ChecksPerformed = 0;
+    private int p2ChecksPerformed = 0;
+    private int p1Checkmate = 0;
+    private int p2Checkmate = 0;
 
     /**
      * Constructor to initiate a chess game
@@ -87,13 +91,9 @@ public class Chess extends Game {
     public void switchTurn() {
         if (gameState == GameState.P1_TURN){
             gameState = GameState.P2_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
         else if (gameState == GameState.P2_TURN){
             gameState = GameState.P1_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
     }
 
@@ -138,7 +138,9 @@ public class Chess extends Game {
         // Actually perform the move
 
         Piece potentialEnemy = board.getBoardState()[x][y];
-        //need to account for en passant somehow
+
+        if(piece instanceof King && isKingInCheck(player) && ((King) piece).isTryingToCastle(oldX, oldY, x, y, this.board)) return;
+
         if (piece.move(x, y, board)) {
             if(piece.getOwnedBy() == this.player1){
                 addp1Turn();
@@ -155,7 +157,7 @@ public class Chess extends Game {
                     } else if(potentialEnemy instanceof Queen){
                         addP1QueenCaptures();
                     }
-                //account for en passant
+                //account for en passant and promotion tracking
                 } else{
                     if(piece instanceof Pawn){
                         if(((Pawn) piece).getEnPassantPerformed()){
@@ -163,6 +165,7 @@ public class Chess extends Game {
                             addP1PawnCaptures();
                             ((Pawn) piece).resetEnPassantPerformed();
                         }
+                        if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
                     }
                 }
             } else if(piece.getOwnedBy() == this.player2){
@@ -180,7 +183,7 @@ public class Chess extends Game {
                     } else if(potentialEnemy instanceof Queen){
                         addP2QueenCaptures();
                     }
-                //account for en passant
+                //account for en passant and promotion tracking
                 } else{
                     if(piece instanceof Pawn){
                         if(((Pawn) piece).getEnPassantPerformed()){
@@ -188,7 +191,9 @@ public class Chess extends Game {
                             addP2PawnCaptures();
                             ((Pawn) piece).resetEnPassantPerformed();
                         }
+                        if(((Pawn) piece).checkPromotion()) addP1PawnsPromoted();
                     }
+
                 }
             }
             switchTurn();
@@ -397,6 +402,8 @@ public class Chess extends Game {
                     MovingPiece mp = (MovingPiece) p;
                     if (mp.isValidMove(kingX, kingY, board)) {
                         // Check if the piece can attack the king directly
+                        if(player.equals(player1)) addP2ChecksPerformed();
+                        if(player.equals(player2)) addP1ChecksPerformed();
                         return true;
                     }
                 }
@@ -413,9 +420,29 @@ public class Chess extends Game {
     public void checkWinCondition() {
         if(isCheckmate(player1)){
             gameState = GameState.P2_WIN;
+            p2Checkmate += 1;
         } else if(isCheckmate(player2)){
             gameState = GameState.P1_WIN;
+            p1Checkmate += 1;
         }
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 1
+     * @return p1Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1Checkmate(){
+        return p1Checkmate;
+    }
+
+    /**
+     * Statistic for if the game ended with checkmate by player 2
+     * @return p2Checkmate: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2Checkmate(){
+        return p2Checkmate;
     }
 
     /**
@@ -546,7 +573,13 @@ public class Chess extends Game {
         matchOutcome.put(StatisticType.MATCHES_PLAYED, 1);
         matchOutcome.put(StatisticType.NUMBER_OF_TURNS, getP2Turns());
         matchOutcome.put(StatisticType.PIECES_CAPTURED, getP2Captures());
-
+        matchOutcome.put(StatisticType.PAWNS_CAPTURED, getP2PawnCaptures());
+        matchOutcome.put(StatisticType.ROOKS_CAPTURED, getP2RookCaptures());
+        matchOutcome.put(StatisticType.BISHOPS_CAPTURED, getP2BishopCaptures());
+        matchOutcome.put(StatisticType.KNIGHTS_CAPTURED, getP2KnightCaptures());
+        matchOutcome.put(StatisticType.QUEENS_CAPTURED, getP2QueenCaptures());
+        matchOutcome.put(StatisticType.CHECKS, getP2ChecksPerformed());
+        matchOutcome.put(StatisticType.PIECES_PROMOTED, getP2PawnsPromoted());
         return matchOutcome;
     }
 
@@ -582,14 +615,6 @@ public class Chess extends Game {
 
     public void setGameState(int score2){
         this.score2 = score2;
-    }
-
-    private void netUpdateGame(){
-        Chess temp = (Chess) networking.recieveGame();
-        this.board = temp.board;
-        this.gameState = temp.gameState;
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
     }
 
     /**
@@ -760,5 +785,73 @@ public class Chess extends Game {
      */
     public void addP2RookCaptures() {
         this.p2RookCaptures += 1;
+    }
+
+    /**
+     * Get number of times that player 1 promoted pawns
+     * @return p1PawnsPromoted: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1PawnsPromoted() {
+        return p1PawnsPromoted;
+    }
+
+    /**
+     * Add 1 to value of pawns promoted by player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1PawnsPromoted() {
+        this.p1PawnsPromoted += 1;
+    }
+
+    /**
+     * Get number of times that player 2 promoted pawns
+     * @return p2PawnsPromoted: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2PawnsPromoted() {
+        return p2PawnsPromoted;
+    }
+
+    /**
+     * Add 1 to value of pawns promoted by player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2PawnsPromoted() {
+        this.p2PawnsPromoted += 1;
+    }
+
+    /**
+     * Get number of times that player 1 checked player 2
+     * @return p1ChecksPerformed: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP1ChecksPerformed() {
+        return p1ChecksPerformed;
+    }
+
+    /**
+     * Add 1 to value of checks that player 1 performed on player 2
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP1ChecksPerformed() {
+        this.p1ChecksPerformed += 1;
+    }
+
+    /**
+     * Get number of times that player 2 checked player 1
+     * @return p2ChecksPerformed: int
+     * @author Abdulrahman Negmeldin
+     */
+    public int getP2ChecksPerformed() {
+        return p2ChecksPerformed;
+    }
+
+    /**
+     * Add 1 to value of checks that player 2 performed on player 1
+     * @author Abdulrahman Negmeldin
+     */
+    public void addP2ChecksPerformed() {
+        this.p2ChecksPerformed += 1;
     }
 }

@@ -271,15 +271,11 @@ public class TicTacToe extends Game {
         if(gameState.equals(GameState.P1_TURN))
         {
             gameState = GameState.P2_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
 
         else if(gameState.equals(GameState.P2_TURN))
         {
             gameState = GameState.P1_TURN;
-            networking.sendGame(this);
-            netUpdateGame();
         }
     }
 
@@ -294,14 +290,5 @@ public class TicTacToe extends Game {
     public void drawGame()
     {
         gameState = GameState.DRAW;
-    }
-    private void netUpdateGame(){
-        TicTacToe temp = (TicTacToe) networking.recieveGame();
-        this.board = temp.board;
-        this.score1 = temp.score1;
-        this.score2 = temp.score2;
-        this.gameState = temp.getGameState();
-        this.player1 = temp.getPlayer1();
-        this.player2 = temp.getPlayer2();
     }
 }
