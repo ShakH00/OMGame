@@ -153,10 +153,10 @@ public class P2ChessController extends Application {
 
         if (game.getState() == GameState.P1_TURN) {
             System.out.println("Player 1 (Pink)'s turn!");
-            //updatePlayerLabels();
+            updatePlayerLabels();
         } else if (game.getState() == GameState.P2_TURN){
             System.out.println("Player 2 (Blue)'s turn!");
-            //updatePlayerLabels();
+            updatePlayerLabels();
         }
 
         for (int row = 0; row < 8; row++) {
@@ -207,7 +207,7 @@ public class P2ChessController extends Application {
         }
         return null;
     }
-/*
+
     private void updatePlayerLabels() {
         if (game.getState() == GameState.P2_TURN) {
             p1Label.setOpacity(.5);
@@ -220,7 +220,7 @@ public class P2ChessController extends Application {
             p2Label.setOpacity(1);
         }
 
-    }*/
+    }
 
     public void initialize() {
         Board board = new Board(GameType.CHECKERS);

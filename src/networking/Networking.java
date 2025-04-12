@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class Networking {
     private static final String timeFormatting = "yy.MM.dd HH:mm:ss.SSS"; // Template used for time stamp formatting
     private final int MAX_RECONNECT_ATTEMPTS = 3;
-    private final String IP = "database.omgame.club";
+    private final String IP = "localhost";
     private final int port = 30001;
     private Game cachedGame; // Internal cached instance of game that is sent/received between players
     public boolean isConnected = false; // Connection status, initialize without connection
