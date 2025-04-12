@@ -1,4 +1,4 @@
-package matchoutcome;
+package statistics;
 
 import account.statistics.MatchOutcomeHandler;
 import account.statistics.MatchOutcomeInvalidError;

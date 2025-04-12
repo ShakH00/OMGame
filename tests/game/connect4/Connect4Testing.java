@@ -1,16 +1,9 @@
-package Connect4;
+package game.connect4;
 
 import game.Player;
 import game.Board;
-import game.Game;
-import game.GameType;
-import game.connect4.Connect4;
-import game.connect4.Connect4Piece;
-import game.pieces.Piece;
 import game.pieces.PieceType;
 import javafx.scene.paint.Color;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

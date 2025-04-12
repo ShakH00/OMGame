@@ -8,7 +8,7 @@ import java.util.HashMap;
 public abstract class Game implements Serializable {
 
     public Player player1;
-    protected Player player2;
+    public Player player2;
     protected int score1;
     protected int score2;
     protected GameType gameType;

@@ -1,5 +1,7 @@
 package account;
 
+import authentication.ExceptionsAuthentication.EncryptionFailedException;
+
 public class testLogin {
     public static void main(String[] args) {
         // Make sure there is an account in the database before testing
@@ -8,7 +10,12 @@ public class testLogin {
         Account account = new Account();
 
         // Attempt to login using valid credentials
-        boolean loginSuccess = account.TryLoginWithUsernameAndPassword("test", "test@123");
+        boolean loginSuccess = false;
+        try {
+            loginSuccess = account.TryLoginWithUsernameAndPassword("test", "test@123");
+        } catch (EncryptionFailedException e) {
+            throw new RuntimeException(e);
+        }
 
         // Check if login was successful
         if (loginSuccess) {

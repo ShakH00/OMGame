@@ -31,7 +31,7 @@ public class DatabaseManagerTest {
     @Test
     void testStoreAccount() {
         resetDatabase();
-        Account account = new Account(1,"testuser", "test@example.com", "pass123");
+        Account account = new Account("testuser", "test@example.com", "pass123");
         account.addFriend(1);
         account.addFriend(2);
 
