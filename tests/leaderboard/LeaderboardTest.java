@@ -33,13 +33,14 @@ public class LeaderboardTest {
         // Initialize accounts in database
         Account alice = CreateAccount.createAccount("Alice", "alice@alice.alice", "Alice123!!!");
         Account bob = CreateAccount.createAccount("Bob", "bob@bob.bob", "Bob123!!!");
-        Account carol = CreateAccount.createAccount("Carol", "carol@carol.carol", "Carol123!!!");
+        Account carol = CreateAccount.createAccount("Carol", "xSkull6x4@gmail.com", "Carol123!!!");
 
         // Set alice stats
         HashMap<StatisticType, Integer> aliceStats = new HashMap<>();
         aliceStats.put(StatisticType.WINS, 3);
         aliceStats.put(StatisticType.LOSSES, 2);
         aliceStats.put(StatisticType.CHECKS, 3);
+        aliceStats.put(StatisticType.DRAWS, 1);
         alice.getStatisticsHashMap().get(testGame).addStatistics(aliceStats);
 
         // Set bob stats
@@ -47,6 +48,7 @@ public class LeaderboardTest {
         bobStats.put(StatisticType.WINS, 5);
         bobStats.put(StatisticType.LOSSES, 5);
         bobStats.put(StatisticType.CHECKS, 300);
+        bobStats.put(StatisticType.DRAWS, 1);
         bob.getStatisticsHashMap().get(testGame).addStatistics(bobStats);
 
         // Set carol stats

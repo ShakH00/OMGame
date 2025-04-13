@@ -1,3 +1,4 @@
+import account.LoggedInAccount;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import leaderboard.Leaderboard;
@@ -82,7 +83,6 @@ public class LeaderboardController implements Initializable {
 
     private Leaderboard leaderboard;
     private GameType currentGameType;
-    private Account currentAccount;
     private StatisticType currentSortStat = StatisticType.ELO;
     private StatisticType currentAdditionalStat = StatisticType.WIN_RATE;
     private boolean isAscending = false;
@@ -190,14 +190,14 @@ public class LeaderboardController implements Initializable {
                         1                   // Single page
                 );
             } else {
-                if (currentAccount == null || currentAccount.getIsGuest()) {
+                if (LoggedInAccount.getAccount() == null || LoggedInAccount.getAccount().getIsGuest()) {
                     showAlert("You must be logged in to view friends leaderboard.");
                     globalToggle.setSelected(true);
                     return;
                 }
 
                 leaderboardData = leaderboard.getFriendsLeaderboard(
-                        currentAccount,
+                        LoggedInAccount.getAccount(),
                         currentGameType,
                         currentSortStat,
                         currentAdditionalStat,
@@ -252,14 +252,14 @@ public class LeaderboardController implements Initializable {
                 );
             } else {
 
-                if (currentAccount == null || currentAccount.getIsGuest()) {
+                if (LoggedInAccount.getAccount() == null || LoggedInAccount.getAccount().getIsGuest()) {
                     showAlert("You must be logged in to view friends leaderboard.");
                     globalToggle.setSelected(true);
                     return;
                 }
 
                 leaderboardData = leaderboard.getFriendsLeaderboard(
-                        currentAccount,
+                        LoggedInAccount.getAccount(),
                         currentGameType,
                         currentSortStat,
                         currentAdditionalStat,
