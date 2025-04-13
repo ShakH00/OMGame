@@ -1,3 +1,4 @@
+import account.statistics.MatchOutcomeHandler;
 import game.Board;
 import game.Game;
 import game.GameState;
@@ -187,19 +188,21 @@ public class P1ChessController extends Application implements DataInitializable<
                 playerWonLabel.setText(opponentUsername + " won!");
             }
             gameOver.setVisible(true);
-
+            MatchOutcomeHandler.RecordMatchOutcome(GameType.CHESS, game.matchOutcomeP1());
         } else if (state == GameState.P2_WIN) {
             System.out.println("Player 2 wins!");
             if (selfPlayerNo == 2) {
                 playerWonLabel.setText(selfUsername + " won!");
             } else {
                 playerWonLabel.setText(opponentUsername + " won!");
+                MatchOutcomeHandler.RecordMatchOutcome(GameType.CHESS, game.matchOutcomeP1());
             }
             gameOver.setVisible(true);
         } else if (state == GameState.DRAW) {
             System.out.println("It’s a draw!");
             playerWonLabel.setText("It's a draw!");
             gameOver.setVisible(true);
+            MatchOutcomeHandler.RecordMatchOutcome(GameType.CHESS, game.matchOutcomeP1());
         }
     }
 
