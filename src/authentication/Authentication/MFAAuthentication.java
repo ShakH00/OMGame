@@ -39,11 +39,7 @@ public class MFAAuthentication {
         if (!testMode) {
             code = generateRandomCode();
             // Simulate sending the code via email
-            try {
-                EmailSender.sendEmail(DecryptionAuthentication.decryptionDriver(email), code); // Ensure this sends the email
-            } catch (DecryptionFailedException e) {
-                throw new RuntimeException(e);
-            }
+            EmailSender.sendEmail(email, code); // Ensure this sends the email
         } else {
             code = "123456"; // Test mode uses a fixed code
         }

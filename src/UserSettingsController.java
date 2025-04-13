@@ -107,7 +107,7 @@ public class UserSettingsController extends Application {
         // set Username to account username or guest if guest
         Account currentAccount = LoggedInAccount.getAccount();
         if (currentAccount != null) {
-            username.setText(currentAccount.getUsername());
+//            username.setText(currentAccount.getUsername());
             displayNameField.setText(currentAccount.getUsername());
             try {
                 emailField.setText(DecryptionAuthentication.decryptionDriver(currentAccount.getEmail()));

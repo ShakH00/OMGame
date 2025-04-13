@@ -121,10 +121,12 @@ public class LoginController extends Application {
             try {
                 if ((DecryptionAuthentication.decryptionDriver(user.getPassword())).equals(password)) {
                     // If the password matches the username/email, log them in
-                    openMFAPopup(user.getEmail());
+                    boolean success = openMFAPopup(user.getEmail());
                     // TODO: remove to use mfa properly
-                    SceneManager.switchScene(stage, "screens/MatchType.fxml");
-                    return;
+                    if(success) {
+                        SceneManager.switchScene(stage, "screens/MatchType.fxml");
+                        return;
+                    }
                 }else{
                     notificationText.setText("Incorrect username or password!");
                 }
@@ -152,9 +154,7 @@ public class LoginController extends Application {
 
 
     @FXML
-    private void openMFAPopup(String email) {
-        // TODO: turn errors into messages in gui
-        // TODO: make sure it doesnt grant access to games if code is wrong or cancelled
+    private boolean openMFAPopup(String email) {
         try {
             // Generate and send the verification code via email
             String verificationCode = MFAAuthentication.emailAuthenticatorDriver(email);
@@ -164,8 +164,12 @@ public class LoginController extends Application {
             Parent root = loader.load();
 
             // Get the controller and set the verification code
-            MFAPopupController controller = loader.getController();
-            controller.setVerificationCode(verificationCode); // Pass the generated code to the controller
+            //MFAPopupController controller = loader.getController();
+            //controller.setVerificationCode(verificationCode); // Pass the generated code to the controller
+
+            if(verificationCode.equals("Code verified successfully!")){
+                return true;
+            }
 
 
         } catch (IOException e) {
@@ -174,6 +178,7 @@ public class LoginController extends Application {
             e.printStackTrace();
             System.err.println("Failed to send the verification code: " + e.getMessage());
         }
+        return false;
     }
 
 

@@ -30,7 +30,7 @@ public class MFAPopupController {
             Stage stage = (Stage) codeField.getScene().getWindow();
             stage.close();
             //TODO: uncomment for proper mfa
-            //SceneManager.switchScene(stage, "screens/MatchType.fxml");
+            SceneManager.switchScene(stage, "screens/MatchType.fxml");
         } else {
             // Show error message
             Alert alert = new Alert(Alert.AlertType.ERROR);
