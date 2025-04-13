@@ -2,6 +2,7 @@ package account;
 
 
 import authentication.ExceptionsAuthentication.EncryptionFailedException;
+import database.DatabaseManager;
 import game.GameType;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class AccountTest {
 
     @Before
     public void setUp() throws EncryptionFailedException {
+        DatabaseManager.deleteAllAccounts();
         guestAccount = new Account();
         userAccount1 = CreateAccount.createAccount("Alice", "alice@example.com", "password123");
         userAccount2 = CreateAccount.createAccount("Bob", "bob@example.com", "securePass");
